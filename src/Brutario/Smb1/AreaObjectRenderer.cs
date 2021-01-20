@@ -47,7 +47,7 @@ namespace Brutario.Smb1
             }
         }
 
-        public RomData RomData
+        public GameData RomData
         {
             get
             {
@@ -326,7 +326,7 @@ namespace Brutario.Smb1
 
         private void RenderTerrain()
         {
-            var bool_0109 = false;
+            var useOtherCastleTile = false;
             var castleTile = (byte)0;
             var castleLongTileOffset = (CurrentRenderingScreenX & 1) != 0;
 
@@ -344,7 +344,7 @@ namespace Brutario.Smb1
             var y = 0;
             var terrainIndex = ((int)CurrentHeader.TerrainMode << 1);
 
-        terrain_loop:
+            terrain_loop:
             var terrainBits = Rom.ReadByte(
                 TerrainBitMaskAddress + terrainIndex);
 
@@ -355,7 +355,7 @@ namespace Brutario.Smb1
             }
 
             var j = 0;
-        bit_loop:
+            bit_loop:
             var bitmask = Rom.ReadByte(BitmaskTableAddress + j);
             if ((terrainBits & bitmask) != 0)
             {
@@ -374,7 +374,7 @@ namespace Brutario.Smb1
                         terrainTile++;
                     }
                 }
-                else if (AreaType2 == AreaType.Castle && !bool_0109 && !castleLongTileOffset)
+                else if (AreaType2 == AreaType.Castle && !useOtherCastleTile && !castleLongTileOffset)
                 {
                     TileBuffer[y]++;
                 }
@@ -382,7 +382,7 @@ namespace Brutario.Smb1
             else
             {
                 castleTile = 0xFE;
-                bool_0109 = true;
+                useOtherCastleTile = true;
             }
 
             if (++y == 0x0D)
@@ -406,7 +406,7 @@ namespace Brutario.Smb1
                 goto terrain_loop;
             }
 
-        end_loop:
+            end_loop:
             terrainTile = (byte)TileBuffer[0x0C];
             if (terrainTile == 0x56 || terrainTile == 0x72)
             {

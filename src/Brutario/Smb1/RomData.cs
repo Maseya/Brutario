@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Brutario.Smb1
 {
-    public class RomData
+    public class GameData
     {
         public const int Map16DataLowBytePointer = 0x03927D;
 
@@ -12,7 +12,7 @@ namespace Brutario.Smb1
 
         private int _areaNumber;
 
-        public RomData(RomIO rom)
+        public GameData(RomIO rom)
         {
             Rom = rom ?? throw new ArgumentOutOfRangeException(nameof(rom));
             if (Rom.HeaderlessSize < 0x200000)
@@ -22,7 +22,7 @@ namespace Brutario.Smb1
             }
 
             AreaLoader = new AreaLoader(this);
-            PaletteData = new PaletteData(this);
+            PaletteData = new PaletteData(this, PalettePointers.Usa());
             GfxData = new GfxData(this);
             AreaBg2Map = new AreaBg2Map(this);
             Map16Data = new Obj16Tile[0x200];

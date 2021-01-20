@@ -69,7 +69,7 @@ namespace Brutario
             }
         }
 
-        public Smb1.RomData Smb1RomData
+        public Smb1.GameData Smb1RomData
         {
             get
             {
@@ -264,6 +264,19 @@ namespace Brutario
         private void AreaScrollBar_ValueChanged(object sender, EventArgs e)
         {
             areaControl.StartX = areaScrollBar.Value;
+        }
+
+        private void LoadAreaByLevel_Click(object sender, EventArgs e)
+        {
+            using var dialog = new AreaSelectorForm
+            {
+                Smb1RomData = Smb1RomData
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Smb1RomData.AreaNumber = dialog.Area;
+            }
         }
     }
 }

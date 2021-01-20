@@ -148,7 +148,8 @@ namespace Brutario
             var bgColor = new Color32BppArgb(0xFF, 0, 0, 0);
 
             Parallel.For(0, result.Length, i => result[i] = bgColor);
-            Parallel.For(0, 0x1E, row => RenderBg2Row(row, LayerPriority.Priority0));
+
+            //Parallel.For(0, 0x1E, row => RenderBg2Row(row, LayerPriority.Priority0));
             Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority0));
             Parallel.For(0, 0x1E, row => RenderRow(row, LayerPriority.Priority0));
             Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority2));
@@ -394,12 +395,14 @@ namespace Brutario
         {
             var bitmapPixels = RenderPixels();
             var imageWidth = bitmapPixels.Length / 0xF0;
-            fixed (Color32BppArgb* pixels = RenderPixels())
+            var scale = 2;
+            var scaleWidth = imageWidth * scale;
+            fixed (Color32BppArgb* pixels = Upscale.Simple(bitmapPixels, imageWidth, scale))
             {
                 using (var image = new Bitmap(
-                    imageWidth,
-                    0xF0,
-                    imageWidth * 4,
+                    scaleWidth,
+                    0xF0 * scale,
+                    scaleWidth * 4,
                     PixelFormat.Format32bppArgb,
                     (IntPtr)pixels))
                 {

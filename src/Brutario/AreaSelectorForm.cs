@@ -16,5 +16,29 @@ namespace Brutario
         {
             InitializeComponent();
         }
+
+        public Smb1.GameData Smb1RomData
+        {
+            get;
+            set;
+        }
+
+        public int Area
+        {
+            get;
+            set;
+        }
+
+        public int World
+        {
+            get;
+            set;
+        }
+
+        public int Level
+        {
+            get;
+            set;
+        }
     }
 }

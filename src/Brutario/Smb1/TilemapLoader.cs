@@ -12,7 +12,7 @@ namespace Brutario.Smb1
 
         public const int TilemapDataPointer = 0x058060;
 
-        public TilemapLoader(RomData romData)
+        public TilemapLoader(GameData romData)
         {
             RomData = romData
                 ?? throw new ArgumentNullException(nameof(romData));
@@ -37,7 +37,7 @@ namespace Brutario.Smb1
             };
         }
 
-        public RomData RomData
+        public GameData RomData
         {
             get;
         }

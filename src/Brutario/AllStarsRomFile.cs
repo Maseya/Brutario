@@ -10,7 +10,7 @@ namespace Brutario
         {
             Path = path ?? throw new ArgumentNullException(nameof(path));
             Rom = new RomIO(File.ReadAllBytes(path));
-            Smb1RomData = new Smb1.RomData(Rom);
+            Smb1RomData = new Smb1.GameData(Rom);
         }
 
         public string Path
@@ -29,7 +29,7 @@ namespace Brutario
             get;
         }
 
-        public Smb1.RomData Smb1RomData
+        public Smb1.GameData Smb1RomData
         {
             get;
         }

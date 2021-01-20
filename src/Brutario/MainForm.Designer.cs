@@ -53,6 +53,10 @@
             this.map16Control = new Brutario.Map16Control();
             this.gfxControl = new Brutario.GfxControl();
             this.paletteControl = new Brutario.PaletteControl();
+            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbLoadAreaByLevel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMain.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -60,7 +64,8 @@
             // mnuMain
             // 
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmFile});
+            this.tsmFile,
+            this.levelToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Size = new System.Drawing.Size(772, 24);
@@ -112,6 +117,8 @@
             this.tslJumpToArea,
             this.ttbJumpToArea,
             this.tsbJumpToArea,
+            this.toolStripSeparator4,
+            this.tsbLoadAreaByLevel,
             this.toolStripSeparator3,
             this.cutToolStripButton,
             this.copyToolStripButton,
@@ -152,13 +159,14 @@
             // tslJumpToArea
             // 
             this.tslJumpToArea.Name = "tslJumpToArea";
-            this.tslJumpToArea.Size = new System.Drawing.Size(92, 22);
+            this.tslJumpToArea.Size = new System.Drawing.Size(93, 22);
             this.tslJumpToArea.Text = "Jump to area: 0x";
             // 
             // ttbJumpToArea
             // 
             this.ttbJumpToArea.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.ttbJumpToArea.Enabled = false;
+            this.ttbJumpToArea.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ttbJumpToArea.Name = "ttbJumpToArea";
             this.ttbJumpToArea.Size = new System.Drawing.Size(100, 25);
             this.ttbJumpToArea.Text = "0";
@@ -270,6 +278,36 @@
             this.paletteControl.Size = new System.Drawing.Size(258, 258);
             this.paletteControl.TabIndex = 0;
             // 
+            // levelToolStripMenuItem
+            // 
+            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadAreaToolStripMenuItem});
+            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.levelToolStripMenuItem.Text = "Level";
+            // 
+            // loadAreaToolStripMenuItem
+            // 
+            this.loadAreaToolStripMenuItem.Name = "loadAreaToolStripMenuItem";
+            this.loadAreaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadAreaToolStripMenuItem.Text = "Load Area";
+            // 
+            // tsbLoadAreaByLevel
+            // 
+            this.tsbLoadAreaByLevel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbLoadAreaByLevel.Enabled = false;
+            this.tsbLoadAreaByLevel.Image = ((System.Drawing.Image)(resources.GetObject("tsbLoadAreaByLevel.Image")));
+            this.tsbLoadAreaByLevel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbLoadAreaByLevel.Name = "tsbLoadAreaByLevel";
+            this.tsbLoadAreaByLevel.Size = new System.Drawing.Size(23, 22);
+            this.tsbLoadAreaByLevel.Text = "Load area by level";
+            this.tsbLoadAreaByLevel.Click += new System.EventHandler(this.LoadAreaByLevel_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -322,6 +360,10 @@
         private Map16Control map16Control;
         private AreaControl areaControl;
         private System.Windows.Forms.HScrollBar areaScrollBar;
+        private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadAreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton tsbLoadAreaByLevel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

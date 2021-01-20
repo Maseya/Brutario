@@ -21,7 +21,7 @@
             get;
         }
 
-        public RomData RomData
+        public GameData RomData
         {
             get
             {

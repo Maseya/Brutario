@@ -10,7 +10,7 @@
         public const int DefaultNumberOfAreas = 0x22;
         public const int NumberOfWorldsAddress = 0x04C026;
 
-        public AreaLoader(RomData romData)
+        public AreaLoader(GameData romData)
         {
             RomData = romData
                 ?? throw new ArgumentNullException(nameof(romData));
@@ -19,7 +19,7 @@
             AreaSpriteLoader = new AreaSpriteLoader(this);
         }
 
-        public RomData RomData
+        public GameData RomData
         {
             get;
         }

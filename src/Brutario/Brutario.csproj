@@ -81,6 +81,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainPaletteEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainPaletteEditorForm.Designer.cs">
+      <DependentUpon>MainPaletteEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Map16Control.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +106,8 @@
     <Compile Include="Smb1\AreaBg2Map.cs" />
     <Compile Include="Smb1\AreaProperties.cs" />
     <Compile Include="Smb1\AreaSpriteRenderer.cs" />
+    <Compile Include="Smb1\ISmb1PaletteEditor.cs" />
+    <Compile Include="Smb1\PalettePointers.cs" />
     <Compile Include="Smb1\SelectedTiles.cs" />
     <Compile Include="Smb1\AreaHeader.cs" />
     <Compile Include="Smb1\AreaLoader.cs" />
@@ -113,7 +121,6 @@
     <Compile Include="Smb1\AreaSpriteLoader.cs" />
     <Compile Include="Smb1\AreaType.cs" />
     <Compile Include="Smb1\BackgroundColorControl.cs" />
-    <Compile Include="Smb1\PaletteHelper.cs" />
     <Compile Include="Smb1\TilemapCommand.cs" />
     <Compile Include="Smb1\ForegroundScenery.cs" />
     <Compile Include="Smb1\GfxData.cs" />
@@ -127,6 +134,7 @@
     <Compile Include="Smb1\StartYPosition.cs" />
     <Compile Include="Smb1\TerrainMode.cs" />
     <Compile Include="Smb1\TilemapLoader.cs" />
+    <Compile Include="Smb1\ISmb1PaletteEditorUI.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="TileFlip.cs" />
     <Compile Include="TileProperties.cs" />
@@ -136,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainPaletteEditorForm.resx">
+      <DependentUpon>MainPaletteEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

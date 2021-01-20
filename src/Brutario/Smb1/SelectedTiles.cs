@@ -26,7 +26,7 @@ namespace Brutario.Smb1
             }
         }
 
-        public RomData RomData
+        public GameData RomData
         {
             get
             {

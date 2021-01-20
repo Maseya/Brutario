@@ -44,7 +44,7 @@ namespace Brutario.Smb1
 
         public const int LevelBasedGfxPagePointer = 0x03FF9E;
 
-        public GfxData(RomData romData)
+        public GfxData(GameData romData)
         {
             RomData = romData
                 ?? throw new ArgumentNullException(nameof(romData));
@@ -143,7 +143,7 @@ namespace Brutario.Smb1
             };
         }
 
-        public RomData RomData
+        public GameData RomData
         {
             get;
         }

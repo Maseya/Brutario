@@ -12,13 +12,13 @@ namespace Brutario.Smb1
 
         public const int TileMapTablesPointer = 0x59170;
 
-        public AreaBg2Map(RomData romData)
+        public AreaBg2Map(GameData romData)
         {
             RomData = romData
                 ?? throw new ArgumentNullException(nameof(romData));
         }
 
-        public RomData RomData
+        public GameData RomData
         {
             get;
         }
