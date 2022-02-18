@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="Sprite.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario
 {
+    using System;
+
     public struct Sprite : IEquatable<Sprite>
     {
         public Sprite(int x, int y, ChrTile tile, TileProperties tileProperties = 0)
@@ -50,12 +52,12 @@ namespace Brutario
 
         public override bool Equals(object obj)
         {
-            return obj is Sprite other ? Equals(other) : false;
+            return obj is Sprite other && Equals(other);
         }
 
         public override int GetHashCode()
         {
-            return Tile.GetHashCode() ^ X ^ Y;
+            return HashCode.Combine(Tile, X, Y);
         }
 
         public override string ToString()

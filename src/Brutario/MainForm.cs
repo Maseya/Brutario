@@ -1,9 +1,16 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Forms;
+﻿// <copyright file="MainForm.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Windows.Forms;
+
     public partial class MainForm : Form
     {
         private const double FramesPerSecond = 60;
@@ -22,17 +29,20 @@ namespace Brutario
                 components = new System.ComponentModel.Container();
             }
 
+            ObjectListWindow = new ObjectListWindow
+            {
+                Owner = this,
+                StartPosition = FormStartPosition.CenterParent
+            };
+            ObjectListWindow.FormClosing += ChildToolWindow_FormClosing;
+            components.Add(ObjectListWindow);
+
             Timer = new System.Timers.Timer();
             components.Add(Timer);
-            Timer.Interval = 1000 / 240f;
+            Timer.Interval = RefreshRate;
             Timer.Elapsed += (s, e) => Animate();
             StartTime = DateTime.Now;
             Timer.Start();
-        }
-
-        private System.Timers.Timer Timer
-        {
-            get;
         }
 
         public AllStarsRomFile AllStarsRomFile
@@ -52,29 +62,36 @@ namespace Brutario
                 if (AllStarsRomFile != null)
                 {
                     AllStarsRomFile.Smb1RomData.AreaNumberChanged -=
-                        AreaIndexChanged;
+                        AreaNumberChanged;
                 }
 
                 _allStarsRomFile = value;
-                UpdateMenuEnabled();
                 if (AllStarsRomFile != null)
                 {
                     AllStarsRomFile.Smb1RomData.AreaNumberChanged +=
-                        AreaIndexChanged;
-
-                    ttbJumpToArea.Text = Smb1RomData.AreaNumber.ToString("X2");
+                        AreaNumberChanged;
                 }
 
                 OnRomFileChanged(EventArgs.Empty);
             }
         }
 
-        public Smb1.GameData Smb1RomData
+        public Smb1.GameData Smb1GameData
         {
             get
             {
                 return AllStarsRomFile?.Smb1RomData;
             }
+        }
+
+        private ObjectListWindow ObjectListWindow
+        {
+            get;
+        }
+
+        private System.Timers.Timer Timer
+        {
+            get;
         }
 
         private DateTime StartTime
@@ -85,8 +102,10 @@ namespace Brutario
 
         private int Frame
         {
-            get;
-            set;
+            get
+            {
+                return (int)(ElapsedTime.TotalSeconds * GameFramesPerSecond);
+            }
         }
 
         private TimeSpan ElapsedTime
@@ -106,78 +125,83 @@ namespace Brutario
 
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                AllStarsRomFile = new AllStarsRomFile(openFileDialog.FileName);
+                Open(openFileDialog.FileName);
             }
+        }
+
+        public void Open(string path)
+        {
+            AllStarsRomFile = new AllStarsRomFile(path);
+        }
+
+        public void LoadBG1()
+        {
+            areaControl.BG1 = Smb1GameData.RenderScreenTiles(
+                Smb1GameData.AreaObjectRenderer.TileMap,
+                0x200);
+
+            areaControl.Sprites = Smb1GameData.AreaSpriteRenderer.GetSprites(
+                Smb1GameData.CurrentSpriteData,
+                Smb1GameData.CurrentObjectData,
+                Frame,
+                true);
         }
 
         protected virtual void OnRomFileChanged(EventArgs e)
         {
-            LoadPalette();
-            gfxControl.PixelData =
-            map16Control.PixelData =
-            areaControl.PixelData = Smb1RomData.PixelData;
-            Smb1RomData?.Animate(0);
-            map16Control.Tiles = Smb1RomData.Map16Data;
-            LoadBG1();
-            LoadBG2();
+            UpdateMenuEnabled();
+            ObjectListWindow.Clear();
+            if (!(Smb1GameData is null))
+            {
+                ObjectListWindow.AddRange(Smb1GameData.CurrentObjectData);
+                ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
+                Smb1GameData.Animate(0);
+                LoadPalette();
+                areaControl.PixelData = Smb1GameData.PixelData;
+                LoadBG1();
+            }
+        }
+
+        private void ChildToolWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                ObjectListWindow.Visible =
+                tsmViewObjectListWindow.Checked = false;
+                e.Cancel = true;
+            }
         }
 
         private void Animate()
         {
-            if (ElapsedTime.Ticks < 10000 * (int)(RefreshRate * (Frame + 1)))
+            if (Smb1GameData is null)
             {
                 return;
             }
 
-            Frame++;
-            if (Smb1RomData is null)
-            {
-                return;
-            }
+            Smb1GameData.Animate(Frame);
 
-            Smb1RomData.Animate((int)(Frame * GameFramesPerSecond / FramesPerSecond));
-            gfxControl.Invalidate();
-            map16Control.Invalidate();
-
-            areaControl.Sprites = Smb1RomData.AreaSpriteRenderer.GetSprites(
-                Smb1RomData.CurrentSpriteData,
-                Smb1RomData.CurrentObjectData);
+            areaControl.Sprites = Smb1GameData.AreaSpriteRenderer.GetSprites(
+                Smb1GameData.CurrentSpriteData,
+                Smb1GameData.CurrentObjectData,
+                Frame,
+                true);
 
             areaControl.Invalidate();
         }
 
         private void LoadPalette()
         {
-            areaControl.Palette =
-            map16Control.Palette =
-            gfxControl.Palette =
-            paletteControl.Palette = Smb1RomData.CurrentPalette;
+            areaControl.Palette = Smb1GameData.CurrentPalette;
         }
 
-        private void LoadBG1()
+        private void AreaNumberChanged(object sender, EventArgs e)
         {
-            areaControl.BG1 = Smb1RomData.RenderScreenTiles(
-                Smb1RomData.AreaObjectRenderer.TileMap,
-                0x200);
-
-            areaControl.Sprites = Smb1RomData.AreaSpriteRenderer.GetSprites(
-                Smb1RomData.CurrentSpriteData,
-                Smb1RomData.CurrentObjectData);
-        }
-
-        private void LoadBG2()
-        {
-            areaControl.BG2 = Smb1RomData.RenderBg2Tiles(
-                Smb1RomData.AreaBg2Map.GetTileMap(Smb1RomData.AreaIndex),
-                0x100);
-        }
-
-        private void AreaIndexChanged(object sender, EventArgs e)
-        {
-            ttbJumpToArea.Text = Smb1RomData.AreaNumber.ToString("X2");
+            ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
+            ObjectListWindow.Clear();
+            ObjectListWindow.AddRange(Smb1GameData.CurrentObjectData);
             LoadPalette();
             LoadBG1();
-            LoadBG2();
         }
 
         private bool IsSavedOrOverwriteUnsaved()
@@ -211,18 +235,21 @@ namespace Brutario
 
         private void UpdateMenuEnabled()
         {
+            tsbSave.Enabled =
             tsbJumpToArea.Enabled =
             ttbJumpToArea.Enabled = AllStarsRomFile != null;
-        }
 
-        private void Exit_Click(object sender, EventArgs e)
-        {
-            Close();
+            //ObjectListWindow.Visible = AllStarsRomFile != null;
         }
 
         private void Open_Click(object sender, EventArgs e)
         {
             Open();
+        }
+
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void JumpToArea_TextChanged(object sender, EventArgs e)
@@ -238,7 +265,7 @@ namespace Brutario
 
         private void JumpToArea_Click(object sender, EventArgs e)
         {
-            Smb1RomData.AreaNumber = Int32.Parse(
+            Smb1GameData.AreaNumber = Int32.Parse(
                 ttbJumpToArea.Text,
                 NumberStyles.HexNumber,
                 CultureInfo.CurrentCulture);
@@ -249,6 +276,7 @@ namespace Brutario
             if (e.KeyCode == Keys.Enter)
             {
                 tsbJumpToArea.PerformClick();
+                e.SuppressKeyPress = true;
             }
         }
 
@@ -270,13 +298,59 @@ namespace Brutario
         {
             using var dialog = new AreaSelectorForm
             {
-                Smb1RomData = Smb1RomData
+                Smb1RomData = Smb1GameData
             };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Smb1RomData.AreaNumber = dialog.Area;
+                Smb1GameData.AreaNumber = dialog.Area;
             }
+        }
+
+        private void ExportTileData_Click(object sender, EventArgs e)
+        {
+            using var dialog = new SaveFileDialog();
+            dialog.DefaultExt = ".bin";
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                var data = new byte[0x20 * 0x10 * 0x0D];
+                for (var i = 0; i < data.Length; i++)
+                {
+                    data[i] = (byte)Smb1GameData.AreaObjectRenderer.TileMap[i + (2 * 0x20 * 0x10)];
+                }
+
+                File.WriteAllBytes(dialog.FileName, data);
+            }
+        }
+
+        private void ViewObjectListWindow_CheckedChanged(object sender, EventArgs e)
+        {
+            ObjectListWindow.Visible = tsmViewObjectListWindow.Checked;
+        }
+
+        private void EditHeader_Click(object sender, EventArgs e)
+        {
+            var dialog = new HeaderEditorForm
+            {
+                AreaHeader = Smb1GameData.CurrentAreaHeader
+            };
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                Smb1GameData.CurrentAreaHeader = dialog.AreaHeader;
+                Smb1GameData.RenderAreaTilemap();
+                LoadBG1();
+            }
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            var rom = Smb1GameData.Rom.Data;
+            var original = new byte[rom.Length];
+            Array.Copy(rom, original, original.Length);
+            Smb1GameData.WriteArea();
+            Smb1GameData.ApplyChanges();
+
+            File.WriteAllBytes("Test ROM.sfc", AllStarsRomFile.Rom.Data);
         }
     }
 }

@@ -8,10 +8,26 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Brutario</RootNamespace>
     <AssemblyName>Brutario</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,8 +53,24 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,7 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllStarsRom.cs" />
     <Compile Include="AllStarsRomFile.cs" />
     <Compile Include="AreaControl.cs">
       <SubType>UserControl</SubType>
@@ -61,19 +92,17 @@
     <Compile Include="AreaSelectorForm.Designer.cs">
       <DependentUpon>AreaSelectorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ArrayReference.cs" />
-    <Compile Include="ByteReference.cs" />
     <Compile Include="ChrTile.cs" />
     <Compile Include="DesignControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GfxControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="GfxConverter.cs" />
+    <Compile Include="HeaderEditorForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IAreaGraphic.cs" />
-    <Compile Include="Int16Reference.cs" />
-    <Compile Include="Int24Reference.cs" />
-    <Compile Include="ITileObject.cs" />
+    <Compile Include="HeaderEditorForm.Designer.cs">
+      <DependentUpon>HeaderEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LayerPriority.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -81,20 +110,20 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainPaletteEditorForm.cs">
+    <Compile Include="Obj16Tile.cs" />
+    <Compile Include="ObjectEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainPaletteEditorForm.Designer.cs">
-      <DependentUpon>MainPaletteEditorForm.cs</DependentUpon>
+    <Compile Include="ObjectEditorForm.Designer.cs">
+      <DependentUpon>ObjectEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Map16Control.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="ObjectListWindow.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Obj16Tile.cs" />
+    <Compile Include="ObjectListWindow.Designer.cs">
+      <DependentUpon>ObjectListWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ObjTile.cs" />
-    <Compile Include="PaletteControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -103,38 +132,41 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RomIO.cs" />
-    <Compile Include="Smb1\AreaBg2Map.cs" />
+    <Compile Include="Smb1\AreaLoaderPointers.cs" />
+    <Compile Include="Smb1\AreaObjectParserPointers.cs" />
+    <Compile Include="Smb1\AreaObjectRendererPointers.cs" />
     <Compile Include="Smb1\AreaProperties.cs" />
     <Compile Include="Smb1\AreaSpriteRenderer.cs" />
-    <Compile Include="Smb1\ISmb1PaletteEditor.cs" />
-    <Compile Include="Smb1\PalettePointers.cs" />
-    <Compile Include="Smb1\SelectedTiles.cs" />
+    <Compile Include="Smb1\GfxDataPointers.cs" />
+    <Compile Include="Smb1\Map16Data.cs" />
+    <Compile Include="Smb1\Map16DataPointers.cs" />
+    <Compile Include="Smb1\PaletteDataPointers.cs" />
     <Compile Include="Smb1\AreaHeader.cs" />
     <Compile Include="Smb1\AreaLoader.cs" />
     <Compile Include="Smb1\AreaObjectCode.cs" />
     <Compile Include="Smb1\AreaObjectCommand.cs" />
-    <Compile Include="Smb1\AreaObjectLoader.cs" />
     <Compile Include="Smb1\AreaObjectParser.cs" />
     <Compile Include="Smb1\AreaObjectRenderer.cs" />
     <Compile Include="Smb1\AreaSpriteCode.cs" />
     <Compile Include="Smb1\AreaSpriteCommand.cs" />
-    <Compile Include="Smb1\AreaSpriteLoader.cs" />
     <Compile Include="Smb1\AreaType.cs" />
     <Compile Include="Smb1\BackgroundColorControl.cs" />
+    <Compile Include="Smb1\Pointers.cs" />
+    <Compile Include="Smb1\SpriteTile.cs" />
     <Compile Include="Smb1\TilemapCommand.cs" />
     <Compile Include="Smb1\ForegroundScenery.cs" />
     <Compile Include="Smb1\GfxData.cs" />
     <Compile Include="Smb1\AreaPlatformType.cs" />
     <Compile Include="Smb1\PaletteData.cs" />
     <Compile Include="Smb1\Player.cs" />
-    <Compile Include="Smb1\RomData.cs" />
+    <Compile Include="Smb1\GameData.cs" />
     <Compile Include="Color32BppArgb.cs" />
     <Compile Include="Smb1\BackgroundScenery.cs" />
     <Compile Include="Smb1\StartTime.cs" />
     <Compile Include="Smb1\StartYPosition.cs" />
     <Compile Include="Smb1\TerrainMode.cs" />
     <Compile Include="Smb1\TilemapLoader.cs" />
-    <Compile Include="Smb1\ISmb1PaletteEditorUI.cs" />
+    <Compile Include="Smb1\TilemapLoaderPointers.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="TileFlip.cs" />
     <Compile Include="TileProperties.cs" />
@@ -142,17 +174,24 @@
     <EmbeddedResource Include="AreaSelectorForm.resx">
       <DependentUpon>AreaSelectorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HeaderEditorForm.resx">
+      <DependentUpon>HeaderEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainPaletteEditorForm.resx">
-      <DependentUpon>MainPaletteEditorForm.cs</DependentUpon>
+    <EmbeddedResource Include="ObjectEditorForm.resx">
+      <DependentUpon>ObjectEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectListWindow.resx">
+      <DependentUpon>ObjectListWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Brutario.licenseheader" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -162,11 +201,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\map16.bin" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

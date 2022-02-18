@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="TilemapLoader.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario.Smb1
 {
+    using System;
+    using System.Collections.Generic;
+
     public class TilemapLoader
     {
-        public const int TilemapDataIndexPointer = 0x058057;
-
-        public const int TilemapDataPointer = 0x058060;
-
-        public TilemapLoader(GameData romData)
+        public TilemapLoader()
         {
-            RomData = romData
-                ?? throw new ArgumentNullException(nameof(romData));
-
+            TilemapCommands = new TilemapCommand[AreaLoader.DefaultNumberOfAreas][];
             Layer2Tilemap = new int[0xD00 >> 1];
-
-            BackgroundGenerationCommands = new Action[0x0D]
+            BackgroundGenerationCommands = new Action<TilemapCommand>[0x0D]
             {
-                () => Layer2TilemapIndex++,
+                x => Layer2TilemapIndex++,
                 EnableHdmaGradient,
                 EnableHdmaWaving,
                 UnknownCommand03,
@@ -30,24 +26,17 @@ namespace Brutario.Smb1
                 FillUndergroundRockPattern,
                 FillUnderwaterTopAreaTilemap,
                 FillWaterFallRockPattern,
-                () => EnableLayer3 = true,
+                x => EnableLayer3 = true,
                 GenerateWaterfallTiles,
                 SetSpecialTilemapIndex,
                 GenerateGoombaPillars,
             };
         }
 
-        public GameData RomData
+        public TilemapLoader(GameData gameData, TilemapLoaderPointers pointers)
+            : this()
         {
-            get;
-        }
-
-        public RomIO Rom
-        {
-            get
-            {
-                return RomData.Rom;
-            }
+            ReadGameData(gameData, pointers);
         }
 
         public int[] Layer2Tilemap
@@ -59,22 +48,6 @@ namespace Brutario.Smb1
         {
             get;
             private set;
-        }
-
-        public int TilemapDataIndexAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(TilemapDataIndexPointer);
-            }
-        }
-
-        public int TilemapDataAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(TilemapDataPointer);
-            }
         }
 
         public bool EnableLayer3
@@ -89,43 +62,68 @@ namespace Brutario.Smb1
             set;
         }
 
-        private Action[] BackgroundGenerationCommands
+        private TilemapCommand[][] TilemapCommands
         {
             get;
         }
 
-        private TilemapCommand CurrentTilemapCommand
+        private Action<TilemapCommand>[] BackgroundGenerationCommands
         {
             get;
-            set;
+        }
+
+        public void ReadGameData(GameData gameData, TilemapLoaderPointers pointers)
+        {
+            if (gameData is null)
+            {
+                throw new ArgumentNullException(nameof(gameData));
+            }
+
+            if (pointers is null)
+            {
+                throw new ArgumentNullException(nameof(pointers));
+            }
+
+            var rom = gameData.Rom;
+            var indexes = rom.ReadInt16ArrayIndirectAs(
+                pointers.TilemapDataIndexPointer,
+                TilemapCommands.Length,
+                x => x >> 1);
+            for (var i = 0; i < TilemapCommands.Length; i++)
+            {
+                var commands = new List<TilemapCommand>();
+                for (var j = 0; true; j++)
+                {
+                    TilemapCommand command = rom.ReadInt16IndirectIndexed(
+                        pointers.TilemapDataPointer,
+                        indexes[i] + j);
+                    commands.Add(command);
+                    if (command.IsTerminationCommand)
+                    {
+                        break;
+                    }
+                }
+
+                TilemapCommands[i] = commands.ToArray();
+            }
         }
 
         public void LoadTilemap(int areaIndex)
         {
             EnableLayer3 = false;
             Array.Clear(Layer2Tilemap, 0, Layer2Tilemap.Length);
-
-            var tilemapDataIndex = Rom.ReadInt16(
-                TilemapDataIndexAddress + (areaIndex << 1));
-
-            var address = TilemapDataAddress + tilemapDataIndex;
-
-            while (true)
+            foreach (var command in TilemapCommands[areaIndex])
             {
-                CurrentTilemapCommand = Rom.ReadInt16(address);
-                address += 2;
-                if ((CurrentTilemapCommand.CommandED & 0xF0) == 0xE0)
+                if ((command.CommandED & 0xF0) == 0xE0)
                 {
-                    if (CurrentTilemapCommand.CommandEF == 0x3F)
+                    if (command.CommandEF == 0x3F)
                     {
                         Layer2Tilemap[++Layer2TilemapIndex] = 0xFFFF;
                         LoadTilemapTiles();
-                        break;
                     }
                     else
                     {
-                        BackgroundGenerationCommands[
-                            CurrentTilemapCommand.CommandEF]();
+                        BackgroundGenerationCommands[command.CommandEF](command);
                     }
                 }
                 else
@@ -138,49 +136,49 @@ namespace Brutario.Smb1
         {
         }
 
-        private void EnableHdmaGradient()
+        private void EnableHdmaGradient(TilemapCommand command)
         {
         }
 
-        private void EnableHdmaWaving()
+        private void EnableHdmaWaving(TilemapCommand command)
         {
         }
 
-        private void UnknownCommand03()
+        private void UnknownCommand03(TilemapCommand command)
         {
         }
 
-        private void SetTilemapIndex()
+        private void SetTilemapIndex(TilemapCommand command)
         {
-            TileSetIndex = (byte)CurrentTilemapCommand.CommandF1;
+            TileSetIndex = (byte)command.CommandF1;
         }
 
-        private void FillTopAreaTilemap()
-        {
-        }
-
-        private void FillUndergroundRockPattern()
+        private void FillTopAreaTilemap(TilemapCommand command)
         {
         }
 
-        private void FillUnderwaterTopAreaTilemap()
+        private void FillUndergroundRockPattern(TilemapCommand command)
         {
         }
 
-        private void FillWaterFallRockPattern()
+        private void FillUnderwaterTopAreaTilemap(TilemapCommand command)
         {
         }
 
-        private void GenerateWaterfallTiles()
+        private void FillWaterFallRockPattern(TilemapCommand command)
         {
         }
 
-        private void SetSpecialTilemapIndex()
+        private void GenerateWaterfallTiles(TilemapCommand command)
         {
-            Layer2TilemapIndex = CurrentTilemapCommand.CommandF1 | 0x10;
         }
 
-        private void GenerateGoombaPillars()
+        private void SetSpecialTilemapIndex(TilemapCommand command)
+        {
+            Layer2TilemapIndex = command.CommandF1 | 0x10;
+        }
+
+        private void GenerateGoombaPillars(TilemapCommand command)
         {
         }
     }

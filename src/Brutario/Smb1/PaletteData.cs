@@ -1,5 +1,5 @@
 ﻿// <copyright file="PaletteData.cs" company="Public Domain">
-//     Copyright (c) 2020 Nelson Garcia. All rights reserved. Licensed under
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
 //     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
@@ -10,164 +10,159 @@ namespace Brutario.Smb1
 
     public class PaletteData
     {
-        public PaletteData(GameData romData, PalettePointers palettePointers)
+        public const int ColorsPerRow = 0x10;
+        public const int RowsPerPalette = 0x10;
+        public const int TotalPaletteSize = ColorsPerRow * RowsPerPalette;
+
+        private const int RowIndexTableSize = 0x220;
+        private const int IndexTableSize = 0x42;
+        private const int DataTableSize = 0x3E0;
+        private const int BonusAreaRow = 7;
+
+        public PaletteData()
         {
-            GameData = romData
-                ?? throw new ArgumentNullException(nameof(romData));
-
-            PalettePointers = palettePointers
-                ?? throw new ArgumentNullException(nameof(palettePointers));
-
-            GameData.AreaNumberChanged += AreaIndexChanged;
-
-            LoadPalette();
+            RowIndexTable = new byte[RowIndexTableSize];
+            IndexTable = new int[IndexTableSize];
+            ColorTable = new Color32BppArgb[DataTableSize];
         }
 
-        public GameData GameData
+        public PaletteData(GameData gameData, PaletteDataPointers pointers)
+            : this()
         {
-            get;
+            ReadGameData(gameData, pointers);
         }
 
-        public RomIO Rom
-        {
-            get
-            {
-                return GameData.Rom;
-            }
-        }
-
-        public PalettePointers PalettePointers
+        public byte[] RowIndexTable
         {
             get;
         }
 
-        public Color32BppArgb[] CurrentPalette
+        public int[] IndexTable
         {
             get;
-            private set;
         }
 
-        public int RowIndexTableAddress
+        public Color32BppArgb[] ColorTable
         {
-            get
+            get;
+        }
+
+        public Color32BppArgb[] LuigiBonusAreaColorTable
+        {
+            get;
+        }
+
+        public void ReadGameData(GameData gameData, PaletteDataPointers pointers)
+        {
+            if (gameData is null)
             {
-                var bank = PalettePointers.RowIndexTablePointer & ~0xFFFF;
-                return bank | Rom.ReadInt16(PalettePointers.RowIndexTablePointer);
+                throw new ArgumentNullException(nameof(gameData));
             }
-        }
 
-        public int IndexTableAddress
-        {
-            get
+            if (pointers is null)
             {
-                var bank = PalettePointers.IndexTablePointer & ~0xFFFF;
-                return bank | Rom.ReadInt16(PalettePointers.IndexTablePointer);
+                throw new ArgumentNullException(nameof(pointers));
             }
+
+            var rom = gameData.Rom;
+            rom.ReadBytesIndirect(
+               pointers.RowIndexTablePointer,
+               RowIndexTable);
+            rom.ReadInt16ArrayIndirectAs(
+               pointers.IndexTablePointer,
+               IndexTable,
+               x => x >> 1);
+            rom.ReadInt16ArrayIndirectAs(
+               pointers.ColorTablePointer,
+               ColorTable,
+               x => Color32BppArgb.FromSnesColor(x));
+            rom.ReadInt16ArrayIndirectAs(
+               pointers.LuigiBonusAreaColorTablePointer,
+               LuigiBonusAreaColorTable,
+               x => Color32BppArgb.FromSnesColor(x));
         }
 
-        public int DataAddress
+        public void ReadPalette(int areaIndex, Span<Color32BppArgb> dest)
         {
-            get
-            {
-                var bank = PalettePointers.DataPointer & ~0xFFFF;
-                return bank | Rom.ReadInt16(PalettePointers.DataPointer);
-            }
+            ReadPalette(areaIndex, isLuigiBonusArea: false, dest);
         }
 
-        public int LuigiBonusAreaAddress
-        {
-            get
-            {
-                var bank = PalettePointers.LuigiBonusAreaDataPointer;
-                return bank | Rom.ReadInt16(PalettePointers.LuigiBonusAreaDataPointer);
-            }
-        }
-
-        public int GetSourceIndex(int areaIndex)
-        {
-            return areaIndex << 4;
-        }
-
-        public int GetSourceAddress(int sourceIndex)
-        {
-            return RowIndexTableAddress + sourceIndex;
-        }
-
-        public int GetPaletteRowAddress(int paletteRowIndex)
-        {
-            return IndexTableAddress + (paletteRowIndex << 1);
-        }
-
-        public int GetPaletteRowIndex(int sourceIndex)
-        {
-            var sourceAddress = GetSourceAddress(sourceIndex);
-            return Rom.ReadByte(sourceAddress);
-        }
-
-        public void SetPaletteRowIndex(int sourceIndex, int value)
-        {
-            var sourceAddress = GetSourceAddress(sourceIndex);
-            Rom.WriteByte(sourceAddress, value);
-        }
-
-        public int GetPaletteIndex(int paletteRowIndex)
-        {
-            var paletteRowAddress = GetPaletteRowAddress(paletteRowIndex);
-            return Rom.ReadInt16(paletteRowAddress);
-        }
-
-        public void SetPaletteIndex(int paletteRowIndex, int value)
-        {
-            var paletteRowAddress = GetPaletteRowAddress(paletteRowIndex);
-            Rom.WriteInt16(paletteRowAddress, value);
-        }
-
-        public Color32BppArgb[] CreatePalette(int areaIndex)
-        {
-            return CreatePalette(areaIndex, false);
-        }
-
-        public Color32BppArgb[] CreatePalette(
+        public void ReadPalette(
             int areaIndex,
-            bool isLuigiBonusArea)
+            bool isLuigiBonusArea,
+            Span<Color32BppArgb> dest)
         {
-            var result = new Color32BppArgb[0x100];
-            var sourceIndex = GetSourceIndex(areaIndex);
-            for (var destIndex = 0; destIndex < result.Length;)
+            if (dest.Length < TotalPaletteSize)
             {
-                var paletteRowIndex = GetPaletteRowIndex(sourceIndex++);
-                var paletteIndex = GetPaletteIndex(paletteRowIndex);
-                var address = DataAddress + paletteIndex;
+                throw new ArgumentException();
+            }
 
-                for (var i = 0; i < 0x10; i++)
-                {
-                    var color = Rom.ReadInt16(address + (i << 1));
-                    result[destIndex++] = Color32BppArgb.FromSnesColor(color);
-                }
+            var sourceIndex = areaIndex * ColorsPerRow;
+            for (var i = 0; i < RowsPerPalette; i++)
+            {
+                var paletteRowIndex = RowIndexTable[sourceIndex++];
+                var paletteIndex = IndexTable[paletteRowIndex];
+                new Span<Color32BppArgb>(ColorTable, paletteIndex, ColorsPerRow).CopyTo(
+                    dest.Slice(i * ColorsPerRow));
             }
 
             if (isLuigiBonusArea)
             {
-                var address = LuigiBonusAreaAddress;
-                for (var i = 0; i < 0x10; i++)
-                {
-                    var color = Rom.ReadInt16(address + (i << 1));
-                    result[PalettePointers.LuigiBonusAreaIndex + i] =
-                        Color32BppArgb.FromSnesColor(color);
-                }
+                LuigiBonusAreaColorTable.CopyTo(dest.Slice(BonusAreaRow * ColorsPerRow));
+            }
+        }
+
+        public void WritePalette(
+            Span<Color32BppArgb> source,
+            int areaIndex,
+            bool isLuigiBonusArea = false)
+        {
+            if (source.Length < TotalPaletteSize)
+            {
+                throw new ArgumentException();
             }
 
-            return result;
+            var sourceIndex = areaIndex * ColorsPerRow;
+            for (var i = 0; i < RowsPerPalette; i++)
+            {
+                if (isLuigiBonusArea && i == BonusAreaRow)
+                {
+                    source.Slice(BonusAreaRow * ColorsPerRow, ColorsPerRow).CopyTo(
+                        LuigiBonusAreaColorTable);
+                }
+                else
+                {
+                    var paletteRowIndex = RowIndexTable[sourceIndex++];
+                    var paletteIndex = IndexTable[paletteRowIndex];
+                    source.Slice(i * ColorsPerRow, ColorsPerRow).CopyTo(
+                        new Span<Color32BppArgb>(ColorTable, paletteIndex, ColorsPerRow));
+                }
+            }
         }
 
-        protected void LoadPalette()
+        public void WriteToGameData(GameData gameData, PaletteDataPointers pointers)
         {
-            CurrentPalette = CreatePalette(GameData.AreaIndex);
-        }
+            if (gameData is null)
+            {
+                throw new ArgumentNullException(nameof(gameData));
+            }
 
-        private void AreaIndexChanged(object sender, EventArgs e)
-        {
-            LoadPalette();
+            var rom = gameData.Rom;
+            rom.WriteArrayAsInt16Indirect<Color32BppArgb>(
+                pointers.LuigiBonusAreaColorTablePointer,
+                LuigiBonusAreaColorTable,
+                x => (short)Color32BppArgb.ToSnesColor(x));
+            rom.WriteArrayAsInt16Indirect<Color32BppArgb>(
+                pointers.ColorTablePointer,
+                ColorTable,
+                x => (short)Color32BppArgb.ToSnesColor(x));
+            rom.WriteArrayAsInt16Indirect<int>(
+                pointers.IndexTablePointer,
+                IndexTable,
+                x => (short)(x << 1));
+            rom.WriteBytesIndirect(
+                pointers.RowIndexTablePointer,
+                RowIndexTable);
         }
     }
 }

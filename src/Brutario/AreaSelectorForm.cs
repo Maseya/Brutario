@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿// <copyright file="AreaSelectorForm.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario
 {
+    using System.Windows.Forms;
+
     public partial class AreaSelectorForm : Form
     {
         public AreaSelectorForm()

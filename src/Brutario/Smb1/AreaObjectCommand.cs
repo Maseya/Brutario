@@ -1,4 +1,10 @@
-﻿namespace Brutario.Smb1
+﻿// <copyright file="AreaObjectCommand.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
+
+namespace Brutario.Smb1
 {
     using System;
     using System.Collections.Generic;
@@ -243,7 +249,11 @@
                                 : (Y << 8) | (Command << 4)
                         : Command == 0
                             ? Parameter
-                            : Command << 4);
+                            : Command == 7
+                                ? Parameter < 8
+                                    ? (int)AreaObjectCode.UnenterablePipe
+                                    : (int)AreaObjectCode.EnterablePipe
+                                : Command << 4);
             }
         }
 
@@ -261,12 +271,12 @@
             {
                 switch (Code)
                 {
-                    case AreaObjectCode.Empty:
-                    case AreaObjectCode.Empty2:
-                        return true;
+                case AreaObjectCode.Empty:
+                case AreaObjectCode.Empty2:
+                    return true;
 
-                    default:
-                        return false;
+                default:
+                    return false;
                 }
             }
         }

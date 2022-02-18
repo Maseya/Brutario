@@ -1,9 +1,15 @@
-﻿using System;
-using System.Drawing;
-using System.Runtime.InteropServices;
+﻿// <copyright file="Color32BppArgb.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario
 {
+    using System;
+    using System.Drawing;
+    using System.Runtime.InteropServices;
+
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct Color32BppArgb : IEquatable<Color32BppArgb>
     {
@@ -56,9 +62,14 @@ namespace Brutario
         {
             return new Color32BppArgb(
                 Byte.MaxValue,
-                (((value >> (5 * 0)) & 0x1F) << 3),
-                (((value >> (5 * 1)) & 0x1F) << 3),
-                (((value >> (5 * 2)) & 0x1F) << 3));
+                ((value >> (5 * 0)) & 0x1F) << 3,
+                ((value >> (5 * 1)) & 0x1F) << 3,
+                ((value >> (5 * 2)) & 0x1F) << 3);
+        }
+
+        public static int ToSnesColor(Color32BppArgb color)
+        {
+            return (color.R >> 3) | ((color.G >> 3) << 5) | ((color.B >> 3) << 10);
         }
 
         public static bool operator ==(
@@ -107,7 +118,7 @@ namespace Brutario
 
         public override bool Equals(object obj)
         {
-            return obj is Color32BppArgb other ? Equals(other) : false;
+            return obj is Color32BppArgb other && Equals(other);
         }
 
         public override string ToString()

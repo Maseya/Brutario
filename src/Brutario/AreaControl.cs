@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.ComponentModel.DesignerSerializationVisibility;
+﻿// <copyright file="AreaControl.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using static System.ComponentModel.DesignerSerializationVisibility;
+
     public class AreaControl : DesignControl
     {
         private Color32BppArgb[] _palette;
         private byte[] _pixelMap;
         private ObjTile[] _bg1;
-        private ObjTile[] _bg2;
         private int _startX;
 
         [Browsable(false)]
@@ -106,27 +112,6 @@ namespace Brutario
             }
         }
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(Hidden)]
-        public ObjTile[] BG2
-        {
-            get
-            {
-                return _bg2;
-            }
-
-            set
-            {
-                if (BG2 == value)
-                {
-                    return;
-                }
-
-                _bg2 = value;
-                Invalidate();
-            }
-        }
-
         public IList<Sprite> Sprites
         {
             get;
@@ -140,32 +125,27 @@ namespace Brutario
                 throw new InvalidOperationException();
             }
 
-            var startTime = DateTime.Now;
             var viewWidth = ((ClientSize.Width - 1) / 8) + 1;
             var imageWidth = viewWidth * 8;
 
-            var result = new Color32BppArgb[imageWidth * 0xF0];
+            var result = new Color32BppArgb[imageWidth * 0x120];
             var bgColor = new Color32BppArgb(0xFF, 0, 0, 0);
 
-            Parallel.For(0, result.Length, i => result[i] = bgColor);
+            _ = Parallel.For(0, result.Length, i => result[i] = bgColor);
 
-            //Parallel.For(0, 0x1E, row => RenderBg2Row(row, LayerPriority.Priority0));
-            Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority0));
-            Parallel.For(0, 0x1E, row => RenderRow(row, LayerPriority.Priority0));
-            Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority2));
-            Parallel.For(0, 0x1E, row => RenderRow(row, LayerPriority.Priority1));
-            Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority3));
+            _ = Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority0));
+            _ = Parallel.For(0, 0x24, row => RenderRow(row, LayerPriority.Priority0));
 
-            var end = DateTime.Now;
-            var elspaded = end - startTime;
+            _ = Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority2));
+            _ = Parallel.For(0, 0x24, row => RenderRow(row, LayerPriority.Priority1));
 
-            Parent.Text = $"{elspaded.Milliseconds} ms";
+            _ = Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority3));
 
             return result;
 
             void RenderRow(int row, LayerPriority layerPriority)
             {
-                var rowIndex = row * 0x400;
+                var rowIndex = Math.Min(row, 0x1C + (row & 1)) * 0x400;
                 var pixelRow = row * 8 * imageWidth;
                 for (var column = 0; column < viewWidth; column++, pixelRow += 8)
                 {
@@ -177,7 +157,7 @@ namespace Brutario
 
                     var xFlip = tile8.XFlipped ? 7 : 0;
                     var yFlip = tile8.YFlipped ? 7 : 0;
-                    var paletteIndex = tile8.PaletteNumber * 0x10;
+                    var paletteIndex = tile8.PaletteIndex * 0x10;
                     var pixelIndex = tile8.TileIndex * 0x40;
 
                     for (var y = 0; y < 8; y++, pixelIndex += 8)
@@ -185,50 +165,6 @@ namespace Brutario
                         var index = pixelRow + ((y ^ yFlip) * imageWidth);
                         for (var x = 0; x < 8; x++, index++)
                         {
-                            var pixel = PixelData[
-                                pixelIndex + (x ^ xFlip)];
-
-                            if (pixel != 0)
-                            {
-                                result[index] = Palette[paletteIndex + pixel];
-                            }
-                        }
-                    }
-                }
-            }
-
-            void RenderBg2Row(int row, LayerPriority layerPriority)
-            {
-                var rowIndex = row * 0x200;
-                var pixelRow = row * 8 * imageWidth;
-                for (var column = 0; column < viewWidth; column++, pixelRow += 8)
-                {
-                    var tile8 = BG2[rowIndex + column + (StartX >> 1)];
-                    if (tile8.Priority != layerPriority)
-                    {
-                        continue;
-                    }
-
-                    var xFlip = tile8.XFlipped ? 7 : 0;
-                    var yFlip = tile8.YFlipped ? 7 : 0;
-                    var paletteIndex = tile8.PaletteNumber * 0x10;
-                    var pixelIndex = tile8.TileIndex * 0x40;
-
-                    for (var y = 0; y < 8; y++, pixelIndex += 8)
-                    {
-                        var index = pixelRow + ((y ^ yFlip) * imageWidth);
-                        if (column != 0 && (StartX & 1) != 0)
-                        {
-                            index -= 4;
-                        }
-
-                        for (var x = 0; x < 8; x++, index++)
-                        {
-                            if (column == 0 && x == 0 && (StartX & 1) != 0)
-                            {
-                                x += 4;
-                            }
-
                             var pixel = PixelData[
                                 pixelIndex + (x ^ xFlip)];
 
@@ -313,67 +249,66 @@ namespace Brutario
 
         private Func<Color32BppArgb, Color32BppArgb, Color32BppArgb> TransformPixel(TileProperties tileProperties)
         {
-            switch (tileProperties)
+            return tileProperties switch
             {
-                case TileProperties.Invert:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.R ^= 0xFF;
-                        pixel.G ^= 0xFF;
-                        pixel.B ^= 0xFF;
-                        return pixel;
-                    };
-                case TileProperties.Red:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.R = 0xFF;
-                        return pixel;
-                    };
-                case TileProperties.Green:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.G = 0xFF;
-                        return pixel;
-                    };
-                case TileProperties.Blue:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.B = 0xFF;
-                        return pixel;
-                    };
-                case TileProperties.Yellow:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.R = 0xFF;
-                        pixel.G = 0xFF;
-                        return pixel;
-                    };
-                case TileProperties.Magenta:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.R = 0xFF;
-                        pixel.B = 0xFF;
-                        return pixel;
-                    };
-                case TileProperties.Cyan:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.G = 0xFF;
-                        pixel.B = 0xFF;
-                        return pixel;
-                    };
-                case TileProperties.Transparent:
-                    return (pixel, bottom) =>
-                    {
-                        pixel.R = (byte)((pixel.R + (1 * bottom.R)) >> 1);
-                        pixel.G = (byte)((pixel.G + (1 * bottom.G)) >> 1);
-                        pixel.B = (byte)((pixel.B + (1 * bottom.B)) >> 1);
-                        return pixel;
-                    };
-                case TileProperties.None:
-                default:
-                    return (pixel, bottom) => pixel;
-            }
+                TileProperties.Invert => (pixel, bottom) =>
+                {
+                    pixel.R ^= 0xFF;
+                    pixel.G ^= 0xFF;
+                    pixel.B ^= 0xFF;
+                    return pixel;
+                }
+                ,
+                TileProperties.Red => (pixel, bottom) =>
+                {
+                    pixel.R = 0xFF;
+                    return pixel;
+                }
+                ,
+                TileProperties.Green => (pixel, bottom) =>
+                {
+                    pixel.G = 0xFF;
+                    return pixel;
+                }
+                ,
+                TileProperties.Blue => (pixel, bottom) =>
+                {
+                    pixel.B = 0xFF;
+                    return pixel;
+                }
+                ,
+                TileProperties.Yellow => (pixel, bottom) =>
+                {
+                    pixel.R = 0xFF;
+                    pixel.G = 0xFF;
+                    return pixel;
+                }
+
+                ,
+                TileProperties.Magenta => (pixel, bottom) =>
+                {
+                    pixel.R = 0xFF;
+                    pixel.B = 0xFF;
+                    return pixel;
+                }
+                ,
+                TileProperties.Cyan => (pixel, bottom) =>
+                {
+                    pixel.G = 0xFF;
+                    pixel.B = 0xFF;
+                    return pixel;
+                }
+                ,
+                TileProperties.Transparent => (pixel, bottom) =>
+                {
+                    pixel.R = (byte)((pixel.R + (1 * bottom.R)) >> 1);
+                    pixel.G = (byte)((pixel.G + (1 * bottom.G)) >> 1);
+                    pixel.B = (byte)((pixel.B + (1 * bottom.B)) >> 1);
+                    return pixel;
+                }
+                ,
+                _ => (pixel, bottom) => pixel,
+            };
         }
 
         private Obj16Tile OffsetTile16(Obj16Tile tile)
@@ -394,20 +329,29 @@ namespace Brutario
         private unsafe void DrawMap16(Graphics graphics)
         {
             var bitmapPixels = RenderPixels();
-            var imageWidth = bitmapPixels.Length / 0xF0;
-            var scale = 2;
-            var scaleWidth = imageWidth * scale;
-            fixed (Color32BppArgb* pixels = Upscale.Simple(bitmapPixels, imageWidth, scale))
+            var imageWidth = bitmapPixels.Length / 0x120;
+            fixed (Color32BppArgb* pixels = bitmapPixels)
             {
-                using (var image = new Bitmap(
-                    scaleWidth,
-                    0xF0 * scale,
-                    scaleWidth * 4,
+                using var image = new Bitmap(
+                    imageWidth,
+                    0x120,
+                    imageWidth * 4,
                     PixelFormat.Format32bppArgb,
-                    (IntPtr)pixels))
+                    (IntPtr)pixels);
+
+                using var g = Graphics.FromImage(image);
+                using var brush = new SolidBrush(Color.FromArgb(196, Color.Black));
+                g.FillRectangle(brush, 0, 0xF0, imageWidth, 0x30);
+
+                using var pen = new Pen(Color.Blue);
+                for (int pageX = 0xFF - ((StartX * 8) % 0x100); pageX < imageWidth; pageX += 0x100)
                 {
-                    graphics.DrawImageUnscaled(image, Point.Empty);
+                    g.DrawLine(pen, pageX, 0, pageX, 0x120);
                 }
+
+                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                graphics.SmoothingMode = SmoothingMode.None;
+                graphics.DrawImage(image, 0, 0, imageWidth * 1, 0x120 * 1);
             }
         }
     }

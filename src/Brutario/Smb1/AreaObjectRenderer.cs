@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// <copyright file="AreaObjectRenderer.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario.Smb1
 {
+    using System;
+    using System.Collections.Generic;
+
     public class AreaObjectRenderer
     {
         /// <summary>
@@ -10,57 +16,45 @@ namespace Brutario.Smb1
         /// </summary>
         public const int TileBufferSize = 0x0D;
 
-        public const int BackgroundSceneryMetaDataOffsetPointer = 0x3A45E;
+        private const int BackgroundSceneryMetaDataOffsetTableSize = 3;
+        private const int BackgroundSceneryMetaDataTableSize = 0x90;
+        private const int BackgroundSceneryTileDataTableSize = 0x24;
 
-        public const int BackgroundSceneryMetaDataPointer = 0x03A465;
+        private const int ForegroundSceneryDataOffsetTableSize = 3;
+        private const int ForegroundSceneryDataTableSize = 0x27;
 
-        public const int BackgroundSceneryTileDataPointer = 0x03A480;
+        private const int TerrainAreaTypeTableSize = 4;
+        private const int TerrainBitMaskTableSize = 0x20;
 
-        public const int ForegroundSceneryDataOffsetPointer = 0x03A495;
+        private const int BitmaskTableSize = 8;
 
-        public const int ForegroundSceneryDataPointer = 0x03A49A;
-
-        public const int TerrainAreaTypePointer = 0x03A4E5;
-
-        public const int TerrainBitMaskPointer = 0x03A4F8;
-
-        public const int BitmaskTablePointer = 0x03A511;
+        public AreaObjectRenderer()
+        {
+            BackgroundSceneryMetaDataOffsetTable =
+                new byte[BackgroundSceneryMetaDataOffsetTableSize];
+            BackgroundSceneryMetaDataTable =
+                new byte[BackgroundSceneryMetaDataTableSize];
+            BackgroundSceneryTileDataTable =
+                new byte[BackgroundSceneryTileDataTableSize];
+            ForegroundSceneryDataOffsetTable =
+                new byte[ForegroundSceneryDataOffsetTableSize];
+            ForegroundSceneryDataTable = new byte[ForegroundSceneryDataTableSize];
+            TerrainAreaTypeTable = new byte[TerrainAreaTypeTableSize];
+            TerrainBitMaskTable = new byte[TerrainBitMaskTableSize];
+            BitmaskTable = new byte[BitmaskTableSize];
+        }
 
         public AreaObjectRenderer(
-            AreaObjectLoader areaObjectLoader)
+            GameData gameData,
+            AreaObjectRendererPointers pointers)
+            : this()
         {
-            AreaObjectLoader = areaObjectLoader;
+            GameData = gameData
+                ?? throw new ArgumentNullException(nameof(gameData));
             TileBuffer = new int[TileBufferSize];
             TileMap = new int[0x20 * 0x10 * 0x10];
-        }
 
-        public AreaObjectLoader AreaObjectLoader
-        {
-            get;
-        }
-
-        public AreaLoader AreaLoader
-        {
-            get
-            {
-                return AreaObjectLoader.AreaLoader;
-            }
-        }
-
-        public GameData RomData
-        {
-            get
-            {
-                return AreaLoader.RomData;
-            }
-        }
-
-        public RomIO Rom
-        {
-            get
-            {
-                return RomData.Rom;
-            }
+            ReadGameData(gameData, pointers);
         }
 
         public int[] TileMap
@@ -68,68 +62,44 @@ namespace Brutario.Smb1
             get;
         }
 
-        public int BackgroundSceneryMetaDataOffsetAddress
+        public byte[] BackgroundSceneryMetaDataOffsetTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(BackgroundSceneryMetaDataOffsetPointer);
-            }
+            get;
         }
 
-        public int BackgroundSceneryMetaDataAddress
+        public byte[] BackgroundSceneryMetaDataTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(BackgroundSceneryMetaDataPointer);
-            }
+            get;
         }
 
-        public int BackgroundSceneryTileDataAddress
+        public byte[] BackgroundSceneryTileDataTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(BackgroundSceneryTileDataPointer);
-            }
+            get;
         }
 
-        public int ForegroundSceneryDataOffsetAddress
+        public byte[] ForegroundSceneryDataOffsetTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(ForegroundSceneryDataOffsetPointer);
-            }
+            get;
         }
 
-        public int ForegroundSceneryDataAddress
+        public byte[] ForegroundSceneryDataTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(ForegroundSceneryDataPointer);
-            }
+            get;
         }
 
-        public int TerrainAreaTypeAddress
+        public byte[] TerrainAreaTypeTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(TerrainAreaTypePointer);
-            }
+            get;
         }
 
-        public int TerrainBitMaskAddress
+        public byte[] TerrainBitMaskTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(TerrainBitMaskPointer);
-            }
+            get;
         }
 
-        public int BitmaskTableAddress
+        public byte[] BitmaskTable
         {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(BitmaskTablePointer);
-            }
+            get;
         }
 
         public AreaType AreaType
@@ -148,7 +118,7 @@ namespace Brutario.Smb1
         {
             get
             {
-                return CurrentHeader.MiscPlatformType == AreaPlatformType.CloudGround;
+                return CurrentHeader.AreaPlatformType == AreaPlatformType.CloudGround;
             }
         }
 
@@ -184,8 +154,7 @@ namespace Brutario.Smb1
         {
             get
             {
-                return (CurrentRenderingScreen * 0x10)
-                    + CurrentRenderingScreenX;
+                return (CurrentRenderingScreen * 0x10) + CurrentRenderingScreenX;
             }
 
             set
@@ -195,24 +164,108 @@ namespace Brutario.Smb1
             }
         }
 
-        private AreaType AreaType2
+        private GameData GameData
         {
-            get
+            get;
+        }
+
+        public void ReadGameData(GameData gameData, AreaObjectRendererPointers pointers)
+        {
+            if (gameData is null)
             {
-                return RomData.AreaNumber == 2 ? AreaType.Castle : AreaType;
+                throw new ArgumentNullException(nameof(gameData));
             }
+
+            if (pointers is null)
+            {
+                throw new ArgumentNullException(nameof(pointers));
+            }
+
+            var rom = gameData.Rom;
+            rom.ReadBytesIndirectIndexed(
+                pointers.BackgroundSceneryMetaDataOffsetTablePointer,
+                1,
+                BackgroundSceneryMetaDataOffsetTable);
+            rom.ReadBytesIndirect(
+                pointers.BackgroundSceneryMetaDataTablePointer,
+                BackgroundSceneryMetaDataTable);
+            rom.ReadBytesIndirect(
+                pointers.BackgroundSceneryTileDataTablePointer,
+                BackgroundSceneryTileDataTable);
+            rom.ReadBytesIndirectIndexed(
+                pointers.ForegroundSceneryDataOffsetTablePointer,
+                1,
+                ForegroundSceneryDataOffsetTable);
+            rom.ReadBytesIndirect(
+                pointers.ForegroundSceneryDataTablePointer,
+                ForegroundSceneryDataTable);
+            rom.ReadBytesIndirect(
+                pointers.TerrainAreaTypeTablePointer,
+                TerrainAreaTypeTable);
+            rom.ReadBytesIndirect(
+                pointers.TerrainBitMaskTablePointer,
+                TerrainBitMaskTable);
+            rom.ReadBytesIndirect(
+                pointers.BitmaskTablePointer,
+                BitmaskTable);
+        }
+
+        public void WriteToGameData(
+            GameData gameData,
+            AreaObjectRendererPointers pointers)
+        {
+            if (gameData is null)
+            {
+                throw new ArgumentNullException(nameof(gameData));
+            }
+
+            if (pointers is null)
+            {
+                throw new ArgumentNullException(nameof(pointers));
+            }
+
+            var rom = gameData.Rom;
+            rom.WriteBytesIndirect(
+                pointers.BitmaskTablePointer,
+                BitmaskTable);
+            rom.WriteBytesIndirect(
+                pointers.TerrainBitMaskTablePointer,
+                TerrainBitMaskTable);
+            rom.WriteBytesIndirect(
+                pointers.TerrainAreaTypeTablePointer,
+                TerrainAreaTypeTable);
+            rom.WriteBytesIndirect(
+                pointers.ForegroundSceneryDataTablePointer,
+                ForegroundSceneryDataTable);
+            rom.WriteBytesIndirectIndexed(
+                pointers.ForegroundSceneryDataOffsetTablePointer,
+                1,
+                ForegroundSceneryDataOffsetTable);
+            rom.WriteBytesIndirect(
+                pointers.BackgroundSceneryTileDataTablePointer,
+                BackgroundSceneryTileDataTable);
+            rom.WriteBytesIndirect(
+                pointers.BackgroundSceneryMetaDataTablePointer,
+                BackgroundSceneryMetaDataTable);
+            rom.WriteBytesIndirectIndexed(
+                pointers.BackgroundSceneryMetaDataOffsetTablePointer,
+                1,
+                BackgroundSceneryMetaDataOffsetTable);
         }
 
         public void RenderTileMap(
             AreaType areaType,
             AreaHeader header,
-            IList<AreaObjectCommand> areaObjectData)
+            IList<AreaObjectCommand> areaObjectData,
+            bool isUnderwaterCastle)
         {
             CurrentHeader = header;
             AreaType = areaType;
             var areaObjectParser = new AreaObjectParser(
                 this,
-                areaObjectData);
+                areaObjectData,
+                GameData,
+                GameData.Pointers.AreaObjectParserPointers);
 
             Array.Clear(TileMap, 0, TileMap.Length);
 
@@ -224,7 +277,7 @@ namespace Brutario.Smb1
                     ResetTileBuffer();
                     RenderBackground();
                     RenderForeground();
-                    RenderTerrain();
+                    RenderTerrain(isUnderwaterCastle);
                     areaObjectParser.ParseAreaData();
                     WriteBufferToTileMap();
                 }
@@ -275,7 +328,7 @@ namespace Brutario.Smb1
             var y = sceneryTile >> 4;
             for (var i = 0; i < 3; i++)
             {
-                var tile = Rom.ReadByte(BackgroundSceneryTileDataAddress + startIndex + i);
+                var tile = BackgroundSceneryTileDataTable[startIndex + i];
                 TileBuffer[y + i] = tile;
             }
         }
@@ -291,9 +344,7 @@ namespace Brutario.Smb1
             var waterTileChange = false;
             for (var y = 0; y < 0x0D; y++)
             {
-                var tile = Rom.ReadByte(
-                    ForegroundSceneryDataAddress + index + y);
-
+                var tile = ForegroundSceneryDataTable[index + y];
                 if (tile == 0)
                 {
                     continue;
@@ -324,7 +375,7 @@ namespace Brutario.Smb1
             }
         }
 
-        private void RenderTerrain()
+        private void RenderTerrain(bool isUnderwaterCastle)
         {
             var useOtherCastleTile = false;
             var castleTile = (byte)0;
@@ -334,19 +385,19 @@ namespace Brutario.Smb1
             // 8. That's a dumb check and I'm not keeping track of the world
             // number, so I'll do this check for the time being. See $03:A4D5
             // in the disassembly.
-            var terrainTile = RomData.AreaNumber == 2
+            var terrainTile = isUnderwaterCastle
                 ? (byte)0x65
                 : IsCloudPlatform
                 ? (byte)0x8C
-                : Rom.ReadByte(
-                    TerrainAreaTypeAddress + (int)AreaType);
+                : TerrainAreaTypeTable[(int)AreaType];
 
             var y = 0;
-            var terrainIndex = ((int)CurrentHeader.TerrainMode << 1);
+            var terrainIndex = (int)CurrentHeader.TerrainMode << 1;
 
-            terrain_loop:
-            var terrainBits = Rom.ReadByte(
-                TerrainBitMaskAddress + terrainIndex);
+            var areaType2 = isUnderwaterCastle ? AreaType.Castle : AreaType;
+
+terrain_loop:
+            var terrainBits = TerrainBitMaskTable[terrainIndex];
 
             terrainIndex++;
             if (IsCloudPlatform && y != 0)
@@ -355,17 +406,17 @@ namespace Brutario.Smb1
             }
 
             var j = 0;
-            bit_loop:
-            var bitmask = Rom.ReadByte(BitmaskTableAddress + j);
+bit_loop:
+            var bitmask = BitmaskTable[j];
             if ((terrainBits & bitmask) != 0)
             {
-                if (AreaType2 == AreaType.Castle && castleTile != 0)
+                if (areaType2 == AreaType.Castle && castleTile != 0)
                 {
                     terrainTile = 0x68;
                 }
 
                 TileBuffer[y] = terrainTile;
-                if (castleTile != 0 && AreaType2 == AreaType.Castle)
+                if (castleTile != 0 && areaType2 == AreaType.Castle)
                 {
                     castleTile++;
                     if (castleTile == 0)
@@ -374,7 +425,9 @@ namespace Brutario.Smb1
                         terrainTile++;
                     }
                 }
-                else if (AreaType2 == AreaType.Castle && !useOtherCastleTile && !castleLongTileOffset)
+                else if (areaType2 == AreaType.Castle
+                    && !useOtherCastleTile
+                    && !castleLongTileOffset)
                 {
                     TileBuffer[y]++;
                 }
@@ -406,7 +459,7 @@ namespace Brutario.Smb1
                 goto terrain_loop;
             }
 
-            end_loop:
+end_loop:
             terrainTile = (byte)TileBuffer[0x0C];
             if (terrainTile == 0x56 || terrainTile == 0x72)
             {
@@ -414,20 +467,22 @@ namespace Brutario.Smb1
             }
         }
 
-        private int GetBackgroundSceneryMetaTile(BackgroundScenery sceneryType, int page, int x)
+        private int GetBackgroundSceneryMetaTile(
+            BackgroundScenery sceneryType,
+            int page,
+            int x)
         {
-            var sceneryOffset = Rom.ReadByte(
-                BackgroundSceneryMetaDataOffsetAddress + (int)sceneryType);
+            // Should never have scenery type 0.
+            var sceneryOffset = BackgroundSceneryMetaDataOffsetTable[
+                (int)sceneryType - 1];
 
             var xIndex = ((page % 3) << 4) + x;
-            return Rom.ReadByte(
-                BackgroundSceneryMetaDataAddress + sceneryOffset + xIndex);
+            return BackgroundSceneryMetaDataTable[sceneryOffset + xIndex];
         }
 
         private int GetForegroundSceneryIndex(ForegroundScenery sceneryType)
         {
-            return Rom.ReadByte(
-                ForegroundSceneryDataOffsetAddress + (int)sceneryType);
+            return ForegroundSceneryDataOffsetTable[(int)sceneryType - 1];
         }
     }
 }

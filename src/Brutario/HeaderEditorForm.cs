@@ -1,0 +1,115 @@
+﻿namespace Brutario
+{
+    using Smb1;
+    using System.Windows.Forms;
+
+    public partial class HeaderEditorForm : Form
+    {
+        public HeaderEditorForm()
+        {
+            InitializeComponent();
+        }
+
+        public StartTime StartTime
+        {
+            get
+            {
+                return (StartTime)cbxTime.SelectedIndex;
+            }
+
+            set
+            {
+                cbxTime.SelectedIndex = (int)value;
+            }
+        }
+
+        public StartYPosition StartYPosition
+        {
+            get
+            {
+                return (StartYPosition)cbxPosition.SelectedIndex;
+            }
+
+            set
+            {
+                cbxPosition.SelectedIndex = (int)value;
+            }
+        }
+
+        public ForegroundScenery ForegroundScenery
+        {
+            get
+            {
+                return (ForegroundScenery)cbxForeground.SelectedIndex;
+            }
+
+            set
+            {
+                cbxForeground.SelectedIndex = (int)value;
+            }
+        }
+
+        public AreaPlatformType AreaPlatformType
+        {
+            get
+            {
+                return (AreaPlatformType)cbxAreaPlatformType.SelectedIndex;
+            }
+
+            set
+            {
+                cbxAreaPlatformType.SelectedIndex = (int)value;
+            }
+        }
+
+        public BackgroundScenery BackgroundScenery
+        {
+            get
+            {
+                return (BackgroundScenery)cbxBackgroundScenery.SelectedIndex;
+            }
+
+            set
+            {
+                cbxBackgroundScenery.SelectedIndex = (int)value;
+            }
+        }
+
+        public TerrainMode TerrainMode
+        {
+            get
+            {
+                return (TerrainMode)cbxTerrainMode.SelectedIndex;
+            }
+
+            set
+            {
+                cbxTerrainMode.SelectedIndex = (int)value;
+            }
+        }
+
+        public AreaHeader AreaHeader
+        {
+            get
+            {
+                return new AreaHeader(
+                    StartTime,
+                    StartYPosition,
+                    ForegroundScenery,
+                    AreaPlatformType,
+                    BackgroundScenery,
+                    TerrainMode);
+            }
+
+            set
+            {
+                StartTime = value.StartTime;
+                StartYPosition = value.StartYPosition;
+                ForegroundScenery = value.ForegroundScenery;
+                AreaPlatformType = value.AreaPlatformType;
+                BackgroundScenery = value.BackgroundScenery;
+                TerrainMode = value.TerrainMode;
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 ﻿// <copyright file="AreaHeader.cs" company="Public Domain">
-//     Copyright (c) 2019 Nelson Garcia. All rights reserved. Licensed under
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
 //     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
@@ -40,11 +40,17 @@ namespace Brutario.Smb1
             Value2 = val2;
         }
 
+        public AreaHeader(int word)
+            : this()
+        {
+            Word = word;
+        }
+
         public AreaHeader(
                     StartTime startTime,
                     StartYPosition startYPosition,
                     ForegroundScenery foregroundScenery,
-                    AreaPlatformType objectMode,
+                    AreaPlatformType areaPlatformType,
                     BackgroundScenery backgroundScenery,
                     TerrainMode terrainMode)
                     : this()
@@ -52,7 +58,7 @@ namespace Brutario.Smb1
             StartTime = startTime;
             StartYPosition = startYPosition;
             ForegroundScenery = foregroundScenery;
-            MiscPlatformType = objectMode;
+            AreaPlatformType = areaPlatformType;
             BackgroundScenery = backgroundScenery;
             TerrainMode = terrainMode;
         }
@@ -106,7 +112,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets or sets the miscellaneous platform type to use in the area.
         /// </summary>
-        public AreaPlatformType MiscPlatformType
+        public AreaPlatformType AreaPlatformType
         {
             get
             {
@@ -206,6 +212,19 @@ namespace Brutario.Smb1
             set;
         }
 
+        public int Word
+        {
+            get
+            {
+                return Value1 | (Value2 << 8);
+            }
+            set
+            {
+                Value1 = (byte)value;
+                Value2 = (byte)(value >> 8);
+            }
+        }
+
         public static bool operator !=(AreaHeader left, AreaHeader right)
         {
             return !(left == right);
@@ -216,9 +235,19 @@ namespace Brutario.Smb1
             return left.Equals(right);
         }
 
+        public static implicit operator int(AreaHeader header)
+        {
+            return header.Word;
+        }
+
+        public static implicit operator AreaHeader(int word)
+        {
+            return new AreaHeader(word);
+        }
+
         public override bool Equals(object obj)
         {
-            return obj is AreaHeader other ? Equals(other) : false;
+            return obj is AreaHeader other && Equals(other);
         }
 
         public bool Equals(AreaHeader other)

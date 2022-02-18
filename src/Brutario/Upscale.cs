@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="Upscale.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public static class Upscale
     {
         public static Color32BppArgb[] Simple(Color32BppArgb[] pixels, int width, int scale)
@@ -13,7 +19,7 @@ namespace Brutario
             var scalePixels = InitializeUpscale(pixels, width, scale);
             var height = pixels.Length / width;
             var scaleWidth = width * scale;
-            Parallel.For(0, height, RenderRow);
+            _ = Parallel.For(0, height, RenderRow);
 
             void RenderRow(int row)
             {

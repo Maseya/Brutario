@@ -1,5 +1,5 @@
 ﻿// <copyright file="ObjTile.cs" company="Public Domain">
-//     Copyright (c) 2019 Nelson Garcia. All rights reserved. Licensed under
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
 //     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
@@ -54,7 +54,7 @@ namespace Brutario
             }
         }
 
-        public int PaletteNumber
+        public int PaletteIndex
         {
             get
             {
@@ -185,7 +185,7 @@ namespace Brutario
 
         public override bool Equals(object obj)
         {
-            return obj is ObjTile tile ? Equals(tile) : false;
+            return obj is ObjTile tile && Equals(tile);
         }
 
         public override int GetHashCode()

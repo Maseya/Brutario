@@ -1,4 +1,11 @@
-﻿namespace Brutario
+﻿// <copyright file="AreaSelectorForm.Designer.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed
+//     under GNU Affero General Public License. See LICENSE in project
+//     root for full license information, or visit
+//     https://www.gnu.org/licenses/#AGPL
+// </copyright>
+
+namespace Brutario
 {
     partial class AreaSelectorForm
     {
@@ -56,7 +63,7 @@
             // 
             // treeView1
             // 
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
@@ -104,7 +111,7 @@
             // 
             // areaControl1
             // 
-            this.areaControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.areaControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.areaControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.areaControl1.Location = new System.Drawing.Point(241, 0);

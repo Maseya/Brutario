@@ -1,5 +1,5 @@
 ﻿// <copyright file="ChrTile.cs" company="Public Domain">
-//     Copyright (c) 2019 Nelson Garcia. All rights reserved. Licensed under
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
 //     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
@@ -122,7 +122,7 @@ namespace Brutario
             {
                 if (value)
                 {
-                    Value |= (1 << FlipXOffset);
+                    Value |= 1 << FlipXOffset;
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Brutario
             {
                 if (value)
                 {
-                    Value |= (1 << FlipYOffset);
+                    Value |= 1 << FlipYOffset;
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace Brutario
 
         public override bool Equals(object obj)
         {
-            return obj is ChrTile tile ? Equals(tile) : false;
+            return obj is ChrTile tile && Equals(tile);
         }
 
         public override int GetHashCode()

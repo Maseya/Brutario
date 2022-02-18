@@ -1,5 +1,5 @@
 ﻿// <copyright file="Obj16Tile.cs" company="Public Domain">
-//     Copyright (c) 2019 Nelson Garcia. All rights reserved. Licensed under
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
 //     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
@@ -7,14 +7,9 @@
 namespace Brutario
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
 
-    public struct Obj16Tile :
-        IList,
-        IList<ObjTile>,
-        IReadOnlyList<ObjTile>,
-        IEquatable<Obj16Tile>
+    public struct Obj16Tile : IEquatable<Obj16Tile>
+
     {
         public const int NumberOfTiles = 4;
 
@@ -25,11 +20,10 @@ namespace Brutario
 
         public const int SizeOf = NumberOfTiles * ObjTile.SizeOf;
 
-        // FIXME: Change signature
         public Obj16Tile(
             ObjTile topLeft,
-            ObjTile topRight,
             ObjTile bottomLeft,
+            ObjTile topRight,
             ObjTile bottomRight)
         {
             TopLeft = topLeft;
@@ -62,92 +56,19 @@ namespace Brutario
             set;
         }
 
-        int ICollection<ObjTile>.Count
-        {
-            get
-            {
-                return NumberOfTiles;
-            }
-        }
-
-        int IReadOnlyCollection<ObjTile>.Count
-        {
-            get
-            {
-                return NumberOfTiles;
-            }
-        }
-
-        int ICollection.Count
-        {
-            get
-            {
-                return NumberOfTiles;
-            }
-        }
-
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        bool ICollection<ObjTile>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
         public ObjTile this[int index]
         {
             get
             {
-                switch (index)
+                return index switch
                 {
-                    case TopLeftIndex:
-                        return TopLeft;
-
-                    case BottomLeftIndex:
-                        return TopRight;
-
-                    case TopRightIndex:
-                        return BottomLeft;
-
-                    case BottomRightIndex:
-                        return BottomRight;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            nameof(index));
-                }
+                    TopLeftIndex => TopLeft,
+                    BottomLeftIndex => TopRight,
+                    TopRightIndex => BottomLeft,
+                    BottomRightIndex => BottomRight,
+                    _ => throw new ArgumentOutOfRangeException(
+                        nameof(index)),
+                };
             }
 
             set
@@ -177,19 +98,6 @@ namespace Brutario
             }
         }
 
-        object IList.this[int index]
-        {
-            get
-            {
-                return this[index];
-            }
-
-            set
-            {
-                this[index] = (ObjTile)value;
-            }
-        }
-
         public static bool operator ==(Obj16Tile left, Obj16Tile right)
         {
             return left.Equals(right);
@@ -214,8 +122,8 @@ namespace Brutario
         {
             return new Obj16Tile(
                 BottomLeft.FlipX(),
-                BottomRight.FlipX(),
                 TopLeft.FlipX(),
+                BottomRight.FlipX(),
                 TopRight.FlipX());
         }
 
@@ -223,8 +131,8 @@ namespace Brutario
         {
             return new Obj16Tile(
                 TopRight.FlipY(),
-                TopLeft.FlipY(),
                 BottomRight.FlipY(),
+                TopLeft.FlipY(),
                 BottomLeft.FlipY());
         }
 
@@ -239,172 +147,17 @@ namespace Brutario
 
         public override bool Equals(object obj)
         {
-            return obj is Obj16Tile tile ? Equals(tile) : false;
+            return obj is Obj16Tile tile && Equals(tile);
         }
 
         public override int GetHashCode()
         {
-            return (TopLeft.Value | (TopRight.Value << 0x10)) ^
-                (BottomLeft.Value | (BottomRight.Value << 0x10));
+            return HashCode.Combine(TopLeft, BottomLeft, TopRight, BottomRight);
         }
 
         public override string ToString()
         {
             return $"{TopLeft}-{BottomLeft}-{TopRight}-{BottomRight}";
-        }
-
-        public bool Contains(ObjTile tile)
-        {
-            foreach (var item in this)
-            {
-                if (Equals(item, tile))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        bool IList.Contains(object value)
-        {
-            return value is ObjTile item ? Contains(item) : false;
-        }
-
-        public void CopyTo(ObjTile[] array, int arrayIndex)
-        {
-            if (array is null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-
-            if (arrayIndex < 0 || arrayIndex >= array.Length)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            if (arrayIndex + NumberOfTiles > array.Length)
-            {
-                throw new ArgumentException();
-            }
-
-            for (var i = 0; i < NumberOfTiles; i++)
-            {
-                array[arrayIndex + i] = this[i];
-            }
-        }
-
-        void ICollection.CopyTo(Array array, int index)
-        {
-            if (array is null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-
-            if (index < 0 || index >= array.Length)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            if (index + NumberOfTiles > array.Length)
-            {
-                throw new ArgumentException();
-            }
-
-            for (var i = 0; i < NumberOfTiles; i++)
-            {
-                array.SetValue(index + i, this[i]);
-            }
-        }
-
-        public int IndexOf(ObjTile item)
-        {
-            for (var i = 0; i < NumberOfTiles; i++)
-            {
-                if (Equals(this[i], item))
-                {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
-        int IList.IndexOf(object value)
-        {
-            return value is ObjTile item ? IndexOf((ObjTile)value) : -1;
-        }
-
-        public IEnumerable<byte> GetBytes()
-        {
-            for (var i = 0; i < NumberOfTiles; i++)
-            {
-                yield return (byte)this[i];
-                yield return (byte)(this[i] >> 8);
-            }
-        }
-
-        public IEnumerator<ObjTile> GetEnumerator()
-        {
-            yield return TopLeft;
-            yield return BottomLeft;
-            yield return TopRight;
-            yield return BottomRight;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        void ICollection<ObjTile>.Add(ObjTile item)
-        {
-            throw new NotSupportedException();
-        }
-
-        int IList.Add(object value)
-        {
-            throw new NotSupportedException();
-        }
-
-        void ICollection<ObjTile>.Clear()
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList.Clear()
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList<ObjTile>.Insert(int index, ObjTile item)
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList.Insert(int index, object value)
-        {
-            throw new NotSupportedException();
-        }
-
-        bool ICollection<ObjTile>.Remove(ObjTile item)
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList.Remove(object value)
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList<ObjTile>.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
         }
     }
 }

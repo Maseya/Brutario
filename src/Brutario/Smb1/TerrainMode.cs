@@ -1,5 +1,5 @@
 ﻿// <copyright file="TerrainMode.cs" company="Public Domain">
-//     Copyright (c) 2019 Nelson Garcia. All rights reserved. Licensed under
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
 //     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
@@ -77,12 +77,14 @@ namespace Brutario.Smb1
         Ceiling1Floor9,
 
         /// <summary>
-        /// 2 tile high floor, 1 tile high ceiling, and 5 layers in the middle.
+        /// 2 tile high floor, 1 tile high ceiling, and 5 layers in the
+        /// middle.
         /// </summary>
         Ceiling1Middle5Floor2,
 
         /// <summary>
-        /// 2 tile high floor, 1 tile high ceiling, and 4 layers in the middle.
+        /// 2 tile high floor, 1 tile high ceiling, and 4 layers in the
+        /// middle.
         /// </summary>
         Ceiling1Middle4Floor2,
 

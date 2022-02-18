@@ -1,138 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="GfxData.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario.Smb1
 {
+    using System;
+    using System.Collections.Generic;
+    using static GfxConverter;
+
     public class GfxData
     {
-        public const int AreaGfxAddress = 0x68000;
-
         public const int AreaGfxSize = 0x4000;
-
-        public const int SpriteGfxAddress = 0x78000;
+        public const int AnimatedPixelDataDestIndex = 0x3000;
+        public const int AreaPixelDataSize = AreaGfxSize << 1;
+        public const int TilesetCount = 0x18;
 
         public const int SpriteGfxSize = 0x4000;
-
-        public const int TotalGfxSize = 0x400 * 0x20;
-
-        public const int AnimatedGfxAddress = 0x6C000;
+        public const int SpritePixelDataSize = SpriteGfxSize << 1;
 
         public const int AnimatedGfxSize = 0x4000;
-
-        public const int MarioGfxAddress = 0xA8000;
-
-        public const int LuigiGfxAddress = 0xAC000;
+        public const int AnimatedPixelDataSize = AnimatedGfxSize << 1;
+        public const int AnimatedPixelDataFrameSize = 0xC00;
+        public const int AnimatedPixelDataFrameOffset = 0x1000;
 
         public const int PlayerGfxSize = 0x2000;
-
-        public const int MenuGfxAddress = 0x0CF800;
+        public const int PlayerPixelDataSize = PlayerGfxSize << 1;
 
         public const int MenuGfxSize = 0x800;
+        public const int MenuPixelDataSize = MenuGfxSize << 2;
 
-        public const int PlayerBonusRoomTileSetIndexPointer = 0x05E6C3;
+        public const int AreaPixelStartIndex = 0;
 
-        public const int GraphicsPageBankBytePointer = 0x05E82D;
+        public const int SpritePixelDataStartIndex = 0xC000;
 
-        public const int GraphicsPageWordPointer = 0x05E835;
+        public const int AnimatedPixelDataStartIndex = SpritePixelDataStartIndex + SpritePixelDataSize;
+        public const int MarioPixelDataStartIndex = AnimatedPixelDataStartIndex + SpritePixelDataSize;
+        public const int LuigiPixelDataStartIndex = MarioPixelDataStartIndex + PlayerPixelDataSize;
+        public const int MenuPixelDataStartIndex = LuigiPixelDataStartIndex + PlayerPixelDataSize;
+        public const int TotalPixelDataSize = MenuPixelDataStartIndex + MenuPixelDataSize;
 
-        public const int GraphicsPageDestPointer = 0x05E83B;
-
-        public const int GraphicsPageSizePointer = 0x05E841;
-
-        public const int LevelBasedGfxPagePointer = 0x03FF9E;
-
-        public GfxData(GameData romData)
+        public GfxData()
         {
-            RomData = romData
-                ?? throw new ArgumentNullException(nameof(romData));
+            AreaPixelData = new byte[PixelMapSize(AreaGfxSize)];
+            SpritePixelData = new byte[PixelMapSize(SpriteGfxSize)];
+            AnimatedPixelData = new byte[PixelMapSize(AnimatedGfxSize)];
+            MarioPixelData = new byte[PixelMapSize(PlayerGfxSize)];
+            LuigiPixelData = new byte[PixelMapSize(PlayerGfxSize)];
+            MenuPixelData = new byte[PixelMapSize2Bpp(MenuGfxSize)];
 
-            PixelData = new byte[0x28000];
+            BonusAreaTileSetTable = new byte[2];
+            TileSetTable = new byte[TilesetCount][];
+            TileSetDestIndexTable = new int[TilesetCount];
 
-            AreaPixelData = GfxToPixelMap(
-                Rom.ReadBytes(AreaGfxAddress, AreaGfxSize, true));
-
-            SpritePixelData = GfxToPixelMap(
-                Rom.ReadBytes(SpriteGfxAddress, SpriteGfxSize, true));
-
-            AnimatedPixelData = GfxToPixelMap(
-                Rom.ReadBytes(AnimatedGfxAddress, AnimatedGfxSize, true));
-
-            MarioGfxData = GfxToPixelMap(
-                Rom.ReadBytes(MarioGfxAddress, PlayerGfxSize, true));
-
-            LuigiGfxData = GfxToPixelMap(
-                Rom.ReadBytes(LuigiGfxAddress, PlayerGfxSize, true));
-
-            MenuGfxData = Gfx2BppToPixelMap(
-                Rom.ReadBytes(MenuGfxAddress, MenuGfxSize, true));
-
-            Array.Copy(AreaPixelData, PixelData, AreaPixelData.Length);
-
-            Array.Copy(
-                sourceArray: SpritePixelData,
-                sourceIndex: 0,
-                destinationArray: PixelData,
-                destinationIndex: 0xC000,
-                length: SpritePixelData.Length);
-
-            Array.Copy(
-                sourceArray: AnimatedPixelData,
-                sourceIndex: 0,
-                destinationArray: PixelData,
-                destinationIndex: 0x14000,
-                length: AnimatedPixelData.Length);
-
-            Array.Copy(
-                sourceArray: MarioGfxData,
-                sourceIndex: 0,
-                destinationArray: PixelData,
-                destinationIndex: 0x1C000,
-                length: MarioGfxData.Length);
-
-            Array.Copy(
-                sourceArray: LuigiGfxData,
-                sourceIndex: 0,
-                destinationArray: PixelData,
-                destinationIndex: 0x20000,
-                length: LuigiGfxData.Length);
-
-            Array.Copy(
-                sourceArray: MenuGfxData,
-                sourceIndex: 0,
-                destinationArray: PixelData,
-                destinationIndex: 0x24000,
-                length: MenuGfxData.Length);
-
-            TileSetActions = new Action[0x20]
+            TileSetActions = new Func<int, IEnumerable<int>>[0x20]
             {
                 null,
-                WriteUnderGroundTileSet,
-                WriteGrassTileSet,
-                WriteUnderGroundTileSet,
-                WriteBowserCastleTileSet,
-                WriteGrassTileSet,
+                GetUndergroundTileSets,
+                GetGrassTileSets,
+                GetUndergroundTileSets,
+                GetBowserCastleTileSets,
+                GetGrassTileSets,
                 null,
-                WriteStarryNightTileSet,
+                GetStarryNightTileSets,
                 null,
-                WriteStarryNightTileSet,
-                WriteGameOverTileSet,
-                WriteGrassTileSet,
-                WriteGrassTileSet,
+                GetStarryNightTileSets,
+                GetGameOverTileSets,
+                GetGrassTileSets,
+                GetGrassTileSets,
                 null,
-                WriteGrassTileSet,
+                GetGrassTileSets,
                 null,
-                WriteGrassTileSet,
-                null,
-                null,
+                GetGrassTileSets,
                 null,
                 null,
                 null,
                 null,
                 null,
-                WriteUnderGroundTileSet,
+                null,
+                null,
+                GetUndergroundTileSets,
                 null,
                 null,
                 null,
@@ -143,101 +91,10 @@ namespace Brutario.Smb1
             };
         }
 
-        public GameData RomData
+        public GfxData(GameData gameData, GfxDataPointers pointers)
+            : this()
         {
-            get;
-        }
-
-        public RomIO Rom
-        {
-            get
-            {
-                return RomData.Rom;
-            }
-        }
-
-        public byte[] PixelData
-        {
-            get;
-        }
-
-        public byte[] AnimatedPixelData
-        {
-            get;
-        }
-
-        public int PlayerBonusRoomTileSetIndexAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(
-                    PlayerBonusRoomTileSetIndexPointer);
-            }
-        }
-
-        public int GraphicsPageBankByteAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(
-                    GraphicsPageBankBytePointer);
-            }
-        }
-
-        public int GraphicsPageWordAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(
-                    GraphicsPageWordPointer);
-            }
-        }
-
-        public int GraphicsPageDestAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(
-                    GraphicsPageDestPointer);
-            }
-        }
-
-        public int GraphicsPageSizeAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(
-                    GraphicsPageSizePointer);
-            }
-        }
-
-        public int LevelBasedGfxPageAddress
-        {
-            get
-            {
-                return 0x050000 | Rom.ReadInt16(
-                    LevelBasedGfxPagePointer);
-            }
-        }
-
-        public int AnimationFrame
-        {
-            get
-            {
-                return RomData.AnimationFrame;
-            }
-        }
-
-        public int GraphicsPage
-        {
-            get;
-            private set;
-        }
-
-        public bool IsBonusArea
-        {
-            get;
-            private set;
+            ReadGameData(gameData, pointers);
         }
 
         private byte[] AreaPixelData
@@ -250,183 +107,254 @@ namespace Brutario.Smb1
             get;
         }
 
-        private byte[] MarioGfxData
+        private byte[] AnimatedPixelData
         {
             get;
         }
 
-        private byte[] LuigiGfxData
+        private byte[] MarioPixelData
         {
             get;
         }
 
-        private byte[] MenuGfxData
+        private byte[] LuigiPixelData
         {
             get;
         }
 
-        private TilemapLoader TilemapLoader
+        private byte[] MenuPixelData
         {
-            get
+            get;
+        }
+
+        private byte[][] TileSetTable
+        {
+            get;
+        }
+
+        private int[] TileSetDestIndexTable
+        {
+            get;
+        }
+
+        private byte[] BonusAreaTileSetTable
+        {
+            get;
+        }
+
+        private Func<int, IEnumerable<int>>[] TileSetActions
+        {
+            get;
+        }
+
+        public void ReadGameData(GameData gameData, GfxDataPointers pointers)
+        {
+            if (gameData is null)
             {
-                return RomData.TilemapLoader;
-            }
-        }
-
-        private Action[] TileSetActions
-        {
-            get;
-        }
-
-        public void Animate()
-        {
-            Array.Copy(
-                sourceArray: AnimatedPixelData,
-                sourceIndex: 0x40 * 0x40 * ((AnimationFrame & 0x38) >> 3),
-                destinationArray: PixelData,
-                destinationIndex: 0x3000,
-                length: 0x30 * 0x40);
-        }
-
-        public void LoadTileSet(int graphicsPage)
-        {
-            if (graphicsPage == 1)
-            {
-                IsBonusArea = true;
-                GraphicsPage = Rom.ReadByte(
-                    PlayerBonusRoomTileSetIndexAddress +
-                    (int)RomData.CurrentPlayer);
-            }
-            else
-            {
-                GraphicsPage = graphicsPage;
+                throw new ArgumentNullException(nameof(gameData));
             }
 
-            WriteTileSet(GraphicsPage);
-            var action = TileSetActions[GraphicsPage & 0x1F];
-            action?.Invoke();
+            if (pointers is null)
+            {
+                throw new ArgumentNullException(nameof(pointers));
+            }
+
+            var rom = gameData.Rom;
+            GfxToPixelMap(
+                rom.ReadBytes(pointers.AreaGfxAddress, AreaGfxSize),
+                AreaPixelData);
+            GfxToPixelMap(
+                rom.ReadBytes(pointers.SpriteGfxAddress, SpriteGfxSize),
+                SpritePixelData);
+            GfxToPixelMap(
+                rom.ReadBytes(pointers.AnimatedGfxAddress, AnimatedGfxSize),
+                AnimatedPixelData);
+            GfxToPixelMap(
+                rom.ReadBytes(pointers.MarioGfxAddress, PlayerGfxSize),
+                MarioPixelData);
+            GfxToPixelMap(
+                rom.ReadBytes(pointers.LuigiGfxAddress, PlayerGfxSize),
+                LuigiPixelData);
+            Gfx2BppToPixelMap(
+                rom.ReadBytes(pointers.MenuGfxAddress, MenuGfxSize),
+                MenuPixelData);
+
+            rom.ReadBytesIndirect(
+               pointers.BonusAreaTileSetTablePointer,
+               BonusAreaTileSetTable);
+
+            for (var i = 1; i < TileSetTable.Length; i++)
+            {
+                var bank = (ushort)rom.ReadInt16IndirectIndexed(
+                    pointers.TileSetAddressBankByteTablePointer, i);
+                var word = (ushort)rom.ReadInt16IndirectIndexed(
+                    pointers.TileSetAddressWordTablePointer, i);
+                var size = (ushort)rom.ReadInt16IndirectIndexed(
+                    pointers.TileSetSizeTablePointer, i);
+                var address = (bank << 0x10) | word;
+                TileSetTable[i] = GfxToPixelMap(rom.ReadBytes(address, size));
+            }
+
+            rom.ReadInt16ArrayIndirectAs<int>(
+               pointers.TileSetDestIndexTablePointer,
+               TileSetDestIndexTable,
+               x => (ushort)x);
         }
 
-        private static byte[] GfxToPixelMap(byte[] gfxData)
+        public void ReadStaticData(Span<byte> dest)
         {
-            var tileCount = gfxData.Length / 0x20;
-            var result = new byte[0x40 * tileCount];
-            var pixelIndex = 0;
-
-            for (var tileIndex = 0; tileIndex < tileCount; tileIndex++)
+            if (dest.Length < TotalPixelDataSize)
             {
-                var gfxIndex = tileIndex * 0x20;
-                for (var y = 0; y < 8; y++)
+                throw new ArgumentException();
+            }
+
+            AreaPixelData.CopyTo(dest);
+            SpritePixelData.CopyTo(dest.Slice(SpritePixelDataStartIndex));
+            AnimatedPixelData.CopyTo(dest.Slice(AnimatedPixelDataStartIndex));
+            MarioPixelData.CopyTo(dest.Slice(MarioPixelDataStartIndex));
+            LuigiPixelData.CopyTo(dest.Slice(LuigiPixelDataStartIndex));
+            MenuPixelData.CopyTo(dest.Slice(MenuPixelDataStartIndex));
+        }
+
+        public void ReadAnimationFrame(int frame, Span<byte> pixelData)
+        {
+            var actualFrame = (frame >> 3) & 7;
+            var src = new Span<byte>(
+                AnimatedPixelData,
+                AnimatedPixelDataFrameOffset * actualFrame,
+                AnimatedPixelDataFrameSize);
+            var dest = pixelData.Slice(
+                AnimatedPixelDataDestIndex,
+                AnimatedPixelDataFrameSize);
+            src.CopyTo(dest);
+        }
+
+        public void ReadAreaTileSet(
+            int areaIndex,
+            int areaTileSetIndex,
+            Player player,
+            Span<byte> pixelData)
+        {
+            if (areaTileSetIndex == 1)
+            {
+                areaTileSetIndex = BonusAreaTileSetTable[(int)player];
+            }
+            ReadTileSet(areaTileSetIndex, pixelData);
+
+            // HACK: These levels don't load a complete tileset (to save time). It uses
+            // tile sets of the area before them. Eventually, I'll need to
+            // devise a system to better load tile sets.
+            if (areaIndex == 2)
+            {
+                ReadTileSet(4, pixelData);
+            }
+            else if (areaIndex == 0x0F)
+            {
+                ReadTileSet(0x17, pixelData);
+            }
+
+            var action = TileSetActions[areaTileSetIndex & 0x1F];
+            if (!(action is null))
+            {
+                foreach (var tileset in action(areaIndex))
                 {
-                    var offset = gfxIndex + (y << 1);
-
-                    var val1 = gfxData[offset + 0];
-                    var val2 = gfxData[offset + 1];
-                    var val3 = gfxData[offset + 0 + (2 * 8)];
-                    var val4 = gfxData[offset + 1 + (2 * 8)];
-
-                    for (var x = 8; --x >= 0;)
-                    {
-                        result[pixelIndex++] = (byte)(
-                            (((val1 >> x) & 1) << 0) |
-                            (((val2 >> x) & 1) << 1) |
-                            (((val3 >> x) & 1) << 2) |
-                            (((val4 >> x) & 1) << 3));
-                    }
+                    ReadTileSet(tileset, pixelData);
                 }
             }
-
-            return result;
         }
 
-        private static byte [] Gfx2BppToPixelMap(byte[] gfxData)
+        public void ReadTileSet(int tileSetIndex, Span<byte> pixelData)
         {
-            var tileCount = gfxData.Length / 0x10;
-            var result = new byte[0x40 * tileCount];
-            var pixelIndex = 0;
+            var tileSet = TileSetTable[tileSetIndex];
+            var destIndex = (TileSetDestIndexTable[tileSetIndex] - 0x1000) << 2;
+            tileSet.CopyTo(pixelData.Slice(destIndex, tileSet.Length));
+        }
 
-            for (var tileIndex = 0; tileIndex < tileCount; tileIndex++)
+        public void WriteToGameData(GameData gameData, GfxDataPointers pointers)
+        {
+            if (gameData is null)
             {
-                var gfxIndex = tileIndex * 0x10;
-                for (var y = 0; y < 8; y++)
-                {
-                    var offset = gfxIndex + (y << 1);
-
-                    var val1 = gfxData[offset + 0];
-                    var val2 = gfxData[offset + 1];
-
-                    for (var x = 8; --x >= 0;)
-                    {
-                        result[pixelIndex++] = (byte)(
-                            (((val1 >> x) & 1) << 0) |
-                            (((val2 >> x) & 1) << 1));
-                    }
-                }
+                throw new ArgumentNullException(nameof(gameData));
             }
 
-            return result;
+            if (pointers is null)
+            {
+                throw new ArgumentNullException(nameof(pointers));
+            }
+
+            var rom = gameData.Rom;
+            rom.WriteArrayAsInt16Indirect<int>(
+                pointers.TileSetDestIndexTablePointer,
+                TileSetDestIndexTable,
+                x => (short)x);
+
+            for (var i = 1; i < TileSetTable.Length; i++)
+            {
+                var bank = (ushort)rom.ReadInt16IndirectIndexed(
+                    pointers.TileSetAddressBankByteTablePointer,
+                    i);
+                var word = (ushort)rom.ReadInt16IndirectIndexed(
+                    pointers.TileSetAddressWordTablePointer,
+                    i);
+                var src = (bank << 0x10) | word;
+                rom.WriteBytes(src, PixelMapToGfx(TileSetTable[i]));
+            }
+            rom.WriteBytesIndirect(
+                pointers.BonusAreaTileSetTablePointer,
+                BonusAreaTileSetTable);
+
+            rom.WriteBytes(
+                pointers.MenuGfxAddress,
+                PixelMapToGfx2Bpp(MenuPixelData));
+            rom.WriteBytes(
+                pointers.LuigiGfxAddress,
+                PixelMapToGfx(LuigiPixelData));
+            rom.WriteBytes(
+                pointers.MarioGfxAddress,
+                PixelMapToGfx(MarioPixelData));
+            rom.WriteBytes(
+                pointers.AnimatedGfxAddress,
+                PixelMapToGfx(AnimatedPixelData));
+            rom.WriteBytes(
+                pointers.SpriteGfxAddress,
+                PixelMapToGfx(SpritePixelData));
+            rom.WriteBytes(
+                pointers.AreaGfxAddress,
+                PixelMapToGfx(AreaPixelData));
         }
 
-        private void WriteTileSet(int tileSetIndex)
+        private IEnumerable<int> GetGrassTileSets(int areaIndex)
         {
-            var index = tileSetIndex << 1;
-            var bank = Rom.ReadInt16(
-                GraphicsPageBankByteAddress + index);
-
-            var word = Rom.ReadInt16(
-                GraphicsPageWordAddress + index);
-
-            var dest = Rom.ReadInt16(
-                GraphicsPageDestAddress + index);
-
-            var size = Rom.ReadInt16(
-                GraphicsPageSizeAddress + index);
-
-            var src = (bank << 0x10) | word;
-            var gfx = GfxToPixelMap(Rom.ReadBytes(src, size, true));
-
-            var destIndex = (dest - 0x1000) << 2;
-            Array.Copy(
-                sourceArray: gfx,
-                sourceIndex: 0,
-                destinationArray: PixelData,
-                destinationIndex: destIndex,
-                length: gfx.Length);
-        }
-
-        private void WriteGrassTileSet()
-        {
-            var areaIndex = RomData.AreaIndex;
             if (areaIndex == 0x16 || areaIndex == 0x14 || areaIndex == 0x0D)
             {
-                WriteTileSet(0x12);
+                yield return 0x12;
             }
             else
             {
-                WriteTileSet(0x17);
+                yield return 0x17;
             }
         }
 
-        private void WriteUnderGroundTileSet()
+        private IEnumerable<int> GetUndergroundTileSets(int areaIndex)
         {
-            WriteTileSet(0x11);
+            yield return 0x11;
         }
 
-        private void WriteStarryNightTileSet()
+        private IEnumerable<int> GetStarryNightTileSets(int areaIndex)
         {
-            WriteTileSet(0x16);
-            WriteTileSet(0x12);
+            yield return 0x16;
+            yield return 0x12;
         }
 
-        private void WriteBowserCastleTileSet()
+        private IEnumerable<int> GetBowserCastleTileSets(int areaIndex)
         {
-            WriteTileSet(0x13);
-            WriteTileSet(0x14);
+            yield return 0x13;
+            yield return 0x14;
         }
 
-        private void WriteGameOverTileSet()
+        private IEnumerable<int> GetGameOverTileSets(int areaIndex)
         {
-            WriteTileSet(0x15);
+            yield return 0x15;
         }
     }
 }

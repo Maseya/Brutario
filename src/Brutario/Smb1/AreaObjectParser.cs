@@ -1,53 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿// <copyright file="AreaObjectParser.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario.Smb1
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
     public class AreaObjectParser
     {
         /// <summary>
-        /// The default size of the object data buffer. This field is constant.
+        /// The default size of the object data buffer. This field is
+        /// constant.
         /// </summary>
         public const int DefaultBufferSize = 5;
 
-        public const int SingleTileObjectPointer = 0x03AC2B;
-
-        public const int BrickRowTilePointer = 0x03AB6D;
-
-        public const int StoneRowTilePointer = 0x03AB75;
-
-        public const int CoinRowTilePointer = 0x03AB2D;
-
-        public const int PipeCapTilePointer = 0x03AA3E;
-
-        public const int PipeTilePointer = 0x03AA45;
-
-        public const int BlockItemTilePointer = 0x03AC2B;
-
-        public const int PulleyRopeTilePointer = 0x03A987;
-
-        public const int WaterSurfaceTilePointer = 0x03AA8D;
-
-        public const int JPipeTiles1Pointer = 0x03A9B4;
-
-        public const int JPipeTiles2Pointer = 0x03A9C5;
-
-        public const int JPipeTiles3Pointer = 0x03A9CB;
-
-        public const int JPipeTiles4Pointer = 0x03A9DD;
-
-        public const int CastleTilePointer = 0x048F61;
-
-        public const int StoneStairHeightPointer = 0x049033;
-
-        public const int StoneStairYPointer = 0x049030;
-
-        public const int JPipeTiles5Pointer = 0x049194;
-
-        public const int JPipeTiles6Pointer = 0x0491A6;
-
-        public const int JPipeTiles7Pointer = 0x0491AC;
+        private const int PulleyRopeTileTableSize = 3;
+        private const int JPipeTilesTable1Size = 4;
+        private const int JPipeTilesTable2Size = 4;
+        private const int JPipeTilesTable3Size = 4;
+        private const int JPipeTilesTable4Size = 8;
+        private const int PipeTileTableSize = 8;
+        private const int WaterSurfaceTileTableSize = 6;
+        private const int CoinRowTileTableSize = 4;
+        private const int BrickRowTileTableSize = 5;
+        private const int StoneRowTileTableSize = 4;
+        private const int SingleTileObjectTableSize = 0x0E;
+        private const int CastleTileTableSize = 0x6E;
+        private const int StoneStairYTableSize = 9;
+        private const int StoneStairHeightTableSize = 9;
+        private const int JPipeTilesTable5Size = 4;
+        private const int JPipeTilesTable6Size = 4;
+        private const int JPipeTilesTable7Size = 4;
 
         public AreaObjectParser(
             AreaObjectRenderer areaObjectRenderer,
@@ -57,10 +44,29 @@ namespace Brutario.Smb1
             AreaObjectRenderer = areaObjectRenderer
                 ?? throw new ArgumentNullException(nameof(areaObjectRenderer));
 
-            AreaData = new Collection<AreaObjectCommand>(areaObjectData);
             BufferSize = bufferSize >= 0
                 ? bufferSize
                 : throw new ArgumentOutOfRangeException(nameof(bufferSize));
+
+            AreaData = new Collection<AreaObjectCommand>(areaObjectData);
+
+            PulleyRopeTileTable = new byte[PulleyRopeTileTableSize];
+            JPipeTilesTable1 = new byte[JPipeTilesTable1Size];
+            JPipeTilesTable2 = new byte[JPipeTilesTable2Size];
+            JPipeTilesTable3 = new byte[JPipeTilesTable3Size];
+            JPipeTilesTable4 = new byte[JPipeTilesTable4Size];
+            PipeTileTable = new byte[PipeTileTableSize];
+            WaterSurfaceTileTable = new byte[WaterSurfaceTileTableSize];
+            CoinRowTileTable = new byte[CoinRowTileTableSize];
+            BrickRowTileTable = new byte[BrickRowTileTableSize];
+            StoneRowTileTable = new byte[StoneRowTileTableSize];
+            SingleTileObjectTable = new byte[SingleTileObjectTableSize];
+            CastleTileTable = new byte[CastleTileTableSize];
+            StoneStairYTable = new byte[StoneStairYTableSize];
+            StoneStairHeightTable = new byte[StoneStairHeightTableSize];
+            JPipeTilesTable5 = new byte[JPipeTilesTable5Size];
+            JPipeTilesTable6 = new byte[JPipeTilesTable6Size];
+            JPipeTilesTable7 = new byte[JPipeTilesTable7Size];
 
             LengthBuffer = new int[BufferSize];
             IndexBuffer = new int[BufferSize];
@@ -108,7 +114,7 @@ namespace Brutario.Smb1
                 { AreaObjectCode.RopeForLift, RopeForLift },
                 { AreaObjectCode.PulleyRope, PulleyRope },
                 { AreaObjectCode.Castle, Castle },
-                { AreaObjectCode.CastleCeilingCap, CastleCeilineCap },
+                { AreaObjectCode.CastleCeilingCap, CastleCeilingCap },
                 { AreaObjectCode.Staircase, StoneStairs },
                 { AreaObjectCode.CastleStairs, CastleDescendingSteps },
                 { AreaObjectCode.CastleRectangularCeilingTiles, CastleRectangularCeilingTiles },
@@ -122,196 +128,57 @@ namespace Brutario.Smb1
             };
         }
 
+        public AreaObjectParser(
+            AreaObjectRenderer areaObjectRenderer,
+            IList<AreaObjectCommand> areaObjectData,
+            GameData gameData,
+            AreaObjectParserPointers pointers,
+            int bufferSize = DefaultBufferSize)
+            : this(areaObjectRenderer, areaObjectData, bufferSize)
+        {
+            ReadGameData(gameData, pointers);
+        }
+
         public AreaObjectRenderer AreaObjectRenderer
         {
             get;
         }
 
-        public AreaObjectLoader AreaObjectLoader
-        {
-            get
-            {
-                return AreaObjectRenderer.AreaObjectLoader;
-            }
-        }
+        public byte[] PulleyRopeTileTable { get; }
 
-        public AreaLoader AreaLoader
-        {
-            get
-            {
-                return AreaObjectLoader.AreaLoader;
-            }
-        }
+        public byte[] JPipeTilesTable1 { get; }
 
-        public GameData RomData
-        {
-            get
-            {
-                return AreaLoader.RomData;
-            }
-        }
+        public byte[] JPipeTilesTable2 { get; }
 
-        public RomIO Rom
-        {
-            get
-            {
-                return RomData.Rom;
-            }
-        }
+        public byte[] JPipeTilesTable3 { get; }
 
-        public int SingleTileObjectAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(SingleTileObjectPointer);
-            }
-        }
+        public byte[] JPipeTilesTable4 { get; }
 
-        public int BrickLineTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(BrickRowTilePointer);
-            }
-        }
+        public byte[] PipeTileTable { get; }
 
-        public int StoneLineTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(StoneRowTilePointer);
-            }
-        }
+        public byte[] WaterSurfaceTileTable { get; }
 
-        public int CoinLineTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(CoinRowTilePointer);
-            }
-        }
+        public byte[] CoinRowTileTable { get; }
 
-        public int PipeCapTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(PipeCapTilePointer);
-            }
-        }
+        public byte[] BrickRowTileTable { get; }
 
-        public int PipeTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(PipeTilePointer);
-            }
-        }
+        public byte[] StoneRowTileTable { get; }
 
-        public int BlockItemTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(BlockItemTilePointer);
-            }
-        }
+        public byte[] SingleTileObjectTable { get; }
 
-        public int PulleyRopeTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(PulleyRopeTilePointer);
-            }
-        }
+        public byte[] CastleTileTable { get; }
 
-        public int WaterSurfaceTileAddress
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(WaterSurfaceTilePointer);
-            }
-        }
+        public byte[] StoneStairYTable { get; }
 
-        public int JPipeTiles1Address
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(JPipeTiles1Pointer);
-            }
-        }
+        public byte[] StoneStairHeightTable { get; }
 
-        public int JPipeTiles2Address
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(JPipeTiles2Pointer);
-            }
-        }
+        public byte[] JPipeTilesTable5 { get; }
 
-        public int JPipeTiles3Address
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(JPipeTiles3Pointer);
-            }
-        }
+        public byte[] JPipeTilesTable6 { get; }
 
-        public int JPipeTiles4Address
-        {
-            get
-            {
-                return 0x030000 | Rom.ReadInt16(JPipeTiles4Pointer);
-            }
-        }
+        public byte[] JPipeTilesTable7 { get; }
 
-        public int JPipeTiles5Address
-        {
-            get
-            {
-                return 0x040000 | Rom.ReadInt16(JPipeTiles5Pointer);
-            }
-        }
-
-        public int JPipeTiles6Address
-        {
-            get
-            {
-                return 0x040000 | Rom.ReadInt16(JPipeTiles6Pointer);
-            }
-        }
-
-        public int JPipeTiles7Address
-        {
-            get
-            {
-                return 0x040000 | Rom.ReadInt16(JPipeTiles7Pointer);
-            }
-        }
-
-        public int CastleTileAddress
-        {
-            get
-            {
-                return 0x040000 | Rom.ReadInt16(CastleTilePointer);
-            }
-        }
-
-        public int StoneStairHeightAddress
-        {
-            get
-            {
-                return 0x040000 | Rom.ReadInt16(StoneStairHeightPointer);
-            }
-        }
-
-        public int StoneStairYAddress
-        {
-            get
-            {
-                return 0x040000 | Rom.ReadInt16(StoneStairYPointer);
-            }
-        }
-
-        public AreaType AreaType
+        private AreaType AreaType
         {
             get
             {
@@ -323,7 +190,7 @@ namespace Brutario.Smb1
         /// Gets the size of the object data buffers. The default value is set
         /// to <see cref="DefaultBufferSize"/>.
         /// </summary>
-        public int BufferSize
+        private int BufferSize
         {
             get;
         }
@@ -332,17 +199,18 @@ namespace Brutario.Smb1
         /// Gets the X register, which represents the current index of the
         /// object data buffer the <see cref="AreaObjectParser"/> is on.
         /// </summary>
-        public int CurrentBufferIndex
+        private int CurrentBufferIndex
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Gets the Y register, which represents the current index of the area
-        /// object data collection the <see cref="AreaObjectParser"/> is on.
+        /// Gets the Y register, which represents the current index of the
+        /// area object data collection the <see cref="AreaObjectParser"/> is
+        /// on.
         /// </summary>
-        public int AreaDataIndex
+        private int AreaDataIndex
         {
             get;
             set;
@@ -351,12 +219,12 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets $FA, which represents the pointer to the area object data.
         /// </summary>
-        public Collection<AreaObjectCommand> AreaData
+        private Collection<AreaObjectCommand> AreaData
         {
             get;
         }
 
-        public AreaObjectCommand CurrentObjectCommand
+        private AreaObjectCommand CurrentObjectCommand
         {
             get
             {
@@ -369,7 +237,7 @@ namespace Brutario.Smb1
             }
         }
 
-        public AreaObjectCommand CurrentBufferObject
+        private AreaObjectCommand CurrentBufferObject
         {
             get
             {
@@ -382,7 +250,7 @@ namespace Brutario.Smb1
             }
         }
 
-        public AreaObjectCode CurrentObjectCode
+        private AreaObjectCode CurrentObjectCode
         {
             get
             {
@@ -390,7 +258,7 @@ namespace Brutario.Smb1
             }
         }
 
-        public bool IsScreenFlag
+        private bool IsScreenFlag
         {
             get
             {
@@ -398,7 +266,7 @@ namespace Brutario.Smb1
             }
         }
 
-        public bool IsScreenJumpCommand
+        private bool IsScreenJumpCommand
         {
             get
             {
@@ -406,7 +274,7 @@ namespace Brutario.Smb1
             }
         }
 
-        public AreaHeader CurrentHeader
+        private AreaHeader CurrentHeader
         {
             get
             {
@@ -422,7 +290,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets $06A1, which represents the tile data buffer.
         /// </summary>
-        public int[] TileBuffer
+        private int[] TileBuffer
         {
             get
             {
@@ -433,7 +301,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets $1300, which represents the current buffer object's width.
         /// </summary>
-        public int[] LengthBuffer
+        private int[] LengthBuffer
         {
             get;
         }
@@ -441,7 +309,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets $1300,x.
         /// </summary>
-        public int CurrentBufferObjectWidth
+        private int CurrentBufferObjectWidth
         {
             get
             {
@@ -458,7 +326,7 @@ namespace Brutario.Smb1
         /// Gets a value that determines whether <see
         /// cref="CurrentBufferObjectWidth"/> has been set to a valid value.
         /// </summary>
-        public bool CurrentBufferEnabled
+        private bool CurrentBufferEnabled
         {
             get
             {
@@ -469,7 +337,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets $1305, which represents the area object data index
         /// </summary>
-        public int[] IndexBuffer
+        private int[] IndexBuffer
         {
             get;
         }
@@ -478,12 +346,12 @@ namespace Brutario.Smb1
         /// Gets $130F, which represents extra properties for the respective
         /// buffer object.
         /// </summary>
-        public bool[] TreePlatformProperties
+        private bool[] TreePlatformProperties
         {
             get;
         }
 
-        public bool ObjectHasSpecialProperties
+        private bool ObjectHasSpecialProperties
         {
             get
             {
@@ -496,12 +364,12 @@ namespace Brutario.Smb1
             }
         }
 
-        public int[] MushroomPlatformCenterCoordinate
+        private int[] MushroomPlatformCenterCoordinate
         {
             get;
         }
 
-        public int ObjectSpecialCoordinate
+        private int ObjectSpecialCoordinate
         {
             get
             {
@@ -517,7 +385,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets $1305,x
         /// </summary>
-        public int CurrentBufferObjectIndex
+        private int CurrentBufferObjectIndex
         {
             get
             {
@@ -534,7 +402,7 @@ namespace Brutario.Smb1
         /// Gets or sets $0725, which represents the screen the renderer is
         /// currently on.
         /// </summary>
-        public int CurrentRenderingScreen
+        private int CurrentRenderingScreen
         {
             get
             {
@@ -551,7 +419,7 @@ namespace Brutario.Smb1
         /// Gets or sets $0726, which represents the X-coordinate of the
         /// current screen the renderer is currently on.
         /// </summary>
-        public int CurrentRenderingScreenX
+        private int CurrentRenderingScreenX
         {
             get
             {
@@ -567,7 +435,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets or sets the full X-coordinate the renderer is currently on.
         /// </summary>
-        public int CurrentRenderingX
+        private int CurrentRenderingX
         {
             get
             {
@@ -584,18 +452,18 @@ namespace Brutario.Smb1
         /// Gets or sets $072A, which represents the screen the area object
         /// data starts on.
         /// </summary>
-        public int CurrentObjectScreen
+        private int CurrentObjectScreen
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Gets or sets $072B, which represents a flag that determines whether
-        /// a page jump command has been activated for this current rendering
-        /// pass.
+        /// Gets or sets $072B, which represents a flag that determines
+        /// whether a page jump command has been activated for this current
+        /// rendering pass.
         /// </summary>
-        public bool IsScreenJumpSet
+        private bool IsScreenJumpSet
         {
             get;
             set;
@@ -604,13 +472,13 @@ namespace Brutario.Smb1
         /// <summary>
         /// Gets or sets $072C, which represents the saved area data index.
         /// </summary>
-        public int StoredAreaDataIndex
+        private int StoredAreaDataIndex
         {
             get;
             set;
         }
 
-        public bool IsEndOfArea
+        private bool IsEndOfArea
         {
             get
             {
@@ -622,10 +490,10 @@ namespace Brutario.Smb1
         /// Gets $0729, which determines whether the current object is behind
         /// the rendering screen.
         /// </summary>
-        public bool IsObjectBehindRenderer
+        private bool IsObjectBehindRenderer
         {
             get;
-            private set;
+            set;
         }
 
         private int ObjectParameter
@@ -637,6 +505,138 @@ namespace Brutario.Smb1
         private Dictionary<AreaObjectCode, Action> RenderCommands
         {
             get;
+        }
+
+        public void ReadGameData(GameData gameData, AreaObjectParserPointers pointers)
+        {
+            if (gameData is null)
+            {
+                throw new ArgumentNullException(nameof(gameData));
+            }
+
+            if (pointers is null)
+            {
+                throw new ArgumentNullException(nameof(pointers));
+            }
+
+            var rom = gameData.Rom;
+            rom.ReadBytesIndirect(
+                pointers.PulleyRopeTileTablePointer,
+                PulleyRopeTileTable);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable1Pointer,
+                JPipeTilesTable1);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable2Pointer,
+                JPipeTilesTable2);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable3Pointer,
+                JPipeTilesTable3);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable4Pointer,
+                JPipeTilesTable4);
+            rom.ReadBytesIndirect(
+                pointers.PipeTileTablePointer,
+                PipeTileTable);
+            rom.ReadBytesIndirect(
+                pointers.WaterSurfaceTileTablePointer,
+                WaterSurfaceTileTable);
+            rom.ReadBytesIndirect(
+                pointers.CoinRowTileTablePointer,
+                CoinRowTileTable);
+            rom.ReadBytesIndirect(
+                pointers.BrickRowTileTablePointer,
+                BrickRowTileTable);
+            rom.ReadBytesIndirect(
+                pointers.StoneRowTileTablePointer,
+                StoneRowTileTable);
+            rom.ReadBytesIndirect(
+                pointers.SingleTileObjectTablePointer,
+                SingleTileObjectTable);
+            rom.ReadBytesIndirect(
+                pointers.CastleTileTablePointer,
+                CastleTileTable);
+            rom.ReadBytesIndirect(
+                pointers.StoneStairYTablePointer,
+                StoneStairYTable);
+            rom.ReadBytesIndirect(
+                pointers.StoneStairHeightTablePointer,
+                StoneStairHeightTable);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable5Pointer,
+                JPipeTilesTable5);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable6Pointer,
+                JPipeTilesTable6);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable7Pointer,
+                JPipeTilesTable7);
+        }
+
+        public void WriteToGameData(GameData gameData, AreaObjectParserPointers pointers)
+        {
+            if (gameData is null)
+            {
+                throw new ArgumentNullException(nameof(gameData));
+            }
+
+            if (pointers is null)
+            {
+                throw new ArgumentNullException(nameof(pointers));
+            }
+
+            var rom = gameData.Rom;
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable7Pointer,
+                JPipeTilesTable7);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable6Pointer,
+                JPipeTilesTable6);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable5Pointer,
+                JPipeTilesTable5);
+            rom.WriteBytesIndirect(
+                pointers.StoneStairHeightTablePointer,
+                StoneStairHeightTable);
+            rom.WriteBytesIndirect(
+                pointers.StoneStairYTablePointer,
+                StoneStairYTable);
+            rom.WriteBytesIndirect(
+                pointers.CastleTileTablePointer,
+                CastleTileTable);
+            rom.WriteBytesIndirect(
+                pointers.SingleTileObjectTablePointer,
+                SingleTileObjectTable);
+            rom.WriteBytesIndirect(
+                pointers.StoneRowTileTablePointer,
+                StoneRowTileTable);
+            rom.WriteBytesIndirect(
+                pointers.BrickRowTileTablePointer,
+                BrickRowTileTable);
+            rom.WriteBytesIndirect(
+                pointers.CoinRowTileTablePointer,
+                CoinRowTileTable);
+            rom.WriteBytesIndirect(
+                pointers.WaterSurfaceTileTablePointer,
+                WaterSurfaceTileTable);
+            rom.WriteBytesIndirect(
+                pointers.PipeTileTablePointer,
+                PipeTileTable);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable4Pointer,
+                JPipeTilesTable4);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable3Pointer,
+                JPipeTilesTable3);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable2Pointer,
+                JPipeTilesTable2);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable1Pointer,
+                JPipeTilesTable1);
+            rom.WriteBytesIndirect(
+                pointers.PulleyRopeTileTablePointer,
+                PulleyRopeTileTable);
         }
 
         /// <summary>
@@ -652,8 +652,9 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Parses the area data for object at <see cref="CurrentRenderingX"/>.
-        /// The result is stored to <see cref="TileBuffer"/>.
+        /// Parses the area data for object at <see
+        /// cref="CurrentRenderingX"/>. The result is stored to <see
+        /// cref="TileBuffer"/>.
         /// </summary>
         public void ParseAreaData()
         {
@@ -700,9 +701,9 @@ namespace Brutario.Smb1
         /// object or if we should instead read the next one.
         /// </summary>
         /// <returns>
-        /// <see langword="true"/> if there is an object in the buffer that can
-        /// be rendered or if there is no more area data to parse; otherwise,
-        /// <see langword="false"/>.
+        /// <see langword="true"/> if there is an object in the buffer that
+        /// can be rendered or if there is no more area data to parse;
+        /// otherwise, <see langword="false"/>.
         /// </returns>
         private bool IsRenderableObject()
         {
@@ -737,8 +738,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Update the area data index and resets <see cref="IsScreenJumpSet"/>
-        /// for the next object.
+        /// Update the area data index and resets <see
+        /// cref="IsScreenJumpSet"/> for the next object.
         /// </summary>
         private void IncrementAreaDataIndex()
         {
@@ -772,7 +773,8 @@ namespace Brutario.Smb1
                 AreaDataIndex = CurrentBufferObjectIndex;
             }
 
-            // Do not render if end of area or if we had a screen jump command.
+            // Do not render if end of area or if we had a screen jump
+            // command.
             if (IsEndOfArea || IsScreenJumpCommand)
             {
                 return;
@@ -822,7 +824,7 @@ namespace Brutario.Smb1
 
         private void InitSingleTileRow(int tile)
         {
-            TrySetCurrentBufferObjectWidth();
+            _ = TrySetCurrentBufferObjectWidth();
             RenderSingleTile(tile);
         }
 
@@ -896,7 +898,7 @@ namespace Brutario.Smb1
 
         private void Pipe()
         {
-            TrySetCurrentBufferObjectWidth(1);
+            _ = TrySetCurrentBufferObjectWidth(1);
             (var y, var height) = GetObjectColumnProperties();
             height &= 7;
 
@@ -906,16 +908,16 @@ namespace Brutario.Smb1
                 index += 4;
             }
 
-            TileBuffer[y] = Rom.ReadByte(PipeCapTileAddress + index);
+            TileBuffer[y] = PipeTileTable[index];
             RenderTileColumn(
-                Rom.ReadByte(PipeTileAddress + index),
+                PipeTileTable[index + 2],
                 y + 1,
                 height - 1);
         }
 
         private void AreaSpecificPlatform()
         {
-            switch (CurrentHeader.MiscPlatformType)
+            switch (CurrentHeader.AreaPlatformType)
             {
                 case AreaPlatformType.Trees:
                     RenderTreePlatform();
@@ -1048,41 +1050,41 @@ namespace Brutario.Smb1
                 ? 4
                 : (int)AreaType;
 
-            var tile = Rom.ReadByte(BrickLineTileAddress + index);
+            var tile = BrickRowTileTable[index];
             InitSingleTileRow(tile);
         }
 
         private void RowOfStones()
         {
-            var tile = Rom.ReadByte(StoneLineTileAddress + (int)AreaType);
+            var tile = StoneRowTileTable[(int)AreaType];
 
             InitSingleTileRow(tile);
         }
 
         private void RowOfCoins()
         {
-            var tile = Rom.ReadByte(CoinLineTileAddress + (int)AreaType);
+            var tile = CoinRowTileTable[(int)AreaType];
 
             InitSingleTileRow(tile);
         }
 
         private void ColumnOfBricks()
         {
-            var tile = Rom.ReadByte(BrickLineTileAddress + (int)AreaType);
+            var tile = BrickRowTileTable[(int)AreaType];
 
             RenderTileColumn(tile);
         }
 
         private void ColumnOfStones()
         {
-            var tile = Rom.ReadByte(StoneLineTileAddress + (int)AreaType);
+            var tile = StoneRowTileTable[(int)AreaType];
 
             RenderTileColumn(tile);
         }
 
         private void Hole()
         {
-            TrySetCurrentBufferObjectWidth();
+            _ = TrySetCurrentBufferObjectWidth();
             RenderTileColumn(0, 0x08, 0x0F);
         }
 
@@ -1094,7 +1096,7 @@ namespace Brutario.Smb1
                 ? 1
                 : 2;
 
-            var tile = Rom.ReadByte(PulleyRopeTileAddress + index);
+            var tile = PulleyRopeTileTable[index];
             TileBuffer[0] = tile;
         }
 
@@ -1115,7 +1117,7 @@ namespace Brutario.Smb1
 
         private void Bridge(int y)
         {
-            TrySetCurrentBufferObjectWidth();
+            _ = TrySetCurrentBufferObjectWidth();
             if (CurrentBufferObjectWidth != 0)
             {
                 if (!ObjectHasSpecialProperties)
@@ -1143,14 +1145,12 @@ namespace Brutario.Smb1
 
         private void HoleWithWaterOrLava()
         {
-            TrySetCurrentBufferObjectWidth();
+            _ = TrySetCurrentBufferObjectWidth();
             var y = AreaType == AreaType.Castle ? 0x0B : 0x0A;
-            var tile = Rom.ReadByte(WaterSurfaceTileAddress + (int)AreaType);
+            var tile = WaterSurfaceTileTable[(int)AreaType];
             TileBuffer[y++] = tile;
 
-            tile = Rom.ReadByte(
-                WaterSurfaceTileAddress + 4 + ((int)AreaType >> 1));
-
+            tile = WaterSurfaceTileTable[4 + ((int)AreaType >> 1)];
             RenderTileColumn(tile, y, 1);
         }
 
@@ -1166,15 +1166,13 @@ namespace Brutario.Smb1
 
         private void RowOfCoinBlocks(int y)
         {
-            TrySetCurrentBufferObjectWidth();
+            _ = TrySetCurrentBufferObjectWidth();
             TileBuffer[y] = 0xE7;
         }
 
         private void ItemBlock()
         {
-            var tile = Rom.ReadByte(SingleTileObjectAddress
-                + CurrentObjectCommand.Parameter);
-
+            var tile = SingleTileObjectTable[CurrentObjectCommand.Parameter];
             TileBuffer[CurrentBufferObject.Y] = tile;
         }
 
@@ -1186,13 +1184,13 @@ namespace Brutario.Smb1
                 index += 5;
             }
 
-            var tile = Rom.ReadByte(BlockItemTileAddress + index);
+            var tile = SingleTileObjectTable[index];
             TileBuffer[CurrentBufferObject.Y] = tile;
         }
 
         private void SidewaysPipe()
         {
-            TrySetCurrentBufferObjectWidth();
+            _ = TrySetCurrentBufferObjectWidth();
             var y = CurrentBufferObject.Y;
             TileBuffer[y++] = 0x75;
             TileBuffer[y] = 0x76;
@@ -1212,35 +1210,27 @@ namespace Brutario.Smb1
 
         private void JPipe()
         {
-            var firstTile = TrySetCurrentBufferObjectWidth(3);
-            var y = 0x0A - 1;
+            var drawVertical = !TrySetCurrentBufferObjectWidth(3);
             var index = CurrentBufferObjectWidth;
-            var tile = Rom.ReadByte(JPipeTiles1Address + index);
+            var tile = JPipeTilesTable1[index];
             if (tile != 0)
             {
-                RenderTileColumn(tile, y + 1, 0);
-                firstTile = false;
+                RenderTileColumn(tile, 0, 8);
+            }
+            else
+            {
+                drawVertical = false;
             }
 
-            tile = Rom.ReadByte(JPipeTiles2Address + index);
-            TileBuffer[y++] = tile;
-
-            tile = Rom.ReadByte(JPipeTiles3Address + index);
-            TileBuffer[y++] = tile;
-
-            if (firstTile)
+            TileBuffer[9] = JPipeTilesTable2[index];
+            TileBuffer[10] = JPipeTilesTable3[index];
+            if (!drawVertical)
             {
                 return;
             }
 
-            do
-            {
-                TileBuffer[y] = 0;
-            }
-            while (--y >= 0);
-
-            tile = Rom.ReadByte(JPipeTiles4Address + index);
-            TileBuffer[7] = tile;
+            Array.Clear(TileBuffer, 0, 7);
+            TileBuffer[7] = JPipeTilesTable4[index];
         }
 
         private void FlagPole()
@@ -1262,7 +1252,7 @@ namespace Brutario.Smb1
 
         private void BowserBridge()
         {
-            TrySetCurrentBufferObjectWidth(0x0C);
+            _ = TrySetCurrentBufferObjectWidth(0x0C);
             BowserBridge(0x8D, 8);
         }
 
@@ -1300,24 +1290,20 @@ namespace Brutario.Smb1
         private void PulleyRope()
         {
             RenderTileColumn(0x44, 1, 0x0F);
-            (var y, var height) = GetObjectColumnProperties();
+            (_, var height) = GetObjectColumnProperties();
 
             RenderTileColumn(0x40, 1, height);
-        }
-
-        private void EmptyTile()
-        {
         }
 
         private void Castle()
         {
             var parameter = CurrentBufferObject.Parameter;
             var y = parameter;
-            TrySetCurrentBufferObjectWidth(y == 0 ? 9 : y + 1);
+            _ = TrySetCurrentBufferObjectWidth(y == 0 ? 9 : y + 1);
             var index = CurrentBufferObjectWidth;
             for (var i = 0x16; y != 0x0B;)
             {
-                var tile = Rom.ReadByte(CastleTileAddress + index);
+                var tile = CastleTileTable[index];
                 TileBuffer[y++] = tile;
                 if (i != 0)
                 {
@@ -1338,10 +1324,10 @@ namespace Brutario.Smb1
             }
         }
 
-        private void CastleCeilineCap()
+        private void CastleCeilingCap()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             var firstTile = TileBuffer[0];
             var secondTile = firstTile + (firstTile == 0x65 ? +1 : -1);
             do
@@ -1353,21 +1339,21 @@ namespace Brutario.Smb1
 
         private void StoneStairs()
         {
-            (var y, var height) = GetObjectColumnProperties();
+            (_, var height) = GetObjectColumnProperties();
             if (TrySetCurrentBufferObjectWidth(height))
             {
                 ObjectParameter = 9;
             }
 
-            y = Rom.ReadByte(StoneStairYAddress + --ObjectParameter);
-            height = Rom.ReadByte(StoneStairHeightAddress + ObjectParameter);
+            int y = StoneStairYTable[--ObjectParameter];
+            height = StoneStairHeightTable[ObjectParameter];
             RenderTileColumn(0x64, y, height);
         }
 
         private void CastleDescendingSteps()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             if (CurrentBufferObjectWidth == 0)
             {
                 TileBuffer[y++] = 0xF3;
@@ -1393,8 +1379,8 @@ namespace Brutario.Smb1
 
         private void CastleRectangularCeilingTiles()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             TileBuffer[y++] = 0x67;
             while (y < 0x0C && TileBuffer[++y] == 0x65 && TileBuffer[y] == 0x66)
             {
@@ -1404,8 +1390,8 @@ namespace Brutario.Smb1
 
         private void CastleFloorRightEdge()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             TileBuffer[y++] = 0xF7;
             while (y != 0x0D && TileBuffer[y] != 0xEB)
             {
@@ -1415,8 +1401,8 @@ namespace Brutario.Smb1
 
         private void CastleFloorLeftEdge()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             if (TileBuffer[y] != 0xFC)
             {
                 TileBuffer[y] = 0xF9;
@@ -1430,8 +1416,8 @@ namespace Brutario.Smb1
 
         private void CastleFloorLeftWall()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             if (CurrentBufferObjectWidth == 0)
             {
                 TileBuffer[y++] = 2;
@@ -1447,8 +1433,8 @@ namespace Brutario.Smb1
 
         private void CastleFloorRightWall()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             if (CurrentBufferObjectWidth == 0)
             {
                 TileBuffer[y] = TileBuffer[y] == 0x68 ? 0xF2 : 0xF0;
@@ -1468,8 +1454,8 @@ namespace Brutario.Smb1
 
         private void VerticalSeaBlocks()
         {
-            TrySetCurrentBufferObjectWidth();
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
+            (var y, _) = GetObjectColumnProperties();
             do
             {
                 TileBuffer[y++] = 0x71;
@@ -1479,27 +1465,27 @@ namespace Brutario.Smb1
 
         private void ExtendableJPipe()
         {
-            TrySetCurrentBufferObjectWidth(3);
-            (var y, var height) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth(3);
+            (_, var height) = GetObjectColumnProperties();
             height -= 2;
-            y = height + 1;
+            int y = height + 1;
             var index = CurrentBufferObjectWidth;
-            var tile = Rom.ReadByte(JPipeTiles5Address + index);
+            var tile = JPipeTilesTable5[index];
             if (tile != 0)
             {
                 RenderTileColumn(tile, 0, height);
             }
 
-            tile = Rom.ReadByte(JPipeTiles6Address + index);
+            tile = JPipeTilesTable6[index];
             TileBuffer[y++] = tile;
 
-            tile = Rom.ReadByte(JPipeTiles7Address + index);
+            tile = JPipeTilesTable7[index];
             TileBuffer[y] = tile;
         }
 
         private void VerticalClimbingObject()
         {
-            (var y, var height) = GetObjectColumnProperties();
+            (var _, var height) = GetObjectColumnProperties();
             RenderTileColumn(0x77, 2, height);
         }
     }

@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="TilemapCommand.cs" company="Public Domain">
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
+//     GNU Affero General Public License. See LICENSE in project root for full
+//     license information, or visit https://www.gnu.org/licenses/#AGPL
+// </copyright>
 
 namespace Brutario.Smb1
 {
+    using System;
+    using System.Collections.Generic;
+
     public struct TilemapCommand : IEquatable<TilemapCommand>
     {
         public const int TerminationValue = 0xE3F0;
@@ -54,7 +57,7 @@ namespace Brutario.Smb1
             set
             {
                 Command04 &= ~0x0F;
-                Command04 |= (value & 0x0F);
+                Command04 |= value & 0x0F;
             }
         }
 
@@ -72,16 +75,20 @@ namespace Brutario.Smb1
             }
         }
 
-        public static bool operator ==(
-            TilemapCommand left,
-            TilemapCommand right)
+        public bool IsTerminationCommand
+        {
+            get
+            {
+                return (CommandED & 0xF0) == 0xE0 && CommandEF == 0x3F;
+            }
+        }
+
+        public static bool operator ==(TilemapCommand left, TilemapCommand right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(
-            TilemapCommand left,
-            TilemapCommand right)
+        public static bool operator !=(TilemapCommand left, TilemapCommand right)
         {
             return !(left == right);
         }
@@ -103,7 +110,7 @@ namespace Brutario.Smb1
 
         public override bool Equals(object obj)
         {
-            return obj is TilemapCommand other ? Equals(other) : false;
+            return obj is TilemapCommand other && Equals(other);
         }
 
         public override int GetHashCode()

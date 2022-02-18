@@ -1,5 +1,5 @@
 ﻿// <copyright file="StartYPosition.cs" company="Public Domain">
-//     Copyright (c) 2019 Nelson Garcia. All rights reserved. Licensed under
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
 //     GNU Affero General Public License. See LICENSE in project root for full
 //     license information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
@@ -10,8 +10,8 @@ namespace Brutario.Smb1
     /// The player's starting Y position when entering the area.
     /// </summary>
     /// <remarks>
-    /// The names specify the absolute screen coordinates, but the descriptions
-    /// specify the relative tile coordinates.
+    /// The names specify the absolute screen coordinates, but the
+    /// descriptions specify the relative tile coordinates.
     /// </remarks>
     public enum StartYPosition
     {
