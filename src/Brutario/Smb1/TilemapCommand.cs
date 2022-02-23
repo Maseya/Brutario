@@ -7,7 +7,6 @@
 namespace Brutario.Smb1
 {
     using System;
-    using System.Collections.Generic;
 
     public struct TilemapCommand : IEquatable<TilemapCommand>
     {

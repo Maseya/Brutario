@@ -23,6 +23,11 @@ namespace Brutario
         private ObjTile[] _bg1;
         private int _startX;
 
+        public AreaControl()
+        {
+            Sprites = new List<Sprite>();
+        }
+
         [Browsable(false)]
         [DesignerSerializationVisibility(Hidden)]
         public int StartX
@@ -112,10 +117,41 @@ namespace Brutario
             }
         }
 
-        public IList<Sprite> Sprites
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
+        public Rectangle[] ObjectRectangles
         {
             get;
             set;
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
+        public int ObjectIndex
+        {
+            get;
+            set;
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
+        public Rectangle[] SpriteRectangles
+        {
+            get;
+            set;
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(Hidden)]
+        public int SpriteIndex
+        {
+            get;
+            set;
+        }
+
+        public List<Sprite> Sprites
+        {
+            get;
         }
 
         public Color32BppArgb[] RenderPixels()
@@ -129,22 +165,30 @@ namespace Brutario
             var imageWidth = viewWidth * 8;
 
             var result = new Color32BppArgb[imageWidth * 0x120];
-            var bgColor = new Color32BppArgb(0xFF, 0, 0, 0);
+            var bgColor = new Color32BppArgb(0xFF, 0x3F, 0x7F, 0xFF);
+            var sprites = new List<Sprite>();
+            lock (Sprites)
+            {
+                sprites.AddRange(Sprites);
+            }
 
             _ = Parallel.For(0, result.Length, i => result[i] = bgColor);
 
-            _ = Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority0));
+            _ = Parallel.ForEach(sprites, sprite => RenderSprite(sprite, LayerPriority.Priority0));
             _ = Parallel.For(0, 0x24, row => RenderRow(row, LayerPriority.Priority0));
 
-            _ = Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority2));
+            _ = Parallel.ForEach(sprites, sprite => RenderSprite(sprite, LayerPriority.Priority2));
             _ = Parallel.For(0, 0x24, row => RenderRow(row, LayerPriority.Priority1));
 
-            _ = Parallel.ForEach(Sprites, sprite => RenderSprite(sprite, LayerPriority.Priority3));
+            _ = Parallel.ForEach(sprites, sprite => RenderSprite(sprite, LayerPriority.Priority3));
+
+            _ = Parallel.ForEach(sprites, sprite => RenderSprite(sprite, (LayerPriority)4));
 
             return result;
 
             void RenderRow(int row, LayerPriority layerPriority)
             {
+                bool darken = row > 0x1D;
                 var rowIndex = Math.Min(row, 0x1C + (row & 1)) * 0x400;
                 var pixelRow = row * 8 * imageWidth;
                 for (var column = 0; column < viewWidth; column++, pixelRow += 8)
@@ -170,7 +214,14 @@ namespace Brutario
 
                             if (pixel != 0)
                             {
-                                result[index] = Palette[paletteIndex + pixel];
+                                var color = Palette[paletteIndex + pixel];
+                                if (darken)
+                                {
+                                    color.R /= 2;
+                                    color.G /= 2;
+                                    color.B /= 2;
+                                }
+                                result[index] = color;
                             }
                         }
                     }
@@ -200,21 +251,21 @@ namespace Brutario
                     return;
                 }
 
-                if (sprite.Y + 8 >= 0xF0)
+                if (sprite.Y + 8 >= 0x120)
                 {
                     return;
                 }
 
                 var tile8 = sprite.Tile;
-                if (tile8.Priority != layerPriority)
+                if ((tile8.Priority - 2) / 3 != (int)layerPriority)
                 {
                     return;
                 }
 
-                var xFlip = tile8.XFlipMask;
-                var yFlip = tile8.YFlipMask;
-                var paletteIndex = (tile8.PaletteIndex * 0x10) + 0x80;
-                var pixelIndex = (tile8.TileIndex + 0x300) * 0x40;
+                var xFlip = tile8.FlipX ? 7 : 0;
+                var yFlip = tile8.FlipY ? 7 : 0;
+                var paletteIndex = tile8.PaletteIndex * 0x10;
+                var pixelIndex = tile8.TileIndex * 0x40;
                 var func = TransformPixel(sprite.TileProperties);
                 var pixelRow = (sprite.Y * imageWidth) + sprite.X - (StartX * 8);
 
@@ -340,11 +391,31 @@ namespace Brutario
                     (IntPtr)pixels);
 
                 using var g = Graphics.FromImage(image);
-                using var brush = new SolidBrush(Color.FromArgb(196, Color.Black));
-                g.FillRectangle(brush, 0, 0xF0, imageWidth, 0x30);
+                using var selectBrush = new SolidBrush(Color.FromArgb(0x7F, Color.White));
+                if (!(ObjectRectangles is null))
+                {
+                    using var brush = new SolidBrush(Color.FromArgb(0x7F, Color.GreenYellow));
+                    for (var i = 0; i < ObjectRectangles.Length; i++)
+                    {
+                        var temp = ObjectRectangles[i];
+                        temp.X -= StartX << 3;
+                        g.FillRectangle(i == ObjectIndex ? selectBrush : brush, temp);
+                    }
+                }
+
+                if (!(SpriteRectangles is null))
+                {
+                    using var brush = new SolidBrush(Color.FromArgb(0x7F, Color.LightSalmon));
+                    for (var i = 0; i < SpriteRectangles.Length; i++)
+                    {
+                        var temp = SpriteRectangles[i];
+                        temp.X -= StartX << 3;
+                        g.FillRectangle(i == SpriteIndex ? selectBrush : brush, temp);
+                    }
+                }
 
                 using var pen = new Pen(Color.Blue);
-                for (int pageX = 0xFF - ((StartX * 8) % 0x100); pageX < imageWidth; pageX += 0x100)
+                for (int pageX = 0xFF - (StartX * 8 % 0x100); pageX < imageWidth; pageX += 0x100)
                 {
                     g.DrawLine(pen, pageX, 0, pageX, 0x120);
                 }

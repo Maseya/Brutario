@@ -82,7 +82,7 @@ namespace Brutario
                 }
             }
 
-            throw new InvalidOperationException();
+            return Pointers.Usa;
         }
     }
 }

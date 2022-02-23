@@ -75,7 +75,7 @@
             }
         }
 
-        public void ReadTiles(Span<Obj16Tile> dest)
+        public void ReadStaticTiles(Span<Obj16Tile> dest)
         {
             if (dest.Length < 0x100)
             {

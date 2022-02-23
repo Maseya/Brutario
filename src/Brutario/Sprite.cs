@@ -10,7 +10,7 @@ namespace Brutario
 
     public struct Sprite : IEquatable<Sprite>
     {
-        public Sprite(int x, int y, ChrTile tile, TileProperties tileProperties = 0)
+        public Sprite(int x, int y, SpriteTile tile, TileProperties tileProperties = 0)
         {
             X = x;
             Y = y;
@@ -30,7 +30,7 @@ namespace Brutario
             set;
         }
 
-        public ChrTile Tile
+        public SpriteTile Tile
         {
             get;
             set;
@@ -40,6 +40,16 @@ namespace Brutario
         {
             get;
             set;
+        }
+
+        public static bool operator ==(Sprite left, Sprite right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Sprite left, Sprite right)
+        {
+            return !(left == right);
         }
 
         public bool Equals(Sprite other)

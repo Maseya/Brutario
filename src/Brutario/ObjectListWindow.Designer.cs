@@ -50,13 +50,16 @@
             this.lvwObjects.HideSelection = false;
             this.lvwObjects.LabelWrap = false;
             this.lvwObjects.Location = new System.Drawing.Point(0, 0);
+            this.lvwObjects.MultiSelect = false;
             this.lvwObjects.Name = "lvwObjects";
             this.lvwObjects.ShowGroups = false;
             this.lvwObjects.Size = new System.Drawing.Size(496, 334);
             this.lvwObjects.TabIndex = 0;
             this.lvwObjects.UseCompatibleStateImageBehavior = false;
             this.lvwObjects.View = System.Windows.Forms.View.Details;
-            this.lvwObjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvwObjects_MouseDoubleClick);
+            this.lvwObjects.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.Objects_ItemSelectionChanged);
+            this.lvwObjects.SelectedIndexChanged += new System.EventHandler(this.Objects_SelectedIndexChanged);
+            this.lvwObjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Objects_MouseDoubleClick);
             // 
             // chdHex
             // 
@@ -90,7 +93,7 @@
             this.Name = "ObjectListWindow";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Object List";
             this.ResumeLayout(false);
 

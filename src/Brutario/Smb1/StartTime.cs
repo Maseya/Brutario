@@ -14,7 +14,7 @@ namespace Brutario.Smb1
         /// <summary>
         /// No time. Use this for auto-walk areas.
         /// </summary>
-        Time000,
+        None = 0,
 
         /// <summary>
         /// 400 game seconds.

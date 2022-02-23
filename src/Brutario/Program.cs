@@ -22,7 +22,9 @@ namespace Brutario
 
             using var form = new MainForm();
             if (args.Length == 1)
-                form.Open(args[0]);
+            {
+                form.Load += (s, e) => form.Open(args[0]);
+            }
 
             Application.Run(form);
         }

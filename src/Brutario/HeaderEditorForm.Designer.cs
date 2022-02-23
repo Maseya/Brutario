@@ -110,8 +110,12 @@
             this.cbxForeground.Items.AddRange(new object[] {
             "None",
             "Underwater",
-            "Castle Wall",
-            "Over Water"});
+            "Castle Wall (Unused)",
+            "Over Water",
+            "Night (Unused)",
+            "Snow (Unused)",
+            "Night and Snow (Unused)",
+            "Castle (unused)"});
             this.cbxForeground.Location = new System.Drawing.Point(115, 66);
             this.cbxForeground.Name = "cbxForeground";
             this.cbxForeground.Size = new System.Drawing.Size(245, 21);

@@ -13,12 +13,7 @@ namespace Brutario.Smb1
     {
         public const byte TerminationCode = 0xFF;
 
-        public AreaSpriteCommand(byte value1, byte value2)
-            : this(value1, value2, 0)
-        {
-        }
-
-        public AreaSpriteCommand(byte value1, byte value2, byte value3)
+        public AreaSpriteCommand(byte value1, byte value2, byte value3 = 0)
         {
             Value1 = value1;
             Value2 = value2;
@@ -56,7 +51,7 @@ namespace Brutario.Smb1
         {
             get
             {
-                return IsThreeByteCommand ? false : (Value2 & 0x40) != 0;
+                return !IsThreeByteCommand && (Value2 & 0x40) != 0;
             }
 
             set
@@ -252,16 +247,12 @@ namespace Brutario.Smb1
             }
         }
 
-        public static bool operator !=(
-            AreaSpriteCommand left,
-            AreaSpriteCommand right)
+        public static bool operator !=(AreaSpriteCommand left, AreaSpriteCommand right)
         {
             return !(left == right);
         }
 
-        public static bool operator ==(
-            AreaSpriteCommand left,
-            AreaSpriteCommand right)
+        public static bool operator ==(AreaSpriteCommand left, AreaSpriteCommand right)
         {
             return left.Equals(right);
         }
@@ -341,18 +332,55 @@ namespace Brutario.Smb1
             }
         }
 
+        public static IEnumerable<(int x, int y)> EnumeratePositions(
+            IEnumerable<AreaSpriteCommand> collection)
+        {
+            var screen = 0;
+            var screenSkip = false;
+            foreach (var command in collection)
+            {
+                if (command.ScreenFlag && !screenSkip)
+                {
+                    screen += 0x10;
+                }
+
+                var y = (command.Y + 1) << 4;
+
+                screenSkip = command.Code == AreaSpriteCode.ScreenSkip;
+                if (screenSkip)
+                {
+                    screen = command.BaseCommand << 4;
+                }
+                switch (command.Code)
+                {
+                case AreaSpriteCode.ScreenSkip:
+                    screen = command.BaseCommand << 4;
+                    break;
+                case AreaSpriteCode.FireBarClockwise:
+                case AreaSpriteCode.FireBarCounterClockwise:
+                case AreaSpriteCode.FastFireBarClockwise:
+                case AreaSpriteCode.FastFireBarCounterClockwise:
+                case AreaSpriteCode.LongFireBarClockwise:
+                    y -= 0x10;
+                    break;
+                }
+
+                var x = (screen | command.X) << 4;
+
+                yield return (x, y);
+            }
+        }
+
         public override bool Equals(object obj)
         {
-            return obj is AreaSpriteCommand other ? Equals(other) : false;
+            return obj is AreaSpriteCommand other && Equals(other);
         }
 
         public bool Equals(AreaSpriteCommand other)
         {
-            return !Size.Equals(other.Size)
-                ? false
-                : !Value1.Equals(other.Value1) || Value2.Equals(other.Value2)
-                    ? false
-                    : Size == 2 || Value3.Equals(other.Value3);
+            return Size.Equals(other.Size) && Value1.Equals(other.Value1)
+                && !Value2.Equals(other.Value2)
+                && (Size == 2 || Value3.Equals(other.Value3));
         }
 
         public override int GetHashCode()

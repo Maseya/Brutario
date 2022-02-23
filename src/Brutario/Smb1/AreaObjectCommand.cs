@@ -17,11 +17,7 @@ namespace Brutario.Smb1
         /// </summary>
         public const byte TerminationCode = 0xFD;
 
-        public AreaObjectCommand(byte value1, byte value2)
-            : this(value1, value2, 0)
-        { }
-
-        public AreaObjectCommand(byte value1, byte value2, byte value3)
+        public AreaObjectCommand(byte value1, byte value2, byte value3 = 0)
         {
             Value1 = value1;
             Value2 = value2;
@@ -37,12 +33,12 @@ namespace Brutario.Smb1
             int extendedCommand)
             : this()
         {
-            ExtendedCommand = extendedCommand;
             X = x;
             Y = y;
             ScreenFlag = pageFlag;
             Command = command;
             Parameter = parameter;
+            ExtendedCommand = extendedCommand;
         }
 
         public byte Value1
@@ -119,27 +115,16 @@ namespace Brutario.Smb1
 
             set
             {
+                var mask = (byte)(value ? 0x80 : 0);
                 if (IsThreeByteObject)
                 {
-                    if (value)
-                    {
-                        Value3 |= 0x80;
-                    }
-                    else
-                    {
-                        Value3 &= 0x7F;
-                    }
+                    Value3 &= 0x7F;
+                    Value3 |= mask;
                 }
                 else
                 {
-                    if (value)
-                    {
-                        Value2 |= 0x80;
-                    }
-                    else
-                    {
-                        Value2 &= 0x7F;
-                    }
+                    Value2 &= 0x7F;
+                    Value2 |= 0x80;
                 }
             }
         }
@@ -208,7 +193,7 @@ namespace Brutario.Smb1
                 // object.
                 var pageFlag = ScreenFlag;
                 var command = Command;
-                var paraeter = Parameter;
+                var parameter = Parameter;
                 var y = Y;
 
                 if (value == -1)
@@ -217,7 +202,7 @@ namespace Brutario.Smb1
                     Y = y;
                     ScreenFlag = pageFlag;
                     Command = command;
-                    Parameter = paraeter;
+                    Parameter = parameter;
                     Value3 = 0;
                 }
                 else
@@ -226,7 +211,7 @@ namespace Brutario.Smb1
                     Y = y;
                     ScreenFlag = pageFlag;
                     Command = command;
-                    Parameter = paraeter;
+                    Parameter = parameter;
                     Value3 &= 0xF0;
                     Value3 |= (byte)(value & 0x0F);
                 }
@@ -239,21 +224,21 @@ namespace Brutario.Smb1
             {
                 return (AreaObjectCode)(IsThreeByteObject
                     ? 0xF00 | BaseCommand
-                    : Y >= 0x0C
-                        ? Y == 0x0D
-                            ? Command == 0
-                                ? (int)AreaObjectCode.ScreenSkip
-                                : (Y << 8) | (Command << 4) | (Parameter)
-                            : Y == 0x0E
-                                ? 0x0E00 | (Command >= 4 ? 0x40 : 0)
-                                : (Y << 8) | (Command << 4)
-                        : Command == 0
-                            ? Parameter
-                            : Command == 7
-                                ? Parameter < 8
-                                    ? (int)AreaObjectCode.UnenterablePipe
-                                    : (int)AreaObjectCode.EnterablePipe
-                                : Command << 4);
+                    : Y == 0x0C
+                    ? 0xC00 | (Command << 4)
+                    : Y == 0x0D
+                    ? (Command & ~1) == 0
+                        ? (int)AreaObjectCode.ScreenSkip
+                        : 0xD00 | (Command << 4) | Parameter
+                    : Y == 0x0E
+                    ? 0xE00 | ((Command & 4) << 4)
+                    : Command == 0
+                    ? Parameter
+                    : Command == 7
+                    ? Parameter < 8
+                        ? (int)AreaObjectCode.UnenterablePipe
+                        : (int)AreaObjectCode.EnterablePipe
+                    : Command << 4);
             }
         }
 
@@ -319,65 +304,58 @@ namespace Brutario.Smb1
                 throw new ArgumentNullException(nameof(bytes));
             }
 
-            using (var en = bytes.GetEnumerator())
+            using var en = bytes.GetEnumerator();
+            if (!en.MoveNext())
             {
-                if (en.MoveNext())
-                {
-                    while (true)
-                    {
-                        if (en.Current == TerminationCode)
-                        {
-                            yield break;
-                        }
+                throw new ArgumentException();
+            }
 
-                        if (IsThreeByteSpecifier(en.Current))
-                        {
-                            var list = new List<byte>(GetBytes(3));
-                            yield return new AreaObjectCommand(
-                                list[0],
-                                list[1],
-                                list[2]);
-                        }
-                        else
-                        {
-                            var list = new List<byte>(GetBytes(2));
-                            yield return new AreaObjectCommand(
-                                list[0],
-                                list[1]);
-                        }
-                    }
+            while (en.Current != TerminationCode)
+            {
+                if (IsThreeByteSpecifier(en.Current))
+                {
+                    var list = new List<byte>(GetBytes(3));
+                    yield return new AreaObjectCommand(
+                        list[0],
+                        list[1],
+                        list[2]);
                 }
-
-                IEnumerable<byte> GetBytes(int size)
+                else
                 {
-                    for (var i = 0; i < size; i++)
-                    {
-                        yield return en.Current;
-
-                        if (!en.MoveNext())
-                        {
-                            throw NoMoreBytesException();
-                        }
-                    }
+                    var list = new List<byte>(GetBytes(2));
+                    yield return new AreaObjectCommand(
+                        list[0],
+                        list[1]);
                 }
             }
 
-            throw NoMoreBytesException();
-
-            ArgumentException NoMoreBytesException()
+            IEnumerable<byte> GetBytes(int size)
             {
-                return new ArgumentException();
+                for (var i = 0; i < size; i++)
+                {
+                    yield return en.Current;
+
+                    if (!en.MoveNext())
+                    {
+                        throw new ArgumentException();
+                    }
+                }
             }
         }
 
         public static IEnumerable<byte> GetAreaByteData(
             IEnumerable<AreaObjectCommand> collection)
         {
+            if (collection is null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
             foreach (var command in collection)
             {
                 yield return command.Value1;
                 yield return command.Value2;
-                if (command.Size == 3)
+                if (command.IsThreeByteObject)
                 {
                     yield return command.Value3;
                 }
@@ -386,25 +364,44 @@ namespace Brutario.Smb1
             yield return TerminationCode;
         }
 
+        public static IEnumerable<(int x, int y)> EnumeratePositions(
+            IEnumerable<AreaObjectCommand> collection)
+        {
+            var screen = 0;
+            var screenSkip = false;
+            foreach (var command in collection)
+            {
+                if (command.ScreenFlag && !screenSkip)
+                {
+                    screen += 0x10;
+                }
+
+                if (command.Code == AreaObjectCode.ScreenSkip)
+                {
+                    screen = command.BaseCommand << 4;
+                }
+
+                var x = (screen | command.X) << 4;
+                var y = (command.Y + 2) << 4;
+                yield return (x, y);
+            }
+        }
+
         public override bool Equals(object obj)
         {
-            return obj is AreaObjectCommand other ? Equals(other) : false;
+            return obj is AreaObjectCommand other && Equals(other);
         }
 
         public bool Equals(AreaObjectCommand other)
         {
-            return !Size.Equals(other.Size)
-                ? false
-                : !Value1.Equals(other.Value1) || !Value2.Equals(other.Value2)
-                ? false
-                : Size == 3
-                ? Value3.Equals(other.Value3)
-                : true;
+            return Size.Equals(other.Size)
+                && Value1.Equals(other.Value1) && Value2.Equals(other.Value2)
+                && (!IsThreeByteObject || Value3.Equals(other.Value3));
         }
 
         public override int GetHashCode()
         {
-            return (Value1) | (Value2 << 8) | (Value3 << 16);
+            return HashCode.Combine(Value1, Value2, Value3);
         }
 
         public override string ToString()

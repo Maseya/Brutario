@@ -16,6 +16,12 @@ namespace Brutario.Smb1
         /// </summary>
         public const int TileBufferSize = 0x0D;
 
+        public const int ScreenCount = 0x20;
+        public const int ScreenWidth = 0x10;
+        public const int ScreenHeight = 0x10;
+        public const int TilemapWidth = ScreenCount * ScreenWidth;
+        public const int TilemapLength = TilemapWidth * ScreenHeight;
+
         private const int BackgroundSceneryMetaDataOffsetTableSize = 3;
         private const int BackgroundSceneryMetaDataTableSize = 0x90;
         private const int BackgroundSceneryTileDataTableSize = 0x24;
@@ -27,6 +33,24 @@ namespace Brutario.Smb1
         private const int TerrainBitMaskTableSize = 0x20;
 
         private const int BitmaskTableSize = 8;
+
+        private const int PulleyRopeTileTableSize = 3;
+        private const int JPipeTilesTable1Size = 4;
+        private const int JPipeTilesTable2Size = 4;
+        private const int JPipeTilesTable3Size = 4;
+        private const int JPipeTilesTable4Size = 8;
+        private const int PipeTileTableSize = 8;
+        private const int WaterSurfaceTileTableSize = 6;
+        private const int CoinRowTileTableSize = 4;
+        private const int BrickRowTileTableSize = 5;
+        private const int StoneRowTileTableSize = 4;
+        private const int SingleTileObjectTableSize = 0x0E;
+        private const int CastleTileTableSize = 0x6E;
+        private const int StoneStairYTableSize = 9;
+        private const int StoneStairHeightTableSize = 9;
+        private const int JPipeTilesTable5Size = 4;
+        private const int JPipeTilesTable6Size = 4;
+        private const int JPipeTilesTable7Size = 4;
 
         public AreaObjectRenderer()
         {
@@ -42,6 +66,27 @@ namespace Brutario.Smb1
             TerrainAreaTypeTable = new byte[TerrainAreaTypeTableSize];
             TerrainBitMaskTable = new byte[TerrainBitMaskTableSize];
             BitmaskTable = new byte[BitmaskTableSize];
+
+            PulleyRopeTileTable = new byte[PulleyRopeTileTableSize];
+            JPipeTilesTable1 = new byte[JPipeTilesTable1Size];
+            JPipeTilesTable2 = new byte[JPipeTilesTable2Size];
+            JPipeTilesTable3 = new byte[JPipeTilesTable3Size];
+            JPipeTilesTable4 = new byte[JPipeTilesTable4Size];
+            PipeTileTable = new byte[PipeTileTableSize];
+            WaterSurfaceTileTable = new byte[WaterSurfaceTileTableSize];
+            CoinRowTileTable = new byte[CoinRowTileTableSize];
+            BrickRowTileTable = new byte[BrickRowTileTableSize];
+            StoneRowTileTable = new byte[StoneRowTileTableSize];
+            SingleTileObjectTable = new byte[SingleTileObjectTableSize];
+            CastleTileTable = new byte[CastleTileTableSize];
+            StoneStairYTable = new byte[StoneStairYTableSize];
+            StoneStairHeightTable = new byte[StoneStairHeightTableSize];
+            JPipeTilesTable5 = new byte[JPipeTilesTable5Size];
+            JPipeTilesTable6 = new byte[JPipeTilesTable6Size];
+            JPipeTilesTable7 = new byte[JPipeTilesTable7Size];
+
+            TileBuffer = new int[TileBufferSize];
+            TileMap = new int[TilemapLength];
         }
 
         public AreaObjectRenderer(
@@ -49,58 +94,60 @@ namespace Brutario.Smb1
             AreaObjectRendererPointers pointers)
             : this()
         {
-            GameData = gameData
-                ?? throw new ArgumentNullException(nameof(gameData));
-            TileBuffer = new int[TileBufferSize];
-            TileMap = new int[0x20 * 0x10 * 0x10];
-
             ReadGameData(gameData, pointers);
         }
 
-        public int[] TileMap
-        {
-            get;
-        }
+        public int[] TileMap { get; }
 
-        public byte[] BackgroundSceneryMetaDataOffsetTable
-        {
-            get;
-        }
+        public byte[] BackgroundSceneryMetaDataOffsetTable { get; }
 
-        public byte[] BackgroundSceneryMetaDataTable
-        {
-            get;
-        }
+        public byte[] BackgroundSceneryMetaDataTable { get; }
 
-        public byte[] BackgroundSceneryTileDataTable
-        {
-            get;
-        }
+        public byte[] BackgroundSceneryTileDataTable { get; }
 
-        public byte[] ForegroundSceneryDataOffsetTable
-        {
-            get;
-        }
+        public byte[] ForegroundSceneryDataOffsetTable { get; }
 
-        public byte[] ForegroundSceneryDataTable
-        {
-            get;
-        }
+        public byte[] ForegroundSceneryDataTable { get; }
 
-        public byte[] TerrainAreaTypeTable
-        {
-            get;
-        }
+        public byte[] TerrainAreaTypeTable { get; }
 
-        public byte[] TerrainBitMaskTable
-        {
-            get;
-        }
+        public byte[] TerrainBitMaskTable { get; }
 
-        public byte[] BitmaskTable
-        {
-            get;
-        }
+        public byte[] BitmaskTable { get; }
+
+        public byte[] PulleyRopeTileTable { get; }
+
+        public byte[] JPipeTilesTable1 { get; }
+
+        public byte[] JPipeTilesTable2 { get; }
+
+        public byte[] JPipeTilesTable3 { get; }
+
+        public byte[] JPipeTilesTable4 { get; }
+
+        public byte[] PipeTileTable { get; }
+
+        public byte[] WaterSurfaceTileTable { get; }
+
+        public byte[] CoinRowTileTable { get; }
+
+        public byte[] BrickRowTileTable { get; }
+
+        public byte[] StoneRowTileTable { get; }
+
+        public byte[] SingleTileObjectTable { get; }
+
+        public byte[] CastleTileTable { get; }
+
+        public byte[] StoneStairYTable { get; }
+
+        public byte[] StoneStairHeightTable { get; }
+
+        public byte[] JPipeTilesTable5 { get; }
+
+        public byte[] JPipeTilesTable6 { get; }
+
+        public byte[] JPipeTilesTable7 { get; }
 
         public AreaType AreaType
         {
@@ -164,11 +211,6 @@ namespace Brutario.Smb1
             }
         }
 
-        private GameData GameData
-        {
-            get;
-        }
-
         public void ReadGameData(GameData gameData, AreaObjectRendererPointers pointers)
         {
             if (gameData is null)
@@ -208,6 +250,58 @@ namespace Brutario.Smb1
             rom.ReadBytesIndirect(
                 pointers.BitmaskTablePointer,
                 BitmaskTable);
+
+            rom.ReadBytesIndirect(
+                pointers.PulleyRopeTileTablePointer,
+                PulleyRopeTileTable);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable1Pointer,
+                JPipeTilesTable1);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable2Pointer,
+                JPipeTilesTable2);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable3Pointer,
+                JPipeTilesTable3);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable4Pointer,
+                JPipeTilesTable4);
+            rom.ReadBytesIndirect(
+                pointers.PipeTileTablePointer,
+                PipeTileTable);
+            rom.ReadBytesIndirect(
+                pointers.WaterSurfaceTileTablePointer,
+                WaterSurfaceTileTable);
+            rom.ReadBytesIndirect(
+                pointers.CoinRowTileTablePointer,
+                CoinRowTileTable);
+            rom.ReadBytesIndirect(
+                pointers.BrickRowTileTablePointer,
+                BrickRowTileTable);
+            rom.ReadBytesIndirect(
+                pointers.StoneRowTileTablePointer,
+                StoneRowTileTable);
+            rom.ReadBytesIndirect(
+                pointers.SingleTileObjectTablePointer,
+                SingleTileObjectTable);
+            rom.ReadBytesIndirect(
+                pointers.CastleTileTablePointer,
+                CastleTileTable);
+            rom.ReadBytesIndirect(
+                pointers.StoneStairYTablePointer,
+                StoneStairYTable);
+            rom.ReadBytesIndirect(
+                pointers.StoneStairHeightTablePointer,
+                StoneStairHeightTable);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable5Pointer,
+                JPipeTilesTable5);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable6Pointer,
+                JPipeTilesTable6);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable7Pointer,
+                JPipeTilesTable7);
         }
 
         public void WriteToGameData(
@@ -225,6 +319,58 @@ namespace Brutario.Smb1
             }
 
             var rom = gameData.Rom;
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable7Pointer,
+                JPipeTilesTable7);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable6Pointer,
+                JPipeTilesTable6);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable5Pointer,
+                JPipeTilesTable5);
+            rom.WriteBytesIndirect(
+                pointers.StoneStairHeightTablePointer,
+                StoneStairHeightTable);
+            rom.WriteBytesIndirect(
+                pointers.StoneStairYTablePointer,
+                StoneStairYTable);
+            rom.WriteBytesIndirect(
+                pointers.CastleTileTablePointer,
+                CastleTileTable);
+            rom.WriteBytesIndirect(
+                pointers.SingleTileObjectTablePointer,
+                SingleTileObjectTable);
+            rom.WriteBytesIndirect(
+                pointers.StoneRowTileTablePointer,
+                StoneRowTileTable);
+            rom.WriteBytesIndirect(
+                pointers.BrickRowTileTablePointer,
+                BrickRowTileTable);
+            rom.WriteBytesIndirect(
+                pointers.CoinRowTileTablePointer,
+                CoinRowTileTable);
+            rom.WriteBytesIndirect(
+                pointers.WaterSurfaceTileTablePointer,
+                WaterSurfaceTileTable);
+            rom.WriteBytesIndirect(
+                pointers.PipeTileTablePointer,
+                PipeTileTable);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable4Pointer,
+                JPipeTilesTable4);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable3Pointer,
+                JPipeTilesTable3);
+            rom.WriteBytesIndirect(
+                pointers.JPipeTilesTable2Pointer,
+                JPipeTilesTable2);
+            rom.ReadBytesIndirect(
+                pointers.JPipeTilesTable1Pointer,
+                JPipeTilesTable1);
+            rom.WriteBytesIndirect(
+                pointers.PulleyRopeTileTablePointer,
+                PulleyRopeTileTable);
+
             rom.WriteBytesIndirect(
                 pointers.BitmaskTablePointer,
                 BitmaskTable);
@@ -263,9 +409,7 @@ namespace Brutario.Smb1
             AreaType = areaType;
             var areaObjectParser = new AreaObjectParser(
                 this,
-                areaObjectData,
-                GameData,
-                GameData.Pointers.AreaObjectParserPointers);
+                areaObjectData);
 
             Array.Clear(TileMap, 0, TileMap.Length);
 
@@ -330,6 +474,11 @@ namespace Brutario.Smb1
             {
                 var tile = BackgroundSceneryTileDataTable[startIndex + i];
                 TileBuffer[y + i] = tile;
+
+                if (y + i + 1 == 0x0B)
+                {
+                    break;
+                }
             }
         }
 
@@ -362,12 +511,11 @@ namespace Brutario.Smb1
                     if (waterTileChange)
                     {
                         waterTileChange = false;
-                        tile += 2;
                     }
                     else
                     {
                         waterTileChange = true;
-                        tile += 1;
+                        tile += 1 + 2;
                     }
                 }
 
@@ -396,7 +544,7 @@ namespace Brutario.Smb1
 
             var areaType2 = isUnderwaterCastle ? AreaType.Castle : AreaType;
 
-terrain_loop:
+        terrain_loop:
             var terrainBits = TerrainBitMaskTable[terrainIndex];
 
             terrainIndex++;
@@ -406,7 +554,7 @@ terrain_loop:
             }
 
             var j = 0;
-bit_loop:
+        bit_loop:
             var bitmask = BitmaskTable[j];
             if ((terrainBits & bitmask) != 0)
             {
@@ -459,7 +607,7 @@ bit_loop:
                 goto terrain_loop;
             }
 
-end_loop:
+        end_loop:
             terrainTile = (byte)TileBuffer[0x0C];
             if (terrainTile == 0x56 || terrainTile == 0x72)
             {
@@ -472,11 +620,11 @@ end_loop:
             int page,
             int x)
         {
+            var xIndex = ((page % 3) << 4) + x;
+
             // Should never have scenery type 0.
             var sceneryOffset = BackgroundSceneryMetaDataOffsetTable[
                 (int)sceneryType - 1];
-
-            var xIndex = ((page % 3) << 4) + x;
             return BackgroundSceneryMetaDataTable[sceneryOffset + xIndex];
         }
 

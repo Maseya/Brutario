@@ -82,13 +82,13 @@ namespace Brutario.Smb1
                x => Color32BppArgb.FromSnesColor(x));
         }
 
-        public void ReadPalette(int areaIndex, Span<Color32BppArgb> dest)
+        public void ReadPalette(int index, Span<Color32BppArgb> dest)
         {
-            ReadPalette(areaIndex, isLuigiBonusArea: false, dest);
+            ReadPalette(index, isLuigiBonusArea: false, dest);
         }
 
         public void ReadPalette(
-            int areaIndex,
+            int index,
             bool isLuigiBonusArea,
             Span<Color32BppArgb> dest)
         {
@@ -97,12 +97,12 @@ namespace Brutario.Smb1
                 throw new ArgumentException();
             }
 
-            var sourceIndex = areaIndex * ColorsPerRow;
+            var sourceIndex = index * ColorsPerRow;
             for (var i = 0; i < RowsPerPalette; i++)
             {
-                var paletteRowIndex = RowIndexTable[sourceIndex++];
-                var paletteIndex = IndexTable[paletteRowIndex];
-                new Span<Color32BppArgb>(ColorTable, paletteIndex, ColorsPerRow).CopyTo(
+                var rowIndex = RowIndexTable[sourceIndex++];
+                var startIndex = IndexTable[rowIndex];
+                new Span<Color32BppArgb>(ColorTable, startIndex, ColorsPerRow).CopyTo(
                     dest.Slice(i * ColorsPerRow));
             }
 
@@ -114,7 +114,7 @@ namespace Brutario.Smb1
 
         public void WritePalette(
             Span<Color32BppArgb> source,
-            int areaIndex,
+            int index,
             bool isLuigiBonusArea = false)
         {
             if (source.Length < TotalPaletteSize)
@@ -122,7 +122,7 @@ namespace Brutario.Smb1
                 throw new ArgumentException();
             }
 
-            var sourceIndex = areaIndex * ColorsPerRow;
+            var sourceIndex = index * ColorsPerRow;
             for (var i = 0; i < RowsPerPalette; i++)
             {
                 if (isLuigiBonusArea && i == BonusAreaRow)
@@ -132,10 +132,10 @@ namespace Brutario.Smb1
                 }
                 else
                 {
-                    var paletteRowIndex = RowIndexTable[sourceIndex++];
-                    var paletteIndex = IndexTable[paletteRowIndex];
+                    var rowIndex = RowIndexTable[sourceIndex++];
+                    var startIndex = IndexTable[rowIndex];
                     source.Slice(i * ColorsPerRow, ColorsPerRow).CopyTo(
-                        new Span<Color32BppArgb>(ColorTable, paletteIndex, ColorsPerRow));
+                        new Span<Color32BppArgb>(ColorTable, startIndex, ColorsPerRow));
                 }
             }
         }

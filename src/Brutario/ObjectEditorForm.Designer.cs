@@ -31,10 +31,16 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblForegroundScenery = new System.Windows.Forms.Label();
+            this.cbxBackgroundScenery = new System.Windows.Forms.ComboBox();
+            this.cbxForegroundScenery = new System.Windows.Forms.ComboBox();
+            this.lblBackgroundScenery = new System.Windows.Forms.Label();
+            this.cbxTerrainMode = new System.Windows.Forms.ComboBox();
+            this.lblTerrainMode = new System.Windows.Forms.Label();
             this.nudLength = new System.Windows.Forms.NumericUpDown();
             this.lblLength = new System.Windows.Forms.Label();
             this.lblObject = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbxAreaObjectCode = new System.Windows.Forms.ComboBox();
             this.chkPageFlag = new System.Windows.Forms.CheckBox();
             this.lblY = new System.Windows.Forms.Label();
             this.lblX = new System.Windows.Forms.Label();
@@ -52,8 +58,9 @@
             // 
             // btnOK
             // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(207, 112);
+            this.btnOK.Location = new System.Drawing.Point(253, 186);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -62,8 +69,9 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(288, 111);
+            this.btnCancel.Location = new System.Drawing.Point(334, 186);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -72,10 +80,18 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.lblForegroundScenery);
+            this.groupBox1.Controls.Add(this.cbxBackgroundScenery);
+            this.groupBox1.Controls.Add(this.cbxForegroundScenery);
+            this.groupBox1.Controls.Add(this.lblBackgroundScenery);
+            this.groupBox1.Controls.Add(this.cbxTerrainMode);
+            this.groupBox1.Controls.Add(this.lblTerrainMode);
             this.groupBox1.Controls.Add(this.nudLength);
             this.groupBox1.Controls.Add(this.lblLength);
             this.groupBox1.Controls.Add(this.lblObject);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.cbxAreaObjectCode);
             this.groupBox1.Controls.Add(this.chkPageFlag);
             this.groupBox1.Controls.Add(this.lblY);
             this.groupBox1.Controls.Add(this.lblX);
@@ -83,16 +99,115 @@
             this.groupBox1.Controls.Add(this.nudX);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(314, 73);
+            this.groupBox1.Size = new System.Drawing.Size(397, 148);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Object";
             // 
+            // lblForegroundScenery
+            // 
+            this.lblForegroundScenery.AutoSize = true;
+            this.lblForegroundScenery.Location = new System.Drawing.Point(6, 124);
+            this.lblForegroundScenery.Name = "lblForegroundScenery";
+            this.lblForegroundScenery.Size = new System.Drawing.Size(61, 13);
+            this.lblForegroundScenery.TabIndex = 21;
+            this.lblForegroundScenery.Text = "Foreground";
+            // 
+            // cbxBackgroundScenery
+            // 
+            this.cbxBackgroundScenery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxBackgroundScenery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxBackgroundScenery.FormattingEnabled = true;
+            this.cbxBackgroundScenery.Items.AddRange(new object[] {
+            "Nothing",
+            "Clouds",
+            "Mountain",
+            "Fence"});
+            this.cbxBackgroundScenery.Location = new System.Drawing.Point(82, 94);
+            this.cbxBackgroundScenery.Name = "cbxBackgroundScenery";
+            this.cbxBackgroundScenery.Size = new System.Drawing.Size(309, 21);
+            this.cbxBackgroundScenery.TabIndex = 20;
+            this.cbxBackgroundScenery.SelectedIndexChanged += new System.EventHandler(this.Item_ValueChanged);
+            // 
+            // cbxForegroundScenery
+            // 
+            this.cbxForegroundScenery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxForegroundScenery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxForegroundScenery.FormattingEnabled = true;
+            this.cbxForegroundScenery.Items.AddRange(new object[] {
+            "None",
+            "Underwater",
+            "Castle Wall (Unused)",
+            "Over Water",
+            "Night (Unused)",
+            "Snow (Unused)",
+            "Night and Snow (Unused)",
+            "Castle (unused)"});
+            this.cbxForegroundScenery.Location = new System.Drawing.Point(82, 121);
+            this.cbxForegroundScenery.Name = "cbxForegroundScenery";
+            this.cbxForegroundScenery.Size = new System.Drawing.Size(309, 21);
+            this.cbxForegroundScenery.TabIndex = 19;
+            this.cbxForegroundScenery.SelectedIndexChanged += new System.EventHandler(this.Item_ValueChanged);
+            // 
+            // lblBackgroundScenery
+            // 
+            this.lblBackgroundScenery.AutoSize = true;
+            this.lblBackgroundScenery.Location = new System.Drawing.Point(6, 97);
+            this.lblBackgroundScenery.Name = "lblBackgroundScenery";
+            this.lblBackgroundScenery.Size = new System.Drawing.Size(46, 13);
+            this.lblBackgroundScenery.TabIndex = 18;
+            this.lblBackgroundScenery.Text = "Scenery";
+            // 
+            // cbxTerrainMode
+            // 
+            this.cbxTerrainMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxTerrainMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTerrainMode.FormattingEnabled = true;
+            this.cbxTerrainMode.Items.AddRange(new object[] {
+            "None",
+            "2-tile-high floor with no ceiling",
+            "2-tile-high floor with 1-tile-high ceiling",
+            "2-tile-high floor with 3-tile-high ceiling",
+            "2-tile-high floor with 4-tile-high ceiling",
+            "2-tile-high floor with 8-tile-high ceiling",
+            "5-tile-high floor with 1-tile-high ceiling",
+            "5-tile-high floor with 3-tile-high ceiling",
+            "5-tile-high floor with 4-tile-high ceiling",
+            "6-tile-high floor with 1-tile-high ceiling",
+            "No floor with 1-tile-high ceiling",
+            "6-tile-high floor with 4-tile-high ceiling",
+            "9-tile-high floor with 1-tile-high ceiling",
+            "2-tile-high floor with 1-tile-high ceiling and 5 tiles in the middle",
+            "2-tile-high floor with 1-tile-high ceiling and 4 tiles in the middle",
+            "Floor tiles everywhere"});
+            this.cbxTerrainMode.Location = new System.Drawing.Point(82, 67);
+            this.cbxTerrainMode.Name = "cbxTerrainMode";
+            this.cbxTerrainMode.Size = new System.Drawing.Size(309, 21);
+            this.cbxTerrainMode.TabIndex = 17;
+            this.cbxTerrainMode.SelectedIndexChanged += new System.EventHandler(this.Item_ValueChanged);
+            // 
+            // lblTerrainMode
+            // 
+            this.lblTerrainMode.AutoSize = true;
+            this.lblTerrainMode.Location = new System.Drawing.Point(6, 70);
+            this.lblTerrainMode.Name = "lblTerrainMode";
+            this.lblTerrainMode.Size = new System.Drawing.Size(70, 13);
+            this.lblTerrainMode.TabIndex = 16;
+            this.lblTerrainMode.Text = "Terrain Mode";
+            // 
             // nudLength
             // 
-            this.nudLength.Location = new System.Drawing.Point(261, 41);
+            this.nudLength.Location = new System.Drawing.Point(218, 14);
             this.nudLength.Maximum = new decimal(new int[] {
             15,
+            0,
+            0,
+            0});
+            this.nudLength.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -101,15 +216,16 @@
             this.nudLength.TabIndex = 8;
             this.nudLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudLength.Value = new decimal(new int[] {
-            15,
+            1,
             0,
             0,
             0});
+            this.nudLength.ValueChanged += new System.EventHandler(this.Item_ValueChanged);
             // 
             // lblLength
             // 
             this.lblLength.AutoSize = true;
-            this.lblLength.Location = new System.Drawing.Point(215, 43);
+            this.lblLength.Location = new System.Drawing.Point(172, 16);
             this.lblLength.Name = "lblLength";
             this.lblLength.Size = new System.Drawing.Size(40, 13);
             this.lblLength.TabIndex = 7;
@@ -124,23 +240,28 @@
             this.lblObject.TabIndex = 6;
             this.lblObject.Text = "Object";
             // 
-            // comboBox1
+            // cbxAreaObjectCode
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(50, 40);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(159, 21);
-            this.comboBox1.TabIndex = 5;
+            this.cbxAreaObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxAreaObjectCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxAreaObjectCode.FormattingEnabled = true;
+            this.cbxAreaObjectCode.Location = new System.Drawing.Point(50, 40);
+            this.cbxAreaObjectCode.Name = "cbxAreaObjectCode";
+            this.cbxAreaObjectCode.Size = new System.Drawing.Size(341, 21);
+            this.cbxAreaObjectCode.TabIndex = 5;
+            this.cbxAreaObjectCode.SelectedIndexChanged += new System.EventHandler(this.AreaObectCode_SelectedIndexChanged);
             // 
             // chkPageFlag
             // 
             this.chkPageFlag.AutoSize = true;
-            this.chkPageFlag.Location = new System.Drawing.Point(172, 15);
+            this.chkPageFlag.Location = new System.Drawing.Point(259, 16);
             this.chkPageFlag.Name = "chkPageFlag";
             this.chkPageFlag.Size = new System.Drawing.Size(74, 17);
             this.chkPageFlag.TabIndex = 4;
             this.chkPageFlag.Text = "Page Flag";
             this.chkPageFlag.UseVisualStyleBackColor = true;
+            this.chkPageFlag.CheckedChanged += new System.EventHandler(this.Item_ValueChanged);
             // 
             // lblY
             // 
@@ -164,7 +285,7 @@
             // 
             this.nudY.Location = new System.Drawing.Point(131, 14);
             this.nudY.Maximum = new decimal(new int[] {
-            15,
+            11,
             0,
             0,
             0});
@@ -172,11 +293,7 @@
             this.nudY.Size = new System.Drawing.Size(35, 20);
             this.nudY.TabIndex = 1;
             this.nudY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudY.Value = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
+            this.nudY.ValueChanged += new System.EventHandler(this.Item_ValueChanged);
             // 
             // nudX
             // 
@@ -190,19 +307,15 @@
             this.nudX.Size = new System.Drawing.Size(35, 20);
             this.nudX.TabIndex = 0;
             this.nudX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudX.Value = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
+            this.nudX.ValueChanged += new System.EventHandler(this.Item_ValueChanged);
             // 
             // gbxBinary
             // 
             this.gbxBinary.Controls.Add(this.tbxBinary);
             this.gbxBinary.Controls.Add(this.chkBinary);
-            this.gbxBinary.Location = new System.Drawing.Point(12, 91);
+            this.gbxBinary.Location = new System.Drawing.Point(12, 166);
             this.gbxBinary.Name = "gbxBinary";
-            this.gbxBinary.Size = new System.Drawing.Size(189, 59);
+            this.gbxBinary.Size = new System.Drawing.Size(188, 59);
             this.gbxBinary.TabIndex = 3;
             this.gbxBinary.TabStop = false;
             // 
@@ -212,7 +325,7 @@
             this.tbxBinary.Location = new System.Drawing.Point(9, 23);
             this.tbxBinary.MaxLength = 8;
             this.tbxBinary.Name = "tbxBinary";
-            this.tbxBinary.Size = new System.Drawing.Size(157, 20);
+            this.tbxBinary.Size = new System.Drawing.Size(173, 20);
             this.tbxBinary.TabIndex = 1;
             this.tbxBinary.WordWrap = false;
             this.tbxBinary.TextChanged += new System.EventHandler(this.Binary_TextChanged);
@@ -234,17 +347,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(374, 157);
+            this.ClientSize = new System.Drawing.Size(421, 237);
             this.Controls.Add(this.gbxBinary);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(390, 276);
             this.Name = "ObjectEditorForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "ObjectEditorForm";
+            this.Text = "Object Editor";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudLength)).EndInit();
@@ -264,7 +379,7 @@
         private System.Windows.Forms.NumericUpDown nudLength;
         private System.Windows.Forms.Label lblLength;
         private System.Windows.Forms.Label lblObject;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbxAreaObjectCode;
         private System.Windows.Forms.CheckBox chkPageFlag;
         private System.Windows.Forms.Label lblY;
         private System.Windows.Forms.Label lblX;
@@ -273,5 +388,11 @@
         private System.Windows.Forms.GroupBox gbxBinary;
         private System.Windows.Forms.TextBox tbxBinary;
         private System.Windows.Forms.CheckBox chkBinary;
+        private System.Windows.Forms.ComboBox cbxTerrainMode;
+        private System.Windows.Forms.Label lblTerrainMode;
+        private System.Windows.Forms.ComboBox cbxForegroundScenery;
+        private System.Windows.Forms.Label lblBackgroundScenery;
+        private System.Windows.Forms.Label lblForegroundScenery;
+        private System.Windows.Forms.ComboBox cbxBackgroundScenery;
     }
 }

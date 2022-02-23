@@ -18,24 +18,6 @@ namespace Brutario.Smb1
         /// </summary>
         public const int DefaultBufferSize = 5;
 
-        private const int PulleyRopeTileTableSize = 3;
-        private const int JPipeTilesTable1Size = 4;
-        private const int JPipeTilesTable2Size = 4;
-        private const int JPipeTilesTable3Size = 4;
-        private const int JPipeTilesTable4Size = 8;
-        private const int PipeTileTableSize = 8;
-        private const int WaterSurfaceTileTableSize = 6;
-        private const int CoinRowTileTableSize = 4;
-        private const int BrickRowTileTableSize = 5;
-        private const int StoneRowTileTableSize = 4;
-        private const int SingleTileObjectTableSize = 0x0E;
-        private const int CastleTileTableSize = 0x6E;
-        private const int StoneStairYTableSize = 9;
-        private const int StoneStairHeightTableSize = 9;
-        private const int JPipeTilesTable5Size = 4;
-        private const int JPipeTilesTable6Size = 4;
-        private const int JPipeTilesTable7Size = 4;
-
         public AreaObjectParser(
             AreaObjectRenderer areaObjectRenderer,
             IList<AreaObjectCommand> areaObjectData,
@@ -50,23 +32,23 @@ namespace Brutario.Smb1
 
             AreaData = new Collection<AreaObjectCommand>(areaObjectData);
 
-            PulleyRopeTileTable = new byte[PulleyRopeTileTableSize];
-            JPipeTilesTable1 = new byte[JPipeTilesTable1Size];
-            JPipeTilesTable2 = new byte[JPipeTilesTable2Size];
-            JPipeTilesTable3 = new byte[JPipeTilesTable3Size];
-            JPipeTilesTable4 = new byte[JPipeTilesTable4Size];
-            PipeTileTable = new byte[PipeTileTableSize];
-            WaterSurfaceTileTable = new byte[WaterSurfaceTileTableSize];
-            CoinRowTileTable = new byte[CoinRowTileTableSize];
-            BrickRowTileTable = new byte[BrickRowTileTableSize];
-            StoneRowTileTable = new byte[StoneRowTileTableSize];
-            SingleTileObjectTable = new byte[SingleTileObjectTableSize];
-            CastleTileTable = new byte[CastleTileTableSize];
-            StoneStairYTable = new byte[StoneStairYTableSize];
-            StoneStairHeightTable = new byte[StoneStairHeightTableSize];
-            JPipeTilesTable5 = new byte[JPipeTilesTable5Size];
-            JPipeTilesTable6 = new byte[JPipeTilesTable6Size];
-            JPipeTilesTable7 = new byte[JPipeTilesTable7Size];
+            PulleyRopeTileTable = areaObjectRenderer.PulleyRopeTileTable;
+            JPipeTilesTable1 = areaObjectRenderer.JPipeTilesTable1;
+            JPipeTilesTable2 = areaObjectRenderer.JPipeTilesTable2;
+            JPipeTilesTable3 = areaObjectRenderer.JPipeTilesTable3;
+            JPipeTilesTable4 = areaObjectRenderer.JPipeTilesTable4;
+            PipeTileTable = areaObjectRenderer.PipeTileTable;
+            WaterSurfaceTileTable = areaObjectRenderer.WaterSurfaceTileTable;
+            CoinRowTileTable = areaObjectRenderer.CoinRowTileTable;
+            BrickRowTileTable = areaObjectRenderer.BrickRowTileTable;
+            StoneRowTileTable = areaObjectRenderer.StoneRowTileTable;
+            SingleTileObjectTable = areaObjectRenderer.SingleTileObjectTable;
+            CastleTileTable = areaObjectRenderer.CastleTileTable;
+            StoneStairYTable = areaObjectRenderer.StoneStairYTable;
+            StoneStairHeightTable = areaObjectRenderer.StoneStairHeightTable;
+            JPipeTilesTable5 = areaObjectRenderer.JPipeTilesTable5;
+            JPipeTilesTable6 = areaObjectRenderer.JPipeTilesTable6;
+            JPipeTilesTable7 = areaObjectRenderer.JPipeTilesTable7;
 
             LengthBuffer = new int[BufferSize];
             IndexBuffer = new int[BufferSize];
@@ -128,21 +110,7 @@ namespace Brutario.Smb1
             };
         }
 
-        public AreaObjectParser(
-            AreaObjectRenderer areaObjectRenderer,
-            IList<AreaObjectCommand> areaObjectData,
-            GameData gameData,
-            AreaObjectParserPointers pointers,
-            int bufferSize = DefaultBufferSize)
-            : this(areaObjectRenderer, areaObjectData, bufferSize)
-        {
-            ReadGameData(gameData, pointers);
-        }
-
-        public AreaObjectRenderer AreaObjectRenderer
-        {
-            get;
-        }
+        public AreaObjectRenderer AreaObjectRenderer { get; }
 
         public byte[] PulleyRopeTileTable { get; }
 
@@ -507,138 +475,6 @@ namespace Brutario.Smb1
             get;
         }
 
-        public void ReadGameData(GameData gameData, AreaObjectParserPointers pointers)
-        {
-            if (gameData is null)
-            {
-                throw new ArgumentNullException(nameof(gameData));
-            }
-
-            if (pointers is null)
-            {
-                throw new ArgumentNullException(nameof(pointers));
-            }
-
-            var rom = gameData.Rom;
-            rom.ReadBytesIndirect(
-                pointers.PulleyRopeTileTablePointer,
-                PulleyRopeTileTable);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable1Pointer,
-                JPipeTilesTable1);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable2Pointer,
-                JPipeTilesTable2);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable3Pointer,
-                JPipeTilesTable3);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable4Pointer,
-                JPipeTilesTable4);
-            rom.ReadBytesIndirect(
-                pointers.PipeTileTablePointer,
-                PipeTileTable);
-            rom.ReadBytesIndirect(
-                pointers.WaterSurfaceTileTablePointer,
-                WaterSurfaceTileTable);
-            rom.ReadBytesIndirect(
-                pointers.CoinRowTileTablePointer,
-                CoinRowTileTable);
-            rom.ReadBytesIndirect(
-                pointers.BrickRowTileTablePointer,
-                BrickRowTileTable);
-            rom.ReadBytesIndirect(
-                pointers.StoneRowTileTablePointer,
-                StoneRowTileTable);
-            rom.ReadBytesIndirect(
-                pointers.SingleTileObjectTablePointer,
-                SingleTileObjectTable);
-            rom.ReadBytesIndirect(
-                pointers.CastleTileTablePointer,
-                CastleTileTable);
-            rom.ReadBytesIndirect(
-                pointers.StoneStairYTablePointer,
-                StoneStairYTable);
-            rom.ReadBytesIndirect(
-                pointers.StoneStairHeightTablePointer,
-                StoneStairHeightTable);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable5Pointer,
-                JPipeTilesTable5);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable6Pointer,
-                JPipeTilesTable6);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable7Pointer,
-                JPipeTilesTable7);
-        }
-
-        public void WriteToGameData(GameData gameData, AreaObjectParserPointers pointers)
-        {
-            if (gameData is null)
-            {
-                throw new ArgumentNullException(nameof(gameData));
-            }
-
-            if (pointers is null)
-            {
-                throw new ArgumentNullException(nameof(pointers));
-            }
-
-            var rom = gameData.Rom;
-            rom.WriteBytesIndirect(
-                pointers.JPipeTilesTable7Pointer,
-                JPipeTilesTable7);
-            rom.WriteBytesIndirect(
-                pointers.JPipeTilesTable6Pointer,
-                JPipeTilesTable6);
-            rom.WriteBytesIndirect(
-                pointers.JPipeTilesTable5Pointer,
-                JPipeTilesTable5);
-            rom.WriteBytesIndirect(
-                pointers.StoneStairHeightTablePointer,
-                StoneStairHeightTable);
-            rom.WriteBytesIndirect(
-                pointers.StoneStairYTablePointer,
-                StoneStairYTable);
-            rom.WriteBytesIndirect(
-                pointers.CastleTileTablePointer,
-                CastleTileTable);
-            rom.WriteBytesIndirect(
-                pointers.SingleTileObjectTablePointer,
-                SingleTileObjectTable);
-            rom.WriteBytesIndirect(
-                pointers.StoneRowTileTablePointer,
-                StoneRowTileTable);
-            rom.WriteBytesIndirect(
-                pointers.BrickRowTileTablePointer,
-                BrickRowTileTable);
-            rom.WriteBytesIndirect(
-                pointers.CoinRowTileTablePointer,
-                CoinRowTileTable);
-            rom.WriteBytesIndirect(
-                pointers.WaterSurfaceTileTablePointer,
-                WaterSurfaceTileTable);
-            rom.WriteBytesIndirect(
-                pointers.PipeTileTablePointer,
-                PipeTileTable);
-            rom.WriteBytesIndirect(
-                pointers.JPipeTilesTable4Pointer,
-                JPipeTilesTable4);
-            rom.WriteBytesIndirect(
-                pointers.JPipeTilesTable3Pointer,
-                JPipeTilesTable3);
-            rom.WriteBytesIndirect(
-                pointers.JPipeTilesTable2Pointer,
-                JPipeTilesTable2);
-            rom.ReadBytesIndirect(
-                pointers.JPipeTilesTable1Pointer,
-                JPipeTilesTable1);
-            rom.WriteBytesIndirect(
-                pointers.PulleyRopeTileTablePointer,
-                PulleyRopeTileTable);
-        }
-
         /// <summary>
         /// Clears all buffers in <see cref="LengthBuffer"/>. This should be
         /// called every time a new screen is going to be rendered.
@@ -716,7 +552,7 @@ namespace Brutario.Smb1
             }
 
             // Increment screen if we encounter a screen flag.
-            if (CurrentObjectCommand.ScreenFlag && !IsScreenJumpSet)
+            if (IsScreenFlag && !IsScreenJumpSet)
             {
                 CurrentObjectScreen++;
                 IsScreenJumpSet = true;
@@ -854,21 +690,21 @@ namespace Brutario.Smb1
         {
             switch (currentTile)
             {
-                case 0:
-                    return true;
+            case 0:
+                return true;
 
-                case 0x1B:
-                case 0x1E:
-                case 0x46:
-                case 0x4A:
-                    return false;
+            case 0x1B:
+            case 0x1E:
+            case 0x46:
+            case 0x4A:
+                return false;
 
-                case 0x56:
-                case 0x57:
-                    return tile != 0x50;
+            case 0x56:
+            case 0x57:
+                return tile != 0x50;
 
-                default:
-                    return currentTile < 0xE7;
+            default:
+                return currentTile < 0xE7;
             }
         }
 
@@ -919,21 +755,21 @@ namespace Brutario.Smb1
         {
             switch (CurrentHeader.AreaPlatformType)
             {
-                case AreaPlatformType.Trees:
-                    RenderTreePlatform();
-                    break;
+            case AreaPlatformType.Trees:
+                RenderTreePlatform();
+                break;
 
-                case AreaPlatformType.Mushrooms:
-                    RenderMushroomPlatform();
-                    break;
+            case AreaPlatformType.Mushrooms:
+                RenderMushroomPlatform();
+                break;
 
-                case AreaPlatformType.CloudGround:
-                    RenderCloudPlatform();
-                    break;
+            case AreaPlatformType.CloudGround:
+                RenderCloudPlatform();
+                break;
 
-                case AreaPlatformType.BulletBillTurrets:
-                    RenderBulletBillTurrets();
-                    break;
+            case AreaPlatformType.BulletBillTurrets:
+                RenderBulletBillTurrets();
+                break;
             }
         }
 
@@ -1031,6 +867,8 @@ namespace Brutario.Smb1
 
         private void RenderCloudPlatform()
         {
+            // Unverified
+            RenderTreePlatform();
         }
 
         private void RenderBulletBillTurrets()
@@ -1190,7 +1028,6 @@ namespace Brutario.Smb1
 
         private void SidewaysPipe()
         {
-            _ = TrySetCurrentBufferObjectWidth();
             var y = CurrentBufferObject.Y;
             TileBuffer[y++] = 0x75;
             TileBuffer[y] = 0x76;
@@ -1264,9 +1101,9 @@ namespace Brutario.Smb1
         private void ForegroundChange()
         {
             var header = CurrentHeader;
-            header.ForegroundScenery = (ForegroundScenery)
-                (CurrentBufferObject.BaseCommand & 7);
-
+            header.ForegroundScenery = (CurrentBufferObject.BaseCommand & 7) < 4
+                ? (ForegroundScenery)(CurrentBufferObject.BaseCommand & 7)
+                : ForegroundScenery.None;
             CurrentHeader = header;
         }
 
@@ -1277,7 +1114,7 @@ namespace Brutario.Smb1
                 (CurrentBufferObject.BaseCommand & 0x0F);
 
             header.BackgroundScenery = (BackgroundScenery)
-                (CurrentBufferObject.BaseCommand >> 4);
+                ((CurrentBufferObject.BaseCommand & 0x30) >> 4);
 
             CurrentHeader = header;
         }
@@ -1303,6 +1140,12 @@ namespace Brutario.Smb1
             var index = CurrentBufferObjectWidth;
             for (var i = 0x16; y != 0x0B;)
             {
+                // Bounds check not in game.
+                if (index >= CastleTileTable.Length || y >= TileBuffer.Length)
+                {
+                    break;
+                }
+
                 var tile = CastleTileTable[index];
                 TileBuffer[y++] = tile;
                 if (i != 0)
@@ -1326,13 +1169,20 @@ namespace Brutario.Smb1
 
         private void CastleCeilingCap()
         {
-            _ = TrySetCurrentBufferObjectWidth();
             (var y, _) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
             var firstTile = TileBuffer[0];
             var secondTile = firstTile + (firstTile == 0x65 ? +1 : -1);
             do
             {
+                // Check not in the game.
+                if (y >= TileBuffer.Length)
+                {
+                    break;
+                }
+
                 TileBuffer[y] = (y & 1) == 0 ? firstTile : secondTile;
+                y++;
             }
             while (--CurrentBufferObjectWidth >= 0);
         }
@@ -1343,6 +1193,12 @@ namespace Brutario.Smb1
             if (TrySetCurrentBufferObjectWidth(height))
             {
                 ObjectParameter = 9;
+            }
+
+            // Bounds check not in game.
+            if (ObjectParameter == 0)
+            {
+                return;
             }
 
             int y = StoneStairYTable[--ObjectParameter];
@@ -1379,12 +1235,17 @@ namespace Brutario.Smb1
 
         private void CastleRectangularCeilingTiles()
         {
-            _ = TrySetCurrentBufferObjectWidth();
             (var y, _) = GetObjectColumnProperties();
-            TileBuffer[y++] = 0x67;
-            while (y < 0x0C && TileBuffer[++y] == 0x65 && TileBuffer[y] == 0x66)
+            _ = TrySetCurrentBufferObjectWidth();
+            TileBuffer[y] = 0x67;
+            for (y += 2; y < TileBuffer.Length; y += 2)
             {
-                TileBuffer[y++] = 0x67;
+                if (TileBuffer[y] != 0x65 && TileBuffer[y] != 0x66)
+                {
+                    break;
+                }
+
+                TileBuffer[y] = 0x67;
             }
         }
 
@@ -1433,22 +1294,21 @@ namespace Brutario.Smb1
 
         private void CastleFloorRightWall()
         {
-            _ = TrySetCurrentBufferObjectWidth();
             (var y, _) = GetObjectColumnProperties();
+            _ = TrySetCurrentBufferObjectWidth();
             if (CurrentBufferObjectWidth == 0)
             {
                 TileBuffer[y] = TileBuffer[y] == 0x68 ? 0xF2 : 0xF0;
                 TileBuffer[++y] = 0xF1;
-                TileBuffer[++y] = 0x69;
                 while (++y != 0x0D)
                 {
-                    TileBuffer[y] = 0xEF;
+                    TileBuffer[y] = 0x69;
                 }
             }
             else
             {
-                TileBuffer[y++] = 3;
-                TileBuffer[y] = 0xEF;
+                TileBuffer[y] = 3;
+                TileBuffer[y + 1] = 0xEF;
             }
         }
 
@@ -1468,7 +1328,7 @@ namespace Brutario.Smb1
             _ = TrySetCurrentBufferObjectWidth(3);
             (_, var height) = GetObjectColumnProperties();
             height -= 2;
-            int y = height + 1;
+            var y = height + 1;
             var index = CurrentBufferObjectWidth;
             var tile = JPipeTilesTable5[index];
             if (tile != 0)
@@ -1476,11 +1336,18 @@ namespace Brutario.Smb1
                 RenderTileColumn(tile, 0, height);
             }
 
-            tile = JPipeTilesTable6[index];
-            TileBuffer[y++] = tile;
+            // Bounds checks not in the game.
+            if (y >= 0 && y < TileBuffer.Length)
+            {
+                tile = JPipeTilesTable6[index];
+                TileBuffer[y] = tile;
+            }
 
-            tile = JPipeTilesTable7[index];
-            TileBuffer[y] = tile;
+            if (++y >= 0 && y < TileBuffer.Length)
+            {
+                tile = JPipeTilesTable7[index];
+                TileBuffer[y] = tile;
+            }
         }
 
         private void VerticalClimbingObject()

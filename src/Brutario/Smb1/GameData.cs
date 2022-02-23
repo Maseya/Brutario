@@ -8,22 +8,20 @@ namespace Brutario.Smb1
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
 
     public class GameData
     {
         private int _areaNumber;
 
+        private AreaHeader _areaHeader;
+
         public GameData(RomIO rom, Pointers pointers)
         {
-            Pointers = pointers;
-            Rom = rom ?? throw new ArgumentOutOfRangeException(nameof(rom));
-
-            // I should do more checks, but not really sure what are good
-            // choices.
-            if (false && Rom.HeaderlessSize < 0x200000)
-            {
-                throw new ArgumentException("ROM data size is insufficient.");
-            }
+            Rom = rom
+                ?? throw new ArgumentOutOfRangeException(nameof(rom));
+            Pointers = pointers
+                ?? throw new ArgumentNullException(nameof(pointers));
 
             PaletteData = new PaletteData(this, pointers.PaletteDataPointers);
             GfxData = new GfxData(this, pointers.GfxDataPointers);
@@ -31,112 +29,25 @@ namespace Brutario.Smb1
             TilemapLoader = new TilemapLoader(this, pointers.TilemapLoaderPointers);
             AreaLoader = new AreaLoader(this, pointers.AreaLoaderPointers);
             AreaObjectRenderer = new AreaObjectRenderer(this, pointers.AreaObjectRendererPointers);
-            AreaSpriteRenderer = new AreaSpriteRenderer();
+            AreaSpriteRenderer = new AreaSpriteRenderer(this);
 
-            CurrentPalette = new Color32BppArgb[0x100];
+            Palette = new Color32BppArgb[0x100];
             PixelData = new byte[GfxData.TotalPixelDataSize];
             Map16Tiles = new Obj16Tile[0x100];
 
-            CurrentObjectData = new List<AreaObjectCommand>();
-            CurrentSpriteData = new List<AreaSpriteCommand>();
+            ObjectData = new List<AreaObjectCommand>();
+            SpriteData = new List<AreaSpriteCommand>();
 
             GfxData.ReadStaticData(PixelData);
-            Map16Data.ReadTiles(Map16Tiles);
+            Map16Data.ReadStaticTiles(Map16Tiles);
 
-            AreaNumber = AreaLoader.GetAreaNumber(0, 0);
-
-            // We will have to manually call ReloadArea since assigning zero
-            // will not trigger the event the first time.
-            if (AreaNumber == 0)
-            {
-                ReloadArea();
-            }
+            _areaNumber = AreaLoader.GetAreaNumber(world: 0, level: 0);
+            ReloadArea();
         }
 
         public event EventHandler AreaNumberChanged;
 
-        public RomIO Rom
-        {
-            get;
-        }
-
-        public AreaLoader AreaLoader
-        {
-            get;
-        }
-
-        public TilemapLoader TilemapLoader
-        {
-            get;
-        }
-
-        public AreaObjectRenderer AreaObjectRenderer
-        {
-            get;
-        }
-
-        public AreaSpriteRenderer AreaSpriteRenderer
-        {
-            get;
-        }
-
-        public AreaHeader CurrentAreaHeader
-        {
-            get;
-            set;
-        }
-
-        public List<AreaObjectCommand> CurrentObjectData
-        {
-            get;
-        }
-
-        public List<AreaSpriteCommand> CurrentSpriteData
-        {
-            get;
-        }
-
-        public int AnimationFrame
-        {
-            get;
-            private set;
-        }
-
-        public Color32BppArgb[] CurrentPalette
-        {
-            get;
-        }
-
-        public byte[] PixelData
-        {
-            get;
-        }
-
-        public Obj16Tile[] Map16Tiles
-        {
-            get;
-        }
-
-        public Map16Data Map16Data
-        {
-            get;
-        }
-
-        public PaletteData PaletteData
-        {
-            get;
-        }
-
-        public GfxData GfxData
-        {
-            get;
-        }
-
-        public Player CurrentPlayer
-        {
-            get;
-            set;
-        }
+        public event EventHandler AreaHeaderChanged;
 
         public int AreaNumber
         {
@@ -181,75 +92,210 @@ namespace Brutario.Smb1
             }
         }
 
+        public AreaHeader AreaHeader
+        {
+            get
+            {
+                return _areaHeader;
+            }
+            set
+            {
+                if (_areaHeader == value)
+                {
+                    return;
+                }
+
+                _areaHeader = value;
+                OnAreaHeaderChanged(EventArgs.Empty);
+            }
+        }
+
+        public List<AreaObjectCommand> ObjectData
+        {
+            get;
+        }
+
+        public List<AreaSpriteCommand> SpriteData
+        {
+            get;
+        }
+
+        public Player Player
+        {
+            get;
+            set;
+        }
+
+        public Color32BppArgb[] Palette
+        {
+            get;
+        }
+
+        public byte[] PixelData
+        {
+            get;
+        }
+
+        public Obj16Tile[] Map16Tiles
+        {
+            get;
+        }
+
+        public RomIO Rom
+        {
+            get;
+        }
+
+        public PaletteData PaletteData
+        {
+            get;
+        }
+
+        public GfxData GfxData
+        {
+            get;
+        }
+
+        public Map16Data Map16Data
+        {
+            get;
+        }
+
+        public AreaLoader AreaLoader
+        {
+            get;
+        }
+
+        public TilemapLoader TilemapLoader
+        {
+            get;
+        }
+
+        public AreaObjectRenderer AreaObjectRenderer
+        {
+            get;
+        }
+
+        public AreaSpriteRenderer AreaSpriteRenderer
+        {
+            get;
+        }
+
         internal Pointers Pointers
         {
             get;
         }
 
-        public void Animate(int frame)
+        public void UpdateAnimatedPixelData(int frame)
         {
-            AnimationFrame = frame;
             GfxData.ReadAnimationFrame(frame, PixelData);
         }
 
-        public ObjTile[] RenderScreenTiles(int[] tiles, int width)
+        public int GetObjectIndex(Point location)
         {
-            if (tiles is null)
+            var i = 0;
+            foreach (var rect in GetObjectRectangles())
             {
-                throw new ArgumentNullException(nameof(tiles));
+                if (rect.Contains(location))
+                {
+                    return i;
+                }
+
+                i++;
             }
 
-            if (width <= 0)
+            return -1;
+        }
+
+        public IEnumerable<Rectangle> GetObjectRectangles()
+        {
+            var en = AreaObjectCommand.EnumeratePositions(ObjectData);
+            foreach ((var x, var y) in en)
             {
-                throw new ArgumentOutOfRangeException(nameof(width));
+                yield return new Rectangle(x, y, 16, 16);
+            }
+        }
+
+        public int GetSpriteIndex(Point location)
+        {
+            var i = 0;
+            foreach (var rect in GetSpriteRectangles())
+            {
+                if (rect.Contains(location))
+                {
+                    return i;
+                }
+
+                i++;
             }
 
-            if ((tiles.Length % width) != 0)
-            {
-                throw new ArgumentException();
-            }
+            return -1;
+        }
 
+        public IEnumerable<Rectangle> GetSpriteRectangles()
+        {
+            var en = AreaSpriteCommand.EnumeratePositions(SpriteData);
+            foreach ((var x, var y) in en)
+            {
+                yield return new Rectangle(x, y, 16, 16);
+            }
+        }
+
+        public ObjTile[] ReadBG1Tiles()
+        {
+            var tiles = AreaObjectRenderer.TileMap;
+            const int width = 0x200;
             var height = tiles.Length / width;
             var result = new ObjTile[tiles.Length * 4];
             for (var y = 0; y < height; y++)
             {
-                var rowIndex = y * width;
-                var rowIndex2 = rowIndex << 2;
-                for (var x = 0; x < width; x++)
+                var srcRow = y * width;
+                var destRow = srcRow << 2;
+                for (var srcX = 0; srcX < width; srcX++)
                 {
-                    var x2 = x << 1;
-                    var index = rowIndex + x;
+                    var destX = srcX << 1;
+                    var index = srcRow + srcX;
                     var tileIndex = (byte)tiles[index];
                     var tile = Map16Tiles[tileIndex];
                     if (tileIndex == 0x56 || tileIndex == 0x57)
                     {
-                        if (x > 0 && ((byte)tiles[index - 1]) == 0)
+                        if (srcX > 0 && ((byte)tiles[index - 1]) == 0)
                         {
                             tile.TopLeft += 4;
                             tile.BottomLeft += 4;
                         }
 
-                        if (x + 1 < width && ((byte)tiles[index + 1]) == 0)
+                        if (srcX + 1 < width && ((byte)tiles[index + 1]) == 0)
                         {
                             tile.TopRight += 4;
                             tile.BottomRight += 4;
                         }
                     }
 
-                    result[rowIndex2 + x2] = tile.TopLeft;
-                    result[rowIndex2 + x2 + 1] = tile.TopRight;
-                    result[rowIndex2 + (width << 1) + x2] = tile.BottomLeft;
-                    result[rowIndex2 + (width << 1) + x2 + 1] = tile.BottomRight;
+                    result[destRow + destX] = tile.TopLeft;
+                    result[destRow + destX + 1] = tile.TopRight;
+                    result[destRow + (width << 1) + destX] = tile.BottomLeft;
+                    result[destRow + (width << 1) + destX + 1] = tile.BottomRight;
                 }
             }
 
             return result;
         }
 
+        public IEnumerable<Sprite> EnumerateSprites(int frame)
+        {
+            return AreaSpriteRenderer.GetSprites(
+                SpriteData.ToArray(),
+                ObjectData.ToArray(),
+                frame,
+                AreaType,
+                true);
+        }
+
         public void ReloadArea()
         {
             UpdateArea();
-            PaletteData.ReadPalette(ObjectAreaIndex, CurrentPalette);
+            PaletteData.ReadPalette(ObjectAreaIndex, Palette);
             TilemapLoader.LoadTilemap(ObjectAreaIndex);
             GfxData.ReadAreaTileSet(
                ObjectAreaIndex,
@@ -262,19 +308,19 @@ namespace Brutario.Smb1
         {
             AreaObjectRenderer.RenderTileMap(
                 AreaType,
-                CurrentAreaHeader,
-                CurrentObjectData,
+                AreaHeader,
+                ObjectData,
                 AreaNumber == 2);
         }
 
         public void WriteArea()
         {
-            AreaLoader.Headers[ObjectAreaIndex] = CurrentAreaHeader;
-            AreaLoader.AreaObjectData[ObjectAreaIndex] = CurrentObjectData.ToArray();
-            AreaLoader.AreaSpriteData[SpriteAreaIndex] = CurrentSpriteData.ToArray();
+            AreaLoader.Headers[ObjectAreaIndex] = AreaHeader;
+            AreaLoader.AreaObjectData[ObjectAreaIndex] = ObjectData.ToArray();
+            AreaLoader.AreaSpriteData[SpriteAreaIndex] = SpriteData.ToArray();
         }
 
-        public void ApplyChanges()
+        public void Save()
         {
             PaletteData.WriteToGameData(this, Pointers.PaletteDataPointers);
             GfxData.WriteToGameData(this, Pointers.GfxDataPointers);
@@ -289,15 +335,19 @@ namespace Brutario.Smb1
             AreaNumberChanged?.Invoke(this, e);
         }
 
+        protected virtual void OnAreaHeaderChanged(EventArgs e)
+        {
+            RenderAreaTilemap();
+            AreaHeaderChanged?.Invoke(this, e);
+        }
+
         private void UpdateArea()
         {
-            CurrentAreaHeader = AreaLoader.Headers[ObjectAreaIndex];
-            CurrentObjectData.Clear();
-            CurrentObjectData.AddRange(
-                AreaLoader.AreaObjectData[ObjectAreaIndex]);
-            CurrentSpriteData.Clear();
-            CurrentSpriteData.AddRange(
-                AreaLoader.AreaSpriteData[SpriteAreaIndex]);
+            AreaHeader = AreaLoader.Headers[ObjectAreaIndex];
+            ObjectData.Clear();
+            ObjectData.AddRange(AreaLoader.AreaObjectData[ObjectAreaIndex]);
+            SpriteData.Clear();
+            SpriteData.AddRange(AreaLoader.AreaSpriteData[SpriteAreaIndex]);
             RenderAreaTilemap();
         }
     }

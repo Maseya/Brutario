@@ -72,16 +72,12 @@ namespace Brutario
             return (color.R >> 3) | ((color.G >> 3) << 5) | ((color.B >> 3) << 10);
         }
 
-        public static bool operator ==(
-            Color32BppArgb left,
-            Color32BppArgb right)
+        public static bool operator ==(Color32BppArgb left, Color32BppArgb right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(
-            Color32BppArgb left,
-            Color32BppArgb right)
+        public static bool operator !=(Color32BppArgb left, Color32BppArgb right)
         {
             return !(left == right);
         }

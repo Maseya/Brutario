@@ -241,7 +241,7 @@ namespace Brutario.Smb1
             }
             ReadTileSet(areaTileSetIndex, pixelData);
 
-            // HACK: These levels don't load a complete tileset (to save time). It uses
+            // HACK: These levels don't load a complete tileset. It uses
             // tile sets of the area before them. Eventually, I'll need to
             // devise a system to better load tile sets.
             if (areaIndex == 2)

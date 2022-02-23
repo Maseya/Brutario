@@ -41,11 +41,11 @@ namespace Brutario
             this.tsmOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportTileDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmLevel = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmLoadArea = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmExportTileData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEditHeader = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmView = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmViewObjectListWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
@@ -58,11 +58,11 @@ namespace Brutario
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbLoadAreaByLevel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.tsbCut = new System.Windows.Forms.ToolStripButton();
+            this.tsbCopy = new System.Windows.Forms.ToolStripButton();
+            this.tsbPaste = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.tsbHelp = new System.Windows.Forms.ToolStripButton();
             this.areaScrollBar = new System.Windows.Forms.HScrollBar();
             this.areaControl = new Brutario.AreaControl();
             this.mnuMain.SuspendLayout();
@@ -73,8 +73,8 @@ namespace Brutario
             // 
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmFile,
-            this.levelToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.tsmLevel,
+            this.tsmView});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Size = new System.Drawing.Size(1384, 24);
@@ -95,65 +95,65 @@ namespace Brutario
             // 
             this.tsmOpen.Name = "tsmOpen";
             this.tsmOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmOpen.Size = new System.Drawing.Size(146, 22);
+            this.tsmOpen.Size = new System.Drawing.Size(180, 22);
             this.tsmOpen.Text = "&Open";
             this.tsmOpen.Click += new System.EventHandler(this.Open_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmExit
             // 
             this.tsmExit.Name = "tsmExit";
-            this.tsmExit.Size = new System.Drawing.Size(146, 22);
+            this.tsmExit.Size = new System.Drawing.Size(180, 22);
             this.tsmExit.Text = "E&xit";
             this.tsmExit.Click += new System.EventHandler(this.Exit_Click);
             // 
-            // levelToolStripMenuItem
+            // tsmLevel
             // 
-            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadAreaToolStripMenuItem,
-            this.exportTileDataToolStripMenuItem,
+            this.tsmLevel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmLoadArea,
+            this.tsmExportTileData,
             this.tsmEditHeader});
-            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
-            this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.levelToolStripMenuItem.Text = "Level";
+            this.tsmLevel.Name = "tsmLevel";
+            this.tsmLevel.Size = new System.Drawing.Size(46, 20);
+            this.tsmLevel.Text = "Level";
             // 
-            // loadAreaToolStripMenuItem
+            // tsmLoadArea
             // 
-            this.loadAreaToolStripMenuItem.Name = "loadAreaToolStripMenuItem";
-            this.loadAreaToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.loadAreaToolStripMenuItem.Text = "Load Area";
+            this.tsmLoadArea.Name = "tsmLoadArea";
+            this.tsmLoadArea.Size = new System.Drawing.Size(180, 22);
+            this.tsmLoadArea.Text = "Load Area";
             // 
-            // exportTileDataToolStripMenuItem
+            // tsmExportTileData
             // 
-            this.exportTileDataToolStripMenuItem.Name = "exportTileDataToolStripMenuItem";
-            this.exportTileDataToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.exportTileDataToolStripMenuItem.Text = "Export Tile Data";
-            this.exportTileDataToolStripMenuItem.Click += new System.EventHandler(this.ExportTileData_Click);
+            this.tsmExportTileData.Name = "tsmExportTileData";
+            this.tsmExportTileData.Size = new System.Drawing.Size(180, 22);
+            this.tsmExportTileData.Text = "Export Tile Data";
+            this.tsmExportTileData.Click += new System.EventHandler(this.ExportTileData_Click);
             // 
             // tsmEditHeader
             // 
             this.tsmEditHeader.Name = "tsmEditHeader";
-            this.tsmEditHeader.Size = new System.Drawing.Size(156, 22);
+            this.tsmEditHeader.Size = new System.Drawing.Size(180, 22);
             this.tsmEditHeader.Text = "Edit Header";
             this.tsmEditHeader.Click += new System.EventHandler(this.EditHeader_Click);
             // 
-            // viewToolStripMenuItem
+            // tsmView
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmViewObjectListWindow});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "&View";
+            this.tsmView.Name = "tsmView";
+            this.tsmView.Size = new System.Drawing.Size(44, 20);
+            this.tsmView.Text = "&View";
             // 
             // tsmViewObjectListWindow
             // 
             this.tsmViewObjectListWindow.CheckOnClick = true;
             this.tsmViewObjectListWindow.Name = "tsmViewObjectListWindow";
-            this.tsmViewObjectListWindow.Size = new System.Drawing.Size(130, 22);
+            this.tsmViewObjectListWindow.Size = new System.Drawing.Size(180, 22);
             this.tsmViewObjectListWindow.Text = "&Object List";
             this.tsmViewObjectListWindow.CheckedChanged += new System.EventHandler(this.ViewObjectListWindow_CheckedChanged);
             // 
@@ -161,7 +161,7 @@ namespace Brutario
             // 
             this.openFileDialog.DefaultExt = "sfc";
             this.openFileDialog.Filter = "ROM Image (*.sfc;*.smc)|*.smc;*.sfc|All files|*.*";
-            this.openFileDialog.Title = "Open Super Mario All-Stars [U] file";
+            this.openFileDialog.Title = "Open Super Mario All-Stars ROM";
             // 
             // toolStrip
             // 
@@ -175,11 +175,11 @@ namespace Brutario
             this.toolStripSeparator4,
             this.tsbLoadAreaByLevel,
             this.toolStripSeparator3,
-            this.cutToolStripButton,
-            this.copyToolStripButton,
-            this.pasteToolStripButton,
+            this.tsbCut,
+            this.tsbCopy,
+            this.tsbPaste,
             this.toolStripSeparator2,
-            this.helpToolStripButton});
+            this.tsbHelp});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1384, 25);
@@ -196,13 +196,13 @@ namespace Brutario
             this.tsbOpen.Text = "&Open";
             this.tsbOpen.Click += new System.EventHandler(this.Open_Click);
             // 
-            // tsmSave
+            // tsbSave
             // 
             this.tsbSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbSave.Enabled = false;
-            this.tsbSave.Image = ((System.Drawing.Image)(resources.GetObject("tsmSave.Image")));
+            this.tsbSave.Image = ((System.Drawing.Image)(resources.GetObject("tsbSave.Image")));
             this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSave.Name = "tsmSave";
+            this.tsbSave.Name = "tsbSave";
             this.tsbSave.Size = new System.Drawing.Size(23, 22);
             this.tsbSave.Text = "&Save";
             this.tsbSave.Click += new System.EventHandler(this.Save_Click);
@@ -261,49 +261,49 @@ namespace Brutario
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
-            // cutToolStripButton
+            // tsbCut
             // 
-            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cutToolStripButton.Enabled = false;
-            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
-            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutToolStripButton.Name = "cutToolStripButton";
-            this.cutToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.cutToolStripButton.Text = "C&ut";
+            this.tsbCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCut.Enabled = false;
+            this.tsbCut.Image = ((System.Drawing.Image)(resources.GetObject("tsbCut.Image")));
+            this.tsbCut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCut.Name = "tsbCut";
+            this.tsbCut.Size = new System.Drawing.Size(23, 22);
+            this.tsbCut.Text = "C&ut";
             // 
-            // copyToolStripButton
+            // tsbCopy
             // 
-            this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copyToolStripButton.Enabled = false;
-            this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
-            this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyToolStripButton.Name = "copyToolStripButton";
-            this.copyToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.copyToolStripButton.Text = "&Copy";
+            this.tsbCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCopy.Enabled = false;
+            this.tsbCopy.Image = ((System.Drawing.Image)(resources.GetObject("tsbCopy.Image")));
+            this.tsbCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCopy.Name = "tsbCopy";
+            this.tsbCopy.Size = new System.Drawing.Size(23, 22);
+            this.tsbCopy.Text = "&Copy";
             // 
-            // pasteToolStripButton
+            // tsbPaste
             // 
-            this.pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pasteToolStripButton.Enabled = false;
-            this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
-            this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.pasteToolStripButton.Text = "&Paste";
+            this.tsbPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbPaste.Enabled = false;
+            this.tsbPaste.Image = ((System.Drawing.Image)(resources.GetObject("tsbPaste.Image")));
+            this.tsbPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPaste.Name = "tsbPaste";
+            this.tsbPaste.Size = new System.Drawing.Size(23, 22);
+            this.tsbPaste.Text = "&Paste";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // helpToolStripButton
+            // tsbHelp
             // 
-            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
-            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.helpToolStripButton.Name = "helpToolStripButton";
-            this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.helpToolStripButton.Text = "He&lp";
+            this.tsbHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbHelp.Image = ((System.Drawing.Image)(resources.GetObject("tsbHelp.Image")));
+            this.tsbHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbHelp.Name = "tsbHelp";
+            this.tsbHelp.Size = new System.Drawing.Size(23, 22);
+            this.tsbHelp.Text = "He&lp";
             // 
             // areaScrollBar
             // 
@@ -323,8 +323,9 @@ namespace Brutario
             this.areaControl.Location = new System.Drawing.Point(0, 52);
             this.areaControl.Name = "areaControl";
             this.areaControl.Size = new System.Drawing.Size(1384, 290);
-            this.areaControl.Sprites = null;
             this.areaControl.TabIndex = 3;
+            this.areaControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.AreaControl_MouseDoubleClick);
+            this.areaControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AreaControl_MouseClick);
             // 
             // MainForm
             // 
@@ -362,23 +363,23 @@ namespace Brutario
         private System.Windows.Forms.ToolStripButton tsbOpen;
         private System.Windows.Forms.ToolStripButton tsbSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripButton cutToolStripButton;
-        private System.Windows.Forms.ToolStripButton copyToolStripButton;
-        private System.Windows.Forms.ToolStripButton pasteToolStripButton;
+        private System.Windows.Forms.ToolStripButton tsbCut;
+        private System.Windows.Forms.ToolStripButton tsbCopy;
+        private System.Windows.Forms.ToolStripButton tsbPaste;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton helpToolStripButton;
+        private System.Windows.Forms.ToolStripButton tsbHelp;
         private System.Windows.Forms.ToolStripLabel tslJumpToArea;
         private System.Windows.Forms.ToolStripTextBox ttbJumpToArea;
         private System.Windows.Forms.ToolStripButton tsbJumpToArea;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private AreaControl areaControl;
         private System.Windows.Forms.HScrollBar areaScrollBar;
-        private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadAreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmLevel;
+        private System.Windows.Forms.ToolStripMenuItem tsmLoadArea;
         private System.Windows.Forms.ToolStripButton tsbLoadAreaByLevel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem exportTileDataToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmExportTileData;
+        private System.Windows.Forms.ToolStripMenuItem tsmView;
         private System.Windows.Forms.ToolStripMenuItem tsmViewObjectListWindow;
         private System.Windows.Forms.ToolStripMenuItem tsmEditHeader;
     }

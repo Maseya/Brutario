@@ -25,12 +25,14 @@ namespace Brutario.Smb1
             AreaObjectData = new AreaObjectCommand[DefaultNumberOfAreas][];
             AreaSpriteData = new AreaSpriteCommand[DefaultNumberOfAreas][];
 
+            // Isn't sorted until game data is loaded.
             SortedObjectAreaTypes = new AreaType[4];
             for (var i = 0; i < SortedObjectAreaTypes.Length; i++)
             {
                 SortedObjectAreaTypes[i] = (AreaType)i;
             }
 
+            // Isn't sorted until game data is loaded.
             SortedSpriteAreaTypes = new AreaType[4];
             for (var i = 0; i < SortedSpriteAreaTypes.Length; i++)
             {

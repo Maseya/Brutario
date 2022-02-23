@@ -8,7 +8,6 @@ namespace Brutario.Smb1
 {
     public enum AreaObjectCode
     {
-        Invalid = -1,
         QuestionBlockPowerup,
         QuestionBlockCoin,
         HiddenBlockCoin,
@@ -26,10 +25,10 @@ namespace Brutario.Smb1
         Empty,
         Empty2,
         AreaSpecificPlatform = 0x10,
-        GreenIsland = AreaSpecificPlatform | AreaPlatformType.Trees,
-        MushroomIsland = AreaSpecificPlatform | AreaPlatformType.Mushrooms,
-        Cannon = AreaSpecificPlatform | AreaPlatformType.BulletBillTurrets,
-        CloudGround = AreaSpecificPlatform | AreaPlatformType.CloudGround,
+        //GreenIsland = AreaSpecificPlatform | AreaPlatformType.Trees,
+        //MushroomIsland = AreaSpecificPlatform | AreaPlatformType.Mushrooms,
+        //Cannon = AreaSpecificPlatform | AreaPlatformType.BulletBillTurrets,
+        //CloudGround = AreaSpecificPlatform | AreaPlatformType.CloudGround,
 
         HorizontalBricks = 0x20,
         HorizontalStones = 0x30,
@@ -59,7 +58,7 @@ namespace Brutario.Smb1
         AltScrollStop,
         RedCheepCheepFlying,
         BulletBillGenerator,
-        Generator,
+        StopGenerator,
         LoopCommand,
 
         BrickAndSceneryChange = 0x0E00,

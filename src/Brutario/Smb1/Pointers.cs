@@ -8,8 +8,7 @@
             Map16DataPointers.Jp10,
             TilemapLoaderPointers.Jp10,
             AreaLoaderPointers.Jp10,
-            AreaObjectRendererPointers.Jp10,
-            AreaObjectParserPointers.Jp10);
+            AreaObjectRendererPointers.Jp10);
 
         public static readonly Pointers Jp11 = new Pointers(
             PaletteDataPointers.Jp11,
@@ -17,8 +16,7 @@
             Map16DataPointers.Jp11,
             TilemapLoaderPointers.Jp11,
             AreaLoaderPointers.Jp11,
-            AreaObjectRendererPointers.Jp11,
-            AreaObjectParserPointers.Jp11);
+            AreaObjectRendererPointers.Jp11);
 
         public static readonly Pointers Usa = new Pointers(
             PaletteDataPointers.Usa,
@@ -26,8 +24,7 @@
             Map16DataPointers.Usa,
             TilemapLoaderPointers.Usa,
             AreaLoaderPointers.Usa,
-            AreaObjectRendererPointers.Usa,
-            AreaObjectParserPointers.Usa);
+            AreaObjectRendererPointers.Usa);
 
         public static readonly Pointers UsaPlusW = new Pointers(
             PaletteDataPointers.UsaPlusW,
@@ -35,8 +32,7 @@
             Map16DataPointers.UsaPlusW,
             TilemapLoaderPointers.UsaPlusW,
             AreaLoaderPointers.UsaPlusW,
-            AreaObjectRendererPointers.UsaPlusW,
-            AreaObjectParserPointers.UsaPlusW);
+            AreaObjectRendererPointers.UsaPlusW);
 
         public static readonly Pointers Eu = new Pointers(
             PaletteDataPointers.Eu,
@@ -44,8 +40,7 @@
             Map16DataPointers.Eu,
             TilemapLoaderPointers.Eu,
             AreaLoaderPointers.Eu,
-            AreaObjectRendererPointers.Eu,
-            AreaObjectParserPointers.Eu);
+            AreaObjectRendererPointers.Eu);
 
         public static readonly Pointers EuPlusW = new Pointers(
             PaletteDataPointers.EuPlusW,
@@ -53,8 +48,7 @@
             Map16DataPointers.EuPlusW,
             TilemapLoaderPointers.EuPlusW,
             AreaLoaderPointers.EuPlusW,
-            AreaObjectRendererPointers.EuPlusW,
-            AreaObjectParserPointers.EuPlusW);
+            AreaObjectRendererPointers.EuPlusW);
 
         public static readonly Pointers UsaSmb1 = new Pointers(
             PaletteDataPointers.UsaSmb1,
@@ -62,8 +56,7 @@
             Map16DataPointers.UsaSmb1,
             TilemapLoaderPointers.UsaSmb1,
             AreaLoaderPointers.UsaSmb1,
-            AreaObjectRendererPointers.UsaSmb1,
-            AreaObjectParserPointers.UsaSmb1);
+            AreaObjectRendererPointers.UsaSmb1);
 
         private Pointers(
             PaletteDataPointers paletteDataPointers,
@@ -71,8 +64,7 @@
             Map16DataPointers map16DataPointers,
             TilemapLoaderPointers tilemapLoaderPointers,
             AreaLoaderPointers areaLoaderPointers,
-            AreaObjectRendererPointers areaObjectRendererPointers,
-            AreaObjectParserPointers areaObjectParserPointers)
+            AreaObjectRendererPointers areaObjectRendererPointers)
         {
             PaletteDataPointers = paletteDataPointers;
             GfxDataPointers = gfxDataPointers;
@@ -80,7 +72,6 @@
             TilemapLoaderPointers = tilemapLoaderPointers;
             AreaLoaderPointers = areaLoaderPointers;
             AreaObjectRendererPointers = areaObjectRendererPointers;
-            AreaObjectParserPointers = areaObjectParserPointers;
         }
 
         public PaletteDataPointers PaletteDataPointers
@@ -109,11 +100,6 @@
         }
 
         public AreaObjectRendererPointers AreaObjectRendererPointers
-        {
-            get;
-        }
-
-        public AreaObjectParserPointers AreaObjectParserPointers
         {
             get;
         }
