@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaLoader.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -271,8 +271,8 @@ namespace Brutario.Smb1
                 SortedSpriteAreaTypes,
                 (x, y) => SpriteAreaIndexTable[(int)x] - SpriteAreaIndexTable[(int)y]);
 
-            // The counts should be the same when using sprite or object data.
-            // We choose object data.
+            // The counts should be the same when using sprite or object data. We
+            // choose object data.
             for (var i = 0; i < 3; i++)
             {
                 AreaObjectCounts[i] =
@@ -340,7 +340,6 @@ namespace Brutario.Smb1
         public int AreaNumberFromAreaType(AreaType areaType, int reducedAreaNumber)
         {
             return reducedAreaNumber | ((int)areaType << 5);
-
         }
 
         public AreaType AreaTypeFromSpriteAreaIndex(int spriteAreaIndex)

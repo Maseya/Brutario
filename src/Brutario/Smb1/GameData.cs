@@ -1,7 +1,7 @@
 ﻿// <copyright file="RomData.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -9,12 +9,17 @@ namespace Brutario.Smb1
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
 
     public class GameData
     {
         private int _areaNumber;
 
         private AreaHeader _areaHeader;
+
+        private Player _player;
+
+        private PlayerState _playerState;
 
         public GameData(RomIO rom, Pointers pointers)
         {
@@ -31,7 +36,7 @@ namespace Brutario.Smb1
             AreaObjectRenderer = new AreaObjectRenderer(this, pointers.AreaObjectRendererPointers);
             AreaSpriteRenderer = new AreaSpriteRenderer(this);
 
-            Palette = new Color32BppArgb[0x100];
+            Palette = new Color32BppArgb[0x140];
             PixelData = new byte[GfxData.TotalPixelDataSize];
             Map16Tiles = new Obj16Tile[0x100];
 
@@ -48,6 +53,10 @@ namespace Brutario.Smb1
         public event EventHandler AreaNumberChanged;
 
         public event EventHandler AreaHeaderChanged;
+
+        public event EventHandler PlayerChanged;
+
+        public event EventHandler PlayerStateChanged;
 
         public int AreaNumber
         {
@@ -76,6 +85,44 @@ namespace Brutario.Smb1
             }
         }
 
+        public Player Player
+        {
+            get
+            {
+                return _player;
+            }
+
+            set
+            {
+                if (Player == value)
+                {
+                    return;
+                }
+
+                _player = value;
+                PlayerChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public PlayerState PlayerState
+        {
+            get
+            {
+                return _playerState;
+            }
+
+            set
+            {
+                if (PlayerState == value)
+                {
+                    return;
+                }
+
+                _playerState = value;
+                PlayerStateChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         public int ObjectAreaIndex
         {
             get
@@ -98,6 +145,7 @@ namespace Brutario.Smb1
             {
                 return _areaHeader;
             }
+
             set
             {
                 if (_areaHeader == value)
@@ -118,12 +166,6 @@ namespace Brutario.Smb1
         public List<AreaSpriteCommand> SpriteData
         {
             get;
-        }
-
-        public Player Player
-        {
-            get;
-            set;
         }
 
         public Color32BppArgb[] Palette
@@ -284,23 +326,46 @@ namespace Brutario.Smb1
 
         public IEnumerable<Sprite> EnumerateSprites(int frame)
         {
-            return AreaSpriteRenderer.GetSprites(
+            var result = AreaSpriteRenderer.GetSprites(
                 SpriteData.ToArray(),
                 ObjectData.ToArray(),
                 frame,
                 AreaType,
                 true);
+
+            return result.Concat(
+                AreaSpriteRenderer.GetPlayerSprite(
+                    0x28,
+                    StartY(AreaHeader.StartYPosition),
+                    Player,
+                    PlayerState,
+                    PlayerFrame(AreaHeader.StartYPosition)));
         }
 
         public void ReloadArea()
         {
             UpdateArea();
-            PaletteData.ReadPalette(ObjectAreaIndex, Palette);
+            ReloadPalette();
             TilemapLoader.LoadTilemap(ObjectAreaIndex);
+            ReloadGfx();
+        }
+
+        public void ReloadPalette()
+        {
+            PaletteData.ReadPalette(
+                ObjectAreaIndex,
+                isLuigiBonusArea: false,
+                Player,
+                PlayerState,
+                Palette);
+        }
+
+        public void ReloadGfx()
+        {
             GfxData.ReadAreaTileSet(
                ObjectAreaIndex,
                TilemapLoader.TileSetIndex,
-               Player.Mario,
+               Player,
                PixelData);
         }
 
@@ -339,6 +404,38 @@ namespace Brutario.Smb1
         {
             RenderAreaTilemap();
             AreaHeaderChanged?.Invoke(this, e);
+        }
+
+        private static int PlayerFrame(StartYPosition position)
+        {
+            return position switch
+            {
+                StartYPosition.Y00 => 4,
+                StartYPosition.Y20 => 4,
+                StartYPosition.YB0 => 2,
+                StartYPosition.Y50 => 2,
+                StartYPosition.Alt1Y00 => 4,
+                StartYPosition.Alt2Y00 => 4,
+                StartYPosition.PipeIntroYB0 => 0,
+                StartYPosition.AltPipeIntroYB0 => 0,
+                _ => 6,
+            };
+        }
+
+        private static int StartY(StartYPosition position)
+        {
+            return position switch
+            {
+                StartYPosition.Y00 => 0x00,
+                StartYPosition.Y20 => 0x20,
+                StartYPosition.YB0 => 0xB0,
+                StartYPosition.Y50 => 0x50,
+                StartYPosition.Alt1Y00 => 0x00,
+                StartYPosition.Alt2Y00 => 0x00,
+                StartYPosition.PipeIntroYB0 => 0xB0,
+                StartYPosition.AltPipeIntroYB0 => 0xB0,
+                _ => 0x00,
+            };
         }
 
         private void UpdateArea()

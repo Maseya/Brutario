@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaObjectParser.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -13,8 +13,7 @@ namespace Brutario.Smb1
     public class AreaObjectParser
     {
         /// <summary>
-        /// The default size of the object data buffer. This field is
-        /// constant.
+        /// The default size of the object data buffer. This field is constant.
         /// </summary>
         public const int DefaultBufferSize = 5;
 
@@ -155,8 +154,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets the size of the object data buffers. The default value is set
-        /// to <see cref="DefaultBufferSize"/>.
+        /// Gets the size of the object data buffers. The default value is set to <see
+        /// cref="DefaultBufferSize"/>.
         /// </summary>
         private int BufferSize
         {
@@ -164,8 +163,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets the X register, which represents the current index of the
-        /// object data buffer the <see cref="AreaObjectParser"/> is on.
+        /// Gets the X register, which represents the current index of the object data
+        /// buffer the <see cref="AreaObjectParser"/> is on.
         /// </summary>
         private int CurrentBufferIndex
         {
@@ -174,9 +173,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets the Y register, which represents the current index of the
-        /// area object data collection the <see cref="AreaObjectParser"/> is
-        /// on.
+        /// Gets the Y register, which represents the current index of the area object
+        /// data collection the <see cref="AreaObjectParser"/> is on.
         /// </summary>
         private int AreaDataIndex
         {
@@ -311,8 +309,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets $130F, which represents extra properties for the respective
-        /// buffer object.
+        /// Gets $130F, which represents extra properties for the respective buffer
+        /// object.
         /// </summary>
         private bool[] TreePlatformProperties
         {
@@ -367,8 +365,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets $0725, which represents the screen the renderer is
-        /// currently on.
+        /// Gets or sets $0725, which represents the screen the renderer is currently
+        /// on.
         /// </summary>
         private int CurrentRenderingScreen
         {
@@ -384,8 +382,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets $0726, which represents the X-coordinate of the
-        /// current screen the renderer is currently on.
+        /// Gets or sets $0726, which represents the X-coordinate of the current
+        /// screen the renderer is currently on.
         /// </summary>
         private int CurrentRenderingScreenX
         {
@@ -417,8 +415,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets $072A, which represents the screen the area object
-        /// data starts on.
+        /// Gets or sets $072A, which represents the screen the area object data
+        /// starts on.
         /// </summary>
         private int CurrentObjectScreen
         {
@@ -427,9 +425,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets $072B, which represents a flag that determines
-        /// whether a page jump command has been activated for this current
-        /// rendering pass.
+        /// Gets or sets $072B, which represents a flag that determines whether a page
+        /// jump command has been activated for this current rendering pass.
         /// </summary>
         private bool IsScreenJumpSet
         {
@@ -455,8 +452,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets $0729, which determines whether the current object is behind
-        /// the rendering screen.
+        /// Gets $0729, which determines whether the current object is behind the
+        /// rendering screen.
         /// </summary>
         private bool IsObjectBehindRenderer
         {
@@ -476,8 +473,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Clears all buffers in <see cref="LengthBuffer"/>. This should be
-        /// called every time a new screen is going to be rendered.
+        /// Clears all buffers in <see cref="LengthBuffer"/>. This should be called
+        /// every time a new screen is going to be rendered.
         /// </summary>
         public void ResetBuffer()
         {
@@ -488,9 +485,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Parses the area data for object at <see
-        /// cref="CurrentRenderingX"/>. The result is stored to <see
-        /// cref="TileBuffer"/>.
+        /// Parses the area data for object at <see cref="CurrentRenderingX"/>. The
+        /// result is stored to <see cref="TileBuffer"/>.
         /// </summary>
         public void ParseAreaData()
         {
@@ -514,8 +510,7 @@ namespace Brutario.Smb1
 
         private void DecodeBufferData()
         {
-            // Return to the current area index if a buffer changed it at any
-            // time.
+            // Return to the current area index if a buffer changed it at any time.
             AreaDataIndex = StoredAreaDataIndex;
 
             IsObjectBehindRenderer = false;
@@ -533,19 +528,18 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets a value that determines whether we can decode the current
-        /// object or if we should instead read the next one.
+        /// Gets a value that determines whether we can decode the current object or
+        /// if we should instead read the next one.
         /// </summary>
         /// <returns>
-        /// <see langword="true"/> if there is an object in the buffer that
-        /// can be rendered or if there is no more area data to parse;
-        /// otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if there is an object in the buffer that can be
+        /// rendered or if there is no more area data to parse; otherwise, <see
+        /// langword="false"/>.
         /// </returns>
         private bool IsRenderableObject()
         {
-            // If we're at the end of the array, attempt to decode any buffer
-            // objects. Or, if there is a currently set buffer object, decode
-            // it right away.
+            // If we're at the end of the array, attempt to decode any buffer objects.
+            // Or, if there is a currently set buffer object, decode it right away.
             if (IsEndOfArea || CurrentBufferEnabled)
             {
                 return true;
@@ -574,8 +568,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Update the area data index and resets <see
-        /// cref="IsScreenJumpSet"/> for the next object.
+        /// Update the area data index and resets <see cref="IsScreenJumpSet"/> for
+        /// the next object.
         /// </summary>
         private void IncrementAreaDataIndex()
         {
@@ -584,12 +578,12 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Moves to next buffer index and updates the length of the current
-        /// buffer it is enabled.
+        /// Moves to next buffer index and updates the length of the current buffer it
+        /// is enabled.
         /// </summary>
         /// <returns>
-        /// <see langword="true"/> if there is another buffer to read;
-        /// otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if there is another buffer to read; otherwise, <see
+        /// langword="false"/>.
         /// </returns>
         private bool MoveToNextBuffer()
         {
@@ -609,8 +603,7 @@ namespace Brutario.Smb1
                 AreaDataIndex = CurrentBufferObjectIndex;
             }
 
-            // Do not render if end of area or if we had a screen jump
-            // command.
+            // Do not render if end of area or if we had a screen jump command.
             if (IsEndOfArea || IsScreenJumpCommand)
             {
                 return;
@@ -631,8 +624,8 @@ namespace Brutario.Smb1
 
         private bool IsObjectAtRenderCoordinate()
         {
-            // If we're rendering a buffer object, then it is guaranteed that
-            // it is at the rendering coordinate.
+            // If we're rendering a buffer object, then it is guaranteed that it is at
+            // the rendering coordinate.
             if (CurrentBufferEnabled)
             {
                 return true;

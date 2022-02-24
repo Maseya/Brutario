@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaControl.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario
@@ -14,6 +14,7 @@ namespace Brutario
     using System.Drawing.Imaging;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+
     using static System.ComponentModel.DesignerSerializationVisibility;
 
     public class AreaControl : DesignControl
@@ -66,10 +67,6 @@ namespace Brutario
                 }
 
                 _palette = value;
-                if (Palette != null && Palette.Length != 0x100)
-                {
-                    throw new ArgumentException();
-                }
 
                 Invalidate();
             }
@@ -188,7 +185,7 @@ namespace Brutario
 
             void RenderRow(int row, LayerPriority layerPriority)
             {
-                bool darken = row > 0x1D;
+                var darken = row > 0x1D;
                 var rowIndex = Math.Min(row, 0x1C + (row & 1)) * 0x400;
                 var pixelRow = row * 8 * imageWidth;
                 for (var column = 0; column < viewWidth; column++, pixelRow += 8)

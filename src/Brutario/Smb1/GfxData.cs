@@ -1,13 +1,14 @@
 ﻿// <copyright file="GfxData.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
 {
     using System;
     using System.Collections.Generic;
+
     using static GfxConverter;
 
     public class GfxData
@@ -241,9 +242,9 @@ namespace Brutario.Smb1
             }
             ReadTileSet(areaTileSetIndex, pixelData);
 
-            // HACK: These levels don't load a complete tileset. It uses
-            // tile sets of the area before them. Eventually, I'll need to
-            // devise a system to better load tile sets.
+            // HACK: These levels don't load a complete tileset. It uses tile sets of
+            // the area before them. Eventually, I'll need to devise a system to
+            // better load tile sets.
             if (areaIndex == 2)
             {
                 ReadTileSet(4, pixelData);

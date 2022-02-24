@@ -1,13 +1,10 @@
 ﻿namespace Brutario
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows.Forms;
 
     using Maseya.Controls;
-
-    using Smb1;
 
     using static System.ComponentModel.DesignerSerializationVisibility;
 
@@ -44,6 +41,7 @@
             {
                 return ObjectListWindow.SelectedIndex;
             }
+
             set
             {
                 ObjectListWindow.SelectedIndex = value;

@@ -84,6 +84,7 @@
             this.cbxTime.Name = "cbxTime";
             this.cbxTime.Size = new System.Drawing.Size(245, 21);
             this.cbxTime.TabIndex = 7;
+            this.cbxTime.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
             // 
             // cbxPosition
             // 
@@ -102,6 +103,7 @@
             this.cbxPosition.Name = "cbxPosition";
             this.cbxPosition.Size = new System.Drawing.Size(245, 21);
             this.cbxPosition.TabIndex = 8;
+            this.cbxPosition.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
             // 
             // cbxForeground
             // 
@@ -120,6 +122,7 @@
             this.cbxForeground.Name = "cbxForeground";
             this.cbxForeground.Size = new System.Drawing.Size(245, 21);
             this.cbxForeground.TabIndex = 9;
+            this.cbxForeground.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
             // 
             // lblForeground
             // 
@@ -143,6 +146,7 @@
             this.cbxAreaPlatformType.Name = "cbxAreaPlatformType";
             this.cbxAreaPlatformType.Size = new System.Drawing.Size(245, 21);
             this.cbxAreaPlatformType.TabIndex = 11;
+            this.cbxAreaPlatformType.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
             // 
             // lblAreaPlatformType
             // 
@@ -166,6 +170,7 @@
             this.cbxBackgroundScenery.Name = "cbxBackgroundScenery";
             this.cbxBackgroundScenery.Size = new System.Drawing.Size(245, 21);
             this.cbxBackgroundScenery.TabIndex = 13;
+            this.cbxBackgroundScenery.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
             // 
             // lblTerrainMode
             // 
@@ -201,6 +206,7 @@
             this.cbxTerrainMode.Name = "cbxTerrainMode";
             this.cbxTerrainMode.Size = new System.Drawing.Size(245, 21);
             this.cbxTerrainMode.TabIndex = 15;
+            this.cbxTerrainMode.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
             // 
             // btnOK
             // 

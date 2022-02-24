@@ -1,7 +1,7 @@
 ﻿// <copyright file="PalettePointers.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -33,20 +33,30 @@ namespace Brutario.Smb1
             int rowIndexTablePointer,
             int indexTablePointer,
             int colorTablePointer,
-            int luigiBonusAreaColorTablePointer)
+            int luigiBonusAreaColorTablePointer,
+            int playerPaletteTablePointer)
         {
             RowIndexTablePointer = rowIndexTablePointer;
             IndexTablePointer = indexTablePointer;
             ColorTablePointer = colorTablePointer;
             LuigiBonusAreaColorTablePointer = luigiBonusAreaColorTablePointer;
+            PlayerPaletteTablePointer = playerPaletteTablePointer;
         }
 
         private PaletteDataPointers(int baseAddress)
-                    : this(
+            : this(
+                  baseAddress,
+                  playerPaletteTablePointer: baseAddress + 0x4FD)
+        {
+        }
+
+        private PaletteDataPointers(int baseAddress, int playerPaletteTablePointer)
+            : this(
                   rowIndexTablePointer: baseAddress,
                   indexTablePointer: baseAddress + 0x0B,
                   colorTablePointer: baseAddress + 0x16,
-                  luigiBonusAreaColorTablePointer: baseAddress + 0x4C)
+                  luigiBonusAreaColorTablePointer: baseAddress + 0x4C,
+                  playerPaletteTablePointer)
         {
         }
 
@@ -66,6 +76,11 @@ namespace Brutario.Smb1
         }
 
         public int LuigiBonusAreaColorTablePointer
+        {
+            get;
+        }
+
+        public int PlayerPaletteTablePointer
         {
             get;
         }

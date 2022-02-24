@@ -13,6 +13,7 @@ namespace Brutario
     using System.Linq;
     using System.IO;
     using System.Windows.Forms;
+    using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
     public partial class MainForm : Form
     {
@@ -25,6 +26,13 @@ namespace Brutario
         public MainForm()
         {
             InitializeComponent();
+
+            tsmMario.Tag = Smb1.Player.Mario;
+            tsmLuigi.Tag = Smb1.Player.Luigi;
+            tsmStateSmall.Tag = Smb1.PlayerState.Small;
+            tsmStateBig.Tag = Smb1.PlayerState.Big;
+            tsmStateFire.Tag = Smb1.PlayerState.Fire;
+
             if (components is null)
             {
                 components = new Container();
@@ -65,6 +73,10 @@ namespace Brutario
                         AreaNumberChanged;
                     AllStarsRomFile.Smb1RomData.AreaHeaderChanged -=
                         Smb1RomData_AreaHeaderChanged;
+                    AllStarsRomFile.Smb1RomData.PlayerChanged -=
+                        Smb1RomData_PlayerChanged;
+                    AllStarsRomFile.Smb1RomData.PlayerStateChanged -=
+                        Smb1RomData_PlayerStateChanged;
                 }
 
                 _allStarsRomFile = value;
@@ -74,6 +86,10 @@ namespace Brutario
                         AreaNumberChanged;
                     AllStarsRomFile.Smb1RomData.AreaHeaderChanged +=
                         Smb1RomData_AreaHeaderChanged;
+                    AllStarsRomFile.Smb1RomData.PlayerChanged +=
+                        Smb1RomData_PlayerChanged;
+                    AllStarsRomFile.Smb1RomData.PlayerStateChanged +=
+                        Smb1RomData_PlayerStateChanged;
                 }
 
                 OnRomFileChanged(EventArgs.Empty);
@@ -98,10 +114,35 @@ namespace Brutario
             get;
         }
 
+        private bool BeginMouseMove
+        {
+            get;
+            set;
+        }
+
+        private Point StartMousePoint
+        {
+            get;
+            set;
+        }
+
         private DateTime StartTime
         {
             get;
             set;
+        }
+
+        private bool SpriteMode
+        {
+            get
+            {
+                return tsmSpriteMode.Checked;
+            }
+
+            set
+            {
+                tsmSpriteMode.Checked = value;
+            }
         }
 
         private int Frame
@@ -143,18 +184,20 @@ namespace Brutario
             areaControl.BG1 = Smb1GameData.ReadBG1Tiles();
             LoadSprites();
 
-            areaControl.ObjectRectangles = Smb1GameData.GetObjectRectangles().ToArray();
-            areaControl.SpriteRectangles = Smb1GameData.GetSpriteRectangles().ToArray();
+            areaControl.ObjectRectangles = SpriteMode
+                ? new Rectangle[0]
+                : Smb1GameData.GetObjectRectangles().ToArray();
         }
 
         protected virtual void OnRomFileChanged(EventArgs e)
         {
             SuspendLayout();
             UpdateMenuEnabled();
-            ObjectListWindow.Items.Clear();
+            ObjectListWindow.ObjectItems.Clear();
             if (!(Smb1GameData is null))
             {
-                ObjectListWindow.Items.AddRange(Smb1GameData.ObjectData);
+                UpdatePlayerMenu();
+                ObjectListWindow.ObjectItems.AddRange(Smb1GameData.ObjectData);
                 ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
                 Smb1GameData.UpdateAnimatedPixelData(0);
                 LoadPalette();
@@ -196,14 +239,26 @@ namespace Brutario
                 areaControl.Sprites.Clear();
                 areaControl.Sprites.AddRange(Smb1GameData.EnumerateSprites(Frame));
             }
+
+            areaControl.SpriteRectangles = SpriteMode
+                ? Smb1GameData.GetSpriteRectangles().ToArray()
+                : new Rectangle[0];
         }
 
         private void AreaNumberChanged(object sender, EventArgs e)
         {
             SuspendLayout();
             ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
-            ObjectListWindow.Items.Clear();
-            ObjectListWindow.Items.AddRange(Smb1GameData.ObjectData);
+            if (SpriteMode)
+            {
+                ObjectListWindow.SpriteItems.Clear();
+                ObjectListWindow.SpriteItems.AddRange(Smb1GameData.SpriteData);
+            }
+            else
+            {
+                ObjectListWindow.ObjectItems.Clear();
+                ObjectListWindow.ObjectItems.AddRange(Smb1GameData.ObjectData);
+            }
             areaScrollBar.Value = 0;
             LoadPalette();
             LoadBG1();
@@ -346,15 +401,23 @@ namespace Brutario
 
         private void EditHeader_Click(object sender, EventArgs e)
         {
+            var oldHeader = Smb1GameData.AreaHeader;
             var dialog = new HeaderEditorForm
             {
                 AreaHeader = Smb1GameData.AreaHeader
             };
-            if (dialog.ShowDialog(this) == DialogResult.OK)
+
+            dialog.HeaderChanged +=
+                (s, e) => Smb1GameData.AreaHeader = dialog.AreaHeader;
+
+            switch (dialog.ShowDialog(owner: this))
             {
-                Smb1GameData.AreaHeader = dialog.AreaHeader;
-                Smb1GameData.RenderAreaTilemap();
-                LoadBG1();
+            case DialogResult.OK:
+                break;
+
+            default:
+                Smb1GameData.AreaHeader = oldHeader;
+                break;
             }
         }
 
@@ -368,12 +431,36 @@ namespace Brutario
 
         private void AreaControl_MouseClick(object sender, MouseEventArgs e)
         {
-            var loc = new Point(e.X + (areaControl.StartX << 3), e.Y);
-            ObjectListWindow.SelectedIndex = Smb1GameData.GetObjectIndex(loc);
+            if (e.Button != MouseButtons.Left || BeginMouseMove)
+            {
+                return;
+            }
+
+            var loc = new Point(e.X + (areaControl.StartX << 4), e.Y);
+            ObjectListWindow.SelectedIndex = SpriteMode
+                ? Smb1GameData.GetSpriteIndex(loc)
+                : Smb1GameData.GetObjectIndex(loc);
             areaControl.Invalidate();
+            BeginMouseMove = ObjectListWindow.SelectedIndex != -1;
+            if (BeginMouseMove)
+            {
+                StartMousePoint = new Point(loc.X >> 4, loc.Y >> 4);
+            }
         }
 
         public void EditCurrentItem()
+        {
+            if (SpriteMode)
+            {
+                EditSprite();
+            }
+            else
+            {
+                EditObject();
+            }
+        }
+
+        private void EditObject()
         {
             if (ObjectListWindow.SelectedIndex == -1)
             {
@@ -390,7 +477,7 @@ namespace Brutario
             switch (dialog.ShowDialog(owner: this))
             {
             case DialogResult.OK:
-                ObjectListWindow.Items[ObjectListWindow.SelectedIndex] =
+                ObjectListWindow.ObjectItems[ObjectListWindow.SelectedIndex] =
                     dialog.AreaObjectCommand;
                 break;
             default:
@@ -401,10 +488,46 @@ namespace Brutario
             }
         }
 
+        private void EditSprite()
+        {
+            if (ObjectListWindow.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            var oldCommand = Smb1GameData.SpriteData[ObjectListWindow.SelectedIndex];
+            using var dialog = new SpriteEditorForm();
+            dialog.AreaSpriteCommand = Smb1GameData.SpriteData[
+                ObjectListWindow.SelectedIndex];
+            dialog.AreaSpriteCommandChanged += Dialog_AreaSpriteCommandChanged;
+            switch (dialog.ShowDialog(owner: this))
+            {
+            case DialogResult.OK:
+                ObjectListWindow.SpriteItems[ObjectListWindow.SelectedIndex] =
+                    dialog.AreaSpriteCommand;
+                break;
+            default:
+                Smb1GameData.SpriteData[ObjectListWindow.SelectedIndex] = oldCommand;
+                LoadSprites();
+                areaControl.Invalidate();
+                break;
+            }
+        }
+
+        private void Dialog_AreaSpriteCommandChanged(object sender, EventArgs e)
+        {
+            var dialog = sender as SpriteEditorForm;
+            Smb1GameData.SpriteData[ObjectListWindow.SelectedIndex] =
+                dialog.AreaSpriteCommand;
+            areaControl.Invalidate();
+        }
+
         private void Smb1RomData_AreaHeaderChanged(object sender, EventArgs e)
         {
             ObjectListWindow.AreaPlatformType =
                 Smb1GameData.AreaHeader.AreaPlatformType;
+            LoadSprites();
+            LoadBG1();
         }
 
         private void Dialog_AreaObjectCommandChanged(object sender, EventArgs e)
@@ -429,6 +552,103 @@ namespace Brutario
         private void ObjectListWindow_EditItem(object sender, EventArgs e)
         {
             EditCurrentItem();
+        }
+
+        private void SpriteMode_CheckedChanged(object sender, EventArgs e)
+        {
+            ObjectListWindow.SpriteMode = SpriteMode;
+            if (SpriteMode)
+            {
+                areaControl.ObjectRectangles = new Rectangle[0];
+                areaControl.SpriteRectangles = Smb1GameData.GetSpriteRectangles().ToArray();
+                ObjectListWindow.SpriteItems.Clear();
+                ObjectListWindow.SpriteItems.AddRange(Smb1GameData.SpriteData);
+            }
+            else
+            {
+                areaControl.ObjectRectangles = Smb1GameData.GetObjectRectangles().ToArray();
+                areaControl.SpriteRectangles = new Rectangle[0];
+                ObjectListWindow.ObjectItems.Clear();
+                ObjectListWindow.ObjectItems.AddRange(Smb1GameData.ObjectData);
+            }
+
+            areaControl.Invalidate();
+        }
+
+        private void Player_Click(object sender, EventArgs e)
+        {
+            Smb1GameData.Player = (Smb1.Player)(sender as ToolStripMenuItem).Tag;
+        }
+
+        private void PlayerState_Click(object sender, EventArgs e)
+        {
+            Smb1GameData.PlayerState = (Smb1.PlayerState)(sender as ToolStripMenuItem).Tag;
+        }
+
+        private void Smb1RomData_PlayerStateChanged(object sender, EventArgs e)
+        {
+            UpdatePlayerMenu();
+            Smb1GameData.ReloadPalette();
+            LoadSprites();
+        }
+
+        private void Smb1RomData_PlayerChanged(object sender, EventArgs e)
+        {
+            UpdatePlayerMenu();
+            Smb1GameData.ReloadPalette();
+            LoadSprites();
+        }
+
+        private void UpdatePlayerMenu()
+        {
+            tsmStateSmall.Checked = Smb1GameData.PlayerState == Smb1.PlayerState.Small;
+            tsmStateBig.Checked = Smb1GameData.PlayerState == Smb1.PlayerState.Big;
+            tsmStateFire.Checked = Smb1GameData.PlayerState == Smb1.PlayerState.Fire;
+            tsmMario.Checked = Smb1GameData.Player == Smb1.Player.Mario;
+            tsmLuigi.Checked = Smb1GameData.Player == Smb1.Player.Luigi;
+        }
+
+        private void AreaControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                BeginMouseMove = false;
+            }
+        }
+
+        private void AreaControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left || !BeginMouseMove)
+            {
+                return;
+            }
+
+            var command = Smb1GameData.ObjectData[ObjectListWindow.SelectedIndex];
+            var newX = (e.X + (areaControl.StartX << 3)) >> 4;
+            var newY = (e.Y >> 4) - 2;
+            if (newY < 0)
+            {
+                newY = 0;
+            }
+
+            if (newY > 0x0E)
+            {
+                newY = 0x0E;
+            }
+
+            if ((newX & 0x0F) == (command.X & 0x0F) && (newY & 0x0F) == (command.Y & 0x0F))
+            {
+                return;
+            }
+
+            command.X = newX & 0x0F;
+            command.Y = newY & 0x0F;
+            //ObjectListWindow.ObjectItems[ObjectListWindow.SelectedIndex] =
+            //  command;
+            Smb1GameData.ObjectData[ObjectListWindow.SelectedIndex] =
+                command;
+            Smb1GameData.RenderAreaTilemap();
+            LoadBG1();
         }
     }
 }

@@ -778,5 +778,10 @@
                 }
             }
         }
+
+        private void Binary_CheckedChanged(object sender, EventArgs e)
+        {
+            btnOK.Enabled = !UseManual || TryGetCommand(tbxBinary.Text, out var _);
+        }
     }
 }

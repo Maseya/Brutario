@@ -80,7 +80,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.lblForegroundScenery);
             this.groupBox1.Controls.Add(this.cbxBackgroundScenery);
@@ -115,7 +115,7 @@
             // 
             // cbxBackgroundScenery
             // 
-            this.cbxBackgroundScenery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.cbxBackgroundScenery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxBackgroundScenery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxBackgroundScenery.FormattingEnabled = true;
@@ -132,7 +132,7 @@
             // 
             // cbxForegroundScenery
             // 
-            this.cbxForegroundScenery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.cbxForegroundScenery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxForegroundScenery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxForegroundScenery.FormattingEnabled = true;
@@ -162,7 +162,7 @@
             // 
             // cbxTerrainMode
             // 
-            this.cbxTerrainMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.cbxTerrainMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxTerrainMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTerrainMode.FormattingEnabled = true;
@@ -242,7 +242,7 @@
             // 
             // cbxAreaObjectCode
             // 
-            this.cbxAreaObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.cbxAreaObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxAreaObjectCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxAreaObjectCode.FormattingEnabled = true;
@@ -339,7 +339,7 @@
             this.chkBinary.TabIndex = 0;
             this.chkBinary.Text = "Enter value manually";
             this.chkBinary.UseVisualStyleBackColor = true;
-            this.chkBinary.CheckedChanged += new System.EventHandler(this.Binary_TextChanged);
+            this.chkBinary.CheckedChanged += new System.EventHandler(this.Binary_CheckedChanged);
             // 
             // ObjectEditorForm
             // 

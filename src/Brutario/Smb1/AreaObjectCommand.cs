@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaObjectCommand.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -12,8 +12,7 @@ namespace Brutario.Smb1
     public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         /// <summary>
-        /// The object command to read that defined the end of the area object
-        /// data.
+        /// The object command to read that defined the end of the area object data.
         /// </summary>
         public const byte TerminationCode = 0xFD;
 
@@ -188,9 +187,8 @@ namespace Brutario.Smb1
 
             set
             {
-                // We have to save these because their storage locations can
-                // change if the extended command makes us have a three byte
-                // object.
+                // We have to save these because their storage locations can change if
+                // the extended command makes us have a three byte object.
                 var pageFlag = ScreenFlag;
                 var command = Command;
                 var parameter = Parameter;

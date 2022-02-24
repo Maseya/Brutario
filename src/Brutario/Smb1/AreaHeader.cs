@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaHeader.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -12,11 +12,10 @@ namespace Brutario.Smb1
     /// The header data for the current area.
     /// </summary>
     /// <remarks>
-    /// An area header defines how the current area should look when first
-    /// entering it. It defines certain properties like start time, position,
-    /// scenery, and terrain. Certain objects in the area can modify these
-    /// properties too, but every area object pointer starts with two bytes
-    /// that determines the header.
+    /// An area header defines how the current area should look when first entering
+    /// it. It defines certain properties like start time, position, scenery, and
+    /// terrain. Certain objects in the area can modify these properties too, but
+    /// every area object pointer starts with two bytes that determines the header.
     /// </remarks>
     public struct AreaHeader : IEquatable<AreaHeader>
     {
@@ -218,6 +217,7 @@ namespace Brutario.Smb1
             {
                 return Value1 | (Value2 << 8);
             }
+
             set
             {
                 Value1 = (byte)value;

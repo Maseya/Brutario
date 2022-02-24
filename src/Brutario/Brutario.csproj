@@ -157,6 +157,12 @@
     <Compile Include="Smb1\BackgroundColorControl.cs" />
     <Compile Include="Smb1\PlayerState.cs" />
     <Compile Include="Smb1\Pointers.cs" />
+    <Compile Include="SpriteEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpriteEditorForm.Designer.cs">
+      <DependentUpon>SpriteEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpriteTile.cs" />
     <Compile Include="Smb1\TilemapCommand.cs" />
     <Compile Include="Smb1\ForegroundScenery.cs" />
@@ -193,6 +199,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpriteEditorForm.resx">
+      <DependentUpon>SpriteEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Brutario.licenseheader" />
     <None Include="packages.config" />

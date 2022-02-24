@@ -1,7 +1,7 @@
 ﻿// <copyright file="PaletteData.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -24,6 +24,7 @@ namespace Brutario.Smb1
             RowIndexTable = new byte[RowIndexTableSize];
             IndexTable = new int[IndexTableSize];
             ColorTable = new Color32BppArgb[DataTableSize];
+            PlayerPaletteTable = new Color32BppArgb[ColorsPerRow * 4];
         }
 
         public PaletteData(GameData gameData, PaletteDataPointers pointers)
@@ -48,6 +49,11 @@ namespace Brutario.Smb1
         }
 
         public Color32BppArgb[] LuigiBonusAreaColorTable
+        {
+            get;
+        }
+
+        public Color32BppArgb[] PlayerPaletteTable
         {
             get;
         }
@@ -80,16 +86,27 @@ namespace Brutario.Smb1
                pointers.LuigiBonusAreaColorTablePointer,
                LuigiBonusAreaColorTable,
                x => Color32BppArgb.FromSnesColor(x));
+            rom.ReadInt16ArrayIndirectAs(
+               pointers.PlayerPaletteTablePointer,
+               PlayerPaletteTable,
+               x => Color32BppArgb.FromSnesColor(x));
         }
 
         public void ReadPalette(int index, Span<Color32BppArgb> dest)
         {
-            ReadPalette(index, isLuigiBonusArea: false, dest);
+            ReadPalette(
+                index,
+                isLuigiBonusArea: false,
+                player: Player.Mario,
+                state: PlayerState.Small,
+                dest);
         }
 
         public void ReadPalette(
             int index,
             bool isLuigiBonusArea,
+            Player player,
+            PlayerState state,
             Span<Color32BppArgb> dest)
         {
             if (dest.Length < TotalPaletteSize)
@@ -110,6 +127,42 @@ namespace Brutario.Smb1
             {
                 LuigiBonusAreaColorTable.CopyTo(dest.Slice(BonusAreaRow * ColorsPerRow));
             }
+
+            sourceIndex = 0;
+            if (player == Player.Luigi)
+            {
+                sourceIndex |= 0x10;
+            }
+
+            if (state == PlayerState.Fire)
+            {
+                sourceIndex |= 0x20;
+            }
+
+            new Span<Color32BppArgb>(PlayerPaletteTable, sourceIndex, 0x10).CopyTo(
+              dest.Slice(0xF0));
+        }
+
+        public void ReadPlayerPalettes(
+            Span<Color32BppArgb> dest)
+        {
+            if (dest.Length < PlayerPaletteTable.Length)
+            {
+                throw new ArgumentException();
+            }
+
+            PlayerPaletteTable.CopyTo(dest);
+        }
+
+        public void WritePlayerPalettes(
+            Span<Color32BppArgb> src)
+        {
+            if (src.Length > PlayerPaletteTable.Length)
+            {
+                throw new ArgumentException();
+            }
+
+            src.CopyTo(PlayerPaletteTable);
         }
 
         public void WritePalette(
@@ -148,6 +201,10 @@ namespace Brutario.Smb1
             }
 
             var rom = gameData.Rom;
+            rom.WriteArrayAsInt16Indirect<Color32BppArgb>(
+                pointers.PlayerPaletteTablePointer,
+                PlayerPaletteTable,
+                x => (short)Color32BppArgb.ToSnesColor(x));
             rom.WriteArrayAsInt16Indirect<Color32BppArgb>(
                 pointers.LuigiBonusAreaColorTablePointer,
                 LuigiBonusAreaColorTable,

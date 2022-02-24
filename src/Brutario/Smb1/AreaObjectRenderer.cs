@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaObjectRenderer.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -175,8 +175,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets $0725, which represents the screen the renderer is
-        /// currently on.
+        /// Gets or sets $0725, which represents the screen the renderer is currently
+        /// on.
         /// </summary>
         public int CurrentRenderingScreenX
         {
@@ -185,8 +185,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets $0726, which represents the X-coordinate of the
-        /// current screen the renderer is currently on.
+        /// Gets or sets $0726, which represents the X-coordinate of the current
+        /// screen the renderer is currently on.
         /// </summary>
         public int CurrentRenderingScreen
         {
@@ -530,9 +530,9 @@ namespace Brutario.Smb1
             var castleLongTileOffset = (CurrentRenderingScreenX & 1) != 0;
 
             // In the ROM, the actual check is for an underwater area in World
-            // 8. That's a dumb check and I'm not keeping track of the world
-            // number, so I'll do this check for the time being. See $03:A4D5
-            // in the disassembly.
+            // 8. That's a dumb check and I'm not keeping track of the world number,
+            // so I'll do this check for the time being. See $03:A4D5 in the
+            // disassembly.
             var terrainTile = isUnderwaterCastle
                 ? (byte)0x65
                 : IsCloudPlatform

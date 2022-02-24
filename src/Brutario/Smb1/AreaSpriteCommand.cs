@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaSpriteCommand.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -21,8 +21,7 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets the command value of this <see
-        /// cref="AreaSpriteCommand"/>.
+        /// Gets or sets the command value of this <see cref="AreaSpriteCommand"/>.
         /// </summary>
         public AreaSpriteCode Code
         {
@@ -44,8 +43,8 @@ namespace Brutario.Smb1
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see
-        /// cref="AreaSpriteCommand"/> only spawns after the hard world flag
-        /// has been set.
+        /// cref="AreaSpriteCommand"/> only spawns after the hard world flag has been
+        /// set.
         /// </summary>
         public bool HardWorldFlag
         {
@@ -108,8 +107,7 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets the first value of this <see
-        /// cref="AreaSpriteCommand"/>.
+        /// Gets or sets the first value of this <see cref="AreaSpriteCommand"/>.
         /// </summary>
         public byte Value1
         {
@@ -118,8 +116,7 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets the second value of this <see
-        /// cref="AreaSpriteCommand"/>.
+        /// Gets or sets the second value of this <see cref="AreaSpriteCommand"/>.
         /// </summary>
         public byte Value2
         {
@@ -128,8 +125,7 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets the third value of this <see
-        /// cref="AreaSpriteCommand"/>.
+        /// Gets or sets the third value of this <see cref="AreaSpriteCommand"/>.
         /// </summary>
         public byte Value3
         {
@@ -146,9 +142,8 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets the X-coordinate of this <see
-        /// cref="AreaSpriteCommand"/>. The coordinate is relative to the page
-        /// the object is in.
+        /// Gets or sets the X-coordinate of this <see cref="AreaSpriteCommand"/>. The
+        /// coordinate is relative to the page the object is in.
         /// </summary>
         public int X
         {
@@ -165,8 +160,7 @@ namespace Brutario.Smb1
         }
 
         /// <summary>
-        /// Gets or sets the Y-coordinate of this <see
-        /// cref="AreaSpriteCommand"/>.
+        /// Gets or sets the Y-coordinate of this <see cref="AreaSpriteCommand"/>.
         /// </summary>
         public int Y
         {
@@ -206,7 +200,7 @@ namespace Brutario.Smb1
             get
             {
                 return IsThreeByteCommand
-                    ? Value3 >> 4
+                    ? Value3 >> 5
                     : 0;
             }
 
@@ -225,7 +219,7 @@ namespace Brutario.Smb1
             get
             {
                 return IsThreeByteCommand
-                    ? Value3 & 0x0F
+                    ? Value3 & 0x1F
                     : 0;
             }
 
@@ -233,8 +227,8 @@ namespace Brutario.Smb1
             {
                 if (IsThreeByteCommand)
                 {
-                    Value3 &= 0xF0;
-                    Value3 |= (byte)(value & 0x0F);
+                    Value3 &= 0xE0;
+                    Value3 |= (byte)(value & 0x1F);
                 }
             }
         }
@@ -356,6 +350,7 @@ namespace Brutario.Smb1
                 case AreaSpriteCode.ScreenSkip:
                     screen = command.BaseCommand << 4;
                     break;
+
                 case AreaSpriteCode.FireBarClockwise:
                 case AreaSpriteCode.FireBarCounterClockwise:
                 case AreaSpriteCode.FastFireBarClockwise:
@@ -379,7 +374,7 @@ namespace Brutario.Smb1
         public bool Equals(AreaSpriteCommand other)
         {
             return Size.Equals(other.Size) && Value1.Equals(other.Value1)
-                && !Value2.Equals(other.Value2)
+                && Value2.Equals(other.Value2)
                 && (Size == 2 || Value3.Equals(other.Value3));
         }
 

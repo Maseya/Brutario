@@ -1,7 +1,9 @@
 ﻿namespace Brutario
 {
-    using Smb1;
+    using System;
     using System.Windows.Forms;
+
+    using Smb1;
 
     public partial class HeaderEditorForm : Form
     {
@@ -9,6 +11,8 @@
         {
             InitializeComponent();
         }
+
+        public event EventHandler HeaderChanged;
 
         public StartTime StartTime
         {
@@ -110,6 +114,11 @@
                 BackgroundScenery = value.BackgroundScenery;
                 TerrainMode = value.TerrainMode;
             }
+        }
+
+        private void Value_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HeaderChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

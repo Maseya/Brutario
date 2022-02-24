@@ -1,7 +1,7 @@
 ﻿// <copyright file="AreaSpriteRenderer.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario.Smb1
@@ -175,6 +175,42 @@ namespace Brutario.Smb1
                         yield return sprite;
                     }
                 }
+            }
+        }
+
+        public IEnumerable<Sprite> GetPlayerSprite(
+            int x,
+            int y,
+            Player player,
+            PlayerState state,
+            int frame)
+        {
+            var tile = new SpriteTile(
+                GfxData.MarioPixelDataStartIndex / 0x40,
+                0x0F,
+                9,
+                false,
+                false);
+
+            tile.TileIndex += frame * 8;
+
+            if (player == Player.Luigi)
+            {
+                tile.TileIndex += 0x100;
+            }
+
+            if (state == PlayerState.Small)
+            {
+                tile.TileIndex += 0x60;
+            }
+
+            for (var i = 0; i < 8; i++)
+            {
+                yield return new Sprite(
+                    x + ((i & 1) << 3),
+                    y + ((i & 6) << 2),
+                    tile);
+                tile.TileIndex++;
             }
         }
 
@@ -401,7 +437,6 @@ namespace Brutario.Smb1
                 y += 8;
                 tile.TileIndex++;
                 yield return new Sprite(x, y, new SpriteTile(tile, GfxData.SpritePixelDataStartIndex / 0x40));
-
             }
             else
             {
@@ -415,7 +450,6 @@ namespace Brutario.Smb1
                 y += 8;
                 tile.TileIndex = 0xD2;
                 yield return new Sprite(x, y, new SpriteTile(tile, GfxData.SpritePixelDataStartIndex / 0x40));
-
             }
 
             tile.TileIndex++;
@@ -1003,7 +1037,6 @@ namespace Brutario.Smb1
 
                 tile.XFlipped = true;
                 yield return new Sprite(x + 8, y, new SpriteTile(tile, GfxData.SpritePixelDataStartIndex / 0x40));
-
             }
         }
 
