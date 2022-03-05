@@ -461,10 +461,18 @@ namespace Brutario.Smb1
             rom.WriteBytesIndirect(pointers.ObjectHighBytePointer, objectHigh);
             rom.WriteBytesIndirect(pointers.ObjectLowBytePointer, objectLow);
 
-            rom.WriteBytesIndirect(pointers.SpriteAreaTypeOffsetPointer, SpriteAreaIndexTable);
-            rom.WriteBytesIndirect(pointers.ObjectAreaTypeOffsetPointer, ObjectAreaIndexTable);
-            rom.WriteBytesIndirect(pointers.AreaIndexTablePointer, AreaNumberTable);
-            rom.WriteBytesIndirect(pointers.WorldLevelOffsetPointer, WorldAreaStartTable);
+            rom.WriteBytesIndirect(
+                pointers.SpriteAreaTypeOffsetPointer,
+                SpriteAreaIndexTable);
+            rom.WriteBytesIndirect(
+                pointers.ObjectAreaTypeOffsetPointer,
+                ObjectAreaIndexTable);
+            rom.WriteBytesIndirect(
+                pointers.AreaIndexTablePointer,
+                new Span<byte>(AreaNumberTable, 0, AreaNumberTableSize));
+            rom.WriteBytesIndirect(
+                pointers.WorldLevelOffsetPointer,
+                new Span<byte>(WorldAreaStartTable, 0, NumberOfWorlds));
 
             rom.WriteByte(pointers.NumberOfWorldsAddress, NumberOfWorlds);
         }
