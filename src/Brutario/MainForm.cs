@@ -346,6 +346,7 @@ namespace Brutario
             }
 
             Smb1GameData.ObjectData.Insert(index, oldCommand);
+            objectListDialog.SelectedIndex = index;
 
             using var dialog = new ObjectEditorForm();
             dialog.AreaObjectCommand = oldCommand;
@@ -374,6 +375,7 @@ namespace Brutario
             }
 
             Smb1GameData.SpriteData.Insert(index, oldCommand);
+            objectListDialog.SelectedIndex = index;
 
             using var dialog = new SpriteEditorForm();
             dialog.AreaSpriteCommand = oldCommand;
