@@ -5,9 +5,9 @@
     using System.Globalization;
     using System.Windows.Forms;
 
-    using Brutario.Smb1;
+    using Smb1;
 
-    public partial class SpriteEditorForm : Form
+    public partial class SpriteEditorForm : Form, ISpriteEditorView
     {
         public SpriteEditorForm()
         {
@@ -20,43 +20,59 @@
                 EnumIndexes.Add((AreaSpriteCode)code, Codes.Count);
                 Codes.Add((AreaSpriteCode)code);
                 _ = cbxAreaSpriteCode.Items.Add(
-                    BaseName((AreaSpriteCode)code));
+                    ((AreaSpriteCode)code).BaseName());
             }
         }
 
         public event EventHandler AreaSpriteCommandChanged;
 
-        public bool UseManual
-        {
-            get
-            {
-                return chkBinary.Checked;
-            }
-
-            set
-            {
-                chkBinary.Checked = value;
-            }
-        }
-
         public AreaSpriteCommand AreaSpriteCommand
         {
             get
             {
-                return UseManual ? BinaryCommand : UICommand;
+                return UseManualInput ? BinaryCommand : UICommand;
             }
 
             set
             {
                 BinaryCommand = UICommand = value;
-                if (btnOK.Enabled)
+                if (IsValidInput)
                 {
                     AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        private bool Assigning
+        private bool IsValidInput
+        {
+            get
+            {
+                return btnOK.Enabled;
+            }
+
+            set
+            {
+                btnOK.Enabled = value;
+            }
+        }
+
+        private bool UseManualInput
+        {
+            get
+            {
+                return chkUseManualInput.Checked;
+            }
+
+            set
+            {
+                chkUseManualInput.Checked = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns true when the UICommand is being updated by its set accessor.
+        /// </summary>
+        private bool SettingUICommand
         {
             get;
             set;
@@ -79,7 +95,8 @@
         {
             get
             {
-                return (int)nudY.Value;
+                var y = (int)AreaSpriteCode >> 8;
+                return y < 0x0D ? (int)nudY.Value : y;
             }
 
             set
@@ -95,7 +112,7 @@
         {
             get
             {
-                return chkPageFlag.Checked;
+                return chkPageFlag.Enabled && chkPageFlag.Checked;
             }
 
             set
@@ -118,9 +135,7 @@
             {
                 cbxAreaSpriteCode.SelectedIndex = EnumIndexes.TryGetValue(
                     value,
-                    out var index)
-                    ? index
-                    : -1;
+                    out var index) ? index : -1;
             }
         }
 
@@ -128,7 +143,7 @@
         {
             get
             {
-                return (int)nudPage.Value;
+                return nudPage.Enabled ? (int)nudPage.Value : 1;
             }
 
             set
@@ -144,7 +159,7 @@
         {
             get
             {
-                return (int)nudWorld.Value;
+                return nudWorld.Enabled ? (int)nudWorld.Value : 1;
             }
 
             set
@@ -160,7 +175,7 @@
         {
             get
             {
-                return chkHardFlag.Checked;
+                return chkHardFlag.Enabled && chkHardFlag.Checked;
             }
 
             set
@@ -173,18 +188,13 @@
         {
             get
             {
-                return Int32.TryParse(
-                    tbxAreaNumber.Text,
-                    NumberStyles.HexNumber,
-                    CultureInfo.CurrentUICulture,
-                    out var result)
-                    ? result
-                    : -1;
+                _ = TryGetAreaNumber(tbxAreaNumber.Text, out var result);
+                return tbxAreaNumber.Enabled ? result : 0;
             }
 
             set
             {
-                tbxAreaNumber.Text = $"{value:X2}";
+                tbxAreaNumber.Text = $"{value & 0xFF:X2}";
             }
         }
 
@@ -203,7 +213,7 @@
                     result.Value3 |= (byte)((Page - 1) & 0x1F);
                     break;
 
-                case AreaSpriteCode.ScreenSkip:
+                case AreaSpriteCode.ScreenJump:
                     result.Value1 |= 0x0F;
                     result.Value2 |= (byte)((Page - 1) & 0x1F);
                     break;
@@ -211,30 +221,19 @@
                 default:
                     result.Value1 |= (byte)YPos;
                     result.Value2 |= (byte)((int)AreaSpriteCode & 0x3F);
-                    if (HardFlag)
-                    {
-                        result.Value2 |= 0x40;
-                    }
                     break;
                 }
 
-                if (PageFlag)
-                {
-                    result.Value2 |= 0x80;
-                }
+                result.HardWorldFlag |= HardFlag;
+                result.ScreenFlag |= PageFlag;
 
                 return result;
             }
 
             set
             {
-                if (!EnumIndexes.ContainsKey(value.Code))
-                {
-                    return;
-                }
-
-                Assigning = true;
-                UpdateAccess(value);
+                SettingUICommand = true;
+                UpdateEnabledControls(value);
 
                 XPos = value.X;
                 PageFlag = value.ScreenFlag;
@@ -247,7 +246,7 @@
                     AreaNumber = value.AreaNumber;
                     break;
 
-                case AreaSpriteCode.ScreenSkip:
+                case AreaSpriteCode.ScreenJump:
                     Page = 1 + (value.Value2 & 0x1F);
                     break;
 
@@ -257,7 +256,7 @@
                     break;
                 }
 
-                Assigning = false;
+                SettingUICommand = false;
             }
         }
 
@@ -265,13 +264,13 @@
         {
             get
             {
-                _ = TryGetCommand(tbxBinary.Text, out var result);
+                _ = TryGetCommand(tbxManualInput.Text, out var result);
                 return result;
             }
 
             set
             {
-                tbxBinary.Text = value.Size == 3
+                tbxManualInput.Text = value.Size == 3
                     ? $"{value.Value1:X2} {value.Value2:X2} {value.Value3:X2}"
                     : $"{value.Value1:X2} {value.Value2:X2}";
             }
@@ -287,12 +286,27 @@
             get;
         }
 
+        private static bool TryGetAreaNumber(string text, out byte result)
+        {
+            if (text.Length != 2)
+            {
+                result = 0;
+                return false;
+            }
+
+            return Byte.TryParse(
+                text,
+                NumberStyles.HexNumber,
+                CultureInfo.CurrentUICulture,
+                out result);
+        }
+
         private static bool TryGetCommand(string text, out AreaSpriteCommand command)
         {
-            command = default;
             var tokens = text.Split(' ');
             if (tokens.Length != 3 && tokens.Length != 2)
             {
+                command = default;
                 return false;
             }
 
@@ -301,6 +315,7 @@
             {
                 if (tokens[i].Length != 2)
                 {
+                    command = default;
                     return false;
                 }
 
@@ -310,186 +325,22 @@
                         CultureInfo.CurrentUICulture,
                         out bytes[i]))
                 {
+                    command = default;
                     return false;
                 }
             }
 
-            if (bytes[0] == 0xFF)
-            {
-                return false;
-            }
-
-            if ((bytes[0] & 0x0F) == 0x0E && tokens.Length == 2)
-            {
-                return false;
-            }
-
-            if ((bytes[0] & 0x0F) != 0x0E && tokens.Length == 3)
-            {
-                return false;
-            }
-
             command = new AreaSpriteCommand(bytes[0], bytes[1], bytes[2]);
+            if (!command.IsValid)
+            {
+                command = default;
+                return false;
+            }
+
             return true;
         }
 
-        private static string BaseName(
-            AreaSpriteCode code)
-        {
-            switch (code)
-            {
-            case AreaSpriteCode.AreaPointer:
-                return "Transition Command";
-
-            case AreaSpriteCode.GreenKoopaTroopa:
-                return "Koopa Troopa (Green)";
-
-            case AreaSpriteCode.RedKoopaTroopa:
-                return "Koopa Troopa (Red; Walks off floors)";
-            case AreaSpriteCode.BuzzyBeetle:
-                return "Buzzy Beetle";
-
-            case AreaSpriteCode.RedKoopaTroopa2:
-                return "Koopa Troopa (Red; Stays on floors)";
-            case AreaSpriteCode.GreenKoopaTroopa2:
-                return "Koopa Troopa (Green; Walks in place)";
-            case AreaSpriteCode.HammerBros:
-                return "Hammer Bros.";
-
-            case AreaSpriteCode.Goomba:
-                return "Goomba";
-
-            case AreaSpriteCode.Blooper:
-                return "Squid";
-
-            case AreaSpriteCode.BulletBill:
-                return "Bullet Bill";
-
-            case AreaSpriteCode.YellowKoopaParatroopa:
-                return "Yellow Koopa Paratroopa (Flies in place)";
-
-            case AreaSpriteCode.GreenCheepCheep:
-                return "Green Cheep-Cheep";
-
-            case AreaSpriteCode.RedCheepCheep:
-                return "Red Cheep-Cheep";
-
-            case AreaSpriteCode.Podoboo:
-                return "Podoboo";
-
-            case AreaSpriteCode.PiranhaPlant:
-                return "Piranha Plant";
-
-            case AreaSpriteCode.GreenKoopaParatroopa:
-                return "Green Koopa Paratroopa (Leaping)";
-
-            case AreaSpriteCode.RedKoopaParatroopa:
-                return "Red Koopa Paratroopa (Flies vertically)";
-
-            case AreaSpriteCode.GreenKoopaParatroopa2:
-                return "Green Koopa Paratroopa (Flies horizontally)";
-
-            case AreaSpriteCode.Lakitu:
-                return "Lakitu";
-
-            case AreaSpriteCode.Spiny:
-                return "Spiny (undefined walk speed)";
-
-            case AreaSpriteCode.RedFlyingCheepCheep:
-                return "Red Flying Cheep-Cheep";
-
-            case AreaSpriteCode.BowsersFire:
-                return "Bowser's Fire (generator)";
-
-            case AreaSpriteCode.Fireworks:
-                return "Single Firework";
-
-            case AreaSpriteCode.BulletBillOrCheepCheeps:
-                return "Generator (Bullet Bill or Cheep-Cheeps)";
-
-            case AreaSpriteCode.FireBarClockwise:
-                return "Fire Bar (Clockwise)";
-
-            case AreaSpriteCode.FastFireBarClockwise:
-                return "Fire Bar (Fast; Clockwise)";
-            case AreaSpriteCode.FireBarCounterClockwise:
-                return "Fire Bar (Counter-Clockwise)";
-
-            case AreaSpriteCode.FastFireBarCounterClockwise:
-                return "Fire Bar (Fast; Counter-Clockwise)";
-            case AreaSpriteCode.LongFireBarClockwise:
-                return "Long Fire Bar (Fast; Clockwise)";
-            case AreaSpriteCode.BalanceRopeLift:
-                return "Rope for Lift Balance";
-
-            case AreaSpriteCode.LiftDownThenUp:
-                return "Lift (Down, then up)";
-
-            case AreaSpriteCode.LiftUp:
-                return "Lift (Up)";
-
-            case AreaSpriteCode.LiftDown:
-                return "Lift (Down)";
-
-            case AreaSpriteCode.LiftLeftThenRight:
-                return "Lift (Left, then right)";
-
-            case AreaSpriteCode.LiftFalling:
-                return "Lift (Falling)";
-
-            case AreaSpriteCode.LiftRight:
-                return "Lift (Right)";
-
-            case AreaSpriteCode.ShortLiftUp:
-                return "Short Lift (Up)";
-
-            case AreaSpriteCode.ShortLiftDown:
-                return "Short Lift (Down)";
-
-            case AreaSpriteCode.Bowser:
-                return "Bowser: King of the Koopa";
-
-            case AreaSpriteCode.WarpZoneCommand:
-                return "Command: Load Warp Zone";
-
-            case AreaSpriteCode.ToadOrPrincess:
-                return "Toad or Princess";
-
-            case AreaSpriteCode.TwoGoombasY10:
-                return "Two Goombas (Y=10)";
-
-            case AreaSpriteCode.ThreeGoombasY10:
-                return "Three Goombas (Y=10)";
-
-            case AreaSpriteCode.TwoGoombasY6:
-                return "Two Goombas (Y=6)";
-
-            case AreaSpriteCode.ThreeGoombasY6:
-                return "Three Goombas (Y=6)";
-
-            case AreaSpriteCode.TwoGreenKoopasY10:
-                return "Two Green Koopa Troopas (Y=10)";
-
-            case AreaSpriteCode.ThreeGreenKoopasY10:
-                return "Three Green Koopa Troopas (Y=10)";
-
-            case AreaSpriteCode.TwoGreenKoopasY6:
-                return "Two Green Koopa Troopas (Y=6)";
-
-            case AreaSpriteCode.ThreeGreenKoopasY6:
-                return "Three Green Koopa Troopas (Y=6)";
-
-            case AreaSpriteCode.ScreenSkip:
-                return "Page Skip";
-
-            default:
-                break;
-            }
-
-            return "Unknown code";
-        }
-
-        private void UpdateAccess(AreaSpriteCommand value)
+        private void UpdateEnabledControls(AreaSpriteCommand value)
         {
             lblY.Enabled =
             nudY.Enabled =
@@ -504,51 +355,56 @@
             tbxAreaNumber.Enabled = value.Code == AreaSpriteCode.AreaPointer;
         }
 
-        private void AreaNumber_TextChanged(object sender, EventArgs e)
+        private void UpdateValidInput()
         {
-            btnOK.Enabled = !tbxAreaNumber.Enabled || AreaNumber != -1;
+            // If we're using the list and check boxes, then the input is always valid
+            // by their restraints. Otherwise, if we're entering the value manually,
+            // then we must check that text is valid.
+            IsValidInput =
+                !UseManualInput || TryGetCommand(tbxManualInput.Text, out var _);
         }
 
-        private void Binary_TextChanged(object sender, EventArgs e)
+        private void AreaNumber_TextChanged(object sender, EventArgs e)
         {
-            btnOK.Enabled = !UseManual || TryGetCommand(tbxBinary.Text, out var _);
-            if (!Assigning && btnOK.Enabled && UICommand != BinaryCommand)
+            IsValidInput = !tbxAreaNumber.Enabled
+                || TryGetAreaNumber(tbxAreaNumber.Text, out var _);
+        }
+
+        private void ManualInput_TextChanged(object sender, EventArgs e)
+        {
+            UpdateValidInput();
+            if (!SettingUICommand && btnOK.Enabled && UICommand != BinaryCommand)
             {
                 UICommand = BinaryCommand;
                 AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        private void Item_ValueChanged(object sender, EventArgs e)
-        {
-            if ((sender as Control).Enabled && !Assigning && BinaryCommand != UICommand)
-            {
-                BinaryCommand = UICommand;
-                if (btnOK.Enabled)
-                {
-                    AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
         private void AreaSpriteCode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbxAreaSpriteCode.SelectedIndex == -1 || Assigning)
+            if (cbxAreaSpriteCode.SelectedIndex == -1 || SettingUICommand)
             {
                 return;
             }
 
-            UpdateAccess(UICommand);
+            UpdateEnabledControls(UICommand);
             BinaryCommand = UICommand;
-            if (btnOK.Enabled)
+            AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Item_ValueChanged(object sender, EventArgs e)
+        {
+            var control = sender as Control;
+            if (control.Enabled && !SettingUICommand && BinaryCommand != UICommand)
             {
+                BinaryCommand = UICommand;
                 AreaSpriteCommandChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        private void Binary_CheckedChanged(object sender, EventArgs e)
+        private void UseManualInput_CheckedChanged(object sender, EventArgs e)
         {
-            btnOK.Enabled = !UseManual || TryGetCommand(tbxBinary.Text, out var _);
+            UpdateValidInput();
         }
     }
 }

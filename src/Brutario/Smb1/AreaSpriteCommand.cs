@@ -7,7 +7,6 @@
 namespace Brutario.Smb1
 {
     using System;
-    using System.Collections.Generic;
 
     public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     {
@@ -30,7 +29,7 @@ namespace Brutario.Smb1
                 return IsThreeByteCommand
                     ? AreaSpriteCode.AreaPointer
                     : Y == 0x0F
-                    ? AreaSpriteCode.ScreenSkip
+                    ? AreaSpriteCode.ScreenJump
                     : (AreaSpriteCode)(Value2 & 0x3F);
             }
 
@@ -38,6 +37,14 @@ namespace Brutario.Smb1
             {
                 Value2 &= 0xC0;
                 Value2 |= (byte)((int)value & 0x3F);
+            }
+        }
+
+        public bool IsValid
+        {
+            get
+            {
+                return Value1 != 0xFF && (IsThreeByteCommand || Value3 == 0);
             }
         }
 
@@ -241,9 +248,65 @@ namespace Brutario.Smb1
             }
         }
 
-        public static bool operator !=(AreaSpriteCommand left, AreaSpriteCommand right)
+        public string FullName
         {
-            return !(left == right);
+            get
+            {
+                return Code switch
+                {
+                    AreaSpriteCode.AreaPointer => $"Transition: Area Number={AreaNumber:X2}, Page={AreaPointerScreen + 1} (For world {1 + WorldLimit})",
+                    AreaSpriteCode.GreenKoopaTroopa => "Koopa Troopa (Green)",
+                    AreaSpriteCode.RedKoopaTroopa => "Koopa Troopa (Red; Walks off floors)",
+                    AreaSpriteCode.BuzzyBeetle => "Buzzy Beetle",
+                    AreaSpriteCode.RedKoopaTroopa2 => "Koopa Troopa (Red; Stays on floors)",
+                    AreaSpriteCode.GreenKoopaTroopa2 => "Koopa Troopa (Green; Walks in place)",
+                    AreaSpriteCode.HammerBros => "Hammer Bros.",
+                    AreaSpriteCode.Goomba => "Goomba",
+                    AreaSpriteCode.Blooper => "Squid",
+                    AreaSpriteCode.BulletBill => "Bullet Bill",
+                    AreaSpriteCode.YellowKoopaParatroopa => "Yellow Koopa Paratroopa (Flies in place)",
+                    AreaSpriteCode.GreenCheepCheep => "Green Cheep-Cheep",
+                    AreaSpriteCode.RedCheepCheep => "Red Cheep-Cheep",
+                    AreaSpriteCode.Podoboo => "Podoboo",
+                    AreaSpriteCode.PiranhaPlant => "Piranha Plant",
+                    AreaSpriteCode.GreenKoopaParatroopa => "Green Koopa Paratroopa (Leaping)",
+                    AreaSpriteCode.RedKoopaParatroopa => "Red Koopa Paratroopa (Flies vertically)",
+                    AreaSpriteCode.GreenKoopaParatroopa2 => "Green Koopa Paratroopa (Flies horizontally)",
+                    AreaSpriteCode.Lakitu => "Lakitu",
+                    AreaSpriteCode.Spiny => "Spiny (undefined walk speed)",
+                    AreaSpriteCode.RedFlyingCheepCheep => "Red Flying Cheep-Cheep",
+                    AreaSpriteCode.BowsersFire => "Bowser's Fire (generator)",
+                    AreaSpriteCode.Fireworks => "Single Firework",
+                    AreaSpriteCode.BulletBillOrCheepCheeps => "Generator (Bullet Bill or Cheep-Cheeps)",
+                    AreaSpriteCode.FireBarClockwise => "Fire Bar (Clockwise)",
+                    AreaSpriteCode.FastFireBarClockwise => "Fire Bar (Fast; Clockwise)",
+                    AreaSpriteCode.FireBarCounterClockwise => "Fire Bar (Counter-Clockwise)",
+                    AreaSpriteCode.FastFireBarCounterClockwise => "Fire Bar (Fast; Counter-Clockwise)",
+                    AreaSpriteCode.LongFireBarClockwise => "Long Fire Bar (Fast; Clockwise)",
+                    AreaSpriteCode.BalanceRopeLift => "Rope for Lift Balance",
+                    AreaSpriteCode.LiftDownThenUp => "Lift (Down, then up)",
+                    AreaSpriteCode.LiftUp => "Lift (Up)",
+                    AreaSpriteCode.LiftDown => "Lift (Down)",
+                    AreaSpriteCode.LiftLeftThenRight => "Lift (Left, then right)",
+                    AreaSpriteCode.LiftFalling => "Lift (Falling)",
+                    AreaSpriteCode.LiftRight => "Lift (Right)",
+                    AreaSpriteCode.ShortLiftUp => "Short Lift (Up)",
+                    AreaSpriteCode.ShortLiftDown => "Short Lift (Down)",
+                    AreaSpriteCode.Bowser => "Bowser: King of the Koopa",
+                    AreaSpriteCode.WarpZoneCommand => "Command: Load Warp Zone",
+                    AreaSpriteCode.ToadOrPrincess => "Toad or Princess",
+                    AreaSpriteCode.TwoGoombasY10 => "Two Goombas (Y=10)",
+                    AreaSpriteCode.ThreeGoombasY10 => "Three Goombas (Y=10)",
+                    AreaSpriteCode.TwoGoombasY6 => "Two Goombas (Y=6)",
+                    AreaSpriteCode.ThreeGoombasY6 => "Three Goombas (Y=6)",
+                    AreaSpriteCode.TwoGreenKoopasY10 => "Two Green Koopa Troopas (Y=10)",
+                    AreaSpriteCode.ThreeGreenKoopasY10 => "Three Green Koopa Troopas (Y=10)",
+                    AreaSpriteCode.TwoGreenKoopasY6 => "Two Green Koopa Troopas (Y=6)",
+                    AreaSpriteCode.ThreeGreenKoopasY6 => "Three Green Koopa Troopas (Y=6)",
+                    AreaSpriteCode.ScreenJump => $"Page Skip: {BaseCommand & 0x1F}",
+                    _ => $"Unknown command: {this}",
+                };
+            }
         }
 
         public static bool operator ==(AreaSpriteCommand left, AreaSpriteCommand right)
@@ -251,119 +314,14 @@ namespace Brutario.Smb1
             return left.Equals(right);
         }
 
-        public static IEnumerable<byte> GetAreaByteData(
-            IEnumerable<AreaSpriteCommand> collection)
+        public static bool operator !=(AreaSpriteCommand left, AreaSpriteCommand right)
         {
-            foreach (var command in collection)
-            {
-                yield return command.Value1;
-                yield return command.Value2;
-                if (command.Size == 3)
-                {
-                    yield return command.Value3;
-                }
-            }
-
-            yield return TerminationCode;
+            return !(left == right);
         }
 
-        public static IEnumerable<AreaSpriteCommand> GetAreaData(
-            IEnumerable<byte> bytes)
+        public static bool IsThreeByteSpecifier(int coordinates)
         {
-            if (bytes is null)
-            {
-                throw new ArgumentNullException(nameof(bytes));
-            }
-
-            using (var en = bytes.GetEnumerator())
-            {
-                if (en.MoveNext())
-                {
-                    while (true)
-                    {
-                        if (en.Current == TerminationCode)
-                        {
-                            yield break;
-                        }
-
-                        if (IsThreeByteSpecifier(en.Current))
-                        {
-                            var list = new List<byte>(GetBytes(3));
-                            yield return new AreaSpriteCommand(
-                                list[0],
-                                list[1],
-                                list[2]);
-                        }
-                        else
-                        {
-                            var list = new List<byte>(GetBytes(2));
-                            yield return new AreaSpriteCommand(
-                                list[0],
-                                list[1]);
-                        }
-                    }
-                }
-
-                IEnumerable<byte> GetBytes(int size)
-                {
-                    for (var i = 0; i < size; i++)
-                    {
-                        yield return en.Current;
-
-                        if (!en.MoveNext())
-                        {
-                            throw NoMoreBytesException();
-                        }
-                    }
-                }
-            }
-
-            throw NoMoreBytesException();
-
-            ArgumentException NoMoreBytesException()
-            {
-                return new ArgumentException();
-            }
-        }
-
-        public static IEnumerable<(int x, int y)> EnumeratePositions(
-            IEnumerable<AreaSpriteCommand> collection)
-        {
-            var screen = 0;
-            var screenSkip = false;
-            foreach (var command in collection)
-            {
-                if (command.ScreenFlag && !screenSkip)
-                {
-                    screen += 0x10;
-                }
-
-                var y = (command.Y + 1) << 4;
-
-                screenSkip = command.Code == AreaSpriteCode.ScreenSkip;
-                if (screenSkip)
-                {
-                    screen = command.BaseCommand << 4;
-                }
-                switch (command.Code)
-                {
-                case AreaSpriteCode.ScreenSkip:
-                    screen = command.BaseCommand << 4;
-                    break;
-
-                case AreaSpriteCode.FireBarClockwise:
-                case AreaSpriteCode.FireBarCounterClockwise:
-                case AreaSpriteCode.FastFireBarClockwise:
-                case AreaSpriteCode.FastFireBarCounterClockwise:
-                case AreaSpriteCode.LongFireBarClockwise:
-                    y -= 0x10;
-                    break;
-                }
-
-                var x = (screen | command.X) << 4;
-
-                yield return (x, y);
-            }
+            return (coordinates & 0x0F) == 0x0E;
         }
 
         public override bool Equals(object obj)
@@ -373,14 +331,15 @@ namespace Brutario.Smb1
 
         public bool Equals(AreaSpriteCommand other)
         {
-            return Size.Equals(other.Size) && Value1.Equals(other.Value1)
-                && Value2.Equals(other.Value2)
-                && (Size == 2 || Value3.Equals(other.Value3));
+            return Value1.Equals(other.Value1) && Value2.Equals(other.Value2)
+                && (!IsThreeByteCommand || Value3.Equals(other.Value3));
         }
 
         public override int GetHashCode()
         {
-            return Value1 | (Value2 << 8) | (Value3 << 0x10);
+            return IsThreeByteCommand
+                ? HashCode.Combine(Value1, Value2, Value3)
+                : HashCode.Combine(Value1, Value2);
         }
 
         public override string ToString()
@@ -388,11 +347,6 @@ namespace Brutario.Smb1
             return IsThreeByteCommand
                 ? $"({X}, {Y}): Area pointer to 0x{AreaNumber:X2}"
                 : $"({X}, {Y}): {Code}";
-        }
-
-        private static bool IsThreeByteSpecifier(int coordinates)
-        {
-            return (coordinates & 0x0F) == 0x0E;
         }
     }
 }

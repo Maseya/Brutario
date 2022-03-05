@@ -5,14 +5,16 @@
 
     using Smb1;
 
-    public partial class HeaderEditorForm : Form
+    internal partial class HeaderEditorForm : Form, IHeaderView
     {
         public HeaderEditorForm()
         {
             InitializeComponent();
+
+            AreaHeader = default;
         }
 
-        public event EventHandler HeaderChanged;
+        public event EventHandler AreaHeaderChanged;
 
         public StartTime StartTime
         {
@@ -118,7 +120,7 @@
 
         private void Value_SelectedIndexChanged(object sender, EventArgs e)
         {
-            HeaderChanged?.Invoke(this, EventArgs.Empty);
+            AreaHeaderChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

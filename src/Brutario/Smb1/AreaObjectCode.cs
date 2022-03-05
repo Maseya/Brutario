@@ -26,10 +26,10 @@ namespace Brutario.Smb1
         Empty2,
         AreaSpecificPlatform = 0x10,
 
-        //GreenIsland = AreaSpecificPlatform | AreaPlatformType.Trees,
-        //MushroomIsland = AreaSpecificPlatform | AreaPlatformType.Mushrooms,
-        //Cannon = AreaSpecificPlatform | AreaPlatformType.BulletBillTurrets,
-        //CloudGround = AreaSpecificPlatform | AreaPlatformType.CloudGround,
+        GreenIsland = AreaSpecificPlatform | 8 | AreaPlatformType.Trees,
+        MushroomIsland = AreaSpecificPlatform | 8 | AreaPlatformType.Mushrooms,
+        Cannon = AreaSpecificPlatform | 8 | AreaPlatformType.BulletBillTurrets,
+        CloudGround = AreaSpecificPlatform | 8 | AreaPlatformType.CloudGround,
 
         HorizontalBricks = 0x20,
         HorizontalStones = 0x30,
@@ -48,7 +48,7 @@ namespace Brutario.Smb1
         HorizontalQuestionBlocksV3 = 0x0C60,
         HorizontalQuestionBlocksV7 = 0x0C70,
 
-        ScreenSkip = 0x0D00,
+        ScreenJump = 0x0D00,
         AltJPipe = 0x0D40,
         AltFlagPole,
         BowserAxe,

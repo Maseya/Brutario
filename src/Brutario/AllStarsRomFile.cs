@@ -17,7 +17,7 @@ namespace Brutario
         {
             Path = path ?? throw new ArgumentNullException(nameof(path));
             Rom = new RomIO(File.ReadAllBytes(path));
-            Smb1RomData = new Smb1.GameData(
+            Smb1GameData = new Smb1.GameData(
                 Rom,
                 GetPointers(Rom, System.IO.Path.GetFileName(path)));
         }
@@ -25,6 +25,7 @@ namespace Brutario
         public string Path
         {
             get;
+            set;
         }
 
         public bool HasUnsavedChanges
@@ -38,7 +39,7 @@ namespace Brutario
             get;
         }
 
-        public Smb1.GameData Smb1RomData
+        public Smb1.GameData Smb1GameData
         {
             get;
         }

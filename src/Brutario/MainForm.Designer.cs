@@ -35,10 +35,13 @@ namespace Brutario
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.tsmFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmLevel = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,12 +52,12 @@ namespace Brutario
             this.tsmView = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmViewObjectListWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmPlayer = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmMario = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmLuigi = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsrbMario = new Brutario.ToolStripRadioButtonMenuItem();
+            this.tsrbLuigi = new Brutario.ToolStripRadioButtonMenuItem();
             this.tsmPlayerState = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmStateSmall = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmStateBig = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmStateFire = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsrbSmall = new Brutario.ToolStripRadioButtonMenuItem();
+            this.tsrbBig = new Brutario.ToolStripRadioButtonMenuItem();
+            this.tsrbFire = new Brutario.ToolStripRadioButtonMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tsbOpen = new System.Windows.Forms.ToolStripButton();
@@ -72,7 +75,9 @@ namespace Brutario
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbHelp = new System.Windows.Forms.ToolStripButton();
             this.areaScrollBar = new System.Windows.Forms.HScrollBar();
-            this.areaControl = new Brutario.AreaControl();
+            this.areaControl = new Brutario.DesignControl();
+            this.objectListDialog = new Brutario.ObjectListDialog(this.components);
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.mnuMain.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -93,6 +98,8 @@ namespace Brutario
             // 
             this.tsmFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmOpen,
+            this.tsmSave,
+            this.tsmSaveAs,
             this.toolStripSeparator1,
             this.tsmExit});
             this.tsmFile.Name = "tsmFile";
@@ -103,19 +110,33 @@ namespace Brutario
             // 
             this.tsmOpen.Name = "tsmOpen";
             this.tsmOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmOpen.Size = new System.Drawing.Size(146, 22);
+            this.tsmOpen.Size = new System.Drawing.Size(180, 22);
             this.tsmOpen.Text = "&Open";
             this.tsmOpen.Click += new System.EventHandler(this.Open_Click);
+            // 
+            // tsmSave
+            // 
+            this.tsmSave.Name = "tsmSave";
+            this.tsmSave.Size = new System.Drawing.Size(180, 22);
+            this.tsmSave.Text = "&Save";
+            this.tsmSave.Click += new System.EventHandler(this.Save_Click);
+            // 
+            // tsmSaveAs
+            // 
+            this.tsmSaveAs.Name = "tsmSaveAs";
+            this.tsmSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.tsmSaveAs.Text = "Save &As...";
+            this.tsmSaveAs.Click += new System.EventHandler(this.SaveAs_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmExit
             // 
             this.tsmExit.Name = "tsmExit";
-            this.tsmExit.Size = new System.Drawing.Size(146, 22);
+            this.tsmExit.Size = new System.Drawing.Size(180, 22);
             this.tsmExit.Text = "E&xit";
             this.tsmExit.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -179,56 +200,65 @@ namespace Brutario
             // tsmPlayer
             // 
             this.tsmPlayer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmMario,
-            this.tsmLuigi});
+            this.tsrbMario,
+            this.tsrbLuigi});
             this.tsmPlayer.Name = "tsmPlayer";
             this.tsmPlayer.Size = new System.Drawing.Size(135, 22);
             this.tsmPlayer.Text = "&Player";
             // 
-            // tsmMario
+            // tsrbMario
             // 
-            this.tsmMario.Name = "tsmMario";
-            this.tsmMario.Size = new System.Drawing.Size(105, 22);
-            this.tsmMario.Text = "&Mario";
-            this.tsmMario.Click += new System.EventHandler(this.Player_Click);
+            this.tsrbMario.Checked = true;
+            this.tsrbMario.CheckOnClick = true;
+            this.tsrbMario.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsrbMario.Name = "tsrbMario";
+            this.tsrbMario.Size = new System.Drawing.Size(105, 22);
+            this.tsrbMario.Text = "&Mario";
+            this.tsrbMario.CheckedChanged += new System.EventHandler(this.Player_CheckedChanged);
             // 
-            // tsmLuigi
+            // tsrbLuigi
             // 
-            this.tsmLuigi.Name = "tsmLuigi";
-            this.tsmLuigi.Size = new System.Drawing.Size(105, 22);
-            this.tsmLuigi.Text = "&Luigi";
-            this.tsmLuigi.Click += new System.EventHandler(this.Player_Click);
+            this.tsrbLuigi.CheckOnClick = true;
+            this.tsrbLuigi.Name = "tsrbLuigi";
+            this.tsrbLuigi.Size = new System.Drawing.Size(105, 22);
+            this.tsrbLuigi.Text = "&Luigi";
+            this.tsrbLuigi.CheckedChanged += new System.EventHandler(this.Player_CheckedChanged);
             // 
             // tsmPlayerState
             // 
             this.tsmPlayerState.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmStateSmall,
-            this.tsmStateBig,
-            this.tsmStateFire});
+            this.tsrbSmall,
+            this.tsrbBig,
+            this.tsrbFire});
             this.tsmPlayerState.Name = "tsmPlayerState";
             this.tsmPlayerState.Size = new System.Drawing.Size(135, 22);
             this.tsmPlayerState.Text = "Player &State";
             // 
-            // tsmStateSmall
+            // tsrbSmall
             // 
-            this.tsmStateSmall.Name = "tsmStateSmall";
-            this.tsmStateSmall.Size = new System.Drawing.Size(103, 22);
-            this.tsmStateSmall.Text = "&Small";
-            this.tsmStateSmall.Click += new System.EventHandler(this.PlayerState_Click);
+            this.tsrbSmall.CheckOnClick = true;
+            this.tsrbSmall.Name = "tsrbSmall";
+            this.tsrbSmall.Size = new System.Drawing.Size(103, 22);
+            this.tsrbSmall.Text = "&Small";
+            this.tsrbSmall.CheckedChanged += new System.EventHandler(this.PlayerState_CheckedChanged);
             // 
-            // tsmStateBig
+            // tsrbBig
             // 
-            this.tsmStateBig.Name = "tsmStateBig";
-            this.tsmStateBig.Size = new System.Drawing.Size(103, 22);
-            this.tsmStateBig.Text = "&Big";
-            this.tsmStateBig.Click += new System.EventHandler(this.PlayerState_Click);
+            this.tsrbBig.Checked = true;
+            this.tsrbBig.CheckOnClick = true;
+            this.tsrbBig.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsrbBig.Name = "tsrbBig";
+            this.tsrbBig.Size = new System.Drawing.Size(103, 22);
+            this.tsrbBig.Text = "&Big";
+            this.tsrbBig.CheckedChanged += new System.EventHandler(this.PlayerState_CheckedChanged);
             // 
-            // tsmStateFire
+            // tsrbFire
             // 
-            this.tsmStateFire.Name = "tsmStateFire";
-            this.tsmStateFire.Size = new System.Drawing.Size(103, 22);
-            this.tsmStateFire.Text = "&Fire";
-            this.tsmStateFire.Click += new System.EventHandler(this.PlayerState_Click);
+            this.tsrbFire.CheckOnClick = true;
+            this.tsrbFire.Name = "tsrbFire";
+            this.tsrbFire.Size = new System.Drawing.Size(103, 22);
+            this.tsrbFire.Text = "&Fire";
+            this.tsrbFire.CheckedChanged += new System.EventHandler(this.PlayerState_CheckedChanged);
             // 
             // openFileDialog
             // 
@@ -295,7 +325,6 @@ namespace Brutario
             // 
             this.ttbJumpToArea.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.ttbJumpToArea.Enabled = false;
-            this.ttbJumpToArea.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ttbJumpToArea.Name = "ttbJumpToArea";
             this.ttbJumpToArea.Size = new System.Drawing.Size(100, 25);
             this.ttbJumpToArea.Text = "0";
@@ -397,10 +426,32 @@ namespace Brutario
             this.areaControl.Name = "areaControl";
             this.areaControl.Size = new System.Drawing.Size(1384, 290);
             this.areaControl.TabIndex = 3;
+            this.areaControl.Paint += new System.Windows.Forms.PaintEventHandler(this.AreaControl_Paint);
             this.areaControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.AreaControl_MouseDoubleClick);
             this.areaControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AreaControl_MouseClick);
             this.areaControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AreaControl_MouseMove);
             this.areaControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.AreaControl_MouseUp);
+            // 
+            // objectListDialog
+            // 
+            this.objectListDialog.Owner = null;
+            this.objectListDialog.ShowHelp = false;
+            this.objectListDialog.Title = "Object List";
+            this.objectListDialog.Visible = false;
+            this.objectListDialog.SelectedIndexChanged += new System.EventHandler(this.ObjectListWindow_SelectedIndexChanged);
+            this.objectListDialog.EditItem += new System.EventHandler(this.ObjectListWindow_EditItem);
+            this.objectListDialog.AddItem_Click += new System.EventHandler(this.ObjectListWindow_AddItem_Click);
+            this.objectListDialog.DeleteItem_Click += new System.EventHandler(this.ObjectListWindow_DeleteItem_Click);
+            this.objectListDialog.ClearItems_Click += new System.EventHandler(this.ObjectListWindow_ClearItems_Click);
+            this.objectListDialog.MoveItemUp_Click += new System.EventHandler(this.ObjectListWindow_MoveItemUp_Click);
+            this.objectListDialog.MoveItemDown_Click += new System.EventHandler(this.ObjectListWindow_MoveItemDown_Click);
+            this.objectListDialog.VisibleChanged += new System.EventHandler(this.ObjectListDialog_VisibleChanged);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "sfc";
+            this.saveFileDialog.Filter = "ROM Image (*.sfc;*.smc)|*.smc;*.sfc|All files|*.*";
+            this.saveFileDialog.Title = "Save results to new file";
             // 
             // MainForm
             // 
@@ -447,7 +498,7 @@ namespace Brutario
         private System.Windows.Forms.ToolStripTextBox ttbJumpToArea;
         private System.Windows.Forms.ToolStripButton tsbJumpToArea;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private AreaControl areaControl;
+        private DesignControl areaControl;
         private System.Windows.Forms.HScrollBar areaScrollBar;
         private System.Windows.Forms.ToolStripMenuItem tsmLevel;
         private System.Windows.Forms.ToolStripMenuItem tsmLoadArea;
@@ -459,12 +510,16 @@ namespace Brutario
         private System.Windows.Forms.ToolStripMenuItem tsmEditHeader;
         private System.Windows.Forms.ToolStripMenuItem tsmSpriteMode;
         private System.Windows.Forms.ToolStripMenuItem tsmPlayer;
-        private System.Windows.Forms.ToolStripMenuItem tsmMario;
-        private System.Windows.Forms.ToolStripMenuItem tsmLuigi;
         private System.Windows.Forms.ToolStripMenuItem tsmPlayerState;
-        private System.Windows.Forms.ToolStripMenuItem tsmStateSmall;
-        private System.Windows.Forms.ToolStripMenuItem tsmStateBig;
-        private System.Windows.Forms.ToolStripMenuItem tsmStateFire;
+        private ToolStripRadioButtonMenuItem tsrbMario;
+        private ToolStripRadioButtonMenuItem tsrbLuigi;
+        private ToolStripRadioButtonMenuItem tsrbSmall;
+        private ToolStripRadioButtonMenuItem tsrbBig;
+        private ToolStripRadioButtonMenuItem tsrbFire;
+        private ObjectListDialog objectListDialog;
+        private System.Windows.Forms.ToolStripMenuItem tsmSave;
+        private System.Windows.Forms.ToolStripMenuItem tsmSaveAs;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 

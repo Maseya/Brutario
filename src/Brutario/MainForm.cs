@@ -1,19 +1,19 @@
 ﻿// <copyright file="MainForm.cs" company="Public Domain">
-//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under
-//     GNU Affero General Public License. See LICENSE in project root for full
-//     license information, or visit https://www.gnu.org/licenses/#AGPL
+//     Copyright (c) 2022 Nelson Garcia. All rights reserved. Licensed under GNU
+//     Affero General Public License. See LICENSE in project root for full license
+//     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
 namespace Brutario
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.Globalization;
-    using System.Linq;
     using System.IO;
+    using System.Linq;
     using System.Windows.Forms;
-    using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
     public partial class MainForm : Form
     {
@@ -26,41 +26,32 @@ namespace Brutario
         public MainForm()
         {
             InitializeComponent();
+            areaControl.MouseWheel += AreaControl_MouseWheel;
 
-            tsmMario.Tag = Smb1.Player.Mario;
-            tsmLuigi.Tag = Smb1.Player.Luigi;
-            tsmStateSmall.Tag = Smb1.PlayerState.Small;
-            tsmStateBig.Tag = Smb1.PlayerState.Big;
-            tsmStateFire.Tag = Smb1.PlayerState.Fire;
+            Timer = new System.Timers.Timer
+            {
+                Interval = RefreshRate
+            };
+            Timer.Elapsed += (s, e) => Animate();
 
             if (components is null)
             {
                 components = new Container();
             }
 
-            ObjectListWindow = new ObjectListWindow
-            {
-                Owner = this
-            };
-            ObjectListWindow.SelectedIndexChanged += ObjectListWindow_SelectedIndexChanged;
-            ObjectListWindow.EditItem += ObjectListWindow_EditItem;
-            ObjectListWindow.FormClosing += ChildToolWindow_FormClosing;
-            components.Add(ObjectListWindow);
-
-            Timer = new System.Timers.Timer();
             components.Add(Timer);
-            Timer.Interval = RefreshRate;
-            Timer.Elapsed += (s, e) => Animate();
+
+            objectListDialog.Owner = this;
         }
 
-        public AllStarsRomFile AllStarsRomFile
+        private AllStarsRomFile AllStarsRomFile
         {
             get
             {
                 return _allStarsRomFile;
             }
 
-            private set
+            set
             {
                 if (AllStarsRomFile == value)
                 {
@@ -69,44 +60,124 @@ namespace Brutario
 
                 if (AllStarsRomFile != null)
                 {
-                    AllStarsRomFile.Smb1RomData.AreaNumberChanged -=
-                        AreaNumberChanged;
-                    AllStarsRomFile.Smb1RomData.AreaHeaderChanged -=
+                    AllStarsRomFile.Smb1GameData.AreaNumberChanged -=
+                        Smb1RomData_AreaNumberChanged;
+                    AllStarsRomFile.Smb1GameData.AreaHeaderChanged -=
                         Smb1RomData_AreaHeaderChanged;
-                    AllStarsRomFile.Smb1RomData.PlayerChanged -=
+                    AllStarsRomFile.Smb1GameData.PlayerChanged -=
                         Smb1RomData_PlayerChanged;
-                    AllStarsRomFile.Smb1RomData.PlayerStateChanged -=
+                    AllStarsRomFile.Smb1GameData.PlayerStateChanged -=
                         Smb1RomData_PlayerStateChanged;
+
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemEdited -=
+                        ObjectData_ItemEdited;
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemInserted -=
+                        ObjectData_ItemInserted;
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemMoved -=
+                        ObjectData_ItemMoved;
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemRemoved -=
+                        ObjectData_ItemRemoved;
+                    AllStarsRomFile.Smb1GameData.ObjectData.DataReset -=
+                        ObjectData_DataReset;
+                    AllStarsRomFile.Smb1GameData.ObjectData.DataCleared -=
+                        ObjectData_DataCleared;
+
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemEdited -=
+                        SpriteData_ItemEdited;
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemInserted -=
+                        SpriteData_ItemInserted;
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemMoved -=
+                        SpriteData_ItemMoved;
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemRemoved -=
+                        SpriteData_ItemRemoved;
+                    AllStarsRomFile.Smb1GameData.SpriteData.DataReset -=
+                        SpriteData_DataReset;
+                    AllStarsRomFile.Smb1GameData.SpriteData.DataCleared -=
+                        SpriteData_DataCleared;
                 }
 
                 _allStarsRomFile = value;
                 if (AllStarsRomFile != null)
                 {
-                    AllStarsRomFile.Smb1RomData.AreaNumberChanged +=
-                        AreaNumberChanged;
-                    AllStarsRomFile.Smb1RomData.AreaHeaderChanged +=
+                    AllStarsRomFile.Smb1GameData.AreaNumberChanged +=
+                        Smb1RomData_AreaNumberChanged;
+                    AllStarsRomFile.Smb1GameData.AreaHeaderChanged +=
                         Smb1RomData_AreaHeaderChanged;
-                    AllStarsRomFile.Smb1RomData.PlayerChanged +=
+                    AllStarsRomFile.Smb1GameData.PlayerChanged +=
                         Smb1RomData_PlayerChanged;
-                    AllStarsRomFile.Smb1RomData.PlayerStateChanged +=
+                    AllStarsRomFile.Smb1GameData.PlayerStateChanged +=
                         Smb1RomData_PlayerStateChanged;
+
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemEdited +=
+                        ObjectData_ItemEdited;
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemInserted +=
+                        ObjectData_ItemInserted;
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemMoved +=
+                        ObjectData_ItemMoved;
+                    AllStarsRomFile.Smb1GameData.ObjectData.ItemRemoved +=
+                        ObjectData_ItemRemoved;
+                    AllStarsRomFile.Smb1GameData.ObjectData.DataReset +=
+                        ObjectData_DataReset;
+                    AllStarsRomFile.Smb1GameData.ObjectData.DataCleared +=
+                        ObjectData_DataCleared;
+
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemEdited +=
+                        SpriteData_ItemEdited;
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemInserted +=
+                        SpriteData_ItemInserted;
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemMoved +=
+                        SpriteData_ItemMoved;
+                    AllStarsRomFile.Smb1GameData.SpriteData.ItemRemoved +=
+                        SpriteData_ItemRemoved;
+                    AllStarsRomFile.Smb1GameData.SpriteData.DataReset +=
+                        SpriteData_DataReset;
+                    AllStarsRomFile.Smb1GameData.SpriteData.DataCleared +=
+                        SpriteData_DataCleared;
                 }
 
                 OnRomFileChanged(EventArgs.Empty);
             }
         }
 
-        public Smb1.GameData Smb1GameData
+        private Smb1.GameData Smb1GameData
         {
             get
             {
-                return AllStarsRomFile?.Smb1RomData;
+                return AllStarsRomFile?.Smb1GameData;
             }
         }
 
-        private ObjectListWindow ObjectListWindow
+        private Smb1.Player Player
         {
-            get;
+            get
+            {
+                return tsrbMario.Checked ? Smb1.Player.Mario : Smb1.Player.Luigi;
+            }
+
+            set
+            {
+                tsrbMario.Checked = value == Smb1.Player.Mario;
+                tsrbLuigi.Checked = value == Smb1.Player.Luigi;
+            }
+        }
+
+        private Smb1.PlayerState PlayerState
+        {
+            get
+            {
+                return tsrbSmall.Checked
+                    ? Smb1.PlayerState.Small
+                    : tsrbBig.Checked
+                    ? Smb1.PlayerState.Big
+                    : Smb1.PlayerState.Fire;
+            }
+
+            set
+            {
+                tsrbSmall.Checked = value == Smb1.PlayerState.Small;
+                tsrbBig.Checked = value == Smb1.PlayerState.Big;
+                tsrbFire.Checked = value == Smb1.PlayerState.Fire;
+            }
         }
 
         private System.Timers.Timer Timer
@@ -121,6 +192,12 @@ namespace Brutario
         }
 
         private Point StartMousePoint
+        {
+            get;
+            set;
+        }
+
+        private int SavedPage
         {
             get;
             set;
@@ -161,7 +238,35 @@ namespace Brutario
             }
         }
 
-        public void Open()
+        public void Open(string path)
+        {
+            AllStarsRomFile = new AllStarsRomFile(path);
+        }
+
+        protected virtual void OnRomFileChanged(EventArgs e)
+        {
+            SuspendLayout();
+            UpdateMenuEnabled();
+            if (!(Smb1GameData is null))
+            {
+                Player = Smb1GameData.Player;
+                PlayerState = Smb1GameData.PlayerState;
+                ResetDataListWindowContents();
+                ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
+                Smb1GameData.UpdateAnimatedPixelData(0);
+
+                StartTime = DateTime.Now;
+                Timer.Start();
+            }
+            else
+            {
+                Timer.Stop();
+            }
+
+            ResumeLayout();
+        }
+
+        private void Open()
         {
             if (!IsSavedOrOverwriteUnsaved())
             {
@@ -174,44 +279,115 @@ namespace Brutario
             }
         }
 
-        public void Open(string path)
+        private void SaveAs()
         {
-            AllStarsRomFile = new AllStarsRomFile(path);
-        }
-
-        public void LoadBG1()
-        {
-            areaControl.BG1 = Smb1GameData.ReadBG1Tiles();
-            LoadSprites();
-
-            areaControl.ObjectRectangles = SpriteMode
-                ? new Rectangle[0]
-                : Smb1GameData.GetObjectRectangles().ToArray();
-        }
-
-        protected virtual void OnRomFileChanged(EventArgs e)
-        {
-            SuspendLayout();
-            UpdateMenuEnabled();
-            ObjectListWindow.ObjectItems.Clear();
-            if (!(Smb1GameData is null))
+            saveFileDialog.FileName = AllStarsRomFile.Path;
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                UpdatePlayerMenu();
-                ObjectListWindow.ObjectItems.AddRange(Smb1GameData.ObjectData);
-                ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
-                Smb1GameData.UpdateAnimatedPixelData(0);
-                LoadPalette();
-                areaControl.PixelData = Smb1GameData.PixelData;
-                LoadBG1();
+                SaveAs(saveFileDialog.FileName);
+            }
+        }
 
-                StartTime = DateTime.Now;
-                Timer.Start();
+        private void SaveAs(string path)
+        {
+            AllStarsRomFile.Path = path;
+            Save();
+        }
+
+        private void Save()
+        {
+            Smb1GameData.WriteArea();
+            Smb1GameData.Save();
+
+            File.WriteAllBytes(AllStarsRomFile.Path, Smb1GameData.Rom.Data);
+        }
+
+        private void EditCurrentItem()
+        {
+            if (SpriteMode)
+            {
+                EditSprite();
             }
             else
             {
-                Timer.Stop();
+                EditObject();
             }
-            ResumeLayout();
+        }
+
+        private void ResetDataListWindowContents()
+        {
+            objectListDialog.Items.Clear();
+            if (SpriteMode)
+            {
+                var pages = Smb1GameData.SpriteData.EnumeratePositions().Select(
+                    p => p.x >> 4);
+                var items = Smb1GameData.SpriteData.Zip(
+                    pages, (c, p) => CreateItem(c, p));
+                objectListDialog.Items.AddRange(items);
+            }
+            else
+            {
+                var pages = Smb1GameData.ObjectData.EnumeratePositions().Select(
+                    p => p.x >> 4);
+                var items = Smb1GameData.ObjectData.Zip(
+                    pages, (c, p) => CreateItem(c, p));
+                objectListDialog.Items.AddRange(items);
+            }
+        }
+
+        private void AddObject()
+        {
+            var index = objectListDialog.SelectedIndex + 1;
+
+            var oldCommand = new Smb1.AreaObjectCommand();
+            if ((uint)(index - 1) < (uint)Smb1GameData.ObjectData.Count)
+            {
+                oldCommand = Smb1GameData.ObjectData[index - 1];
+            }
+
+            Smb1GameData.ObjectData.Insert(index, oldCommand);
+
+            using var dialog = new ObjectEditorForm();
+            dialog.AreaObjectCommand = oldCommand;
+            dialog.UpdatePlatformTypeDescription(Smb1GameData.AreaHeader.AreaPlatformType);
+            dialog.AreaObjectCommandChanged += Dialog_AreaObjectCommandChanged;
+            switch (dialog.ShowDialog(owner: this))
+            {
+            case DialogResult.OK:
+                break;
+
+            default:
+                objectListDialog.SelectedIndex = index - 1;
+                Smb1GameData.ObjectData.RemoveAt(index);
+                break;
+            }
+        }
+
+        private void AddSprite()
+        {
+            var index = objectListDialog.SelectedIndex + 1;
+
+            var oldCommand = new Smb1.AreaSpriteCommand();
+            if ((uint)(index - 1) < (uint)Smb1GameData.SpriteData.Count)
+            {
+                oldCommand = Smb1GameData.SpriteData[index - 1];
+            }
+
+            Smb1GameData.SpriteData.Insert(index, oldCommand);
+
+            using var dialog = new SpriteEditorForm();
+            dialog.AreaSpriteCommand = oldCommand;
+            dialog.AreaSpriteCommandChanged += Dialog_AreaSpriteCommandChanged;
+            switch (dialog.ShowDialog(owner: this))
+            {
+            case DialogResult.OK:
+                break;
+
+            default:
+                objectListDialog.SelectedIndex = index - 1;
+                Smb1GameData.SpriteData.RemoveAt(index);
+                break;
+            }
         }
 
         private void Animate()
@@ -222,57 +398,7 @@ namespace Brutario
             }
 
             Smb1GameData.UpdateAnimatedPixelData(Frame);
-            LoadSprites();
-
             areaControl.Invalidate();
-        }
-
-        private void LoadPalette()
-        {
-            areaControl.Palette = Smb1GameData.Palette;
-        }
-
-        private void LoadSprites()
-        {
-            lock (areaControl.Sprites)
-            {
-                areaControl.Sprites.Clear();
-                areaControl.Sprites.AddRange(Smb1GameData.EnumerateSprites(Frame));
-            }
-
-            areaControl.SpriteRectangles = SpriteMode
-                ? Smb1GameData.GetSpriteRectangles().ToArray()
-                : new Rectangle[0];
-        }
-
-        private void AreaNumberChanged(object sender, EventArgs e)
-        {
-            SuspendLayout();
-            ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
-            if (SpriteMode)
-            {
-                ObjectListWindow.SpriteItems.Clear();
-                ObjectListWindow.SpriteItems.AddRange(Smb1GameData.SpriteData);
-            }
-            else
-            {
-                ObjectListWindow.ObjectItems.Clear();
-                ObjectListWindow.ObjectItems.AddRange(Smb1GameData.ObjectData);
-            }
-            areaScrollBar.Value = 0;
-            LoadPalette();
-            LoadBG1();
-            ResumeLayout();
-        }
-
-        private void ChildToolWindow_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                ObjectListWindow.Visible =
-                tsmViewObjectListWindow.Checked = false;
-                e.Cancel = true;
-            }
         }
 
         private bool IsSavedOrOverwriteUnsaved()
@@ -310,12 +436,99 @@ namespace Brutario
             tsbJumpToArea.Enabled =
             ttbJumpToArea.Enabled = AllStarsRomFile != null;
 
-            ObjectListWindow.Visible = AllStarsRomFile != null;
+            objectListDialog.Visible = AllStarsRomFile != null;
+        }
+
+        private void EditObject()
+        {
+            if (objectListDialog.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            var oldCommand = Smb1GameData.ObjectData[objectListDialog.SelectedIndex];
+            using var dialog = new ObjectEditorForm();
+            dialog.AreaObjectCommand = Smb1GameData.ObjectData[
+                objectListDialog.SelectedIndex];
+            dialog.UpdatePlatformTypeDescription(Smb1GameData.AreaHeader.AreaPlatformType);
+            dialog.AreaObjectCommandChanged += Dialog_AreaObjectCommandChanged;
+            switch (dialog.ShowDialog(owner: this))
+            {
+            case DialogResult.OK:
+                break;
+
+            default:
+                Smb1GameData.ObjectData[objectListDialog.SelectedIndex] = oldCommand;
+                Smb1GameData.RenderAreaTilemap();
+                break;
+            }
+        }
+
+        private void EditSprite()
+        {
+            if (objectListDialog.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            var oldCommand = Smb1GameData.SpriteData[objectListDialog.SelectedIndex];
+            using var dialog = new SpriteEditorForm();
+            dialog.AreaSpriteCommand = Smb1GameData.SpriteData[
+                objectListDialog.SelectedIndex];
+            dialog.AreaSpriteCommandChanged += Dialog_AreaSpriteCommandChanged;
+            switch (dialog.ShowDialog(owner: this))
+            {
+            case DialogResult.OK:
+                break;
+
+            default:
+                Smb1GameData.SpriteData[objectListDialog.SelectedIndex] = oldCommand;
+                break;
+            }
+        }
+
+        private void UpdateObjectPages()
+        {
+            var pages = new List<int>(
+                Smb1GameData.ObjectData.EnumeratePositions().Select(p => p.x >> 4));
+            for (var i = 0; i < pages.Count; i++)
+            {
+                objectListDialog.Items.SetPage(i, pages[i]);
+            }
+        }
+
+        private void UpdateSpritePages()
+        {
+            var pages = new List<int>(
+                Smb1GameData.SpriteData.EnumeratePositions().Select(p => p.x >> 4));
+            for (var i = 0; i < pages.Count; i++)
+            {
+                objectListDialog.Items.SetPage(i, pages[i]);
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            var viewWidth = ((areaControl.ClientSize.Width - 1) / 8) + 1;
+            areaScrollBar.Value = 0;
+            areaScrollBar.Maximum = 0x400 - viewWidth;
+            areaScrollBar.SmallChange = 1;
+            areaScrollBar.LargeChange = 0x20;
         }
 
         private void Open_Click(object sender, EventArgs e)
         {
             Open();
+        }
+
+        private void SaveAs_Click(object sender, EventArgs e)
+        {
+            SaveAs();
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            Save();
         }
 
         private void Exit_Click(object sender, EventArgs e)
@@ -330,8 +543,8 @@ namespace Brutario
                     ttbJumpToArea.Text,
                     NumberStyles.HexNumber,
                     CultureInfo.CurrentUICulture,
-                    out var areaIndex)
-                && areaIndex >= 0;
+                    out var areaNumber)
+                && Smb1GameData.IsValidAreaNumber(areaNumber);
         }
 
         private void JumpToArea_Click(object sender, EventArgs e)
@@ -351,31 +564,13 @@ namespace Brutario
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            var viewWidth = ((areaControl.ClientSize.Width - 1) / 8) + 1;
-            areaScrollBar.Value = 0;
-            areaScrollBar.Maximum = 0x400 - viewWidth;
-            areaScrollBar.SmallChange = 1;
-            areaScrollBar.LargeChange = 0x20;
-        }
-
         private void AreaScrollBar_ValueChanged(object sender, EventArgs e)
         {
-            areaControl.StartX = areaScrollBar.Value;
+            areaControl.Invalidate();
         }
 
         private void LoadAreaByLevel_Click(object sender, EventArgs e)
         {
-            using var dialog = new AreaSelectorForm
-            {
-                Smb1RomData = Smb1GameData
-            };
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                Smb1GameData.AreaNumber = dialog.Area;
-            }
         }
 
         private void ExportTileData_Click(object sender, EventArgs e)
@@ -384,19 +579,13 @@ namespace Brutario
             dialog.DefaultExt = ".bin";
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                var data = new byte[0x20 * 0x10 * 0x0D];
-                for (var i = 0; i < data.Length; i++)
-                {
-                    data[i] = (byte)Smb1GameData.AreaObjectRenderer.TileMap[i + (2 * 0x20 * 0x10)];
-                }
-
-                File.WriteAllBytes(dialog.FileName, data);
+                File.WriteAllBytes(dialog.FileName, Smb1GameData.ExportTileMap());
             }
         }
 
         private void ViewObjectListWindow_CheckedChanged(object sender, EventArgs e)
         {
-            ObjectListWindow.Visible = tsmViewObjectListWindow.Checked;
+            objectListDialog.Visible = tsmViewObjectListWindow.Checked;
         }
 
         private void EditHeader_Click(object sender, EventArgs e)
@@ -407,7 +596,7 @@ namespace Brutario
                 AreaHeader = Smb1GameData.AreaHeader
             };
 
-            dialog.HeaderChanged +=
+            dialog.AreaHeaderChanged +=
                 (s, e) => Smb1GameData.AreaHeader = dialog.AreaHeader;
 
             switch (dialog.ShowDialog(owner: this))
@@ -421,12 +610,59 @@ namespace Brutario
             }
         }
 
-        private void Save_Click(object sender, EventArgs e)
+        private void Dialog_AreaSpriteCommandChanged(object sender, EventArgs e)
         {
-            Smb1GameData.WriteArea();
-            Smb1GameData.Save();
+            var dialog = sender as SpriteEditorForm;
+            Smb1GameData.SpriteData[objectListDialog.SelectedIndex] =
+                dialog.AreaSpriteCommand;
+        }
 
-            File.WriteAllBytes("Test ROM.sfc", Smb1GameData.Rom.Data);
+        private void Dialog_AreaObjectCommandChanged(object sender, EventArgs e)
+        {
+            var dialog = sender as ObjectEditorForm;
+            Smb1GameData.ObjectData[objectListDialog.SelectedIndex] =
+                dialog.AreaObjectCommand;
+        }
+
+        private void SpriteMode_CheckedChanged(object sender, EventArgs e)
+        {
+            ResetDataListWindowContents();
+            areaControl.Invalidate();
+        }
+
+        private void Smb1RomData_PlayerChanged(object sender, EventArgs e)
+        {
+            Player = Smb1GameData.Player;
+            Smb1GameData.ReloadPalette();
+        }
+
+        private void Smb1RomData_PlayerStateChanged(object sender, EventArgs e)
+        {
+            PlayerState = Smb1GameData.PlayerState;
+            Smb1GameData.ReloadPalette();
+        }
+
+        private void Smb1RomData_AreaHeaderChanged(object sender, EventArgs e)
+        {
+            Smb1GameData.RenderAreaTilemap();
+            areaControl.Invalidate();
+        }
+
+        private void Smb1RomData_AreaNumberChanged(object sender, EventArgs e)
+        {
+            ttbJumpToArea.Text = Smb1GameData.AreaNumber.ToString("X2");
+            ResetDataListWindowContents();
+            areaScrollBar.Value = 0;
+        }
+
+        private void Player_CheckedChanged(object sender, EventArgs e)
+        {
+            Smb1GameData.Player = Player;
+        }
+
+        private void PlayerState_CheckedChanged(object sender, EventArgs e)
+        {
+            Smb1GameData.PlayerState = PlayerState;
         }
 
         private void AreaControl_MouseClick(object sender, MouseEventArgs e)
@@ -436,107 +672,17 @@ namespace Brutario
                 return;
             }
 
-            var loc = new Point(e.X + (areaControl.StartX << 4), e.Y);
-            ObjectListWindow.SelectedIndex = SpriteMode
-                ? Smb1GameData.GetSpriteIndex(loc)
-                : Smb1GameData.GetObjectIndex(loc);
+            var loc = new Point((e.X >> 4) + areaScrollBar.Value, e.Y >> 4);
+            objectListDialog.SelectedIndex = SpriteMode
+                ? Smb1GameData.SpriteData.GetIndex(loc.X, loc.Y)
+                : Smb1GameData.ObjectData.GetIndex(loc.X, loc.Y - 2);
             areaControl.Invalidate();
-            BeginMouseMove = ObjectListWindow.SelectedIndex != -1;
+            BeginMouseMove = objectListDialog.SelectedIndex != -1;
             if (BeginMouseMove)
             {
-                StartMousePoint = new Point(loc.X >> 4, loc.Y >> 4);
+                StartMousePoint = new Point(loc.X, loc.Y);
+                SavedPage = StartMousePoint.X >> 4;
             }
-        }
-
-        public void EditCurrentItem()
-        {
-            if (SpriteMode)
-            {
-                EditSprite();
-            }
-            else
-            {
-                EditObject();
-            }
-        }
-
-        private void EditObject()
-        {
-            if (ObjectListWindow.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            var oldCommand = Smb1GameData.ObjectData[ObjectListWindow.SelectedIndex];
-            using var dialog = new ObjectEditorForm();
-            dialog.AreaObjectCommand = Smb1GameData.ObjectData[
-                ObjectListWindow.SelectedIndex];
-            dialog.UseManual = true;
-            dialog.AreaPlatformType = Smb1GameData.AreaHeader.AreaPlatformType;
-            dialog.AreaObjectCommandChanged += Dialog_AreaObjectCommandChanged;
-            switch (dialog.ShowDialog(owner: this))
-            {
-            case DialogResult.OK:
-                ObjectListWindow.ObjectItems[ObjectListWindow.SelectedIndex] =
-                    dialog.AreaObjectCommand;
-                break;
-            default:
-                Smb1GameData.ObjectData[ObjectListWindow.SelectedIndex] = oldCommand;
-                Smb1GameData.RenderAreaTilemap();
-                LoadBG1();
-                break;
-            }
-        }
-
-        private void EditSprite()
-        {
-            if (ObjectListWindow.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            var oldCommand = Smb1GameData.SpriteData[ObjectListWindow.SelectedIndex];
-            using var dialog = new SpriteEditorForm();
-            dialog.AreaSpriteCommand = Smb1GameData.SpriteData[
-                ObjectListWindow.SelectedIndex];
-            dialog.AreaSpriteCommandChanged += Dialog_AreaSpriteCommandChanged;
-            switch (dialog.ShowDialog(owner: this))
-            {
-            case DialogResult.OK:
-                ObjectListWindow.SpriteItems[ObjectListWindow.SelectedIndex] =
-                    dialog.AreaSpriteCommand;
-                break;
-            default:
-                Smb1GameData.SpriteData[ObjectListWindow.SelectedIndex] = oldCommand;
-                LoadSprites();
-                areaControl.Invalidate();
-                break;
-            }
-        }
-
-        private void Dialog_AreaSpriteCommandChanged(object sender, EventArgs e)
-        {
-            var dialog = sender as SpriteEditorForm;
-            Smb1GameData.SpriteData[ObjectListWindow.SelectedIndex] =
-                dialog.AreaSpriteCommand;
-            areaControl.Invalidate();
-        }
-
-        private void Smb1RomData_AreaHeaderChanged(object sender, EventArgs e)
-        {
-            ObjectListWindow.AreaPlatformType =
-                Smb1GameData.AreaHeader.AreaPlatformType;
-            LoadSprites();
-            LoadBG1();
-        }
-
-        private void Dialog_AreaObjectCommandChanged(object sender, EventArgs e)
-        {
-            var dialog = sender as ObjectEditorForm;
-            Smb1GameData.ObjectData[ObjectListWindow.SelectedIndex] =
-                dialog.AreaObjectCommand;
-            Smb1GameData.RenderAreaTilemap();
-            LoadBG1();
         }
 
         private void AreaControl_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -544,68 +690,16 @@ namespace Brutario
             EditCurrentItem();
         }
 
-        private void ObjectListWindow_SelectedIndexChanged(object sender, EventArgs e)
+        private void AreaControl_MouseMove(object sender, MouseEventArgs e)
         {
-            areaControl.ObjectIndex = ObjectListWindow.SelectedIndex;
-        }
-
-        private void ObjectListWindow_EditItem(object sender, EventArgs e)
-        {
-            EditCurrentItem();
-        }
-
-        private void SpriteMode_CheckedChanged(object sender, EventArgs e)
-        {
-            ObjectListWindow.SpriteMode = SpriteMode;
-            if (SpriteMode)
+            if (e.Button != MouseButtons.Left || !BeginMouseMove)
             {
-                areaControl.ObjectRectangles = new Rectangle[0];
-                areaControl.SpriteRectangles = Smb1GameData.GetSpriteRectangles().ToArray();
-                ObjectListWindow.SpriteItems.Clear();
-                ObjectListWindow.SpriteItems.AddRange(Smb1GameData.SpriteData);
-            }
-            else
-            {
-                areaControl.ObjectRectangles = Smb1GameData.GetObjectRectangles().ToArray();
-                areaControl.SpriteRectangles = new Rectangle[0];
-                ObjectListWindow.ObjectItems.Clear();
-                ObjectListWindow.ObjectItems.AddRange(Smb1GameData.ObjectData);
+                return;
             }
 
-            areaControl.Invalidate();
-        }
-
-        private void Player_Click(object sender, EventArgs e)
-        {
-            Smb1GameData.Player = (Smb1.Player)(sender as ToolStripMenuItem).Tag;
-        }
-
-        private void PlayerState_Click(object sender, EventArgs e)
-        {
-            Smb1GameData.PlayerState = (Smb1.PlayerState)(sender as ToolStripMenuItem).Tag;
-        }
-
-        private void Smb1RomData_PlayerStateChanged(object sender, EventArgs e)
-        {
-            UpdatePlayerMenu();
-            Smb1GameData.ReloadPalette();
-            LoadSprites();
-        }
-
-        private void Smb1RomData_PlayerChanged(object sender, EventArgs e)
-        {
-            UpdatePlayerMenu();
-            Smb1GameData.ReloadPalette();
-            LoadSprites();
-        }
-
-        private void UpdatePlayerMenu()
-        {
-            tsmStateSmall.Checked = Smb1GameData.PlayerState == Smb1.PlayerState.Small;
-            tsmStateBig.Checked = Smb1GameData.PlayerState == Smb1.PlayerState.Big;
-            tsmStateFire.Checked = Smb1GameData.PlayerState == Smb1.PlayerState.Fire;
-            tsmMario.Checked = Smb1GameData.Player == Smb1.Player.Mario;
-            tsmLuigi.Checked = Smb1GameData.Player == Smb1.Player.Luigi;
+            objectListDialog.SelectedIndex = Smb1GameData.MoveObject(
+                objectListDialog.SelectedIndex,
+                new Point(e.X >> 4, (e.Y >> 4) - 2));
         }
 
         private void AreaControl_MouseUp(object sender, MouseEventArgs e)
@@ -616,39 +710,304 @@ namespace Brutario
             }
         }
 
-        private void AreaControl_MouseMove(object sender, MouseEventArgs e)
+        private void AreaControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left || !BeginMouseMove)
+            if (objectListDialog.SelectedIndex != -1)
+            {
+                if (e.Delta < 0)
+                {
+                    ObjectListWindow_MoveItemDown_Click(sender, e);
+                }
+                else if (e.Delta > 0)
+                {
+                    ObjectListWindow_MoveItemUp_Click(sender, e);
+                }
+            }
+        }
+
+        private void ObjectListWindow_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            areaControl.Invalidate();
+        }
+
+        private void ObjectListWindow_EditItem(object sender, EventArgs e)
+        {
+            EditCurrentItem();
+        }
+
+        private void ObjectListWindow_AddItem_Click(object sender, EventArgs e)
+        {
+            if (SpriteMode)
+            {
+                AddSprite();
+            }
+            else
+            {
+                AddObject();
+            }
+        }
+
+        private void ObjectListWindow_DeleteItem_Click(object sender, EventArgs e)
+        {
+            var index = objectListDialog.SelectedIndex;
+            if (SpriteMode && (uint)index < (uint)Smb1GameData.SpriteData.Count)
+            {
+                Smb1GameData.SpriteData.RemoveAt(index);
+                objectListDialog.SelectedIndex = index;
+            }
+            else if ((uint)index < (uint)Smb1GameData.ObjectData.Count)
+            {
+                Smb1GameData.ObjectData.RemoveAt(index);
+                objectListDialog.SelectedIndex = index;
+            }
+        }
+
+        private void ObjectListWindow_ClearItems_Click(object sender, EventArgs e)
+        {
+            if (SpriteMode)
+            {
+                Smb1GameData.SpriteData.Clear();
+            }
+            else
+            {
+                Smb1GameData.ObjectData.Clear();
+            }
+        }
+
+        private void ObjectListWindow_MoveItemUp_Click(object sender, EventArgs e)
+        {
+            var index = objectListDialog.SelectedIndex;
+            if (SpriteMode && (uint)(index - 1) < (uint)Smb1GameData.SpriteData.Count)
+            {
+                Smb1GameData.SpriteData.MoveItem(index, index - 1);
+                objectListDialog.SelectedIndex = index - 1;
+            }
+            else if ((uint)(index - 1) < (uint)Smb1GameData.ObjectData.Count)
+            {
+                Smb1GameData.ObjectData.MoveItem(index, index - 1);
+                objectListDialog.SelectedIndex = index - 1;
+            }
+        }
+
+        private void ObjectListWindow_MoveItemDown_Click(object sender, EventArgs e)
+        {
+            var index = objectListDialog.SelectedIndex;
+            if (SpriteMode && (uint)index < (uint)(Smb1GameData.SpriteData.Count - 1))
+            {
+                Smb1GameData.SpriteData.MoveItem(index, index + 1);
+                objectListDialog.SelectedIndex = index + 1;
+            }
+            else if ((uint)index < (uint)(Smb1GameData.ObjectData.Count - 1))
+            {
+                Smb1GameData.ObjectData.MoveItem(index, index + 1);
+                objectListDialog.SelectedIndex = index + 1;
+            }
+        }
+
+        private void ObjectListDialog_VisibleChanged(object sender, EventArgs e)
+        {
+            tsmViewObjectListWindow.Checked = objectListDialog.Visible;
+        }
+
+        private void ObjectData_DataCleared(
+            object sender,
+            DataClearedEventArgs<Smb1.AreaObjectCommand> e)
+        {
+            if (!SpriteMode)
+            {
+                objectListDialog.Items.Clear();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void ObjectData_DataReset(
+            object sender,
+            DataResetEventArgs<Smb1.AreaObjectCommand> e)
+        {
+            if (!SpriteMode)
+            {
+                ResetDataListWindowContents();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void ObjectData_ItemRemoved(
+            object sender,
+            ItemInsertedEventArgs<Smb1.AreaObjectCommand> e)
+        {
+            if (!SpriteMode)
+            {
+                objectListDialog.Items.RemoveAt(e.Index);
+                UpdateObjectPages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void ObjectData_ItemMoved(
+            object sender,
+            ItemMovedEventArgs e)
+        {
+            if (!SpriteMode)
+            {
+                objectListDialog.Items.MoveItem(e.OldIndex, e.NewIndex);
+                UpdateObjectPages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void ObjectData_ItemInserted(
+            object sender,
+            ItemInsertedEventArgs<Smb1.AreaObjectCommand> e)
+        {
+            if (!SpriteMode)
+            {
+                objectListDialog.Items.Insert(e.Index, CreateItem(e.Item, 0));
+                UpdateObjectPages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void ObjectData_ItemEdited(
+            object sender,
+            ItemEditedEventArgs<Smb1.AreaObjectCommand> e)
+        {
+            if (!SpriteMode)
+            {
+                objectListDialog.Items[e.Index] = CreateItem(e.NewValue, 0);
+                UpdateObjectPages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void SpriteData_DataCleared(
+            object sender,
+            DataClearedEventArgs<Smb1.AreaSpriteCommand> e)
+        {
+            if (SpriteMode)
+            {
+                objectListDialog.Items.Clear();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void SpriteData_DataReset(
+            object sender,
+            DataResetEventArgs<Smb1.AreaSpriteCommand> e)
+        {
+            if (SpriteMode)
+            {
+                ResetDataListWindowContents();
+                UpdateSpritePages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void SpriteData_ItemRemoved(
+            object sender,
+            ItemInsertedEventArgs<Smb1.AreaSpriteCommand> e)
+        {
+            if (SpriteMode)
+            {
+                objectListDialog.Items.RemoveAt(e.Index);
+                UpdateSpritePages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void SpriteData_ItemMoved(
+            object sender,
+            ItemMovedEventArgs e)
+        {
+            if (SpriteMode)
+            {
+                objectListDialog.Items.MoveItem(e.OldIndex, e.NewIndex);
+                UpdateSpritePages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void SpriteData_ItemInserted(
+            object sender,
+            ItemInsertedEventArgs<Smb1.AreaSpriteCommand> e)
+        {
+            if (SpriteMode)
+            {
+                objectListDialog.Items.Insert(e.Index, CreateItem(e.Item, 0));
+                UpdateSpritePages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private void SpriteData_ItemEdited(
+            object sender,
+            ItemEditedEventArgs<Smb1.AreaSpriteCommand> e)
+        {
+            if (SpriteMode)
+            {
+                objectListDialog.Items[e.Index] = CreateItem(e.NewValue, 0);
+                UpdateSpritePages();
+                Smb1GameData.RenderAreaTilemap();
+            }
+        }
+
+        private ObjectListWindow.Item CreateItem(
+            Smb1.AreaObjectCommand command,
+            int page)
+        {
+            return new ObjectListWindow.Item
+            {
+                Description = command.FullName(
+                AllStarsRomFile.Smb1GameData.AreaHeader.AreaPlatformType),
+                Hex = $"{command.Value1:X2} {command.Value2:X2}"
+                    + (command.IsThreeByteCommand
+                        ? $"{command.Value3:X2}"
+                        : String.Empty),
+                X = command.X,
+                Y = command.Y,
+                Page = page
+            };
+        }
+
+        private ObjectListWindow.Item CreateItem(
+            Smb1.AreaSpriteCommand command,
+            int page)
+        {
+            return new ObjectListWindow.Item
+            {
+                Description = command.FullName,
+                Hex = $"{command.Value1:X2} {command.Value2:X2}"
+                    + (command.IsThreeByteCommand
+                        ? $"{command.Value3:X2}"
+                        : String.Empty),
+                X = command.X,
+                Y = command.Y,
+                Page = page
+            };
+        }
+
+        private void AreaControl_Paint(object sender, PaintEventArgs e)
+        {
+            if (Smb1GameData is null)
             {
                 return;
             }
 
-            var command = Smb1GameData.ObjectData[ObjectListWindow.SelectedIndex];
-            var newX = (e.X + (areaControl.StartX << 3)) >> 4;
-            var newY = (e.Y >> 4) - 2;
-            if (newY < 0)
-            {
-                newY = 0;
-            }
-
-            if (newY > 0x0E)
-            {
-                newY = 0x0E;
-            }
-
-            if ((newX & 0x0F) == (command.X & 0x0F) && (newY & 0x0F) == (command.Y & 0x0F))
-            {
-                return;
-            }
-
-            command.X = newX & 0x0F;
-            command.Y = newY & 0x0F;
-            //ObjectListWindow.ObjectItems[ObjectListWindow.SelectedIndex] =
-            //  command;
-            Smb1GameData.ObjectData[ObjectListWindow.SelectedIndex] =
-                command;
-            Smb1GameData.RenderAreaTilemap();
-            LoadBG1();
+            Smb1.AreaPixelRenderer.DrawArea(
+                e.Graphics,
+                new Color32BppArgb(0xFF, 0, 0, 0),
+                Smb1GameData.Palette,
+                Smb1GameData.PixelData,
+                Smb1GameData.BG1,
+                Smb1GameData.EnumerateSprites(Frame),
+                areaScrollBar.Value,
+                areaControl.Size,
+                SpriteMode
+                    ? Smb1GameData.GetSpriteRectangles().ToArray()
+                    : Smb1GameData.GetObjectRectangles().ToArray(),
+                objectListDialog.SelectedIndex,
+                Color.Blue,
+                Color.White,
+                Color.LightGreen);
         }
     }
 }

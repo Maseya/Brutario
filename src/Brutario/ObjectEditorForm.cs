@@ -7,22 +7,18 @@
 
     using Smb1;
 
-    public sealed partial class ObjectEditorForm : Form
+    internal partial class ObjectEditorForm : Form, IObjectEditorView
     {
-        private AreaPlatformType _areaPlatformType;
-
         public ObjectEditorForm()
         {
             InitializeComponent();
 
-            Codes = new List<AreaObjectCode>();
+            Codes = AreaObjectCommand.ValidCodes;
             EnumIndexes = new Dictionary<AreaObjectCode, int>();
-            foreach (var code in Enum.GetValues(typeof(AreaObjectCode)))
+            for (var i = 0; i < Codes.Count; i++)
             {
-                EnumIndexes.Add((AreaObjectCode)code, Codes.Count);
-                Codes.Add((AreaObjectCode)code);
-                _ = cbxAreaObjectCode.Items.Add(
-                    BaseName((AreaObjectCode)code, AreaPlatformType.Trees));
+                EnumIndexes.Add(Codes[i], i);
+                _ = cbxAreaObjectCode.Items.Add(Codes[i].BaseName());
             }
 
             TerrainMode = TerrainMode.None;
@@ -30,202 +26,58 @@
             BackgroundScenery = BackgroundScenery.None;
         }
 
-        public event EventHandler AreaPlatformTypeChanged;
-
         public event EventHandler AreaObjectCommandChanged;
-
-        public bool UseManual
-        {
-            get
-            {
-                return chkBinary.Checked;
-            }
-
-            set
-            {
-                chkBinary.Checked = value;
-            }
-        }
-
-        public AreaPlatformType AreaPlatformType
-        {
-            get
-            {
-                return _areaPlatformType;
-            }
-
-            set
-            {
-                if (value == AreaPlatformType)
-                {
-                    return;
-                }
-
-                _areaPlatformType = value;
-                var index = EnumIndexes[AreaObjectCode.AreaSpecificPlatform];
-                cbxAreaObjectCode.Items[index] = BaseName(
-                    AreaObjectCode.AreaSpecificPlatform,
-                    value);
-                AreaPlatformTypeChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
 
         public AreaObjectCommand AreaObjectCommand
         {
             get
             {
-                return UseManual ? BinaryCommand : UICommand;
+                return UseManualInput ? BinaryCommand : UICommand;
             }
 
             set
             {
                 BinaryCommand = UICommand = value;
-                if (btnOK.Enabled)
+                if (IsValidInput)
                 {
                     AreaObjectCommandChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-        private bool Assigning
+        private bool IsValidInput
+        {
+            get
+            {
+                return btnOK.Enabled;
+            }
+
+            set
+            {
+                btnOK.Enabled = value;
+            }
+        }
+
+        private bool UseManualInput
+        {
+            get
+            {
+                return chkUseManualInput.Checked;
+            }
+
+            set
+            {
+                chkUseManualInput.Checked = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns true when the UICommand is being updated by its set accessor.
+        /// </summary>
+        private bool SettingUICommand
         {
             get;
             set;
-        }
-
-        private AreaObjectCommand UICommand
-        {
-            get
-            {
-                var result = default(AreaObjectCommand);
-                result.Value1 |= (byte)(XPos << 4);
-                switch ((int)AreaObjectCode & 0xF00)
-                {
-                case 0xC00:
-                    result.Value1 |= 0x0C;
-                    result.Value2 |= (byte)((int)AreaObjectCode & 0x7F);
-                    result.Value2 |= (byte)(Length - 1);
-                    break;
-
-                case 0xD00:
-                    result.Value1 |= 0x0D;
-                    result.Value2 |= (byte)((int)AreaObjectCode & 0x7F);
-                    if (Codes[cbxAreaObjectCode.SelectedIndex] == AreaObjectCode.ScreenSkip)
-                    {
-                        result.Value2 |= (byte)(Length - 1);
-                    }
-                    break;
-
-                case 0xE00:
-                    result.Value1 |= 0x0E;
-                    if (AreaObjectCode == AreaObjectCode.BrickAndSceneryChange)
-                    {
-                        result.Value2 |= (byte)TerrainMode;
-                        result.Value2 |= (byte)((int)BackgroundScenery << 4);
-                    }
-                    else
-                    {
-                        result.Value2 |= 0x40;
-                        result.Value2 |= (byte)ForegroundScenery;
-                    }
-                    break;
-
-                case 0xF00:
-                    result.Value1 |= 0x0F;
-                    result.Value2 |= (byte)(YPos << 4);
-                    result.Value2 |= (byte)(Length - 1);
-                    result.Value3 |= (byte)((int)AreaObjectCode & 0x7F);
-                    break;
-
-                default:
-                    result.Value1 |= (byte)YPos;
-                    result.Value2 |= (byte)((int)AreaObjectCode & 0x7F);
-                    if ((int)AreaObjectCode >= 0x10)
-                    {
-                        result.Value2 |= (byte)(Length - 1);
-                    }
-                    break;
-                }
-
-                if (PageFlag)
-                {
-                    if (result.Size == 3)
-                    {
-                        result.Value3 |= 0x80;
-                    }
-                    else
-                    {
-                        result.Value2 |= 0x80;
-                    }
-                }
-
-                return result;
-            }
-
-            set
-            {
-                if (!EnumIndexes.ContainsKey(value.Code))
-                {
-                    return;
-                }
-
-                Assigning = true;
-                UpdateAccess(value);
-
-                XPos = value.X;
-                var y = value.Value1 & 0x0F;
-                if (y == 0x0F || y < 0x0C)
-                {
-                    YPos = value.Y;
-                }
-
-                PageFlag = value.ScreenFlag;
-                AreaObjectCode = value.Code;
-
-                if (value.Code == AreaObjectCode.BrickAndSceneryChange)
-                {
-                    TerrainMode = (TerrainMode)(value.BaseCommand & 0x0F);
-                    BackgroundScenery = (BackgroundScenery)((value.BaseCommand >> 4) & 3);
-                }
-
-                if (value.Code == AreaObjectCode.ForegroundChange)
-                {
-                    ForegroundScenery = (ForegroundScenery)(value.Parameter & 7);
-                }
-
-                if (value.Code == AreaObjectCode.ScreenSkip)
-                {
-                    Length = 1 + (value.Value2 & 0x1F);
-                }
-                else if (value.Code == AreaObjectCode.EnterablePipe
-                    || value.Code == AreaObjectCode.UnenterablePipe)
-                {
-                    Length = 1 + (AreaObjectCommand.Parameter & 7);
-                }
-                else if (((int)value.Code >= 0x10 && (int)value.Code < 0xD00)
-                    || ((int)value.Code >= 0xF00))
-                {
-                    Length = 1 + AreaObjectCommand.Parameter;
-                }
-
-                Assigning = false;
-            }
-        }
-
-        private AreaObjectCommand BinaryCommand
-        {
-            get
-            {
-                _ = TryGetCommand(tbxBinary.Text, out var result);
-                return result;
-            }
-
-            set
-            {
-                tbxBinary.Text = value.Size == 3
-                    ? $"{value.Value1:X2} {value.Value2:X2} {value.Value3:X2}"
-                    : $"{value.Value1:X2} {value.Value2:X2}";
-            }
         }
 
         private int XPos
@@ -245,7 +97,8 @@
         {
             get
             {
-                return (int)nudY.Value;
+                var y = (int)AreaObjectCode >> 8;
+                return (y < 0x0C || y == 0x0F) ? (int)nudY.Value : y;
             }
 
             set
@@ -261,7 +114,7 @@
         {
             get
             {
-                return chkPageFlag.Checked;
+                return chkPageFlag.Enabled && chkPageFlag.Checked;
             }
 
             set
@@ -275,14 +128,16 @@
             get
             {
                 return Codes[
-                    cbxAreaObjectCode.SelectedIndex >= 0 ? cbxAreaObjectCode.SelectedIndex : 0];
+                    cbxAreaObjectCode.SelectedIndex >= 0
+                    ? cbxAreaObjectCode.SelectedIndex
+                    : 0];
             }
 
             set
             {
-                cbxAreaObjectCode.SelectedIndex = EnumIndexes.TryGetValue(value, out var index)
-                    ? index
-                    : -1;
+                cbxAreaObjectCode.SelectedIndex = EnumIndexes.TryGetValue(
+                    value,
+                    out var index) ? index : -1;
             }
         }
 
@@ -290,7 +145,7 @@
         {
             get
             {
-                return (int)nudLength.Value;
+                return nudLength.Enabled ? (int)nudLength.Value : 1;
             }
 
             set
@@ -302,11 +157,19 @@
             }
         }
 
+        private bool TerrainModeEnabled
+        {
+            get
+            {
+                return cbxTerrainMode.Enabled && cbxTerrainMode.SelectedIndex >= 0;
+            }
+        }
+
         private TerrainMode TerrainMode
         {
             get
             {
-                return (TerrainMode)(cbxTerrainMode.SelectedIndex >= 0
+                return (TerrainMode)(TerrainModeEnabled
                     ? cbxTerrainMode.SelectedIndex
                     : 0);
             }
@@ -317,11 +180,20 @@
             }
         }
 
+        private bool BackgroundSceneryEnabled
+        {
+            get
+            {
+                return cbxBackgroundScenery.Enabled
+                    && cbxBackgroundScenery.SelectedIndex >= 0;
+            }
+        }
+
         private BackgroundScenery BackgroundScenery
         {
             get
             {
-                return (BackgroundScenery)(cbxBackgroundScenery.SelectedIndex >= 0
+                return (BackgroundScenery)(BackgroundSceneryEnabled
                     ? cbxBackgroundScenery.SelectedIndex
                     : 0);
             }
@@ -332,11 +204,20 @@
             }
         }
 
+        private bool ForegroundSceneryEnabled
+        {
+            get
+            {
+                return cbxForegroundScenery.Enabled
+                    && cbxForegroundScenery.SelectedIndex >= 0;
+            }
+        }
+
         private ForegroundScenery ForegroundScenery
         {
             get
             {
-                return (ForegroundScenery)(cbxForegroundScenery.SelectedIndex >= 0
+                return (ForegroundScenery)(ForegroundSceneryEnabled
                     ? cbxForegroundScenery.SelectedIndex
                     : 0);
             }
@@ -347,7 +228,79 @@
             }
         }
 
-        private List<AreaObjectCode> Codes
+        private AreaObjectCommand UICommand
+        {
+            get
+            {
+                var result = default(AreaObjectCommand);
+                result.Value1 |= (byte)(XPos << 4);
+                switch ((int)AreaObjectCode & 0xF00)
+                {
+                case 0xE00:
+                    result.Value1 |= 0x0E;
+                    result.Value2 |= (byte)(((int)AreaObjectCode) & 0x40);
+                    result.Value2 |= (byte)ForegroundScenery;
+                    result.Value2 |= (byte)TerrainMode;
+                    result.Value2 |= (byte)((int)BackgroundScenery << 4);
+                    break;
+
+                case 0xF00:
+                    result.Value1 |= 0x0F;
+                    result.Value2 |= (byte)(YPos << 4);
+                    result.Value2 |= (byte)(Length - 1);
+                    result.Value3 |= (byte)((int)AreaObjectCode & 0x7F);
+                    break;
+
+                default:
+                    result.Value1 |= (byte)YPos;
+                    result.Value2 |= (byte)((int)AreaObjectCode & 0x7F);
+                    result.Value2 |= (byte)(Length - 1);
+                    break;
+                }
+
+                result.ScreenFlag = PageFlag;
+                return result;
+            }
+
+            set
+            {
+                SettingUICommand = true;
+                UpdateEnabledControls(value);
+
+                XPos = value.X;
+                if (value.HasYCoord)
+                {
+                    YPos = value.Y;
+                }
+
+                PageFlag = value.ScreenFlag;
+                AreaObjectCode = value.Code;
+                TerrainMode = value.TerrainMode;
+                BackgroundScenery = value.BackgroundScenery;
+                ForegroundScenery = value.ForegroundScenery;
+                Length = 1 + value.Length;
+
+                SettingUICommand = false;
+            }
+        }
+
+        private AreaObjectCommand BinaryCommand
+        {
+            get
+            {
+                _ = TryGetCommand(tbxManualInput.Text, out var result);
+                return result;
+            }
+
+            set
+            {
+                tbxManualInput.Text = value.IsThreeByteCommand
+                    ? $"{value.Value1:X2} {value.Value2:X2} {value.Value3:X2}"
+                    : $"{value.Value1:X2} {value.Value2:X2}";
+            }
+        }
+
+        private IReadOnlyList<AreaObjectCode> Codes
         {
             get;
         }
@@ -357,12 +310,19 @@
             get;
         }
 
+        public void UpdatePlatformTypeDescription(AreaPlatformType areaPlatformType)
+        {
+            var index = EnumIndexes[AreaObjectCode.AreaSpecificPlatform];
+            var code = areaPlatformType.ToObjectCode();
+            cbxAreaObjectCode.Items[index] = code.BaseName();
+        }
+
         private static bool TryGetCommand(string text, out AreaObjectCommand command)
         {
-            command = default;
             var tokens = text.Split(' ');
             if (tokens.Length != 3 && tokens.Length != 2)
             {
+                command = default;
                 return false;
             }
 
@@ -371,342 +331,39 @@
             {
                 if (tokens[i].Length != 2)
                 {
+                    command = default;
                     return false;
                 }
 
                 if (!Byte.TryParse(
-                        tokens[i],
-                        NumberStyles.HexNumber,
-                        CultureInfo.CurrentUICulture,
-                        out bytes[i]))
+                    tokens[i],
+                    NumberStyles.HexNumber,
+                    CultureInfo.CurrentUICulture,
+                    out bytes[i]))
                 {
+                    command = default;
                     return false;
                 }
             }
 
-            if (bytes[0] == 0xFD)
-            {
-                return false;
-            }
-
-            if ((bytes[0] & 0x0F) == 0x0F && tokens.Length == 2)
-            {
-                return false;
-            }
-
-            if ((bytes[0] & 0x0F) != 0x0F && tokens.Length == 3)
-            {
-                return false;
-            }
-
             command = new AreaObjectCommand(bytes[0], bytes[1], bytes[2]);
+            if (!command.IsValid)
+            {
+                command = default;
+                return false;
+            }
             return true;
         }
 
-        private static int GetMaxLength(AreaObjectCode code)
+        private void UpdateEnabledControls(AreaObjectCommand value)
         {
-            switch (code)
-            {
-            case AreaObjectCode.ScreenSkip:
-                return 0x1F;
-
-            case AreaObjectCode.EnterablePipe:
-            case AreaObjectCode.UnenterablePipe:
-                return 7;
-
-            case AreaObjectCode.Staircase:
-                return 8;
-
-            case AreaObjectCode.Castle:
-                return 7;
-            }
-
-            return IsExtendableObject(code) ? 0x0F : 0;
-        }
-
-        private static bool IsExtendableObject(AreaObjectCode code)
-        {
-            switch (code)
-            {
-            case AreaObjectCode.QuestionBlockPowerup:
-            case AreaObjectCode.QuestionBlockCoin:
-            case AreaObjectCode.HiddenBlockCoin:
-            case AreaObjectCode.HiddenBlock1UP:
-            case AreaObjectCode.BrickPowerup:
-            case AreaObjectCode.BrickBeanstalk:
-            case AreaObjectCode.BrickStar:
-            case AreaObjectCode.Brick10Coins:
-            case AreaObjectCode.Brick1UP:
-            case AreaObjectCode.SidewaysPipe:
-            case AreaObjectCode.UsedBlock:
-            case AreaObjectCode.SpringBoard:
-            case AreaObjectCode.JPipe:
-            case AreaObjectCode.FlagPole:
-            case AreaObjectCode.Empty:
-            case AreaObjectCode.Empty2:
-                return false;
-
-            case AreaObjectCode.AreaSpecificPlatform:
-            case AreaObjectCode.HorizontalBricks:
-            case AreaObjectCode.HorizontalStones:
-            case AreaObjectCode.HorizontalCoins:
-            case AreaObjectCode.VerticalBricks:
-            case AreaObjectCode.VerticalStones:
-            case AreaObjectCode.UnenterablePipe:
-            case AreaObjectCode.EnterablePipe:
-            case AreaObjectCode.Hole:
-            case AreaObjectCode.BalanceHorizontalRope:
-            case AreaObjectCode.BridgeV7:
-            case AreaObjectCode.BridgeV8:
-            case AreaObjectCode.BridgeV10:
-            case AreaObjectCode.HoleWithWaterOrLava:
-            case AreaObjectCode.HorizontalQuestionBlocksV3:
-            case AreaObjectCode.HorizontalQuestionBlocksV7:
-            case AreaObjectCode.ScreenSkip:
-                return true;
-
-            case AreaObjectCode.AltJPipe:
-            case AreaObjectCode.AltFlagPole:
-            case AreaObjectCode.BowserAxe:
-            case AreaObjectCode.RopeForAxe:
-            case AreaObjectCode.BowserBridge:
-            case AreaObjectCode.ScrollStopWarpZone:
-            case AreaObjectCode.ScrollStop:
-            case AreaObjectCode.AltScrollStop:
-            case AreaObjectCode.RedCheepCheepFlying:
-            case AreaObjectCode.BulletBillGenerator:
-            case AreaObjectCode.StopGenerator:
-            case AreaObjectCode.LoopCommand:
-            case AreaObjectCode.BrickAndSceneryChange:
-            case AreaObjectCode.ForegroundChange:
-                return false;
-
-            case AreaObjectCode.RopeForLift:
-            case AreaObjectCode.PulleyRope:
-                return true;
-
-            case AreaObjectCode.EmptyTile:
-                return false;
-
-            case AreaObjectCode.Castle:
-            case AreaObjectCode.CastleCeilingCap:
-            case AreaObjectCode.Staircase:
-            case AreaObjectCode.CastleStairs:
-            case AreaObjectCode.CastleRectangularCeilingTiles:
-            case AreaObjectCode.CastleFloorRightEdge:
-            case AreaObjectCode.CastleFloorLeftEdge:
-            case AreaObjectCode.CastleFloorLeftWall:
-            case AreaObjectCode.CastleFloorRightWall:
-            case AreaObjectCode.VerticalSeaBlocks:
-            case AreaObjectCode.ExtendableJPipe:
-            case AreaObjectCode.VerticalBalls:
-                return true;
-
-            default:
-                return false;
-            }
-        }
-
-        private static string BaseName(
-            AreaObjectCode code,
-            AreaPlatformType areaPlatformType)
-        {
-            switch (code)
-            {
-            case AreaObjectCode.QuestionBlockPowerup:
-                return "Question Block (Powerup)";
-
-            case AreaObjectCode.QuestionBlockCoin:
-                return "Question Block (Coin)";
-
-            case AreaObjectCode.HiddenBlockCoin:
-                return "Hidden Block (Coin)";
-
-            case AreaObjectCode.HiddenBlock1UP:
-                return "Hidden Block (1UP)";
-
-            case AreaObjectCode.BrickPowerup:
-                return "Brick (Powerup)";
-
-            case AreaObjectCode.BrickBeanstalk:
-                return "Brick (Beanstalk)";
-
-            case AreaObjectCode.BrickStar:
-                return "Brick (Star)";
-
-            case AreaObjectCode.Brick10Coins:
-                return "Brick (10 Coins)";
-
-            case AreaObjectCode.Brick1UP:
-                return "Brick (1UP)";
-
-            case AreaObjectCode.SidewaysPipe:
-                return "Sideways Pipe Cap";
-
-            case AreaObjectCode.UsedBlock:
-                return "Used Block";
-
-            case AreaObjectCode.SpringBoard:
-                return "Spring Board";
-
-            case AreaObjectCode.JPipe:
-            case AreaObjectCode.AltJPipe:
-                return "J-Pipe";
-
-            case AreaObjectCode.FlagPole:
-            case AreaObjectCode.AltFlagPole:
-                return "Flag Pole";
-
-            case AreaObjectCode.Empty:
-            case AreaObjectCode.Empty2:
-                return "Nothing";
-
-            case AreaObjectCode.AreaSpecificPlatform:
-                return areaPlatformType switch
-                {
-                    AreaPlatformType.Trees => "Tree Top Platform",
-                    AreaPlatformType.Mushrooms => "Mushroom Platform",
-                    AreaPlatformType.BulletBillTurrets => "Bullet Bill Shooter",
-                    AreaPlatformType.CloudGround => "Cloud Ground",
-                    _ => "Unknown Area Platform Type",
-                };
-
-            case AreaObjectCode.HorizontalBricks:
-                return "Horizontal Bricks";
-
-            case AreaObjectCode.HorizontalStones:
-                return "Horizontal Blocks";
-
-            case AreaObjectCode.HorizontalCoins:
-                return "Horizontal Coins";
-
-            case AreaObjectCode.VerticalBricks:
-                return "Vertical Bricks";
-
-            case AreaObjectCode.VerticalStones:
-                return "Vertical Blocks";
-
-            case AreaObjectCode.UnenterablePipe:
-                return "Unenterable Pipe";
-
-            case AreaObjectCode.EnterablePipe:
-                return "Enterable Pipe";
-
-            case AreaObjectCode.Hole:
-                return "Hole";
-
-            case AreaObjectCode.BalanceHorizontalRope:
-                return "Pulley Platforms";
-
-            case AreaObjectCode.BridgeV7:
-                return "Rope Bridge (Y=7)";
-
-            case AreaObjectCode.BridgeV8:
-                return "Rope Bridge (Y=8)";
-
-            case AreaObjectCode.BridgeV10:
-                return "Rope Bridge (Y=10)";
-
-            case AreaObjectCode.HoleWithWaterOrLava:
-                return "Hole with water or lava";
-
-            case AreaObjectCode.HorizontalQuestionBlocksV3:
-                return "Row of Coin Blocks (Y=3)";
-
-            case AreaObjectCode.HorizontalQuestionBlocksV7:
-                return "Row of Coin Blocks (Y=7)";
-
-            case AreaObjectCode.ScreenSkip:
-                return "Screen Skip";
-
-            case AreaObjectCode.BowserAxe:
-                return "Bowser Axe";
-
-            case AreaObjectCode.RopeForAxe:
-                return "Rope For Axe";
-
-            case AreaObjectCode.BowserBridge:
-                return "Bowser Bridge";
-
-            case AreaObjectCode.ScrollStopWarpZone:
-                return "Scroll Stop (Warp Zone)";
-
-            case AreaObjectCode.ScrollStop:
-            case AreaObjectCode.AltScrollStop:
-                return "Scroll Stop";
-
-            case AreaObjectCode.RedCheepCheepFlying:
-                return "Generator: Red flying cheep-cheeps";
-
-            case AreaObjectCode.BulletBillGenerator:
-                return "Generator: Bullet Bills";
-
-            case AreaObjectCode.StopGenerator:
-                return "Stop Generator (also stops Lakitus)";
-
-            case AreaObjectCode.LoopCommand:
-                return "Screen Loop Command";
-
-            case AreaObjectCode.BrickAndSceneryChange:
-                return "Brick and scenery change";
-
-            case AreaObjectCode.ForegroundChange:
-                return "Foreground Change";
-
-            case AreaObjectCode.RopeForLift:
-                return "Rope for platform lifts";
-
-            case AreaObjectCode.PulleyRope:
-                return "Rope for pulley platforms";
-
-            case AreaObjectCode.EmptyTile:
-                return "Empty tile";
-
-            case AreaObjectCode.Castle:
-                return "Castle";
-
-            case AreaObjectCode.CastleCeilingCap:
-                return "Castle Object: Ceiling Cap Tile";
-
-            case AreaObjectCode.Staircase:
-                return "Staircase";
-
-            case AreaObjectCode.CastleStairs:
-                return "Castle Object: Descending Stairs";
-
-            case AreaObjectCode.CastleRectangularCeilingTiles:
-                return "Castle Object: Rectangular Ceiling Tiles";
-
-            case AreaObjectCode.CastleFloorRightEdge:
-                return "Castle Object: Right-Facing Wall To Floor";
-
-            case AreaObjectCode.CastleFloorLeftEdge:
-                return "Castle Object: Left-Facing Wall To Floor";
-
-            case AreaObjectCode.CastleFloorLeftWall:
-                return "Castle Object: Left-Facing Wall";
-
-            case AreaObjectCode.CastleFloorRightWall:
-                return "Castle Object: Right-Facing Wall";
-
-            case AreaObjectCode.VerticalSeaBlocks:
-                return "Vertical Sea Blocks";
-
-            case AreaObjectCode.ExtendableJPipe:
-                return "Extendable J-Pipe";
-
-            case AreaObjectCode.VerticalBalls:
-                return "Vertical Climbing Balls";
-            }
-
-            return String.Empty;
-        }
-
-        private void UpdateAccess(AreaObjectCommand value)
-        {
-            var y = value.Value1 & 0x0F;
             lblY.Enabled =
-            nudY.Enabled = y == 0x0F || y < 0x0C;
+            nudY.Enabled = value.HasYCoord;
+
+            lblLength.Enabled =
+            nudLength.Enabled = value.IsExtendableObject;
+
+            nudLength.Maximum = 1 + value.Code.GetMaxLength();
 
             lblTerrainMode.Enabled =
             cbxTerrainMode.Enabled =
@@ -718,34 +375,22 @@
             cbxForegroundScenery.Enabled =
                 value.Code == AreaObjectCode.ForegroundChange;
 
-            if (value.Code == AreaObjectCode.ScreenSkip)
-            {
-                lblY.Enabled =
-                nudY.Enabled = false;
-                lblLength.Enabled =
-                nudLength.Enabled = true;
-                nudLength.Maximum = 0x20;
-            }
-            else if (((int)value.Code >= 0x10 && (int)value.Code < 0xD00)
-                || ((int)value.Code >= 0xF00))
-            {
-                lblY.Enabled =
-                nudY.Enabled =
-                lblLength.Enabled =
-                nudLength.Enabled = true;
-                nudLength.Maximum = 1 + GetMaxLength(value.Code);
-            }
-            else
-            {
-                lblLength.Enabled =
-                nudLength.Enabled = false;
-            }
+            chkPageFlag.Enabled = value.Code != AreaObjectCode.ScreenJump;
         }
 
-        private void Binary_TextChanged(object sender, EventArgs e)
+        private void UpdateValidInput()
         {
-            btnOK.Enabled = !UseManual || TryGetCommand(tbxBinary.Text, out var _);
-            if (!Assigning && btnOK.Enabled && UICommand != BinaryCommand)
+            // If we're using the list and check boxes, then the input is always
+            // valid by their restraints. Otherwise, if we're entering the value
+            // manually, then we must check that text is valid.
+            IsValidInput =
+                !UseManualInput || TryGetCommand(tbxManualInput.Text, out var _);
+        }
+
+        private void ManualInput_TextChanged(object sender, EventArgs e)
+        {
+            UpdateValidInput();
+            if (!SettingUICommand && IsValidInput && UICommand != BinaryCommand)
             {
                 UICommand = BinaryCommand;
                 AreaObjectCommandChanged?.Invoke(this, EventArgs.Empty);
@@ -754,34 +399,29 @@
 
         private void AreaObectCode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbxAreaObjectCode.SelectedIndex == -1 || Assigning)
+            if (cbxAreaObjectCode.SelectedIndex == -1 || SettingUICommand)
             {
                 return;
             }
 
-            UpdateAccess(UICommand);
+            UpdateEnabledControls(UICommand);
             BinaryCommand = UICommand;
-            if (btnOK.Enabled)
-            {
-                AreaObjectCommandChanged?.Invoke(this, EventArgs.Empty);
-            }
+            AreaObjectCommandChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void Item_ValueChanged(object sender, EventArgs e)
         {
-            if ((sender as Control).Enabled && !Assigning && BinaryCommand != UICommand)
+            var control = sender as Control;
+            if (control.Enabled && !SettingUICommand && BinaryCommand != UICommand)
             {
                 BinaryCommand = UICommand;
-                if (btnOK.Enabled)
-                {
-                    AreaObjectCommandChanged?.Invoke(this, EventArgs.Empty);
-                }
+                AreaObjectCommandChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        private void Binary_CheckedChanged(object sender, EventArgs e)
+        private void UseManualInput_CheckedChanged(object sender, EventArgs e)
         {
-            btnOK.Enabled = !UseManual || TryGetCommand(tbxBinary.Text, out var _);
+            UpdateValidInput();
         }
     }
 }

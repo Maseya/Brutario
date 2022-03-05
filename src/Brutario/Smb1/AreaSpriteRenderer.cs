@@ -70,7 +70,7 @@ namespace Brutario.Smb1
                 { AreaSpriteCode.ThreeGreenKoopasY10, ThreeGreenKoopasY10 },
                 { AreaSpriteCode.TwoGreenKoopasY6, TwoGreenKoopasY6 },
                 { AreaSpriteCode.ThreeGreenKoopasY6, ThreeGreenKoopasY6 },
-                { AreaSpriteCode.ScreenSkip, SpriteScreenSkip },
+                { AreaSpriteCode.ScreenJump, SpriteScreenSkip },
             };
 
             ObjectCommands = new Dictionary<AreaObjectCode, SpriteCallback>()
@@ -95,7 +95,7 @@ namespace Brutario.Smb1
                 { AreaObjectCode.ScrollStop, ScrollStop },
                 { AreaObjectCode.ScrollStopWarpZone, ScrollStopWarpZone },
                 { AreaObjectCode.AltScrollStop, ScrollStop },
-                { AreaObjectCode.ScreenSkip, ObjectScreenSkip },
+                { AreaObjectCode.ScreenJump, ObjectScreenSkip },
             };
         }
 
@@ -144,21 +144,15 @@ namespace Brutario.Smb1
             }
 
             var screen = 0;
-            var screenSkip = false;
             foreach (var command in areaObjectData)
             {
-                if (command.ScreenFlag && !screenSkip)
+                if (command.ScreenFlag)
                 {
                     screen += 0x10;
                 }
-
-                var x = (screen | command.X) << 4;
-                var y = (command.Y + 2) << 4;
-                screenSkip = command.Code == AreaObjectCode.ScreenSkip;
-                if (screenSkip)
+                else if (command.Code == AreaObjectCode.ScreenJump)
                 {
                     screen = command.BaseCommand << 4;
-                    screenSkip = true;
                 }
 
                 if (!showPipePiranhaPlants && (
@@ -168,6 +162,8 @@ namespace Brutario.Smb1
                     continue;
                 }
 
+                var x = (screen | command.X) << 4;
+                var y = (command.Y + 2) << 4;
                 if (ObjectCommands.TryGetValue(command.Code, out var getSprites))
                 {
                     foreach (var sprite in getSprites(x, y, frame))
@@ -245,7 +241,7 @@ namespace Brutario.Smb1
                     }
                     lastAreaPointerX = x;
                 }
-                screenSkip = command.Code == AreaSpriteCode.ScreenSkip;
+                screenSkip = command.Code == AreaSpriteCode.ScreenJump;
                 if (screenSkip)
                 {
                     screen = command.BaseCommand << 4;
@@ -752,12 +748,12 @@ namespace Brutario.Smb1
 
         private IEnumerable<Sprite> FireBarClockwiseFast(int x, int y, int frame)
         {
-            return FireBar(x, y, frame, 0x68, 6);
+            return FireBar(x, y, frame, 0x64, 6);
         }
 
         private IEnumerable<Sprite> FireBarCounterClockwiseFast(int x, int y, int frame)
         {
-            return FireBar(x, y, frame, -0x68, 6);
+            return FireBar(x, y, frame, -0x64, 6);
         }
 
         private IEnumerable<Sprite> LongFireBarClockwiseFast(int x, int y, int frame)
@@ -921,13 +917,13 @@ namespace Brutario.Smb1
                 yield return sprite;
             }
 
-            foreach (var sprite in HiddenQuestionBlock(x, y, frame))
+            foreach (var sprite in HiddenQuestionBlock(x, y))
             {
                 yield return sprite;
             }
         }
 
-        private IEnumerable<Sprite> HiddenQuestionBlock(int x, int y, int frame)
+        private IEnumerable<Sprite> HiddenQuestionBlock(int x, int y)
         {
             var tile = GameData.Map16Tiles[0xE7];
             yield return new Sprite(x, y, new SpriteTile(tile[0], 0, 0), TileProperties.Transparent);
@@ -965,7 +961,7 @@ namespace Brutario.Smb1
             tile.TileIndex++;
             yield return new Sprite(x + 8, y, new SpriteTile(tile, GfxData.SpritePixelDataStartIndex / 0x40), TileProperties.Transparent);
 
-            foreach (var sprite in HiddenQuestionBlock(x, y, frame))
+            foreach (var sprite in HiddenQuestionBlock(x, y))
             {
                 yield return sprite;
             }

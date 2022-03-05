@@ -250,6 +250,6 @@ namespace Brutario.Smb1
         /// </summary>
         ThreeGreenKoopasY6,
 
-        ScreenSkip,
+        ScreenJump,
     }
 }

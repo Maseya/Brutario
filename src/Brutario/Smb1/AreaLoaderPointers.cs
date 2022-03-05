@@ -11,6 +11,21 @@
         public static readonly AreaLoaderPointers Usa = new AreaLoaderPointers(
             baseAddress: 0x04C026);
 
+        public static readonly AreaLoaderPointers UsaLL = new AreaLoaderPointers(
+            numberOfWorldsAddress: 0x0EC37B,
+            worldLevelOffsetPointer: 0x0EC38A,
+            areaIndexTablePointer: 0x0EC392,
+            spriteAreaTypeOffsetPointer: 0x0EC3EC,
+            spriteLowBytePointer: 0x0EC3F4,
+            spriteHighBytePointer: 0x0EC3F9,
+            objectAreaTypeOffsetPointer: 0x0EC404,
+            objectLowBytePointer: 0x0EC40E,
+            objectHighBytePointer: 0x0EC413,
+            areaDataStartPointer: 0x0EC624,
+            areaDataEndPointer: 0x0EFFFF,
+            numberOfAreas: 0x47,
+            areaNumberTableSize: 0x3A);
+
         public static readonly AreaLoaderPointers UsaPlusW = new AreaLoaderPointers(
             baseAddress: 0x04C026);
 
@@ -34,7 +49,9 @@
             int objectLowBytePointer,
             int objectHighBytePointer,
             int areaDataStartPointer,
-            int areaDataEndPointer)
+            int areaDataEndPointer,
+            int numberOfAreas = 0x22,
+            int areaNumberTableSize = 0x24)
         {
             NumberOfWorldsAddress = numberOfWorldsAddress;
             WorldLevelOffsetPointer = worldLevelOffsetPointer;
@@ -47,6 +64,8 @@
             ObjectHighBytePointer = objectHighBytePointer;
             AreaDataStartPointer = areaDataStartPointer;
             AreaDataEndPointer = areaDataEndPointer;
+            NumberOfAreas = numberOfAreas;
+            AreaNumberTableSize = areaNumberTableSize;
         }
 
         private AreaLoaderPointers(int baseAddress)
@@ -65,6 +84,10 @@
         { }
 
         public int NumberOfWorldsAddress { get; }
+
+        public int NumberOfAreas { get; }
+
+        public int AreaNumberTableSize { get; }
 
         public int WorldLevelOffsetPointer { get; }
 

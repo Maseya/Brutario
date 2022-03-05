@@ -83,16 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllStarsRomFile.cs" />
-    <Compile Include="AreaControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="AreaSelectorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AreaSelectorForm.Designer.cs">
-      <DependentUpon>AreaSelectorForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ChrTile.cs" />
+    <Compile Include="DataClearedEventArgs.cs" />
+    <Compile Include="DataResetEventArgs.cs" />
     <Compile Include="DesignControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,28 +93,53 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GfxConverter.cs" />
+    <Compile Include="HeaderEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HeaderEditor.Designer.cs">
+      <DependentUpon>HeaderEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderEditorDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HeaderEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HeaderEditorForm.Designer.cs">
       <DependentUpon>HeaderEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ItemEditedEventArgs.cs" />
+    <Compile Include="ItemInsertedEventArgs.cs" />
+    <Compile Include="ItemMovedEventArgs.cs" />
     <Compile Include="LayerPriority.cs" />
+    <Compile Include="ListEditor.cs" />
+    <Compile Include="ListViewNF.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectListDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Obj16Tile.cs" />
+    <Compile Include="ObjectEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ObjectEditor.Designer.cs">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectEditorDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ObjectEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ObjectEditorForm.Designer.cs">
       <DependentUpon>ObjectEditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ObjectListDialog.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ObjectListWindow.cs">
       <SubType>Form</SubType>
@@ -140,10 +158,19 @@
     <Compile Include="RomIO.cs" />
     <Compile Include="Smb1\AreaLoaderPointers.cs" />
     <Compile Include="Smb1\AreaObjectRendererPointers.cs" />
+    <Compile Include="Smb1\AreaPixelRenderer.cs" />
     <Compile Include="Smb1\AreaSpriteRenderer.cs" />
+    <Compile Include="Smb1\ExtensionMethods.cs" />
     <Compile Include="Smb1\GfxDataPointers.cs" />
+    <Compile Include="Smb1\IObjectEditor.cs" />
+    <Compile Include="Smb1\IObjectEditorView.cs" />
+    <Compile Include="Smb1\IHeaderEditor.cs" />
+    <Compile Include="Smb1\IHeaderView.cs" />
+    <Compile Include="Smb1\ISpriteEditor.cs" />
+    <Compile Include="Smb1\ISpriteEditorView.cs" />
     <Compile Include="Smb1\Map16Data.cs" />
     <Compile Include="Smb1\Map16DataPointers.cs" />
+    <Compile Include="Smb1\ObjectListEditor.cs" />
     <Compile Include="Smb1\PaletteDataPointers.cs" />
     <Compile Include="Smb1\AreaHeader.cs" />
     <Compile Include="Smb1\AreaLoader.cs" />
@@ -157,6 +184,16 @@
     <Compile Include="Smb1\BackgroundColorControl.cs" />
     <Compile Include="Smb1\PlayerState.cs" />
     <Compile Include="Smb1\Pointers.cs" />
+    <Compile Include="Smb1\SpriteListEditor.cs" />
+    <Compile Include="SpriteEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SpriteEditor.Designer.cs">
+      <DependentUpon>SpriteEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpriteEditorDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SpriteEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,14 +218,23 @@
     <Compile Include="Sprite.cs" />
     <Compile Include="TileFlip.cs" />
     <Compile Include="TileProperties.cs" />
-    <EmbeddedResource Include="AreaSelectorForm.resx">
-      <DependentUpon>AreaSelectorForm.cs</DependentUpon>
+    <Compile Include="ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UndoElement.cs" />
+    <Compile Include="UndoEventArgs.cs" />
+    <Compile Include="UndoFactory.cs" />
+    <EmbeddedResource Include="HeaderEditor.resx">
+      <DependentUpon>HeaderEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderEditorForm.resx">
       <DependentUpon>HeaderEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectEditor.resx">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ObjectEditorForm.resx">
       <DependentUpon>ObjectEditorForm.cs</DependentUpon>
@@ -199,6 +245,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpriteEditor.resx">
+      <DependentUpon>SpriteEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpriteEditorForm.resx">
       <DependentUpon>SpriteEditorForm.cs</DependentUpon>

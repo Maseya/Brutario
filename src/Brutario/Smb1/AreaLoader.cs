@@ -8,22 +8,30 @@ namespace Brutario.Smb1
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
     public class AreaLoader
     {
-        public const int DefaultNumberOfWorlds = 8;
-        public const int DefaultNumberOfAreas = 0x22;
-        public const int AreaNumberTableSize = 0x24;
+        public const int DefaultNumberOfAreas = 0x80;
 
         public AreaLoader()
         {
-            WorldAreaStartTable = new byte[DefaultNumberOfWorlds];
-            AreaNumberTable = new byte[AreaNumberTableSize];
+            WorldAreaStartTable = new byte[0x100];
+            AreaNumberTable = new byte[0x100];
             ObjectAreaIndexTable = new byte[4];
             SpriteAreaIndexTable = new byte[4];
             Headers = new AreaHeader[DefaultNumberOfAreas];
-            AreaObjectData = new AreaObjectCommand[DefaultNumberOfAreas][];
-            AreaSpriteData = new AreaSpriteCommand[DefaultNumberOfAreas][];
+
+            var areaObjectData = new ObjectListEditor[DefaultNumberOfAreas];
+            var areaSpriteData = new SpriteListEditor[DefaultNumberOfAreas];
+            for (var i = 0; i < DefaultNumberOfAreas; i++)
+            {
+                areaObjectData[i] = new ObjectListEditor();
+                areaSpriteData[i] = new SpriteListEditor();
+            }
+
+            AreaObjectData = new ReadOnlyCollection<ObjectListEditor>(areaObjectData);
+            AreaSpriteData = new ReadOnlyCollection<SpriteListEditor>(areaSpriteData);
 
             // Isn't sorted until game data is loaded.
             SortedObjectAreaTypes = new AreaType[4];
@@ -50,10 +58,8 @@ namespace Brutario.Smb1
 
         public int NumberOfAreas
         {
-            get
-            {
-                return DefaultNumberOfAreas;
-            }
+            get;
+            private set;
         }
 
         public int NumberOfWorlds
@@ -62,17 +68,23 @@ namespace Brutario.Smb1
             private set;
         }
 
+        private int AreaNumberTableSize
+        {
+            get;
+            set;
+        }
+
         public AreaHeader[] Headers
         {
             get;
         }
 
-        public AreaObjectCommand[][] AreaObjectData
+        public ReadOnlyCollection<ObjectListEditor> AreaObjectData
         {
             get;
         }
 
-        public AreaSpriteCommand[][] AreaSpriteData
+        public ReadOnlyCollection<SpriteListEditor> AreaSpriteData
         {
             get;
         }
@@ -186,14 +198,14 @@ namespace Brutario.Smb1
             {
                 for (var i = objectAreaIndex; i > newObjectAreaIndex; i--)
                 {
-                    AreaObjectData[i] = AreaObjectData[i - 1];
+                    AreaObjectData[i].Reset(AreaObjectData[i - 1]);
                 }
             }
             else
             {
                 for (var i = objectAreaIndex; i < newObjectAreaIndex; i++)
                 {
-                    AreaObjectData[i] = AreaObjectData[i + 1];
+                    AreaObjectData[i].Reset(AreaObjectData[i + 1]);
                 }
             }
 
@@ -201,19 +213,19 @@ namespace Brutario.Smb1
             {
                 for (var i = spriteAreaIndex; i > newSpriteAreaIndex; i--)
                 {
-                    AreaSpriteData[i] = AreaSpriteData[i - 1];
+                    AreaSpriteData[i].Reset(AreaSpriteData[i - 1]);
                 }
             }
             else
             {
                 for (var i = spriteAreaIndex; i < newSpriteAreaIndex; i++)
                 {
-                    AreaSpriteData[i] = AreaSpriteData[i + 1];
+                    AreaSpriteData[i].Reset(AreaSpriteData[i + 1]);
                 }
             }
 
-            AreaObjectData[newObjectAreaIndex] = objectData;
-            AreaSpriteData[newSpriteAreaIndex] = spriteData;
+            AreaObjectData[newObjectAreaIndex].Reset(objectData);
+            AreaSpriteData[newSpriteAreaIndex].Reset(spriteData);
         }
 
         public void ReadGameData(GameData gameData, AreaLoaderPointers pointers)
@@ -230,13 +242,15 @@ namespace Brutario.Smb1
 
             var rom = gameData.Rom;
             NumberOfWorlds = rom.ReadByte(pointers.NumberOfWorldsAddress);
+            NumberOfAreas = pointers.NumberOfAreas;
+            AreaNumberTableSize = pointers.AreaNumberTableSize;
 
             rom.ReadBytesIndirect(
                 pointers.WorldLevelOffsetPointer,
-                WorldAreaStartTable);
+                new Span<byte>(WorldAreaStartTable, 0, NumberOfWorlds));
             rom.ReadBytesIndirect(
                 pointers.AreaIndexTablePointer,
-                AreaNumberTable);
+                new Span<byte>(AreaNumberTable, 0, AreaNumberTableSize));
             rom.ReadBytesIndirect(
                 pointers.ObjectAreaTypeOffsetPointer,
                 ObjectAreaIndexTable);
@@ -250,18 +264,16 @@ namespace Brutario.Smb1
                 var objectAddress = objectBank | rom.ReadInt16IndirectIndexed(
                     pointers.ObjectLowBytePointer, pointers.ObjectHighBytePointer, i);
                 Headers[i] = rom.ReadInt16(objectAddress);
-                AreaObjectData[i] = new List<AreaObjectCommand>(
-                    AreaObjectCommand.GetAreaData(
-                        rom.EnumerateBytes(objectAddress + 2)))
-                    .ToArray();
+                AreaObjectData[i].Reset(
+                    ObjectListEditor.GetAreaData(
+                        rom.EnumerateBytes(objectAddress + 2)));
 
                 var spriteBank = pointers.SpriteLowBytePointer & 0xFF0000;
                 var spriteAddress = spriteBank | rom.ReadInt16IndirectIndexed(
                     pointers.SpriteLowBytePointer, pointers.SpriteHighBytePointer, i);
-                AreaSpriteData[i] = new List<AreaSpriteCommand>(
-                    AreaSpriteCommand.GetAreaData(
-                        rom.EnumerateBytes(spriteAddress)))
-                    .ToArray();
+                AreaSpriteData[i].Reset(
+                    SpriteListEditor.GetAreaData(
+                        rom.EnumerateBytes(spriteAddress)));
             }
 
             Array.Sort(
@@ -355,6 +367,22 @@ namespace Brutario.Smb1
             throw new ArgumentOutOfRangeException();
         }
 
+        public void WriteObjectData(
+            int index,
+            AreaHeader areaHeader,
+            IEnumerable<AreaObjectCommand> objectData)
+        {
+            Headers[index] = areaHeader;
+            AreaObjectData[index].Reset(objectData);
+        }
+
+        public void WriteSpriteData(
+            int index,
+            IEnumerable<AreaSpriteCommand> spriteData)
+        {
+            AreaSpriteData[index].Reset(spriteData);
+        }
+
         public void WriteToGameData(GameData gameData, AreaLoaderPointers pointers)
         {
             if (gameData is null)
@@ -369,21 +397,20 @@ namespace Brutario.Smb1
 
             var rom = gameData.Rom;
             var totalObjectSize = 0;
-            var objectData = new byte[DefaultNumberOfAreas][];
-            var objectOffsets = new int[DefaultNumberOfAreas];
+            var objectData = new byte[NumberOfAreas][];
+            var objectOffsets = new int[NumberOfAreas];
 
             var totalSpriteSize = 0;
-            var spriteData = new byte[DefaultNumberOfAreas][];
-            var spriteOffsets = new int[DefaultNumberOfAreas];
+            var spriteData = new byte[NumberOfAreas][];
+            var spriteOffsets = new int[NumberOfAreas];
 
-            for (var i = 0; i < DefaultNumberOfAreas; i++)
+            for (var i = 0; i < NumberOfAreas; i++)
             {
                 var spriteAreaIndex = i;
                 var areaNumber = AreaNumberFromSpriteAreaIndex(spriteAreaIndex);
                 var objectAreaIndex = GetObjectAreaIndex(areaNumber);
-                var data = new List<byte>(
-                    AreaObjectCommand.GetAreaByteData(AreaObjectData[objectAreaIndex]));
-                objectData[objectAreaIndex] = new byte[2 + data.Count];
+                var data = AreaObjectData[objectAreaIndex].ToByteArray();
+                objectData[objectAreaIndex] = new byte[2 + data.Length];
                 objectData[objectAreaIndex][0] = Headers[objectAreaIndex].Value1;
                 objectData[objectAreaIndex][1] = Headers[objectAreaIndex].Value2;
                 data.CopyTo(objectData[objectAreaIndex], 2);
@@ -391,10 +418,8 @@ namespace Brutario.Smb1
                 objectOffsets[objectAreaIndex] = totalObjectSize;
                 totalObjectSize += objectData[objectAreaIndex].Length;
 
-                spriteData[spriteAreaIndex] = new List<byte>(
-                    AreaSpriteCommand.GetAreaByteData(AreaSpriteData[spriteAreaIndex]))
-                    .ToArray();
-
+                spriteData[spriteAreaIndex] =
+                    AreaSpriteData[spriteAreaIndex].ToByteArray();
                 if (spriteData[spriteAreaIndex].Length > 1 || spriteAreaIndex != 0x0F)
                 {
                     spriteOffsets[spriteAreaIndex] = totalSpriteSize;
@@ -412,11 +437,11 @@ namespace Brutario.Smb1
                 throw new InvalidOperationException();
             }
 
-            var objectLow = new byte[DefaultNumberOfAreas];
-            var objectHigh = new byte[DefaultNumberOfAreas];
-            var spriteLow = new byte[DefaultNumberOfAreas];
-            var spriteHigh = new byte[DefaultNumberOfAreas];
-            for (var i = 0; i < DefaultNumberOfAreas; i++)
+            var objectLow = new byte[NumberOfAreas];
+            var objectHigh = new byte[NumberOfAreas];
+            var spriteLow = new byte[NumberOfAreas];
+            var spriteHigh = new byte[NumberOfAreas];
+            for (var i = 0; i < NumberOfAreas; i++)
             {
                 var spriteAddress = spriteOffsets[i] + pointers.AreaDataStartPointer;
                 spriteLow[i] = (byte)spriteAddress;

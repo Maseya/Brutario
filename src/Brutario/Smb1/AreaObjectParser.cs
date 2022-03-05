@@ -236,7 +236,7 @@ namespace Brutario.Smb1
         {
             get
             {
-                return CurrentObjectCode == AreaObjectCode.ScreenSkip;
+                return CurrentObjectCode == AreaObjectCode.ScreenJump;
             }
         }
 

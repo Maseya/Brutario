@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.gbxBinary = new System.Windows.Forms.GroupBox();
-            this.tbxBinary = new System.Windows.Forms.TextBox();
-            this.chkBinary = new System.Windows.Forms.CheckBox();
+            this.tbxManualInput = new System.Windows.Forms.TextBox();
+            this.chkUseManualInput = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -58,8 +58,8 @@
             // 
             // gbxBinary
             // 
-            this.gbxBinary.Controls.Add(this.tbxBinary);
-            this.gbxBinary.Controls.Add(this.chkBinary);
+            this.gbxBinary.Controls.Add(this.tbxManualInput);
+            this.gbxBinary.Controls.Add(this.chkUseManualInput);
             this.gbxBinary.Location = new System.Drawing.Point(12, 111);
             this.gbxBinary.Name = "gbxBinary";
             this.gbxBinary.Size = new System.Drawing.Size(188, 59);
@@ -68,25 +68,25 @@
             // 
             // tbxBinary
             // 
-            this.tbxBinary.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbxBinary.Location = new System.Drawing.Point(9, 23);
-            this.tbxBinary.MaxLength = 8;
-            this.tbxBinary.Name = "tbxBinary";
-            this.tbxBinary.Size = new System.Drawing.Size(173, 20);
-            this.tbxBinary.TabIndex = 1;
-            this.tbxBinary.WordWrap = false;
-            this.tbxBinary.TextChanged += new System.EventHandler(this.Binary_TextChanged);
+            this.tbxManualInput.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbxManualInput.Location = new System.Drawing.Point(9, 23);
+            this.tbxManualInput.MaxLength = 8;
+            this.tbxManualInput.Name = "tbxBinary";
+            this.tbxManualInput.Size = new System.Drawing.Size(173, 20);
+            this.tbxManualInput.TabIndex = 1;
+            this.tbxManualInput.WordWrap = false;
+            this.tbxManualInput.TextChanged += new System.EventHandler(this.ManualInput_TextChanged);
             // 
             // chkBinary
             // 
-            this.chkBinary.AutoSize = true;
-            this.chkBinary.Location = new System.Drawing.Point(9, 0);
-            this.chkBinary.Name = "chkBinary";
-            this.chkBinary.Size = new System.Drawing.Size(124, 17);
-            this.chkBinary.TabIndex = 0;
-            this.chkBinary.Text = "Enter value manually";
-            this.chkBinary.UseVisualStyleBackColor = true;
-            this.chkBinary.CheckedChanged += new System.EventHandler(this.Binary_CheckedChanged);
+            this.chkUseManualInput.AutoSize = true;
+            this.chkUseManualInput.Location = new System.Drawing.Point(9, 0);
+            this.chkUseManualInput.Name = "chkBinary";
+            this.chkUseManualInput.Size = new System.Drawing.Size(124, 17);
+            this.chkUseManualInput.TabIndex = 0;
+            this.chkUseManualInput.Text = "Enter value manually";
+            this.chkUseManualInput.UseVisualStyleBackColor = true;
+            this.chkUseManualInput.CheckedChanged += new System.EventHandler(this.UseManualInput_CheckedChanged);
             // 
             // btnCancel
             // 
@@ -338,8 +338,8 @@
         #endregion
 
         private System.Windows.Forms.GroupBox gbxBinary;
-        private System.Windows.Forms.TextBox tbxBinary;
-        private System.Windows.Forms.CheckBox chkBinary;
+        private System.Windows.Forms.TextBox tbxManualInput;
+        private System.Windows.Forms.CheckBox chkUseManualInput;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.GroupBox groupBox1;

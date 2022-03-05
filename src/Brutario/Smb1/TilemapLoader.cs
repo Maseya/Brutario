@@ -89,7 +89,7 @@ namespace Brutario.Smb1
                 pointers.TilemapDataIndexPointer,
                 TilemapCommands.Length,
                 x => x >> 1);
-            for (var i = 0; i < TilemapCommands.Length; i++)
+            for (var i = 0; i < gameData.NumberOfAreas; i++)
             {
                 var commands = new List<TilemapCommand>();
                 for (var j = 0; true; j++)

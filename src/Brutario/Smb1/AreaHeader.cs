@@ -176,6 +176,25 @@ namespace Brutario.Smb1
             }
         }
 
+        public int StartYPixel
+        {
+            get
+            {
+                return StartYPosition switch
+                {
+                    StartYPosition.Y00 => 0x00,
+                    StartYPosition.Y20 => 0x20,
+                    StartYPosition.YB0 => 0xB0,
+                    StartYPosition.Y50 => 0x50,
+                    StartYPosition.Alt1Y00 => 0x00,
+                    StartYPosition.Alt2Y00 => 0x00,
+                    StartYPosition.PipeIntroYB0 => 0xB0,
+                    StartYPosition.AltPipeIntroYB0 => 0xB0,
+                    _ => 0x00,
+                };
+            }
+        }
+
         /// <summary>
         /// Gets or sets the terrain layout to use when starting the area.
         /// </summary>

@@ -4,7 +4,7 @@
 //     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-namespace Maseya.Controls
+namespace Brutario
 {
     using System;
     using System.ComponentModel;
