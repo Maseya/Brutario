@@ -75,19 +75,11 @@ namespace Brutario.Smb1
 
             ObjectCommands = new Dictionary<AreaObjectCode, SpriteCallback>()
             {
-                { AreaObjectCode.QuestionBlockPowerup, Powerup },
-                { AreaObjectCode.BrickPowerup, Powerup },
-                { AreaObjectCode.Brick1UP, Brick1Up },
-                { AreaObjectCode.Brick10Coins, Brick10Coins },
-                { AreaObjectCode.HiddenBlock1UP, HiddenBlock1UP },
                 { AreaObjectCode.EnterablePipe, PipePiranhaPlant },
                 { AreaObjectCode.UnenterablePipe, PipePiranhaPlant },
                 { AreaObjectCode.SpringBoard, SpringBoard },
                 { AreaObjectCode.FlagPole, FlagPole },
                 { AreaObjectCode.AltFlagPole, FlagPole },
-                { AreaObjectCode.BrickBeanstalk, BeanStalk },
-                { AreaObjectCode.HiddenBlockCoin, Coin },
-                { AreaObjectCode.BrickStar, Star },
                 { AreaObjectCode.BulletBillGenerator, BulletBill },
                 { AreaObjectCode.RedCheepCheepFlying, RedFlyingCheepCheep },
                 { AreaObjectCode.StopGenerator, StopGenerator },
@@ -208,6 +200,56 @@ namespace Brutario.Smb1
                     tile);
                 tile.TileIndex++;
             }
+        }
+
+        public IEnumerable<Sprite> GetSprites(int[] tilemap)
+        {
+            var result = Enumerable.Empty<Sprite>();
+            for (var y = 0; y < 0x0C; y++)
+            {
+                var index = y * 0x200;
+                var pY = y << 4;
+                for (var x = 0; x < 0x200; x++)
+                {
+                    var pX = x << 4;
+                    switch (tilemap[index + x])
+                    {
+                    case 0xE8:
+                        result = result.Concat(Powerup(pX, pY, 0));
+                        break;
+
+                    case 0x62:
+                        result = result.Concat(HiddenQuestionBlock(pX, pY));
+                        break;
+
+                    case 0x63:
+                        result = result.Concat(HiddenBlock1UP(pX, pY, 0));
+                        break;
+
+                    case 0x58:
+                        result = result.Concat(Powerup(pX, pY, 0));
+                        break;
+
+                    case 0x59:
+                        result = result.Concat(BeanStalk(pX, pY, 0));
+                        break;
+
+                    case 0x5A:
+                        result = result.Concat(Star(pX, pY, 0));
+                        break;
+
+                    case 0x5B:
+                        result = result.Concat(Brick10Coins(pX, pY, 0));
+                        break;
+
+                    case 0x5C:
+                        result = result.Concat(Brick1Up(pX, pY, 0));
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         public IEnumerable<Sprite> GetSprites(
@@ -1054,14 +1096,19 @@ namespace Brutario.Smb1
 
         private IEnumerable<Sprite> PipePiranhaPlant(int x, int y, int frame)
         {
-            return PiranhaPlant(x + 8, y, frame);
+            return PiranhaPlant(x + 8, y + 8, frame);
         }
 
         private IEnumerable<Sprite> PiranhaPlant(int x, int y, int frame)
         {
             var index = ((frame + (x >> 1)) & 0x10) == 0 ? 0xE5 : 0xEC;
-            y -= PirhanaPlantOffset(frame - (x >> 2));
+            var offset = PirhanaPlantOffset(frame - (x >> 2));
+            if (offset == 0)
+            {
+                yield break;
+            }
 
+            y -= 8 + offset;
             var tile = new ChrTile(index, 5, 0, 0);
             yield return new Sprite(x, y, new SpriteTile(tile, GfxData.SpritePixelDataStartIndex / 0x40));
 

@@ -418,6 +418,9 @@ namespace Brutario.Smb1
                 AreaType,
                 true);
 
+            result = result.Concat(AreaSpriteRenderer.GetSprites(
+                AreaObjectRenderer.TileMap));
+
             return result.Concat(
                 AreaSpriteRenderer.GetPlayerSprite(
                     x: 0x28,

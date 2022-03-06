@@ -697,7 +697,7 @@ namespace Brutario.Smb1
                 return tile != 0x50;
 
             default:
-                return currentTile < 0xE7;
+                return currentTile <= 0xE7;
             }
         }
 
