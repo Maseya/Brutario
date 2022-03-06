@@ -737,6 +737,11 @@ namespace Brutario.Smb1
                 index += 4;
             }
 
+            if (height == 0)
+            {
+                height++;
+            }
+
             TileBuffer[y] = PipeTileTable[index];
             RenderTileColumn(
                 PipeTileTable[index + 2],
