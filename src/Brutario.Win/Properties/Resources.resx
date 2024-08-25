@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="alien" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\alien.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="paste-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\paste-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder-tree-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder-tree-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="plus-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\plus-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="circle-question-regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\circle-question-regular.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minus-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minus-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rotate-right-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rotate-right-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder-open-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder-open-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trash-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trash-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hands-clapping-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hands-clapping-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="copy-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\copy-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="floppy-disk-regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\floppy-disk-regular.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scissors-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scissors-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Picture1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Picture1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rotate-left-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rotate-left-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map-regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\map-regular.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Picture2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Picture2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AltFlagPole" xml:space="preserve">
+    <value>Flag Pole</value>
+  </data>
+  <data name="AltJPipe" xml:space="preserve">
+    <value>J-Pipe</value>
+  </data>
+  <data name="AltScrollStop" xml:space="preserve">
+    <value>Scroll Stop</value>
+  </data>
+  <data name="AreaSpecificPlatform_BulletBillTurrets" xml:space="preserve">
+    <value>Bullet Bill Shooter (Height={0})</value>
+  </data>
+  <data name="AreaSpecificPlatform_CloudGround" xml:space="preserve">
+    <value>Cloud Ground (Width={0})</value>
+  </data>
+  <data name="AreaSpecificPlatform_Mushrooms" xml:space="preserve">
+    <value>Mushroom Platform (Width={0})</value>
+  </data>
+  <data name="AreaSpecificPlatform_Trees" xml:space="preserve">
+    <value>Tree Top Platform (Width={0})</value>
+  </data>
+  <data name="BalanceHorizontalRope" xml:space="preserve">
+    <value>Pulley Platforms (Width={0})</value>
+  </data>
+  <data name="BowserAxe" xml:space="preserve">
+    <value>Bowser Axe</value>
+  </data>
+  <data name="BowserBridge" xml:space="preserve">
+    <value>Bowser Bridge</value>
+  </data>
+  <data name="Brick10Coins" xml:space="preserve">
+    <value>Brick (10 Coins)</value>
+  </data>
+  <data name="Brick1UP" xml:space="preserve">
+    <value>Brick (1UP)</value>
+  </data>
+  <data name="BrickAndSceneryChange" xml:space="preserve">
+    <value>Brick and Scenery Change</value>
+  </data>
+  <data name="BrickBeanstalk" xml:space="preserve">
+    <value>Brick (Beanstalk)</value>
+  </data>
+  <data name="BrickPowerup" xml:space="preserve">
+    <value>Brick (Powerup)</value>
+  </data>
+  <data name="BrickStar" xml:space="preserve">
+    <value>Brick (Star)</value>
+  </data>
+  <data name="BridgeV10" xml:space="preserve">
+    <value>Rope Bridge (Y=10, Width={0})</value>
+  </data>
+  <data name="BridgeV7" xml:space="preserve">
+    <value>Rope Bridge (Y=7, Width={0})</value>
+  </data>
+  <data name="BridgeV8" xml:space="preserve">
+    <value>Rope Bridge (Y=8, Width={0})</value>
+  </data>
+  <data name="BulletBillGenerator" xml:space="preserve">
+    <value>Generator: Bullet Bills</value>
+  </data>
+  <data name="Castle" xml:space="preserve">
+    <value>Castle</value>
+  </data>
+  <data name="CastleCeilingCap" xml:space="preserve">
+    <value>Castle Object: Ceiling Cap Tile</value>
+  </data>
+  <data name="CastleFloorLeftEdge" xml:space="preserve">
+    <value>Castle Object: Left-Facing Wall To Floor</value>
+  </data>
+  <data name="CastleFloorLeftWall" xml:space="preserve">
+    <value>Castle Object: Left-Facing Wall</value>
+  </data>
+  <data name="CastleFloorRightEdge" xml:space="preserve">
+    <value>Castle Object: Right-Facing Wall To Floor</value>
+  </data>
+  <data name="CastleFloorRightWall" xml:space="preserve">
+    <value>Castle Object: Right-Facing Wall</value>
+  </data>
+  <data name="CastleRectangularCeilingTiles" xml:space="preserve">
+    <value>Castle Object: Rectangular Ceiling Tiles</value>
+  </data>
+  <data name="CastleStairs" xml:space="preserve">
+    <value>Castle Object: Descending Stairs</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Nothing</value>
+  </data>
+  <data name="Empty2" xml:space="preserve">
+    <value>Nothing</value>
+  </data>
+  <data name="EmptyTile" xml:space="preserve">
+    <value>Empty Tile</value>
+  </data>
+  <data name="EnterablePipe" xml:space="preserve">
+    <value>Enterable Pipe (Height={0})</value>
+  </data>
+  <data name="ExtendableJPipe" xml:space="preserve">
+    <value>Extendable J-Pipe (Height={0})</value>
+  </data>
+  <data name="FlagPole" xml:space="preserve">
+    <value>Flag Pole</value>
+  </data>
+  <data name="ForegroundChange" xml:space="preserve">
+    <value>Foreground Change</value>
+  </data>
+  <data name="HiddenBlock1UP" xml:space="preserve">
+    <value>Hidden Block (1UP)</value>
+  </data>
+  <data name="HiddenBlockCoin" xml:space="preserve">
+    <value>Hidden Block (Coin)</value>
+  </data>
+  <data name="Hole" xml:space="preserve">
+    <value>Hole (Width={0})</value>
+  </data>
+  <data name="HoleWithWaterOrLava" xml:space="preserve">
+    <value>Hole with water or lava (Width={0})</value>
+  </data>
+  <data name="HorizontalBricks" xml:space="preserve">
+    <value>Horizontal Bricks (Width={0})</value>
+  </data>
+  <data name="HorizontalCoins" xml:space="preserve">
+    <value>Horizontal Coins (Width={0})</value>
+  </data>
+  <data name="HorizontalQuestionBlocksV3" xml:space="preserve">
+    <value>Row of Coin Blocks (Y=3, Width={0})</value>
+  </data>
+  <data name="HorizontalQuestionBlocksV7" xml:space="preserve">
+    <value>Row of Coin Blocks (Y=7, Width={0})</value>
+  </data>
+  <data name="HorizontalStones" xml:space="preserve">
+    <value>Horizontal Blocks (Width={0})</value>
+  </data>
+  <data name="JPipe" xml:space="preserve">
+    <value>J-Pipe</value>
+  </data>
+  <data name="LoopCommand" xml:space="preserve">
+    <value>Screen Loop Command</value>
+  </data>
+  <data name="PulleyRope" xml:space="preserve">
+    <value>Rope for pulley platforms (Height={0})</value>
+  </data>
+  <data name="QuestionBlockCoin" xml:space="preserve">
+    <value>Question Block (Coin)</value>
+  </data>
+  <data name="QuestionBlockPowerup" xml:space="preserve">
+    <value>Question Block (Powerup)</value>
+  </data>
+  <data name="RedCheepCheepFlying" xml:space="preserve">
+    <value>Generator: Red flying cheep-cheeps</value>
+  </data>
+  <data name="RopeForLift" xml:space="preserve">
+    <value>Rope for platform lifts</value>
+  </data>
+  <data name="ScreenJump" xml:space="preserve">
+    <value>Skip to screen 0x{1:X2}</value>
+  </data>
+  <data name="ScrollStop" xml:space="preserve">
+    <value>Scroll Stop</value>
+  </data>
+  <data name="ScrollStopWarpZone" xml:space="preserve">
+    <value>Scroll Stop (Warp Zone)</value>
+  </data>
+  <data name="SidewaysPipe" xml:space="preserve">
+    <value>Sideways Pipe</value>
+  </data>
+  <data name="SpringBoard" xml:space="preserve">
+    <value>Spring Board</value>
+  </data>
+  <data name="Staircase" xml:space="preserve">
+    <value>Staircase (Width={0})</value>
+  </data>
+  <data name="StopGenerator" xml:space="preserve">
+    <value>Stop Generator (also stops Lakitus)</value>
+  </data>
+  <data name="UnenterablePipe" xml:space="preserve">
+    <value>Unenterable Pipe (Height={0})</value>
+  </data>
+  <data name="UnknownCommand" xml:space="preserve">
+    <value>Unknown command: {2}</value>
+  </data>
+  <data name="UsedBlock" xml:space="preserve">
+    <value>Used Block</value>
+  </data>
+  <data name="VerticalBalls" xml:space="preserve">
+    <value>Vertical Climbing Balls (Height={0})</value>
+  </data>
+  <data name="VerticalBricks" xml:space="preserve">
+    <value>Vertical Bricks (Height={0})</value>
+  </data>
+  <data name="VerticalSeaBlocks" xml:space="preserve">
+    <value>Vertical Sea Blocks (Height={0})</value>
+  </data>
+  <data name="VerticalStones" xml:space="preserve">
+    <value>Vertical Blocks (Height={0})</value>
+  </data>
+</root>
