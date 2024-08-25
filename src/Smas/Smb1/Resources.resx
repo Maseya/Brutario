@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BrickAndSceneryChange" xml:space="preserve">
+    <value>Brick and Scenery Change</value>
+  </data>
+  <data name="AreaSpecificPlatform_Mushrooms" xml:space="preserve">
+    <value>Mushroom Platform</value>
+  </data>
+  <data name="AreaSpecificPlatform_BulletBillTurrets" xml:space="preserve">
+    <value>Bullet Bill Shooter</value>
+  </data>
+  <data name="AreaSpecificPlatform_CloudGround" xml:space="preserve">
+    <value>Cloud Ground</value>
+  </data>
+  <data name="AreaSpecificPlatform_Trees" xml:space="preserve">
+    <value>Tree Top Platform</value>
+  </data>
+  <data name="BalanceHorizontalRope" xml:space="preserve">
+    <value>Pulley Platforms</value>
+  </data>
+  <data name="BowserAxe" xml:space="preserve">
+    <value>Bowser Axe</value>
+  </data>
+  <data name="BowserBridge" xml:space="preserve">
+    <value>Bowser Bridge</value>
+  </data>
+  <data name="Bridge" xml:space="preserve">
+    <value>Rope Bridge</value>
+  </data>
+  <data name="BulletBillGenerator" xml:space="preserve">
+    <value>Generator: Bullet Bills</value>
+  </data>
+  <data name="Castle" xml:space="preserve">
+    <value>Castle</value>
+  </data>
+  <data name="CastleCeilingCap" xml:space="preserve">
+    <value>Castle Object: Ceiling Cap Tile</value>
+  </data>
+  <data name="CastleFloorLeftEdge" xml:space="preserve">
+    <value>Castle Object: Left-Facing Wall To Floor</value>
+  </data>
+  <data name="CastleFloorLeftWall" xml:space="preserve">
+    <value>Castle Object: Left-Facing Wall</value>
+  </data>
+  <data name="CastleFloorRightEdge" xml:space="preserve">
+    <value>Castle Object: Right-Facing Wall To Floor</value>
+  </data>
+  <data name="CastleFloorRightWall" xml:space="preserve">
+    <value>Castle Object: Right-Facing Wall</value>
+  </data>
+  <data name="CastleRectangularCeilingTiles" xml:space="preserve">
+    <value>Castle Object: Rectangular Ceiling Tiles</value>
+  </data>
+  <data name="CastleStairs" xml:space="preserve">
+    <value>Castle Object: Descending Stairs</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Nothing</value>
+  </data>
+  <data name="EmptyTile" xml:space="preserve">
+    <value>Empty Tile</value>
+  </data>
+  <data name="EnterablePipe" xml:space="preserve">
+    <value>Enterable Pipe</value>
+  </data>
+  <data name="ExtendableJPipe" xml:space="preserve">
+    <value>Extendable J-Pipe</value>
+  </data>
+  <data name="FlagPole" xml:space="preserve">
+    <value>Flag Pole</value>
+  </data>
+  <data name="ForegroundChange" xml:space="preserve">
+    <value>Foreground Change</value>
+  </data>
+  <data name="Hole" xml:space="preserve">
+    <value>Hole</value>
+  </data>
+  <data name="HoleWithWaterOrLava" xml:space="preserve">
+    <value>Hole with water or lava</value>
+  </data>
+  <data name="HorizontalBricks" xml:space="preserve">
+    <value>Horizontal Bricks</value>
+  </data>
+  <data name="HorizontalCoins" xml:space="preserve">
+    <value>Horizontal Coins</value>
+  </data>
+  <data name="HorizontalQuestionBlocks" xml:space="preserve">
+    <value>Row of Coin Blocks</value>
+  </data>
+  <data name="HorizontalStones" xml:space="preserve">
+    <value>Horizontal Blocks</value>
+  </data>
+  <data name="JPipe" xml:space="preserve">
+    <value>J-Pipe</value>
+  </data>
+  <data name="LoopCommand" xml:space="preserve">
+    <value>Screen Loop Command</value>
+  </data>
+  <data name="PulleyRope" xml:space="preserve">
+    <value>Rope for pulley platforms</value>
+  </data>
+  <data name="RedCheepCheepFlying" xml:space="preserve">
+    <value>Generator: Red flying cheep-cheeps</value>
+  </data>
+  <data name="RopeForLift" xml:space="preserve">
+    <value>Rope for platform lifts</value>
+  </data>
+  <data name="ScreenJump" xml:space="preserve">
+    <value>Screen Jump</value>
+  </data>
+  <data name="ScrollStop" xml:space="preserve">
+    <value>Scroll Stop</value>
+  </data>
+  <data name="ScrollStopWarpZone" xml:space="preserve">
+    <value>Scroll Stop (Warp Zone)</value>
+  </data>
+  <data name="SidewaysPipe" xml:space="preserve">
+    <value>Sideways Pipe</value>
+  </data>
+  <data name="SpringBoard" xml:space="preserve">
+    <value>Spring Board</value>
+  </data>
+  <data name="Staircase" xml:space="preserve">
+    <value>Staircase</value>
+  </data>
+  <data name="StopGenerator" xml:space="preserve">
+    <value>Stop Generator (also stops Lakitus)</value>
+  </data>
+  <data name="UnenterablePipe" xml:space="preserve">
+    <value>Unenterable Pipe</value>
+  </data>
+  <data name="UnknownCommand" xml:space="preserve">
+    <value>Unknown command: {0}</value>
+  </data>
+  <data name="UsedBlock" xml:space="preserve">
+    <value>Used Block</value>
+  </data>
+  <data name="VerticalBalls" xml:space="preserve">
+    <value>Vertical Climbing Balls</value>
+  </data>
+  <data name="VerticalBricks" xml:space="preserve">
+    <value>Vertical Bricks</value>
+  </data>
+  <data name="VerticalSeaBlocks" xml:space="preserve">
+    <value>Vertical Sea Blocks</value>
+  </data>
+  <data name="VerticalStones" xml:space="preserve">
+    <value>Vertical Blocks</value>
+  </data>
+  <data name="WithSpecificYCoord" xml:space="preserve">
+    <value>Y={0}</value>
+  </data>
+  <data name="ObjectWithDescriptor" xml:space="preserve">
+    <value>{0} ({1})</value>
+    <comment>0: Block name; 1: item name</comment>
+  </data>
+  <data name="QuestionBlock" xml:space="preserve">
+    <value>Question Block</value>
+  </data>
+  <data name="Brick" xml:space="preserve">
+    <value>Brick</value>
+  </data>
+  <data name="HiddenBlock" xml:space="preserve">
+    <value>HiddenBlock</value>
+  </data>
+  <data name="Powerup" xml:space="preserve">
+    <value>Powerup</value>
+  </data>
+  <data name="LifeMushroom" xml:space="preserve">
+    <value>1UP Mushroom</value>
+  </data>
+  <data name="TenCoins" xml:space="preserve">
+    <value>10 Coins</value>
+  </data>
+  <data name="Star" xml:space="preserve">
+    <value>Star</value>
+  </data>
+  <data name="Coin" xml:space="preserve">
+    <value>Coin</value>
+  </data>
+  <data name="Beanstalk" xml:space="preserve">
+    <value>Beanstalk</value>
+  </data>
+  <data name="AreaSpecificPlatform" xml:space="preserve">
+    <value>Area-specific platform</value>
+  </data>
+  <data name="RopeForAxe" xml:space="preserve">
+    <value>Rope for axe</value>
+  </data>
+  <data name="SetPage" xml:space="preserve">
+    <value>Skip to screen 0x{0:X2}</value>
+  </data>
+  <data name="AreaPointer" xml:space="preserve">
+    <value>Transition Command</value>
+  </data>
+  <data name="BuzzyBeetle" xml:space="preserve">
+    <value>Buzzy Beetle</value>
+  </data>
+  <data name="HammerBros" xml:space="preserve">
+    <value>Hammer Bros.</value>
+  </data>
+  <data name="Blooper" xml:space="preserve">
+    <value>Squid</value>
+  </data>
+  <data name="BulletBill" xml:space="preserve">
+    <value>Single Bullet Bill</value>
+  </data>
+  <data name="YellowKoopaParatroopa" xml:space="preserve">
+    <value>Koopa Paratroopa (Yellow; Flies in place)</value>
+  </data>
+  <data name="Podoboo" xml:space="preserve">
+    <value>Podoboo</value>
+  </data>
+  <data name="PiranhaPlant" xml:space="preserve">
+    <value>Piranha Plant</value>
+  </data>
+  <data name="Lakitu" xml:space="preserve">
+    <value>Lakitu</value>
+  </data>
+  <data name="Spiny" xml:space="preserve">
+    <value>Spiny (Warning: Walk speed is random)</value>
+  </data>
+  <data name="ObjectWithTwoDescriptors" xml:space="preserve">
+    <value>{0} ({1}; {2})</value>
+    <comment>0: Object: 1: first desctiption; 2: second description</comment>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="KoopaTroopa" xml:space="preserve">
+    <value>Koopa Troopa</value>
+  </data>
+  <data name="KoopaParatroopa" xml:space="preserve">
+    <value>Koopa Paratroopa</value>
+  </data>
+  <data name="Lift" xml:space="preserve">
+    <value>Lift</value>
+  </data>
+  <data name="WalksOffFloors" xml:space="preserve">
+    <value>Walks off floors</value>
+  </data>
+  <data name="WalksInPlace" xml:space="preserve">
+    <value>Walks in place</value>
+  </data>
+  <data name="Goomba" xml:space="preserve">
+    <value>Goomba</value>
+  </data>
+  <data name="FliesInPlace" xml:space="preserve">
+    <value>Flies in place</value>
+  </data>
+  <data name="WarningDescriptor" xml:space="preserve">
+    <value>Warning: {0}</value>
+  </data>
+  <data name="CheepCheep" xml:space="preserve">
+    <value>Cheep-Cheep</value>
+  </data>
+  <data name="Leaping" xml:space="preserve">
+    <value>Leaping</value>
+  </data>
+  <data name="FliesVertically" xml:space="preserve">
+    <value>Flies Vertically</value>
+  </data>
+  <data name="FliesHorizontally" xml:space="preserve">
+    <value>Flies Horizontally</value>
+  </data>
+  <data name="RandomWalkSpeed" xml:space="preserve">
+    <value>Has random speed</value>
+  </data>
+  <data name="Flying" xml:space="preserve">
+    <value>Flying</value>
+  </data>
+  <data name="VerticallyExtendableObject" xml:space="preserve">
+    <value>Height={0}</value>
+  </data>
+  <data name="HorizontallyExtendableObject" xml:space="preserve">
+    <value>Width={0}</value>
+  </data>
+  <data name="Generator" xml:space="preserve">
+    <value>Generator</value>
+  </data>
+  <data name="BowserFire" xml:space="preserve">
+    <value>Bowser's Fire</value>
+  </data>
+  <data name="Firework" xml:space="preserve">
+    <value>Single Firework</value>
+  </data>
+  <data name="BulletBillOrCheepCheep" xml:space="preserve">
+    <value>Bullet Bill or Cheep-Cheeps</value>
+  </data>
+  <data name="FireBar" xml:space="preserve">
+    <value>Fire Bar</value>
+  </data>
+  <data name="Clockwise" xml:space="preserve">
+    <value>Clockwise</value>
+  </data>
+  <data name="CounterClockwise" xml:space="preserve">
+    <value>Counter-Clockwise</value>
+  </data>
+  <data name="Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="Long" xml:space="preserve">
+    <value>Long</value>
+  </data>
+  <data name="BalanceRopeLift" xml:space="preserve">
+    <value>Rope for Lift Balance</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Falling" xml:space="preserve">
+    <value>Falling</value>
+  </data>
+  <data name="Short" xml:space="preserve">
+    <value>Short</value>
+  </data>
+  <data name="Bowser" xml:space="preserve">
+    <value>Bowser: King of the Koopa</value>
+  </data>
+  <data name="Goomba2" xml:space="preserve">
+    <value>Two Goombas</value>
+  </data>
+  <data name="Goomba3" xml:space="preserve">
+    <value>Three Goombas</value>
+  </data>
+  <data name="GreenKoopaTroopa2" xml:space="preserve">
+    <value>Two Green Koopa Troopas</value>
+  </data>
+  <data name="GreenKoopaTroopa3" xml:space="preserve">
+    <value>Three Green Koopa Troopas</value>
+  </data>
+  <data name="WarpZoneCommand" xml:space="preserve">
+    <value>Command: Load Warp Zone</value>
+  </data>
+  <data name="ToadOrPrincess" xml:space="preserve">
+    <value>Toad or Princess</value>
+  </data>
+</root>
