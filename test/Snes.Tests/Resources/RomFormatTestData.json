@@ -1,0 +1,1682 @@
+{
+  "Aladdin (E)": {
+    "AddressMode": "LoRom",
+    "Size": 1310720,
+    "LoRom": "XOmIgAADAAEB8BcAAA8Pf0FMQURESU4gICAgICAgICAgICAgIDAACwACCAA88MMPRWcyM7D/rP+s/6T/rP+o/1gsIC+w/6z/rP+s/wCArP8=",
+    "HiRom": "AACqAP//f5/HgP//v5+/qr+fn5+eqgD//8DAqgDAwMDBOP8AAAAC/wCgAP//AgD/zv/9AQAAAH8F4jXSLcKgTYoA/v//IP/vfwEciZQAFgU=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Aladdin (F)": {
+    "AddressMode": "LoRom",
+    "Size": 1310720,
+    "LoRom": "XOmIgAAAAAAAAAAAAAAAAEFMQURESU4gICAgICAgICAgICAgIDAACwAGCAA3eMiHAAwwqLD/rP+s/6T/rP+o/7pz0W2w/6z/rP+s/wCArP8=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAEACkggOAIhaggI6ABcAliQKYEciOIlDgqAAg0AVyA0STFQCSAoIAQJIgdgiKYBCIJ+M+7nt7bkYl6znmd3YGRs=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Aladdin (G) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1310720,
+    "LoRom": "XOmIgDBAVR9gYGBgl//AAEFMQURESU4gICAgICAgICAgICAgIDAACwAJCAAqH9XgRvZi6rD/rP+s/6T/rP+o/w0E/TCw/6z/rP+s/wCArP8=",
+    "HiRom": "GH+XZikRxAgywAoAgOCqAPj+//8AAG+AAMDgwHBgAAACAID6f/55+HfwsH94t1j/KF+UT6oA/vjw8KoAeDg8PH8A/D7gGfiwkPMjeDiMDDA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Aladdin (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1310720,
+    "LoRom": "XOmIgAAAAAAAAIAAAAAAAEFMQURESU4gICAgICAgICAgICAgIDAACwAACABlpJpbAAAAALD/rP+s/6T/rP+o/wAAAACw/6z/rP+s/wCArP8=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Aladdin (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1310720,
+    "LoRom": "XOmIgAAAYJ9/Ym9GV15/bEFMQURESU4gICAgICAgICAgICAgIDAACwABCAD1+QoGf3E4GbD/rP+s/6T/rP+o//RVOjiw/6z/rP+s/wCArP8=",
+    "HiRom": "AIDgqgD4/v//AABvgADA4MBwYAAAAgCA+n/+efh38LB/eLdY/yhflE+qAP748PCqAHg4PDx/APw+4Bn4sJDzI3g4jAwwACoAHgdhqgDAwMA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Arkanoid - Doh It Again (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "MDFBNiAgAAAAAAAAAAAAAEFSS0FOT0lEIERPSCBJVCBBR0FJTjAACQABMwDyng1hAAAAAGiAiYAzgaqAAIATgQAAAAAzgTOBM4EzgQCAM4E=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Axelay (U)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////0FYRUxBWSAgICAgICAgICAgICAgICAACgABpADHvDhD/////16NXo1eja6NnIsgjv////9ejV6NXo1ejZyLXo0=",
+    "HiRom": "/////////////////////////////////////////////////////////////////////////////////////////////////////////wE=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Battletoads & Double Dragon - The Ultimate Team (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "jQAhwiBsBAB6+mhAeEAJcEJBVFRMRVRPQURTIEQuRC4gICAgIDAACgABXQC810MoUkFSRTkzA3AAAH7/AACY/01BVFQgMTk5MyEA+ACAAHA=",
+    "HiRom": "Ia3fB41BIcIgYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "BS Mario Collection 3 (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDEAAAAAAAAAAAAAAAAAAEJTz9i1utq4vK7dIDOPVCD/AAAAAIAwiDAAMwIezeEyAAAAAKD/oP+g/6H/pf+p/wECAACg/6D/oP+g/6X/qf8=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Chrono Trigger (U) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "hZ+YGGV8haGlXhhlfIWjpWyF26Vuhd2laoXfpZoYaRwAKR8AqGggoYEYZXyFp4oYZXyFpZgYZXyFqaWaOikfAEiopZkpPwAg1oGKGGV8has=",
+    "HiRom": "QzNBQ1RFAAAAAAAAAAAAAENIUk9OTyBUUklHR0VSICAgICAgIDECDAMBMwBzh4x4////////GP///xD///8U//////8Y/////////wD///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Contra III - The Alien Wars (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "Fmv//////////////////0NPTlRSQTMgVEhFIEFMSUVOIFdBUlMACgABpADD8zwM/////+KL4ovii5uBAIDii//////ii+KL4oubgQCA4os=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Contra Spirits (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////0NPTlRSQSBTUElSSVRTICAgICAgICAACgAAygBWYame/////+KL4ovii5uBAIDii//////ii+KL4oubgQCA4os=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Probotector - The Alien Rebels (E)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIFBST0JPVEVDVE9SICAgICAACgACpAA32cgm/////7qLuou6i5uBAIC6i/////+6i7qLuoubgQCAuos=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Daikaijuu Monogatari II (Japan)": {
+    "AddressMode": "ExHiRom",
+    "Size": 5242880,
+    "LoRom": "ruUDysowCr0TBIVIIOZ/gPKulQPKyjAKvZsDhUgg5n+A8q7DA8rKMAq9xQOFSCDmf4DyevprwiDaoAoAsUiJAEDwBSC7gIApiQAC0AUgYoA=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": "AI8vk3eTs5bXlteW96D3oDKrMqsUAKBWAf4AAAP9AAAC3QAAAt0AAAJjAAAAAP//DACgVQCPzpbplgqaHJocmgwAoFYC/QAAAf4AAAJjAAA=",
+    "ExHiRom": "MThBRTZKAAAAAAAAAAAAAERBSUtBSUpZVU1PTk9HQVRBUkkyIDVVDQMAMwDXeiiFAAAAAAAAAAAAAJz/AACg/wAAAAAAAAAAAACc/4D/oP8="
+  },
+  "Demon's Blazon - Makai-Mura Monshou Hen (J)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "RbJMgofAUvhBoUk6hnZM22RlbW9uJ3MgYmxhem9uICAgICAgIDAACwAACACC0n0t3p1DPKz/rP+s/6T/rP+o/46saHes/6z/rP+s/4//rP8=",
+    "HiRom": "0Yp/lFR6P1yCaawXgctI+VyoFlAnVUucASgBkIAMAqgIpi1lofcRtKNBS4uFzPu7nRZ0WHIHl/jGG4NiQJQQWOYW9Rp4QZUB2tgxkJMq1bc=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Demon's Crest (E)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDgzWiAgAAAAAAAAAAAAAGRlbW9uJ3MgY3Jlc3QgICAgICAgIDAACwACMwCmxFk7/59DfKz/rP+s/6T/rP+o/96u7Hes/6z/rP+s/4//rP8=",
+    "HiRom": "0cv/lF56P16CeawXxetI+Vy9tnQ3VducASgJsKAMsqgo5y1l6/dVvOPJa6uVzfu/ndZ0XnoH1/zmH4PrwJR42u4W9xp4QdWD/tgxlNMq17c=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Demon's Crest (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDgzWiAgAAAAAAAAAAAAAGRlbW9uJ3MgY3Jlc3QgICAgICAgIDAACwABMwCCO33E3p1DPKz/rP+s/6T/rP+o/46ubHes/6z/rP+s/4//rP8=",
+    "HiRom": "0Yp/lFR6P1yCeaQXwctI+VypllAnVUOcASgBkIAMEqgI5i1lqfcRtKNBa6uFzPu7nFZ0WHIHl/jGG4NiQJQQWuYW9Rp4QZUB+tgxkNMq1bc=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country (E) (V1.0) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "bwNWDggYGzadX/9/P69f/wD/Af8H/w/4PuE4x3CPQL8wANGQAgA4X68Bce0AAAAAAAAAAAEAAEAgACPOAQDQPyABjZABADZAIAGNkAEAtD8=",
+    "HiRom": "MDE4WCAgAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgIDECDAECMwD2XgmhRElERFkgA3AAAGKpAACKqURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country (E) (V1.1) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "bwNWDggYGzadX/9/P69f/wD/Af8H/w/4PuE4x3CPQL8wANGQAgA4X68Bce0AAAAAAAAAAAEAAEAgACPOAQDQPyABjZABADZAIAGNkAEAtD8=",
+    "HiRom": "MDE4WCAgAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgIDECDAECMwFIrLdTRElERFkgA3AAAGKpAACKqURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country (U) (V1.0) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "bwNWDggYGzadX/9/P69f/wD/Af8H/w/4PuE4x3CPQL8wANGQAgA4X68Bce0AAAAAAAAAAAEAAEAgACPOAQDQPyABjZABADZAIAGNkAEAtD8=",
+    "HiRom": "MDE4WCAgAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgIDECDAEBMwB/EIDvRElERFkgA3AAAGipAACQqURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country (U) (V1.1)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "bwNWDggYGzadX/9/P69f/wD/Af8H/w/4PuE4x3CPQL8wANGQAgA4X68Bce0AAAAAAAAAAAEAAEAgACPOAQDQPyABjZABADZAIAGNkAEAtD8=",
+    "HiRom": "MDE4WCAgAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgIDECDAEBMwGDLnzRRElERFkgA3AAAF+pAACHqURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country (U) (V1.2) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MDE4WCAgAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgIDECDAEBMwIz1MwrRElERFkgA3AAAHapAACeqURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country - Competition Cartridge (U)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MDE4RSAgAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgIDECDAEBMwBlrppRRElERFkgA3AAANWpAAD9qURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Donkey Kong (J) (V1.0)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "bwNWDggYGzadX/9/P69f/wD/Af8H/w/4PuE4x3CPQL8wANGQAgA4X68Bce0AAAAAAAAAAAEAAEAgACPOAQDQPyABjZABADZAIAGNkAEAtD8=",
+    "HiRom": "MDE4WCAgAAAAAAAAAAAAAFNVUEVSIERPTktFWSBLT05HICAgIDECDAEAMwDo8xcMRElERFkgA3AAAJKpAAC6qURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Donkey Kong (J) (V1.1)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MDE4WCAgAAAAAAAAAAAAAFNVUEVSIERPTktFWSBLT05HICAgIDECDAEAMwGmf1mARElERFkgA3AAAJKpAAC6qURPTktFWUtPTkcA+ACAAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country 2 - Diddy's Kong Quest (E) (V1.1) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABk/qsM=",
+    "HiRom": "MDFBRE5QAAAAAAAAAAAAAERJRERZJ1MgS09ORyBRVUVTVCAgIDECDAECMwGx5U4aRElERFkgA3AAAL3zAAD580RJRERZIEtPTkcA+PeDAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country 2 - Diddy's Kong Quest (G) (V1.0)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKrDPxk=",
+    "HiRom": "MDFBRE5EAAAAAAAAAAAAAERJRERZJ1MgS09ORyBRVUVTVCAgIDECDAEJMwBGl7loRElERFkgA3AAAH3zAAC580RJRERZIEtPTkcA+PeDAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country 2 - Diddy's Kong Quest (G) (V1.1) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABk/qsM=",
+    "HiRom": "MDFBRE5EAAAAAAAAAAAAAERJRERZJ1MgS09ORyBRVUVTVCAgIDECDAEJMwF5pIZbRElERFkgA3AAAL3zAAD580RJRERZIEtPTkcA+PeDAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country 2 - Diddy's Kong Quest (U) (V1.0)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKrDPxk=",
+    "HiRom": "MDFBRE5FAAAAAAAAAAAAAERJRERZJ1MgS09ORyBRVUVTVCAgIDECDAEBMwD97QISRElERFkgA3AAAH3zAAC580RJRERZIEtPTkcA+PeDAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country 2 - Diddy's Kong Quest (U) (V1.1) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABk/qsM=",
+    "HiRom": "MDFBRE5FAAAAAAAAAAAAAERJRERZJ1MgS09ORyBRVUVTVCAgIDECDAEBMwGfZ2CYRElERFkgA3AAAL3zAAD580RJRERZIEtPTkcA+PeDAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Donkey Kong 2 - Dixie & Diddy (J) (V1.0)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKrDPxk=",
+    "HiRom": "MDFBRE5KAAAAAAAAAAAAAFNVUEVSIERPTktFWSBLT05HIDIgIDECDAEAMwCHA3j8RElERFkgA3AAAEHzAAB980RJRERZIEtPTkcA+PeDAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Donkey Kong 2 - Dixie & Diddy (J) (V1.1)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKrDPxk=",
+    "HiRom": "MDFBRE5KAAAAAAAAAAAAAFNVUEVSIERPTktFWSBLT05HIDIgIDECDAEAMwExys41RElERFkgA3AAAIHzAAC980RJRERZIEtPTkcA+PeDAHA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country 3 - Dixie Kong's Double Trouble (E) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "/////////////////////////////////////////////////////////////////////////////////////////////////////6rDPxk=",
+    "HiRom": "MDFBM0NQAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgMzECDAECMwD8DQPyRElYSUUgA1AAAHzKAAClyiAgICAgICAgICAA+MSAAFA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Donkey Kong Country 3 - Dixie Kong's Double Trouble (U) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "/////////////////////////////////////////////////////////////////////////////////////////////////////6rDPxk=",
+    "HiRom": "MDFBM0NFAAAAAAAAAAAAAERPTktFWSBLT05HIENPVU5UUlkgMzECDAEBMwBzTYyyRElYSUUgA1AAAEXKAABuyiAgICAgICAgICAA+MSAAFA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Donkey Kong 3 - Nazo no Krems Shima (J) (V1.0)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "/////////////////////////////////////////////////////////////////////////////////////////////////////6rDPxk=",
+    "HiRom": "MDFBM0NKAAAAAAAAAAAAAFNVUEVSIERPTktFWSBLT05HIDMgIDECDAEAMwC6GkXlRElYSUUgA1AAAIvJAAC0ySAgICAgICAgICAA+MSAAFA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Donkey Kong 3 - Nazo no Krems Shima (J) (V1.1)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "AAAACCAQAAAUAAgAAAAAAAAAAAAQMAgQEBgIEAAAAAAAAAAgMAAABBAAEABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVarDPxk=",
+    "HiRom": "MDFBM0NKAAAAAAAAAAAAAFNVUEVSIERPTktFWSBLT05HIDMgIDECDAEAMwEGR/m4RElYSUUgA1AAAK3JAADWySAgICAgICAgICAA+MSAAFA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Earthbound (U)": {
+    "AddressMode": "HiRom",
+    "Size": 3145728,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MDFNQiAgAAAAAAAAAAAAAEVBUlRIIEJPVU5EICAgICAgICAgIDECDAMBMwC3v0hAAAAAAP9f/1//X0eBAABLgQAAAAD/XwAA/1//X0GB/18=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mother 2 (J)": {
+    "AddressMode": "HiRom",
+    "Size": 3145728,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MDFNQiAgAAAAAAAAAAAAAE1PVEhFUi0yICAgICAgICAgICAgIDECDAMAMwA8XcOiAAAAAP9f/1//X0eBAABLgQAAAAD/XwAA/1//X0OB/18=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "F-ZERO (E)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////0YtWkVSTyAgICAgICAgICAgICAgICACCQECAQADPfzCAAAAADiBOIE4gdmA//8BhgAAAAA4gf//OIE4gQCAOIE=",
+    "HiRom": "NndTegAP/w8RM0MzeiIiIzIP/rq7iu7d7t3gE0Qyei/+Dv8RM0QzeiITMyIQ7burit7u3t3QE0UxeiEN/g8BM0RDeiEjMzIQ7cuqit7u3t0=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "F-ZERO (J)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////0YtWkVSTyAgICAgICAgICAgICAgICABCQEAAQBFObrG/////ziBslA4gdmA//8Bhv////84gf//OIE4gQCAOIE=",
+    "HiRom": "DC+EDH+QhAYvhAZ/kAYvhAZ/kAyEiZWJlYkGk5WPkAyJDC+ODH+ajgaYmgzJBoyOmJoMjIQGj5DJiovJGIQGmpwMkAAGf8oMzgbKDM0Gzs4=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "F-ZERO (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////0YtWkVSTyAgICAgICAgICAgICAgICACCQEBAQDRNi7J/////ziBOIE4gdmA//8Bhv////84gf//OIE4gQCAOIE=",
+    "HiRom": "DC+EDH+QhAYvhAZ/kAYvhAZ/kAyEiZWJlYkGk5WPkAyJDC+ODH+ajgaYmgzJBoyOmJoMjIQGj5DJiovJGIQGmpwMkAAGf8oMzgbKDM0Gzs4=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy - Mystic Quest (U) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////0ZGIE1ZU1RJQyBRVUVTVCAgICAgICACCQMBwwAhs95M////////GwEAgBMB//8XAf///////////////wCA//8=",
+    "HiRom": "GGlAAI0UGhhpIACNFhriIGCtiQ446QiNLRmtig446QaNLhmiDwCOvxmiAACOvRnaIHf5IL6D7i4Z+o6/GejgDQDQ7KIAAI6/GWD///////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy - Mystic Quest (U) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////0ZGIE1ZU1RJQyBRVUVTVCAgICAgICACCQMBwwEKcPWP////////GwEAgBMB//8XAf///////////////wCA//8=",
+    "HiRom": "GhhpQACNFBoYaSAAjRYa4iBgrYkOOOkIjS0ZrYoOOOkGjS4Zog8Ajr8ZogAAjr0Z2iB4+SC/g+4uGfqOvxno4A0A0OyiAACOvxlg//////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy USA - Mystic Quest (J)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////0ZGIE1ZU1RJQyBRVUVTVCAgICAgICACCQMAwwBt+5IE////////GwEAgBMB//8XAf///////////////wCA//8=",
+    "HiRom": "wiCtFBoYaUAAjRQaGGkgAI0WGuIgYK2JDjjpCI0tGa2KDjjpBo0uGaIPAI6/GaIAAI69GdogfPkgv4PuLhn6jr8Z6OANANDsogAAjr8ZYP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mystic Quest Legend (E)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAE1ZU1RJQyBRVUVTVCBMRUdFTkQgICACCQMCAQDWLSnSAEAAAGASGwEAgBMBAEAXAYAIIWiTBOZS6AoB8ACACAA=",
+    "HiRom": "GhhpQACNFBoYaSAAjRYa4iBgrYkOOOkIjS0ZrYoOOOkGjS4Zog8Ajr8ZogAAjr0Z2iB4+SC/g+4uGfqOvxno4A0A0OyiAACOvxlgjr8ZYIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mystic Quest Legend (F)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAE1ZU1RJQyBRVUVTVCBMRUdFTkQgICACCQMGAQCAGH/nAEAAAAAAGwEAgBMBAAAXAQAAIAACAIACwAgB8ACAAAA=",
+    "HiRom": "wiCtFBoYaUAAjRQaGGkgAI0WGuIgYK2JDjjpCI0tGa2KDjjpBo0uGaIPAI6/GaIAAI69GdogfPkgv4PuLhn6jr8Z6OANANDsogAAjr8ZYAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mystic Quest Legend (G)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAE1ZU1RJQyBRVUVTVCBMRUdFTkQgICACCQMJAQDO4zEcEEAAACASGwEAgBMBAEAXAYAIIWiTBOZS6AoB8ACACAA=",
+    "HiRom": "wiCtFBoYaUAAjRQaGGkgAI0WGuIgYK2JDjjpCI0tGa2KDjjpBo0uGaIPAI6/GaIAAI69GdogfPkgv4PuLhn6jr8Z6OANANDsogAAjr8ZYIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "FF4FE.bAAMI_KkGAMAF4kA6JQ.6DYM4S5PAX": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "///////0uv9s+w9rINCSa0ZGSVY6IEZSRUUgRU5URVJQUklTRSACCwUBwwFJUbau/////////////wAC//8EAv///////////////wCA//8=",
+    "HiRom": "////////////////////////////////////////////////////////////////////////////////////////////////9P7/bPsP/2s=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy II (U) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "////////////////INCSa0ZJTkFMIEZBTlRBU1kgSUkgICAgICACCgMBwwAPevCF/////////////wAC//8EAv///////////////wCA//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy II (U) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "////////////////INCSa0ZJTkFMIEZBTlRBU1kgMiAgICAgICACCgMBwwHXiCh3/////////////wAC//8EAv///////////////wCA//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy IV (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "ILz+YK3jDyC8/mD/IPCUa0ZJTkFMIEZBTlRBU1kgNCAgICAgICACCgMAwwEzU8ys/////////////wAC//8EAv///////////////wCA//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy IV - 10th Anniversary Edition v3.21": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "ILz+YK3jDyC8/mD/IPCUa0ZpbmFsIEZhbnRhc3kgNCAoSjJlKSACCgMAwwEzU8ys/////////////wAC//8EAiIA8iGABCJM8iFg/wCA//8=",
+    "HiRom": "FMTm4QHwAhEs3eLg3wFwAxHE4ist4AHwAyHdyd8AAP////////////9AAR0RlgDCIEiYGGlCAKho4iBg//9CABzfqP8V3eHfAAqFRgpg//8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy IV - Ultima v5.12f no header": {
+    "AddressMode": "LoRom",
+    "Size": 1245184,
+    "LoRom": "////////////////INCSa0ZJTkFMIEZBTlRBU1kgMiAgICAgICACCgMBwwHXiCh3/////////////wAC//8EAv///////////////wCA//8=",
+    "HiRom": "jwZCAOrq6urq6urqrxZCAKrCIK8UQgAoevpIuQcq0AfiIJ1qIMIgaMllAJADqWQAelzV/wL///////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy V (J)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "IiIiIgQEISMEIiIiIiIiBBEQFBMEIiIiIgQREwQEBAQRFBISEhIQJycnJycnKHNDQ3EmKAVzQ3SHh2AFFhhzQ3SCg4OEcHEmGFNUgq6IiK8=",
+    "HiRom": "dt8ybzSo0LhjyMDsS+gX+EZJTkFMIEZBTlRBU1kgNSAgICAgICECCwMAwwAN4PIfAAAAAAAAAAAAAODOAADkzgAAAAAAAAAAAAAAAMDOAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy III (U) (V1.0) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 3145728,
+    "LoRom": "gACcgCHK0PogqYggfoVgqc2Fy8IgpdAKqr8C5syFyaXQzwDmzJAFe+Ig5st74iCpAY1oBWCcZwWtuR4pQNAFrUUH0AScRQdgqWSNZwWpzoU=",
+    "HiRom": "QzNGNiAgAAAAAAAAAAAAAEZJTkFMIEZBTlRBU1kgMyAgICAgIDECDAMBMwDNoDJf/////////////xD///8U/////////////////wD///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy III (U) (V1.1) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 3145728,
+    "LoRom": "gACcgCHK0PogqYggfoVgqc2Fy8IgpdAKqr8C5syFyaXQzwDmzJAFe+Ig5st74iCpAY1oBWCcZwWtuR4pQNAFrUUH0AScRQdgqWSNZwWpzoU=",
+    "HiRom": "QzNGNiAgAAAAAAAAAAAAAEZJTkFMIEZBTlRBU1kgMyAgICAgIDECDAMBMwGfdWCK/////////////xD///8U/////////////////wD///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Final Fantasy VI (J)": {
+    "AddressMode": "HiRom",
+    "Size": 3145728,
+    "LoRom": "gACcgCHK0Pog3ocgs4Rgqc2Fy8IgpdAKqr8C5syFyaXQzwDmzJAFe+Ig5st74iCpAY1oBWCcZwWtuR4pQNAFrUUH0AScRQdgqWSNZwWp5oU=",
+    "HiRom": "sLGys7S1tre4ubq7vL2+v0ZJTkFMIEZBTlRBU1kgNiAgICAgIDECDAMAwwCNXnKh4OHi4+Tl5ufo6RD/7O0U//Dx8vP09fb3+Pn6+wD//v8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Firepower 2000 (U)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////0ZJUkVQT1dFUiAyMDAwICAgICAgIDAACgABuwDf4CAf/////wAAAAAAAEeBAAAugQAAAAAAAAAAAAAAAGyY//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super SWIV (E)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIFNXSVYgICAgICAgICAgIDAACgACdQDgQh+9/////wAAAAAAAEeBAAAugQAAAAAAAAAAAAAAAGuY//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super SWIV (J) (32469)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIFNXSVYgICAgICAgICAgIDAACgAACwAqgdV+/////wAAAAAAAEeBAAAugQAAAAAAAAAAAAAAAGuY//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super SWIV (J) (62746) [b1]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIFNXSVYgICAgICAgICAgICAACgAACwDlChr1/////wAAAAAAAEeBAAAugQAAAAAAAAAAAAAAAGuY//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super SWIV (J) (62746) [f1]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////0EuSS4gUFJFU0VOVFMgICAgICAgICAACgAACwDlChr1/////wAAAAAAAEeBAAAugQAAAAAAAAAAAAAAAGuY//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super SWIV (J) (62746) [hI]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIFNXSVYgICAgICAgICAgICAACgAACwDlChr1/////wAAAAAAAEeBAAAugQAAAAAAAAAAAAAAAAD///8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super SWIV (J) (62746)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIFNXSVYgICAgICAgICAgICAACgAACwDlChr1/////wAAAAAAAEeBAAAugQAAAAAAAAAAAAAAAGuY//8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Gradius III (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////2dyYWRpdXMgMyAgICAgICAgICAgICAACQABpABd2KIn/////1OFU4VThSOCAIBThf////9ThVOFU4UjggCAU4U=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (Beta)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "r77vquuvr7rqr76vr767rlNpbW9uIEplZmZlcnkurv7urrvr/+r6vqr+7u++u6/qu+6q6qqq7/67++qr6+v/7u767/u+6vu7/r7++6rqvro=",
+    "HiRom": "r+uqv6+7v66r7++u+r+v7khBR0FORS9DcmVhbSEgICAgICAgIDEACwAAGAD//wAAr677v66Hroeuh5QAAICQAO6+/u+uhwCArocAgACAAIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (E) [o1]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MThBSEdQAAAAAAAAAAAAAEhBR0FORSBFQyAgICAgICAgICAgIDEACwACMwAegOF/AAAAAMyHzIfMh5QAAICQAAAAAADMhwCAzIcAgACAAIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (E)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MThBSEdQAAAAAAAAAAAAAEhBR0FORSBFQyAgICAgICAgICAgIDEACwACMwAegOF/AAAAAMyHzIfMh5QAAICQAAAAAADMhwCAzIcAgACAAIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (J) [b1]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MThBSEdKAAAAAAAAAAAAAEhBR0FORSAgICAgICAgICAgICAgIDEACwAAMwDNbTKSAAAAACGIIYghiJQAAICQAAAAAAAhiACAIYgAgACAAIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (J) [t1]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MThBSEdKAAAAAAAAAAAAAEhBR0FORSAgICAgICAgICAgICAgIDEACwAAMwDNbTKSAAAAACGIIYghiJQAAICQAAAAAAAhiACAIYgAgACAAIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (J)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MThBSEdKAAAAAAAAAAAAAEhBR0FORSAgICAgICAgICAgICAgIDEACwAAMwDNbTKSAAAAACGIIYghiJQAAICQAAAAAAAhiACAIYgAgACAAIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (U) [t1]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MThBSEdFAAAAAAAAAAAAAEhBR0FORSBVU0EgICAgICAgICAgIDEACwABMwDpfxaAAAAAAMyHzIfMh5QAAICQAFwA0N/MhwCAzIcAgPD/AIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hagane (U)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "MThBSEdFAAAAAAAAAAAAAEhBR0FORSBVU0EgICAgICAgICAgIDEACwABMwDpfxaAAAAAAMyHzIfMh5QAAICQAAAAAADMhwCAzIcAgACAAIA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Killer Instinct (E) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "HiRom": "MDFBS0xQAAAAAAAAAAAAAEtJTExFUiBJTlNUSU5DVCAgICAgIDEADAACMwD1egqFUkFSRd7yA1De8gDyUoTe8lJBUkXe8t7y3vIA+FKEAFA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Killer Instinct (U) (V1.0)": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "HiRom": "MDFBS0xFAAAAAAAAAAAAAEtJTExFUiBJTlNUSU5DVCAgICAgIDEADAABMwA/usBFUkFSRQrzA1AK8yzyUoQK81JBUkUK8wrzCvMA+FKEAFA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Killer Instinct (U) (V1.1) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 4194304,
+    "LoRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "HiRom": "MDFBS0xFAAAAAAAAAAAAAEtJTExFUiBJTlNUSU5DVCAgICAgIDEADAABMwGFinp1UkFSRcLyA1DpKuTxUVXC8lJBUkXC8lFUB90A+FKEAFA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "King of Dragons, The (J) [f1]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "Ii1+qqkBAJ0AAKACALcCGG3NHZ0PAKAGALcCGG3RHZ0XAKAEALcCnRMAoAgAtwIp/wCdBACgDAC3Ain/AJ00AKAOALcCnUYAGKUCaRAAhQI=",
+    "HiRom": "/////////////////////0tJTkcgT0YgRFJBR09OUyAgICAgIDEACwAACACK63UU/////6D/oP+g/6H/oP+l//////+g/6D/oP+g/6n/oP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "King of Dragons, The (J) [t1]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "Ii1+qqkBAJ0AAKACALcCGG3NHZ0PAKAGALcCGG3RHZ0XAKAEALcCnRMAoAgAtwIp/wCdBACgDAC3Ain/AJ00AKAOALcCnUYAGKUCaRAAhQI=",
+    "HiRom": "/////////////////////0tJTkcgT0YgRFJBR09OUyAgICAgIDEACwAACACK63UU/////6D/oP+g/6H/oP+l//////+g/6D/oP+g/6n/oP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "King of Dragons, The (J)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "Ii1+qqkBAJ0AAKACALcCGG3NHZ0PAKAGALcCGG3RHZ0XAKAEALcCnRMAoAgAtwIp/wCdBACgDAC3Ain/AJ00AKAOALcCnUYAGKUCaRAAhQI=",
+    "HiRom": "/////////////////////0tJTkcgT0YgRFJBR09OUyAgICAgIDEACwAACACK63UU/////6D/oP+g/6H/oP+l//////+g/6D/oP+g/6n/oP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "King of Dragons, The (U) [h1]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "A0xzgPwDgZBJryItfqqpAQCdAACgAgC3AhhtzR2dDwCgBgC3Ahht0R2dFwCgBAC3Ap0TAKAIALcCKf8AnQQAoAwAtwIp/wCdNACgDgC3Ap0=",
+    "HiRom": "/////////////////////0tJTkcgT0YgRFJBR09OUyAgICAgIDEACwABCAABQf6+/////6D/oP+g/6H/oP+l//////+g/6D/oP+g/6n/oP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "King of Dragons, The (U) [T+Ita]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "A0xzgPwDgZBJryItfqqpAQCdAACgAgC3AhhtzR2dDwCgBgC3Ahht0R2dFwCgBAC3Ap0TAKAIALcCKf8AnQQAoAwAtwIp/wCdNACgDgC3Ap0=",
+    "HiRom": "/////////////////////0tJTkcgT0YgRFJBR09OUyAgICAgIDEACwABCAABQf6+/////6D/oP+g/6H/oP+l//////+g/6D/oP+g/6n/oP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "King of Dragons, The (U)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "A0xzgPwDgZBJryItfqqpAQCdAACgAgC3AhhtzR2dDwCgBgC3Ahht0R2dFwCgBAC3Ap0TAKAIALcCKf8AnQQAoAwAtwIp/wCdNACgDgC3Ap0=",
+    "HiRom": "/////////////////////0tJTkcgT0YgRFJBR09OUyAgICAgIDEACwABCAABQf6+/////6D/oP+g/6H/oP+l//////+g/6D/oP+g/6n/oP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Kirby Super Star (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "MDFBS0ZFAAAAAAAAAAAAAEtJUkJZIFNVUEVSIERFTFVYRSAgICM1DAMBMwBVOarGAAAAAAAA/18AALGBAACihAAAAAAAAAAAAAAAAASAAAA=",
+    "HiRom": "6UET6cfy6Foa6QAA6Wgh6ar36G4C6UfR72/R75fR77/R79j/3VfQ73/Q76fQ74NAAqvczSBa//////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Kirby's Avalanche (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFQUSAgAAAAAAAAAAAAAEtpcmJ5J3MgQXZhbGFuY2hlICAgIDAACgABMwDYECfvAAAAAAAAAAAAALSjAACfpAAAAAAAAAAAAABUswCAVLM=",
+    "HiRom": "OACNOgCNPACNPgAp/wDiIGuuAACpAJ8AIn7o4AAC0PapAY1vEmv///////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Kirby's Ghost Trap (E)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFQUSAgAAAAAAAAAAAAAEtpcmJ5J3MgR2hvc3QgVHJhcCAgIDAACgACMwCfvmBBAAAAAAAAAAAAALSjAACfpAAAAAAAAAAAAABUswCAVLM=",
+    "HiRom": "qQGNbxJr//////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Hoshi no Kirby 3 (J)": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "MDFBRkpKAAAAAAAAAAAAAEhPU0hJIE5PIEtJUkJZIDMgICAgICM1DAUAMwDM3TMiAAAAAAAA/18AAPaCAABjgwAAAAAAAAAAAAAAAACAAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Kirby's Dream Land 3 (U)": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "MDFBRkpFAAAAAAAAAAAAAEtJUkJZJ1MgRFJFQU0gTEFORCAzICM1DAUBMwCD23wkAAAAAAAA/18AAPaCAABjgwAAAAAAAAAAAAAAAACAAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Kaizoalttp": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "AY0kAeIwa////////////1pFTERBTk9ERU5TRVRTVSAgICAgICACCwMAAQA3MsjN/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Legend of Zelda, The - A Link to the Past (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "AY0kAeIwa////////////1RIRSBMRUdFTkQgT0YgWkVMREEgICACCgMCAQBGirl1/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Legend of Zelda, The - A Link to the Past (F)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////0xBIExFR0VOREUgREUgWkVMREEgICACCgMGAQBRmq5l/////zGC//8xgsmAAIDdgv////8xgjGCMYIxggCA3YI=",
+    "HiRom": "fsjI6OjgENDV4iCiAKBApYrJQ/AEyUXQD6/D8n4pINAYpRopDAoKqMIguc7+n9DFfsjI6OjgENDv4iCr5hVr//////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Legend of Zelda, The - A Link to the Past (FC)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////0xBIExFR0VOREUgREUgWkVMREEgICACCgMBAQBDR7y4/////zGC//8xgsmAAIDdgv////8xgjGCMYIxggCA3YI=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Legend of Zelda, The - A Link to the Past (G) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1RIRSBMRUdFTkQgT0YgWkVMREEgICACCgMJAQBJr7ZQ/////zGC//8xgsmAAIDdgv////8xgjGCMYIxggCA3YI=",
+    "HiRom": "fsjI6OjgENDV4iCiAKBApYrJQ/AEyUXQD6/D8n4pINAYpRopDAoKqMIguc7+n9DFfsjI6OjgENDv4iCr5hVr//////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Legend of Zelda, The - A Link to the Past (U) [!]-rand-pal": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "AY0kAeIwa////////////1RIRSBMRUdFTkQgT0YgWkVMREEgICACCgMBAQDyUA2v/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Legend of Zelda, The - A Link to the Past (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "AY0kAeIwa////////////1RIRSBMRUdFTkQgT0YgWkVMREEgICACCgMBAQDyUA2v/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Zelda no Densetsu - Kamigami no Triforce (J) (V1.0) [b1]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "AY0kAeIwa////////////1pFTERBTk9ERU5TRVRTVSAgICAgICACCgMAAQA3MsjN/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Zelda no Densetsu - Kamigami no Triforce (J) (V1.0)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "AY0kAeIwa////////////1pFTERBTk9ERU5TRVRTVSAgICAgICACCgMAAQA3MsjN/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Zelda no Densetsu - Kamigami no Triforce (J) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "AY0kAeIwa////////////1pFTERBTk9ERU5TRVRTVSAgICAgICACCgMAAQFv8pAN/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Zelda no Densetsu - Kamigami no Triforce (J) (V1.2)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "AY0kAeIwa////////////1pFTERBTk9ERU5TRVRTVSAgICAgICACCgMAAQIc9OML/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Zelda Parallel Worlds": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "AY0kAeIwa////////////0xPWjogUEFSQUxMRUwgV09STERTICACDAMBAQA3pcha/////yyC//8sgsmAAIDYgv////8sgiyCLIIsggCA2II=",
+    "HiRom": "pI+qwX5rreAC0AavVvN+0BevV/N+8AOc4AKpDIVLqSqmG/ACqRSFEWupDIVLqSqmG/ACqRSFEa9t83446QiPbfN+yaiQBqkAj23zfmv///8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Magical Quest Starring Mickey Mouse, The (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/L/0n/dxor3C/t//7/9//1RIRSBNQUdJQ0FMIFFVRVNUICAgICAACgABCAC1nkphXEm7AfGH7Yf9uwWB9/+ugn52+S9O0zNn2fX99wiA//8=",
+    "HiRom": "jQDQyFw4uwGv/+/99/fv//Hfu+7/r331mtPn23+e/+/+u/f9vr9/L5v3/zz/3//f7/r/Ou/75f///7z+//33///vfX6eft9e/+u/n+///v8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Marko's Magic Football (E) [f1]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "NTFBTVJQAAAAAAAAAAAAAE1BUktPUyBNQUdJQyBGT09UQkFMTCAACwACMwDkthtJ/wAA//GJ7InricKJ/wCfif8AAP//AAD//wAA/wCAAP8=",
+    "HiRom": "/wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Marko's Magic Football (E)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "NTFBTVJQAAAAAAAAAAAAAE1BUktPUyBNQUdJQyBGT09UQkFMTDAACwACMwCEtntJ/wAA//GJ7InricKJ/wCfif8AAP//AAD//wAA/wCAAP8=",
+    "HiRom": "/wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mega Man X (E)": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "AAD//////////////////01FR0FNQU4gWCAgICAgICAgICAgIDAACwACAQAUsetO/////6z/rP+s/6T/rP+o//////+s/6z/rP+s/wCArP8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mega Man X (U) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "AAD//////////////////01FR0FNQU4gWCAgICAgICAgICAgIDAACwABCAAEqvtV/////6z/rP+s/6T/rP+o//////+s/6z/rP+s/wCArP8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mega Man X (U) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "AAD//////////////////01FR0FNQU4gWCAgICAgICAgICAgIDAACwABCAE9s8JM/////6z/rP+s/6T/rP+o//////+s/6z/rP+s/wCArP8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Rockman X (J) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "AAD//////////////////1JPQ0tNQU4gWCAgICAgICAgICAgIDAACwAACACWmmll/////6z/rP+s/6T/rP+o//////+s/6z/rP+s/wCArP8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Rockman X (J) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "AAD//////////////////1JPQ0tNQU4gWCAgICAgICAgICAgIDAACwAACAEotNdL/////6z/rP+s/6T/rP+o//////+s/6z/rP+s/wCArP8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Ms. Pac-Man (U)": {
+    "AddressMode": "LoRom",
+    "Size": 262144,
+    "LoRom": "NURBTjhFAAAAAAAAAAAAAE1TUEFDTUFOICAgICAgICAgICAgIDAACAABMwCJR3a4/wD/AAAAAAAAAB+BAAAYgQAAAAAAAAAAAAAfgQCAGIE=",
+    "HiRom": "/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Pilotwings (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAFBJTE9UV0lOR1MgICAgICAgICAgICADCQACAQDzHAzjAAAAAAjyCPII8qrwAADo8QAAAAAI8gjyCPIAAADwAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGmxG3CAA4Dc=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Pilotwings (J)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAFBJTE9UV0lOR1MgICAgICAgICAgICADCQAAAQAIM/fMAAAAAP7x/vH+8aDwAADe8QAAAAD+8f7x/vEAAADwAAA=",
+    "HiRom": "AEgIBYgAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAECwTEgtfbgANR5IdCIWEjc=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Pilotwings (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAFBJTE9UV0lOR1MgICAgICAgICAgICADCQABAQCczmMxAAAAAP7x/vH+8aDwAADe8QAAAAD+8f7x/vEAAADwAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGmxG3CAA4Dc=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Pilotwings (U) [f1]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAFBJTE9UV0lOR1MgICAgICAgICAgICADCQABAQCczmMxAAAAAP7x/vH+8aDwAADe8QAAAAD+8f7x/vEAAADwAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGmxG3CAA4Dc=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Power Lode Runner (J) (NP)": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "MDFCUExKAAAAAAAAAAAAAFBPV0VSIExPREUgUlVOTkVSICAgIDACCwMAMwDwvQ9CAAAAAAAAAAAAAGKCBYBDgwAAAAAAAAAAAABiggWAQ4M=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Run Saber (Beta) [h1]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "UkNSID0gOTMvMDEvMTkgAFJVTlNBQkVSICAgIFwAgCAgICAgICAACgAB6wD//wAAeNwAAPD/8P/w/+D/If9AgEAAAADw//D/8P/g/yH/QIA=",
+    "HiRom": "7q6q7qqurquq7vqqqu7/q7+uqrrqvquq6qrr7r+qr7rv/q/uuqrqrqu6rqqvrrrur+u6qu6q+qr/qrrv7666qu7qv+qu6uqvqq6uvuqu7qo=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Run Saber (Beta)": {
+    "AddressMode": "LoRom",
+    "Size": 1310720,
+    "LoRom": "UkNSID0gOTMvMDEvMTkgAFJVTlNBQkVSICAgICAgICAgICAgIDAACgAB6wD//wAAeNwAAPD/8P/w/+D/If9AgEAAAADw//D/8P/g/8z/QIA=",
+    "HiRom": "7q6q7qqurquq7vqqqu7/q7+uqrrqvquq6qrr7r+qr7rv/q/uuqrqrqu6rqqvrrrur+u6qu6q+qr/qrrv7666qu7qv+qu6uqvqq6uvuqu7qo=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Run Saber (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "UkNSID0gOTMvMDEvMTkgAFJVTlNBQkVSICAgICAgICAgICAgIDAACgAC6wBkyZs2eNwAAPD/8P/w/+D/If9AgEAAAADw//D/8P/g/yH/QIA=",
+    "HiRom": "QCpX7ewIQij/DO0IQihYGe0IQihYKe0IQihYOe0IQihYVO2O6ftuy///zt37/7/t2+Oz1J/btv13/zWm///13wGXfq/rfq/x//m//////74=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Run Saber (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "UkNSID0gOTMvMDEvMTkgAFJVTlNBQkVSICAgICAgICAgICAgIDAACgAB6wBPtrBJeNwAAPD/8P/w/+D/If9AgEAAAADw//D/8P/g/yH/QIA=",
+    "HiRom": "QCpX7ewIQij/DO0IQihYGe0IQihYKe0IQihYOe0IQihYVO2O6ftuy///zt37/7/t2+Oz1J/btv13/zWm///13wGXfq/rfq/x//m//////74=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Run Saber (U) [t1]": {
+    "AddressMode": "LoRom",
+    "Size": 1081344,
+    "LoRom": "UkNSID0gOTMvMDEvMTkgAFJVTlNBQkVSICAgIFwAgCAgICAgICAACgAB6wD//wAAeNwAAPD/8P/w/+D/If9AgEAAAADw//D/8P/g/8z/QIA=",
+    "HiRom": "7q6q7qqurquq7vqqqu7/q7+uqrrqvquq6qrr7r+qr7rv/q/uuqrqrqu6rqqvrrrur+u6qu6q+qr/qrrv7666qu7qv+qu6uqvqq6uvuqu7qo=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Run Saber (U) [t2]": {
+    "AddressMode": "LoRom",
+    "Size": 1179648,
+    "LoRom": "UkNSID0gOTMvMDEvMTkgAFJVTlNBQkVSICAgIFwAgCAgICAgICAACgAB6wD//wAAeNwAAPD/8P/w/+D/If9AgEAAAADw//D/8P/g/8z/QIA=",
+    "HiRom": "7q6q7qqurquq7vqqqu7/q7+uqrrqvquq6qrr7r+qr7rv/q/uuqrqrqu6rqqvrrrur+u6qu6q+qr/qrrv7666qu7qv+qu6uqvqq6uvuqu7qo=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Run Saber (U) [t3]": {
+    "AddressMode": "LoRom",
+    "Size": 1081344,
+    "LoRom": "UkNSID0gOTMvMDEvMTkgAFJVTlNBQkVSICAgIFwAgCAgICAgICAACgAB6wD//wAAeNwAAPD/8P/w/+D/If9AgEAAAADw//D/8P/g/8z/QIA=",
+    "HiRom": "7q6q7qqurquq7vqqqu7/q7+uqrrqvquq6qrr7r+qr7rv/q/uuqrqrqu6rqqvrrrur+u6qu6q+qr/qrrv7666qu7qv+qu6uqvqq6uvuqu7qo=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Secret of Mana (E) (V1.0)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "HfAG2iKVAMD6qdmNAx2OAR0ikgDAIsHV0MIwIsHV0CCTf4nAz9DyIJN/icDP8PjiIKmALAQY0AmpBAwCGCLB1dBgBBjQCakEDAIYIrTV0GA=",
+    "HiRom": "AQABAAEAAQEAAQABAAEBAFNlY3JldCBvZiBNQU5BICAgICAgICECCwMCAQBRya42/////////////wABBIAEAQAAAAAAAAAAAAAAAASA//8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Secret of Mana (E) (V1.1) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "HfAG2iKVAMD6qdmNAx2OAR0ikgDAIsHV0MIwIsHV0CCTf4nAz9DyIJN/icDP8PjiIKmALAQY0AmpBAwCGCLB1dBgBBjQCakEDAIYIrTV0GA=",
+    "HiRom": "AQABAAEAAQEAAQABAAEBAFNlY3JldCBvZiBNQU5BICAgICAgICECCwMCAQGti1J0/////////////wABBIAEAQAAAAAAAAAAAAAAAASA//8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Secret of Mana (F)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "HfAG2iKVAMD6qdmNAx2OAR0ikgDAIsHV0MIwIsHV0CCTf4nAz9DyIJN/icDP8PjiIKmALAQY0AmpBAwCGCLB1dBgBBjQCakEDAIYIrTV0GA=",
+    "HiRom": "AQABAAEAAQEAAQABAAEBAFNlY3JldCBvZiBNQU5BICAgICAgICECCwMGAQCwik91/////////////wABBIAEAQAAAAAAAAAAAAAAAASA//8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Secret of Mana (G)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "HfAG2iKVAMD6qdmNAx2OAR0ikgDAIsHV0MIwIsHV0CCTf4nAz9DyIJN/icDP8PjiIKmALAQY0AmpBAwCGCLB1dBgBBjQCakEDAIYIrTV0GA=",
+    "HiRom": "AQABAAEAAQEAAQABAAEBAFNlY3JldCBvZiBNQU5BICAgICAgICECCwMJAQAeSuG1/////////////wABBIAEAQAAAAAAAAAAAAAAAASA//8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Secret of Mana (U) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "HfAG2iKVAMD6qdmNAx2OAR0ikgDAIsHV0MIwIsHV0CCTf4nAz9DyIJN/icDP8PjiIKmALAQY0AmpBAwCGCLB1dBgBBjQCakEDAIYIrTV0GA=",
+    "HiRom": "AQABAAEAAQEAAQABAAEBAFNlY3JldCBvZiBNQU5BICAgICAgICECCwMBwwADrvxR/////////////wABBIAEAQAAAAAAAAAAAAAAAASA//8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Seiken Densetsu 2 (J)": {
+    "AddressMode": "HiRom",
+    "Size": 2097152,
+    "LoRom": "HfAG2iKVAMD6qdmNAx2OAR0ikgDAIsHV0MIwIsHV0CCTf4nAz9DyIJN/icDP8PjiIKmALAQY0AmpBAwCGCLB1dBgBBjQCakEDAIYIrTV0GA=",
+    "HiRom": "AQABAAEAAQEAAQABAAEBAFNlaWtlbkRlbnNldHN1IDIgICAgICECCwMAwwCDJnzZ/////////////wABBIAEAQAAAAAAAAAAAAAAAASA//8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Shin Megami Tensei (J) (V1.0)": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "AAS7tQAEAgQABLu1AAQCBERJR0lUQUwgREVWSUwgU1RPUlkgICACCwMA6wCLUnStAAS7tQAEt7UABPiCAIBOhgAEt7UABLe1AAT4ggCAToY=",
+    "HiRom": "oAauFQedWhAYa6wVB75aEL0CECkAwNAIvQQQjT4KGGA4YKksACLFgAFgBsIwKf8ArogG8AcYaQYAytD5Cqi5oAauFQedWhAYa6wVB75aEL0=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Shin Megami Tensei (J) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 1572864,
+    "LoRom": "NwQAADcEAAA3BAAANwQAAERJR0lUQUwgREVWSUwgU1RPUlkgICACCwMA6wGwQE+/NwQAADcEAAA3BPiCAIBOhjcEAAA3BAAANwT4ggCAToY=",
+    "HiRom": "//+dWhA4a43hBsIwKf8ArogG8AcYaQYAytD5Cqi5oAauFQedWhAYa6wVB75aEL0CECkAwNAIvQQQjT4KGGA4YKksACLFgAFg7rv/7q7+xSA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Space Megaforce (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/6MRiYL/77oLY0ujs5PrLVNQQUNFIE1FR0FGT1JDRSAgICAgICAACgABrQDuLhHR9fkCwQAAAAAAACy9AADKvQAADwEAAAAAAAAY4gCAGOI=",
+    "HiRom": "/XsT03B1HZe7eNV4+7/RV34/f9xj1y9renMNPYgef3NDimlJr8ESK8fndWDO1dV77menf/YbDs3Tx/m/e68NY3tW11pe6+vXdx0Ilcjh7ZM=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Space Megaforce (U) [T+Spa100%_Sayans]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/6MRiYL/77oLY0ujs5PrLVNQQUNFIE1FR0FGT1JDRSAgICAgICAACgABrQDuLhHR9fkCwQAAAAAAACy9AADKvQAADwEAAAAAAAAY4gCAGOI=",
+    "HiRom": "/XsT03B1HZe7eNV4+7/RV34/f9xj1y9renMNPYgef3NDimlJr8ESK8fndWDO1dV77menf/YbDs3Tx/m/e68NY3tW11pe6+vXdx0Ilcjh7ZM=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Aleste (E) [h1C]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/6MBiYL/r7oL40+ns5PpKVN1cGVyIEFsZXN0ZSAgICAgICAgICAACgACrQC96UIW9fmCwQAAAAAAADK9AADQvQAADwEAAAAAAABezwCAXs8=",
+    "HiRom": "/XtTU3F3XZe7eNV4e79RV3w//9xD1y9jenMNPcgef3NDimlJr8FSK8fndWDO1fV7/mO/f/ZbDs3bx3m/e68NY3tW1lpe6+vX5x0Il8jp7ZM=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Aleste (E)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/6MBiYL/r7oL40+ns5PpKVNVUEVSIEFMRVNURSAgICAgICAgICAACgACrQDd6iIV9fmCwQAAAAAAADK9AADQvQAADwEAAAAAAABezwCAXs8=",
+    "HiRom": "/XtTU3F3XZe7eNV4e79RV3w//9xD1y9jenMNPcgef3NDimlJr8FSK8fndWDO1fV7/mO/f/ZbDs3bx3m/e68NY3tW1lpe6+vX5x0Il8jp7ZM=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Aleste (J) [t1]": {
+    "AddressMode": "HiRom",
+    "Size": 1048576,
+    "LoRom": "/6MRiYL/77oL60+js5PrKcIwSNpaiwviMKmZjVcBqZmNUgGpBo1vAMIwTB/C9/YI1fkCwQAAAAAAAMD/AACywgAADwEAAAAAAADx5gCA8eY=",
+    "HiRom": "/XsTU3B1HZe7edV4e/9RX35//9xj1y9je3MNPYgef3NDimlJr8FSO8fldWDu1fV7/mWnf7YbDs3bwXm/e68PY3pW11pe6+vX5x0Ilcjh7ZM=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Aleste (J) [t2]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/6MRiYL/77oL60+js5PrKVNVUEVSIEFMRVNURSAgICAgICAgICAACgAArQAJ9/YI1fkCwQAAAAAAABjCAACywgAADwEAAAAAAADx5gCA8eY=",
+    "HiRom": "/XsTU3B1HZe7edV4e/9RX35//9xj1y9je3MNPYgef3NDimlJr8FSO8fldWDu1fV7/mWnf7YbDs3bwXm/e68PY3pW11pe6+vX5x0Ilcjh7ZM=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Aleste (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/6MRiYL/77oL60+js5PrKVNVUEVSIEFMRVNURSAgICAgICAgICAACgAArQAJ9/YI1fkCwQAAAAAAABjCAACywgAADwEAAAAAAADx5gCA8eY=",
+    "HiRom": "/XsTU3B1HZe7edV4e/9RX35//9xj1y9je3MNPYgef3NDimlJr8FSO8fldWDu1fV7/mWnf7YbDs3bwXm/e68PY3pW11pe6+vX5x0Ilcjh7ZM=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Star Fox (J) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgRk9YICAgICAgICAgICAgICATCgAAAQDtVBKr/////5r/mv+a/wgBAAAMAf////+a/wAAmv+a/5b/mv8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Star Fox (U) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgRk9YICAgICAgICAgICAgICATCgABAQBGCbn2/////5r/mv+a/wgBAAAMAf////+a/wAAmv+a/5b/mv8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Star Fox (U) (V1.2) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgRk9YICAgICAgICAgICAgICATCgABAQLPBjD5/////57/nv+e/wgBAAAMAf////+e/wAAnv+e/5z/nv8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "StarWing (E) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgV0lORyAgICAgICAgICAgICATCgACAQAA//8A/////5r/mv+a/wgBAAAMAf////+a/wAAmv+a/5b/mv8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "StarWing (E) (V1.1) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgV0lORyAgICAgICAgICAgICATCgACAQFIELfv/////57/nv+e/wgBAAAMAf////+e/wAAnv+e/5z/nv8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "StarWing (G) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgV0lORyAgICAgICAgICAgICATCgAJAQA8R8O4/////57/nv+e/wgBAAAMAf////+e/wAAnv+e/5z/nv8=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "StarWing Offizieller Wettbewerb (G) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgV0lORyAgICAgICAgICAgICATCgAJAQAqlNVr/////3b8dvx2/AgBAAAMAf////92/AAAdvx2/HT8dvw=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "StarWing Super Weekend Competition (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NUQVIgV0lORyAgICAgICAgICAgICATCgACAQBQgq99/////3b8dvx2/AgBAAAMAf////92/AAAdvx2/HT8dvw=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Stunt Race FX (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFDUSAgAAAAAAAAAAYAAFN0dW50IFJhY2UgRlggICAgICAgICAVCgACMwAjANz//////5D+kP6Q/ggBAAAMAf////+Q/gAAkP6Q/oj+kP4=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Stunt Race FX (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFDUSAgAAAAAAAAAAYAAFN0dW50IFJhY2UgRlggICAgICAgICAaCgABMwE3KMjX/////5D+kP6Q/ggBAAAMAf////+Q/gAAkP6Q/oj+kP4=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Wild Trax (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFDUSAgAAAAAAAAAAYAAFdJTEQgVFJBWCAgICAgICAgICAgICAaCgAAMwG/QEC//////5D+kP6Q/ggBAAAMAf////+Q/gAAkP6Q/oj+kP4=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Akumajou Dracula (J) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////0FLVU1BSk8gRFJBQ1VMQSAgICAgICAACgAApADbbCST/////76CvoK+griBAIC+gv////++gr6CvoK4gQCAvoI=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Castlevania IV (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIENBU1RMRVZBTklBIDQgICAACgACpADFFTrq/////76CvoK+griBAIC+gv////++gr6CvoK4gQCAvoI=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Castlevania IV (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NVUEVSIENBU1RMRVZBTklBIDQgICAACgABpADa/CUD/////76CvoK+griBAIC+gv////++gr6CvoK4gQCAvoI=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario 3 Expert (Hack)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPIEFMTF9TVEFSUyACCwMBAQCjVVyq//////6C///+gtiCAIBsg//////+gv6C/oL+ggCAbIM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario All-Stars (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPIEFMTF9TVEFSUyACCwMCAQBWVqmp//////6C///+gtiCAIBsg//////+gv6C/oL+ggCAbIM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario All-Stars (U) [!] - 8MB": {
+    "AddressMode": "ExLoRom",
+    "Size": 8388608,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPIEFMTF9TVEFSUyACDQMBAQCjVVyq//////6C///+gtiCAIBsg//////+gv6C/oL+ggCAbIM=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": "/////////////////////1NVUEVSIE1BUklPIEFMTF9TVEFSUyACDQMBAQCjVVyq//////6C///+gtiCAIBsg//////+gv6C/oL+ggCAbIM=",
+    "ExHiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA="
+  },
+  "Super Mario All-Stars (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPIEFMTF9TVEFSUyACCwMBAQCjVVyq//////6C///+gtiCAIBsg//////+gv6C/oL+ggCAbIM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario All-Stars + Super Mario World (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2621440,
+    "LoRom": "MDE1TSAgAAAAAAAAAAAAAE1BUklPX0FMTFNUQVJTK1dPUkxEICACDAMCMwAfFuDp/////zSD//80gw6DAICpg/////80gzSDNIM0gwCAqYM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario All-Stars + Super Mario World (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2621440,
+    "LoRom": "/////////////////////0FMTF9TVEFSUyArIFdPUkxEICAgICACDAMBAQAnn9hg/////zSD//80gw6DAICpg/////80gzSDNIM0gwCAqYM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario Bros. (U)": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////1N1cGVyIE1hcmlvIEJyb3MuIDEgICACCQMBAQBoWZem/////waF//8GheiCAIAHhf////8GhQaFBoUGhQCAB4U=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario Collection (J) (V1.0)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "/////////////////////1NVUEVSTUFSSU8gQ09MTEVDVElPTiACCwMAAQA1tMpL//////uC///7gtWCAIBpg//////7gvuC+4L7ggCAaYM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario Collection (J) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "/////////////////////1NVUEVSTUFSSU8gQ09MTEVDVElPTiACCwMAAQHgVx+o//////uC///7gtWCAIBpg//////7gvuC+4L7ggCAaYM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Test ROM": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPIEFMTF9TVEFSUyACCwMBAQCjVVyq//////6C///+gtiCAIBsg//////+gv6C/oL+ggCAbIM=",
+    "HiRom": "RgBHAO8ADwAHAAMAAQDhAP8Pf48/zz/PH++f/5//n/8P8A9wD7APsA/QH8AfwB/A//9//79/v3/fP98/3z/fP/AAcACwALAA0ADAAMAAwAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mario Kart R": {
+    "AddressMode": "HiRom",
+    "Size": 1048576,
+    "LoRom": "Hx9vIG9vLyAnYA9/AAAAAP/4//b/9v307+Tx/gAAAAD4+PYE9vb0BOQG8P4AAAAA/PgE+PwA/AD8APwA+AAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAE1LUiBCWSBERk9SQ0UvRDRTICAgIDEFCgEBAQCJeHaHIAAAAI//ALkQAIX/CACK/wKoAAAJgAC5ikgAAHD/AAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario Kart (E) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 524288,
+    "LoRom": "HwBvAG8ALwAnQA9wAAAAAAcA+/IJAPnw6+ABDv4AAAD4APYA9gD0AOQC8A4AAAAA/PgE+PwA/AD8APwA+AAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAFNVUEVSIE1BUklPIEtBUlQgICAgIDEFCQECAQBHrbhSIAAAAI//ALkAAIX/CACK/wKIAAAJAAC5ikgAAHD/AAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario Kart (J)": {
+    "AddressMode": "HiRom",
+    "Size": 524288,
+    "LoRom": "HwBvAG8ALwAnQA9wAAAAAAcA+/IJAPnw6+ABDv4AAAD4APYA9gD0AOQC8A4AAAAA/PgE+PwA/AD8APwA+AAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAFNVUEVSIE1BUklPIEtBUlQgICAgIDEFCQEAAQDcdSOKIgAAAI//ALkAAIX/CACK/wKoAAAJAAC5ikgAAHD/AAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario Kart (U) [!]": {
+    "AddressMode": "HiRom",
+    "Size": 524288,
+    "LoRom": "HwBvAG8ALwAnQA9wAAAAAAcA+/IJAPnw6+ABDv4AAAD4APYA9gD0AOQC8A4AAAAA/PgE+PwA/AD8APwA+AAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAFNVUEVSIE1BUklPIEtBUlQgICAgIDEFCQEBAQC7FETrIAAAAI//ALkQAIX/CACK/wKoAAAJgAC5ikgAAHD/AAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "SMRPG_GBARP_US_7.1.8_full_4121810938": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "MDFBUldFAAAAAAAAAAAAAFNNUlBHLVIgNDEyMTgxMDkzOCAgICM1DAUBMwf9qwJUAAAAAL6CvoK+gggAvoIMAAAAAAC+gr6CvoIIAJD/DAA=",
+    "HiRom": "6MjGKBD0eoLs+6tg4fsR/EL8cfyT/PT8Rv2Z/fT9Jv5Y/p/+3/4//4H/uv9F/4f/wP8AAKgBqAGoARgAqAEcAAAAAACoAagBqAEYAKD/HAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario RPG - Legend of the Seven Stars (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "MDFBUldFAAAAAAAAAAAAAFNVUEVSIE1BUklPIFJQRyAgICAgICM1DAUBMwBLxLQ7AAAAAL6CvoK+gggAvoIMAAAAAAC+gr6CvoIIAJD/DAA=",
+    "HiRom": "6MjGKBD0eoLs+6tg4fsR/EL8cfyT/PT8Rv2Z/fT9Jv5Y/p/+3/4//4H/uv9F/4f/wP8AAKgBqAGoARgAqAEcAAAAAACoAagBqAEYAKD/HAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario RPG Armageddon v10 (Hard)": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "MDFBUldFAAAAAAAAAAAAAFNVUEVSIE1BUklPIFJQRyAgICAgICM1DAUBMwDuOxHEAAAAAL6CvoK+gggAvoIMAAAAAAC+gr6CvoIIAJD/DAA=",
+    "HiRom": "6MjGKBD0eoLs+6tg4fsR/EL8cfyT/PT8Rv2Z/fT9Jv5Y/p/+3/4//4H/uv9F/4f/wP8AAKgBqAGoARgAqAEcAAAAAACoAagBqAEYAKD/HAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario RPG Armageddon v10 (Normal)": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "MDFBUldFAAAAAAAAAAAAAFNVUEVSIE1BUklPIFJQRyAgICAgICM1DAUBMwCvq1BUAAAAAL6CvoK+gggAvoIMAAAAAAC+gr6CvoIIAJD/DAA=",
+    "HiRom": "6MjGKBD0eoLs+6tg4fsR/EL8cfyT/PT8Rv2Z/fT9Jv5Y/p/+3/4//4H/uv9F/4f/wP8AAKgBqAGoARgAqAEcAAAAAACoAagBqAEYAKD/HAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Bowser's Strike Back": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "////////////////////QkJvd3NlcidzIFN0cmlrZUJhY2sgICACDAEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Brutal Mario": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "//////////////////9OT1NVUEVSIE1BUklPV09STEQgICAgICACDAEBAQAlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg/7WeyRrwC7kLAynxCQuZCwNguQcDKfEJC5kHA2D///////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Demo World - The Legend Continues": {
+    "AddressMode": "ExHiRom",
+    "Size": 6291456,
+    "LoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "HiRom": "//////////////////+4QlN1cGVyIERlbW8gV29ybGQgVExDICUCDQEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "ExLoRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExHiRom": "////////////////////QlN1cGVyIERlbW8gV29ybGQgVExDICUCDQEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I="
+  },
+  "Kaizo Kindergarten v1.09": {
+    "AddressMode": "LoRom",
+    "Size": 3145728,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPV09STEQgICAgICACDAEBAQC8b0OQ/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Luigi's Adventure": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "////////////////////Qkx1aWdpJ3MgQWR2ZW50dXJlICAgICACCwEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mario Is Missing 2": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "////////////////////Qkx1aWdpIFN0YXJ0ICEgICAgICAgICACCwEBAQVxHo7h/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Mario's Return": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "4P0Da///////////////Qk1hcmlvJ3MgUmV0dXJuICAgICAgIDACDAEBAQUlX9qg/////8OC///Dgqf/AIB0g//////DgsOCw4LDgpP/w4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg/whIIPD/8AZoKHm062BoKHn+/2AISCDw//AGaCjZz/hgaCjZ/P9g/////////////7+eAH7JKGD//////yDgBPw=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "MarioX World Chronicles": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "////////////////////Qk1hcmlvWCBXb3JsZCBTRVIgICAgICACCwEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Panic In the Mushroom Kingdom": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "////////////////////QlBpdG1rIDEuMSAgICAgICAgICAgICACDAEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg////////////////////////////////DP////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Return to Dinosaur Land": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "4P0Da///////////////QlJldHVybnRvRGlub3NhdXJMYW5kIDACCwEBAQUlX9qg/////8OC///Dgqf/AIB0g//////DgsOCw4LDgpP/w4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "SMW - HELL Edition": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "/////////////////////1NNVyBIRUxMIEVESVRJT04gICAgICACCgEBAQAlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario Islands": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "4P0Da////////////////1NVUEVSIE1BUklPV09STEQgICAgIDACDAEBAQAlX9qg/////8OC///Dgqf/AIB0g//////DgsOCw4LDgpP/w4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World (U) [!] - 8MB Hack": {
+    "AddressMode": "ExLoRom",
+    "Size": 8388608,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPV09STEQgICAgICACDQEBAQAlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": "/////////////////////1NVUEVSIE1BUklPV09STEQgICAgICACDQEBAQAlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "ExHiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8="
+  },
+  "Super Mario World (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 524288,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPV09STEQgICAgICACCQEBAQAlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World R 2": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "////////////////////QlNNV1IyICAgICAgICAgICAgICAgICACCwEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World R EX": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "////////////////////QlNNV1JFWCAgICAgICAgICAgICAgICACDAEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World R": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "////////////////////QlNNV1IgICAgICAgICAgICAgICAgICACCwEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "The Adventures of Phantasm World": {
+    "AddressMode": "LoRom",
+    "Size": 4194304,
+    "LoRom": "////////////////////Qkx1aWdpJ3MgQWR2ZW50dXJlMiAgICACDAEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "The Second Reality Project (Hard Type)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "////////////////////QlNSMSBWZXJzaW9uIDEtNSAgICAgICACCwEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "The Second Reality Project (SNES Type)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "////////////////////QlNSUEkgU05FUy1WZXJzaW9uICAgICACCwEBAQUlX9qg/////8OC///DgmqBAIB0g//////DgsOCw4LDggCAw4I=",
+    "HiRom": "vdQUaQCNtxTaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "VLDC11_BaseROM": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "/////////////////////1NVUEVSIE1BUklPV09STEQgICAgICM1CwcBAQB+/4EA/////8OC///DgmqBAIAhHf/////DgsOCw4LDgnCKw4I=",
+    "HiRom": "vVgyaQCNt3TaIp3MAfpg//////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario - Yoshi Island (J) (V1.0)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU1NZJ1MgSVNMQU5EICAgICAgICAVCwAAMwDxjA5zT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario - Yoshi Island (J) (V1.1) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU1NZJ1MgSVNMQU5EICAgICAgICAVCwAAMwEyvM1DT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario - Yoshi Island (J) (V1.2)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU1NZJ1MgSVNMQU5EICAgICAgICAVCwAAMwJtvJJDT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World 2 - Yoshi's Island (E) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU0hJJ1MgSVNMQU5EICAgICAgICAVCwACMwD0HgvhT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World 2 - Yoshi's Island (E) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU0hJJ1MgSVNMQU5EICAgICAgICAVCwACMwGrzlQxT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World 2 - Yoshi's Island (U) (V1.0) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU0hJJ1MgSVNMQU5EICAgICAgICAVCwABMwDT7CwTT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Mario World 2 - Yoshi's Island (U) (V1.1)": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU0hJJ1MgSVNMQU5EICAgICAgICAVCwABMwHNoTJeT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super MarioWorld 2+": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDFZSSAgAAAAAAAAAAUAAFlPU0hJJ1MgSVNMQU5EICAgICAgICAVCwABMwDT7CwTT4FPgU+BT4FPgQgBT4EMAU+BT4FPgU+BT4FPgQCAT4E=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Metroid (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 3145728,
+    "LoRom": "/////////////////////1N1cGVyIE1ldHJvaWQgICAgICAgIDACDAMCAQAEhPt7c4VzhXOFc4VzhYOVc4VqmHOFc4VzhXOFc4VzhRyEc4U=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Super Metroid (JU) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 3145728,
+    "LoRom": "/////////////////////1N1cGVyIE1ldHJvaWQgICAgICAgIDACDAMAAQAgB9/4c4VzhXOFc4VzhYOVc4VqmHOFc4VzhXOFc4VzhRyEc4U=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Tales of Phantasia (J) [!]": {
+    "AddressMode": "ExHiRom",
+    "Size": 6291456,
+    "LoRom": "qQGNC0IidYfAsKSpAY0AQ6kYjQFDogAQjgJDqX+NBEOiABCOBUOiAHiOFiGpAY0LQiAThSKT58MidYfAkAYg54ZMBIGpAY0hIZwiIZwiIZw=",
+    "HiRom": "QUZBVFZKAAAAAAAAAAAAAFRBTEVTIE9GIFBIQU5UQVNJQSAgIDUCDQMAMwD//wAAAAAAAALwAvAC8BLwAPAW8AAAAAAC8ALwAvAS8BrwFvA=",
+    "ExLoRom": "IMSDA7oPbtoPBxSA6/9/A4B3Po8AIY0cAIFRl4Dg4MCGQOFA4UDgAgfMI++fEL9A7xAGGy8g78T8eyAXEPybQODADCDtfxLuEfkG4R5PJ+U=",
+    "ExHiRom": "QUZBVFZKAAAAAAAAAAAAAFRBTEVTIE9GIFBIQU5UQVNJQSAgIDUCDQMAMwCog1d8AAAAAALwAvAC8BLwAPAW8AAAAAAC8ALwAvAS8BrwFvA="
+  },
+  "Tetris & Dr. Mario (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBVEZQAAAAAAAAAAAAAFRFVFJJUyZEci5NQVJJTyAgICAgIDAACgACMwBl+ZoG//+A/uL/4v/i/+yIAADOiQAAAADi/wAA4v/siACAzok=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Tetris & Dr. Mario (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBVEZFAAAAAAAAAAAAAFRFVFJJUyZEci5NQVJJTyAgICAgIDAACgABMwCf+mAF//+A/uL/4v/i/+yIAADOiQAAAADi/wAA4v/siACAzok=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "BS Panel de Pon Event '98 (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBWUxKAAAAAAAAAAAAAMrfyNmCxc7f3Sc5OCAgICD/AAAAAAAQWzAQMwHhfR6CAIAAgACAAIAAgN6KAICBiwCAAIAAgACAAIAAgAKAAIA=",
+    "HiRom": "CAAAqn0BAOMB87U/AQDjAfO0PwIA4gHqwD/qgfBkPwIA4gHqwT/qgfCEPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "BS Yoshi no Panepon (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBWUxFAAAAAAAAAAAAANavvLCCzMrfyM7f3UJTlMX/////AABwGCAQMwJ5+oYFAIAAgACAAIAAgHWNAIANjgCAAIAAgACAAIAAgAKAAIA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Panel de Pon (J)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBWUxKAAAAAAAAAAAAAMrfyNkgw94gzt/dICAgICAgICAgIDAACgAAMwALMfTOAIAAgACAAIAAgBqLAIC9iwCAAIAAgACAAIAAgAKAAIA=",
+    "HiRom": "CAAAqn0BAOMB87U/AQDjAfO0PwIA4gHqwD/qgfBkPwIA4gHqwT/qgfCEPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Tetris Attack (E)": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBWUxQAAAAAAAAAAAAAFRFVFJJUyBBVFRBQ0sgICAgICAgIDAACgACMwAqYdWeAIAAgACAAIAAgCGOAIC5jgCAAIAAgACAAIAAgAKAAIA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Tetris Attack (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBWUxFAAAAAAAAAAAAAFRFVFJJUyBBVFRBQ0sgICAgICAgIDAACgABMwAM0/MsAIAAgACAAIAAgCGOAIC5jgCAAIAAgACAAIAAgAKAAIA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Tetris Attack (U) [f1]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBWUxFAAAAAAAAAAAAAFRFVFJJUyBBVFRBQ0sgICAgICAgIDAACgABMwAM0/MsAIAAgACAAIAAgCGOAIC5jgCAAIAAgACAAIAAgAKAAIA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Tetris Attack (U) [T+Spa050_A2j]": {
+    "AddressMode": "LoRom",
+    "Size": 1048576,
+    "LoRom": "MDFBWUxFAAAAAAAAAAAAAFRFVFJJUyBBVFRBQ0sgICAgICAgIDAACgABMwAM0/MsAIAAgACAAIAAgCGOAIC5jgCAAIAAgACAAIAAgAKAAIA=",
+    "HiRom": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Uniracers (U) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDE0TCAgAAAAAAAAAAAAAFVOSVJBQ0VSUyAgICAgICAgICAgIDACCwMBAQBk/JsDAAasLQAGgIUABoiFAAaEhQAGpC0ABqQtAAakLViIhIU=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  },
+  "Unirally (E) [!]": {
+    "AddressMode": "LoRom",
+    "Size": 2097152,
+    "LoRom": "MDE0TCAgAAAAAAAAAAAAAFVOSVJBTExZICAgICAgICAgICAgIDACCwMCMwAsddOK////////f4X//4eF//+Dhf///////////////1iIg4U=",
+    "HiRom": "//////////////////////////////////////////////////////////////////////////////////////////////////////////8=",
+    "ExLoRom": null,
+    "ExHiRom": null
+  }
+}

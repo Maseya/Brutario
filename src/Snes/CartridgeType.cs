@@ -1,0 +1,32 @@
+﻿namespace Maseya.Snes;
+
+public enum CartridgeType
+{
+    RomOnly = 0x00,
+    RomRam = 0x01,
+    RamBattery = 0x02,
+    RomDsp = 0x03,
+    RomDspRam = 0x04,
+    RomDspRamBattery = 0x05,
+    RomDspBattery = 0x06,
+    RomSuperFx = 0x13,
+    RomSuperFxRam = 0x14,
+    RomSuperFxRamBattery = 0x15,
+    RomSuperFxBattery = 0x16,
+    RoObc1 = 0x23,
+    RoObc1Ram = 0x24,
+    RoObc1RamBattery = 0x25,
+    RoObc1Battery = 0x26,
+    RomSa1 = 0x33,
+    RomSa1Ram = 0x34,
+    RomSa1RamBattery = 0x35,
+    RomSa1Battery = 0x36,
+    RomOther = 0xE3,
+    RomOtherRam = 0xE4,
+    RomOtherRamBattery = 0xE5,
+    RomOtherBattery = 0xE6,
+    RomCustomChip = 0xF3,
+    RomCustomChipRam = 0xF4,
+    RomCustomChipRamBattery = 0xF5,
+    RomCustomChipBattery = 0xF6,
+}

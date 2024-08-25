@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>spel werdz rite</Authors>
+    <Company>Maseya</Company>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RootNamespace>Maseya</RootNamespace>
+  </PropertyGroup>
+
+</Project>
