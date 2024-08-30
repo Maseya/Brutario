@@ -195,8 +195,8 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         {
             if (IsThreeByteCommand)
             {
-                Value3 &= 0x80;
-                Value3 |= (byte)(value & 0x7F);
+                Value2 &= 0x80;
+                Value2 |= (byte)(value & 0x7F);
             }
         }
     }
