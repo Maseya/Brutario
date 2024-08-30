@@ -160,7 +160,7 @@ public class SortedObjectListEditor :
         Items.Clear();
         foreach (var item in commands.OrderBy(x => x.X))
         {
-            if (item.Command.Code == AreaObjectCode.ScreenJump)
+            if (item.Command.ObjectType == ObjectType.PageSkip)
             {
                 continue;
             }
@@ -302,12 +302,12 @@ public class SortedObjectListEditor :
             {
                 Debug.Assert(page >= lastPage);
 
-                item.ScreenFlag = page != lastPage;
+                item.PageFlag = page != lastPage;
             }
             else
             {
                 yield return new AreaObjectCommand(0x0D, (byte)(page & 0x1F));
-                item.ScreenFlag = false;
+                item.PageFlag = false;
             }
 
             lastPage = page;
@@ -359,13 +359,13 @@ public class SortedObjectListEditor :
         var page = 0;
         foreach (var item in data)
         {
-            if (item.ScreenFlag)
+            if (item.PageFlag)
             {
                 page++;
             }
-            else if (item.Code == AreaObjectCode.ScreenJump)
+            else if (item.ObjectType == ObjectType.PageSkip)
             {
-                page = item.BaseCommand & 0x1F;
+                page = item.PrimaryCommand & 0x1F;
                 continue;
             }
 
@@ -381,7 +381,7 @@ public class SortedObjectListEditor :
 
     private int AddInternal(UIAreaObjectCommand item)
     {
-        if (item.Command.Code == AreaObjectCode.ScreenJump)
+        if (item.Command.ObjectType == ObjectType.PageSkip)
         {
             return -1;
         }

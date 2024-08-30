@@ -54,59 +54,59 @@ public class AreaObjectParser
         IndexBuffer = new int[BufferSize];
         TreePlatformProperties = new bool[BufferSize];
         MushroomPlatformCenterCoordinate = new int[BufferSize];
-        RenderCommands = new Dictionary<AreaObjectCode, Action>()
+        RenderCommands = new Dictionary<ObjectType, Action>()
         {
-            { AreaObjectCode.EnterablePipe, Pipe },
-            { AreaObjectCode.AreaSpecificPlatform, AreaSpecificPlatform },
-            { AreaObjectCode.HorizontalBricks, RowOfBricks },
-            { AreaObjectCode.HorizontalStones, RowOfStones },
-            { AreaObjectCode.HorizontalCoins, RowOfCoins },
-            { AreaObjectCode.VerticalBricks, ColumnOfBricks },
-            { AreaObjectCode.VerticalStones, ColumnOfStones },
-            { AreaObjectCode.UnenterablePipe, Pipe },
-            { AreaObjectCode.Hole, Hole },
-            { AreaObjectCode.BalanceHorizontalRope, BalanceHorizontalRope },
-            { AreaObjectCode.BridgeV7, HighBridge },
-            { AreaObjectCode.BridgeV8, MidBridge },
-            { AreaObjectCode.BridgeV10, LowBridge },
-            { AreaObjectCode.HoleWithWaterOrLava, HoleWithWaterOrLava },
-            { AreaObjectCode.HorizontalQuestionBlocksV3, HighRowOfCoinBlocks },
-            { AreaObjectCode.HorizontalQuestionBlocksV7, LowRowOfCoinBlocks },
-            { AreaObjectCode.QuestionBlockPowerup, ItemBlock },
-            { AreaObjectCode.QuestionBlockCoin, ItemBlock },
-            { AreaObjectCode.HiddenBlockCoin, ItemBlock },
-            { AreaObjectCode.HiddenBlock1UP, AreaTypeBlock },
-            { AreaObjectCode.BrickPowerup, AreaTypeBlock },
-            { AreaObjectCode.BrickBeanstalk, AreaTypeBlock },
-            { AreaObjectCode.BrickStar, AreaTypeBlock },
-            { AreaObjectCode.Brick10Coins, AreaTypeBlock },
-            { AreaObjectCode.Brick1UP, AreaTypeBlock },
-            { AreaObjectCode.SidewaysPipe, SidewaysPipe },
-            { AreaObjectCode.UsedBlock, FireBarBlock },
-            { AreaObjectCode.SpringBoard, SpringBoard },
-            { AreaObjectCode.JPipe, JPipe },
-            { AreaObjectCode.AltJPipe, JPipe },
-            { AreaObjectCode.FlagPole, FlagPole },
-            { AreaObjectCode.AltFlagPole, FlagPole },
-            { AreaObjectCode.BowserAxe, BowserAxe },
-            { AreaObjectCode.RopeForAxe, RopeForAxe },
-            { AreaObjectCode.BowserBridge, BowserBridge },
-            { AreaObjectCode.ForegroundChange, ForegroundChange },
-            { AreaObjectCode.TerrainAndBackgroundSceneryChange, TerrainModifier },
-            { AreaObjectCode.RopeForLift, RopeForLift },
-            { AreaObjectCode.PulleyRope, PulleyRope },
-            { AreaObjectCode.Castle, Castle },
-            { AreaObjectCode.CastleCeilingCap, CastleCeilingCap },
-            { AreaObjectCode.Staircase, StoneStairs },
-            { AreaObjectCode.CastleStairs, CastleDescendingSteps },
-            { AreaObjectCode.CastleRectangularCeilingTiles, CastleRectangularCeilingTiles },
-            { AreaObjectCode.CastleFloorRightEdge, CastleFloorRightEdge },
-            { AreaObjectCode.CastleFloorLeftEdge, CastleFloorLeftEdge },
-            { AreaObjectCode.CastleFloorLeftWall, CastleFloorLeftWall },
-            { AreaObjectCode.CastleFloorRightWall, CastleFloorRightWall },
-            { AreaObjectCode.VerticalSeaBlocks, VerticalSeaBlocks },
-            { AreaObjectCode.ExtendableJPipe, ExtendableJPipe },
-            { AreaObjectCode.VerticalBalls, VerticalClimbingObject },
+            { ObjectType.EnterablePipe, Pipe },
+            { ObjectType.AreaSpecificPlatform, AreaSpecificPlatform },
+            { ObjectType.HorizontalBricks, RowOfBricks },
+            { ObjectType.HorizontalBlocks, RowOfStones },
+            { ObjectType.HorizontalCoins, RowOfCoins },
+            { ObjectType.VerticalBricks, ColumnOfBricks },
+            { ObjectType.VerticalBlocks, ColumnOfStones },
+            { ObjectType.UnenterablePipe, Pipe },
+            { ObjectType.Hole, Hole },
+            { ObjectType.BalanceHorizontalRope, BalanceHorizontalRope },
+            { ObjectType.BridgeV7, HighBridge },
+            { ObjectType.BridgeV8, MidBridge },
+            { ObjectType.BridgeV10, LowBridge },
+            { ObjectType.HoleWithWaterOrLava, HoleWithWaterOrLava },
+            { ObjectType.HorizontalQuestionBlocksV3, HighRowOfCoinBlocks },
+            { ObjectType.HorizontalQuestionBlocksV7, LowRowOfCoinBlocks },
+            { ObjectType.QuestionBlockPowerup, ItemBlock },
+            { ObjectType.QuestionBlockCoin, ItemBlock },
+            { ObjectType.HiddenBlockCoin, ItemBlock },
+            { ObjectType.HiddenBlock1UP, AreaTypeBlock },
+            { ObjectType.BrickPowerup, AreaTypeBlock },
+            { ObjectType.BrickBeanstalk, AreaTypeBlock },
+            { ObjectType.BrickStar, AreaTypeBlock },
+            { ObjectType.Brick10Coins, AreaTypeBlock },
+            { ObjectType.Brick1UP, AreaTypeBlock },
+            { ObjectType.SidewaysPipe, SidewaysPipe },
+            { ObjectType.UsedBlock, FireBarBlock },
+            { ObjectType.Spring, SpringBoard },
+            { ObjectType.JPipe, JPipe },
+            { ObjectType.AltJPipe, JPipe },
+            { ObjectType.FlagPole, FlagPole },
+            { ObjectType.AltFlagPole, FlagPole },
+            { ObjectType.BowserAxe, BowserAxe },
+            { ObjectType.RopeForAxe, RopeForAxe },
+            { ObjectType.BowserBridge, BowserBridge },
+            { ObjectType.ForegroundSceneryChange, ForegroundChange },
+            { ObjectType.TerrainAndBackgroundSceneryChange, TerrainModifier },
+            { ObjectType.RopeForLift, RopeForLift },
+            { ObjectType.PulleyRope, PulleyRope },
+            { ObjectType.Castle, Castle },
+            { ObjectType.CastleCeilingCap, CastleCeilingCap },
+            { ObjectType.Staircase, StoneStairs },
+            { ObjectType.CastleStairs, CastleDescendingSteps },
+            { ObjectType.CastleRectangularCeilingTiles, CastleRectangularCeilingTiles },
+            { ObjectType.CastleFloorRightEdge, CastleFloorRightEdge },
+            { ObjectType.CastleFloorLeftEdge, CastleFloorLeftEdge },
+            { ObjectType.CastleFloorLeftWall, CastleFloorLeftWall },
+            { ObjectType.CastleFloorRightWall, CastleFloorRightWall },
+            { ObjectType.VerticalSeaBlocks, VerticalSeaBlocks },
+            { ObjectType.ExtendableJPipe, ExtendableJPipe },
+            { ObjectType.VerticalBalls, VerticalClimbingObject },
         };
     }
 
@@ -216,11 +216,11 @@ public class AreaObjectParser
         }
     }
 
-    private AreaObjectCode CurrentObjectCode
+    private ObjectType CurrentObjectCode
     {
         get
         {
-            return CurrentObjectCommand.Code;
+            return CurrentObjectCommand.ObjectType;
         }
     }
 
@@ -228,7 +228,7 @@ public class AreaObjectParser
     {
         get
         {
-            return CurrentObjectCommand.ScreenFlag;
+            return CurrentObjectCommand.PageFlag;
         }
     }
 
@@ -236,7 +236,7 @@ public class AreaObjectParser
     {
         get
         {
-            return CurrentObjectCode == AreaObjectCode.ScreenJump;
+            return CurrentObjectCode == ObjectType.PageSkip;
         }
     }
 
@@ -463,7 +463,7 @@ public class AreaObjectParser
         set;
     }
 
-    private Dictionary<AreaObjectCode, Action> RenderCommands
+    private Dictionary<ObjectType, Action> RenderCommands
     {
         get;
     }
@@ -568,7 +568,7 @@ public class AreaObjectParser
         // Update screen if we encounter a screen skip object.
         if (IsScreenJumpCommand && !IsScreenJumpSet)
         {
-            CurrentObjectScreen = CurrentObjectCommand.BaseCommand;
+            CurrentObjectScreen = CurrentObjectCommand.PrimaryCommand;
             IsScreenJumpSet = true;
             return false;
         }
@@ -721,7 +721,7 @@ public class AreaObjectParser
         height &= 7;
 
         var index = CurrentBufferObjectWidth;
-        if (CurrentObjectCode == AreaObjectCode.UnenterablePipe)
+        if (CurrentObjectCode == ObjectType.UnenterablePipe)
         {
             index += 4;
         }
@@ -1088,8 +1088,8 @@ public class AreaObjectParser
     private void ForegroundChange()
     {
         var header = CurrentHeader;
-        header.ForegroundScenery = (CurrentBufferObject.BaseCommand & 7) < 4
-            ? (ForegroundScenery)(CurrentBufferObject.BaseCommand & 7)
+        header.ForegroundScenery = (CurrentBufferObject.PrimaryCommand & 7) < 4
+            ? (ForegroundScenery)(CurrentBufferObject.PrimaryCommand & 7)
             : ForegroundScenery.None;
         CurrentHeader = header;
     }
@@ -1098,10 +1098,10 @@ public class AreaObjectParser
     {
         var header = CurrentHeader;
         header.TerrainMode = (TerrainMode)
-            (CurrentBufferObject.BaseCommand & 0x0F);
+            (CurrentBufferObject.PrimaryCommand & 0x0F);
 
         header.BackgroundScenery = (BackgroundScenery)
-            ((CurrentBufferObject.BaseCommand & 0x30) >> 4);
+            ((CurrentBufferObject.PrimaryCommand & 0x30) >> 4);
 
         CurrentHeader = header;
     }

@@ -14,44 +14,44 @@ using AreaData.SpriteData;
 
 public static class ExtensionMethods
 {
-    private static readonly ImmutableHashSet<AreaObjectCode> HorizontallyExtendableObjects =
+    private static readonly ImmutableHashSet<ObjectType> HorizontallyExtendableObjects =
         ImmutableHashSet.Create(
-            AreaObjectCode.AreaSpecificPlatform,
-            AreaObjectCode.GreenIsland,
-            AreaObjectCode.MushroomIsland,
-            AreaObjectCode.CloudGround,
-            AreaObjectCode.HorizontalBricks,
-            AreaObjectCode.HorizontalStones,
-            AreaObjectCode.HorizontalCoins,
-            AreaObjectCode.Hole,
-            AreaObjectCode.BalanceHorizontalRope,
-            AreaObjectCode.BridgeV7,
-            AreaObjectCode.BridgeV8,
-            AreaObjectCode.BridgeV10,
-            AreaObjectCode.HoleWithWaterOrLava,
-            AreaObjectCode.HorizontalQuestionBlocksV3,
-            AreaObjectCode.HorizontalQuestionBlocksV7,
-            AreaObjectCode.Staircase);
+            ObjectType.AreaSpecificPlatform,
+            ObjectType.GreenIsland,
+            ObjectType.MushroomIsland,
+            ObjectType.CloudGround,
+            ObjectType.HorizontalBricks,
+            ObjectType.HorizontalBlocks,
+            ObjectType.HorizontalCoins,
+            ObjectType.Hole,
+            ObjectType.BalanceHorizontalRope,
+            ObjectType.BridgeV7,
+            ObjectType.BridgeV8,
+            ObjectType.BridgeV10,
+            ObjectType.HoleWithWaterOrLava,
+            ObjectType.HorizontalQuestionBlocksV3,
+            ObjectType.HorizontalQuestionBlocksV7,
+            ObjectType.Staircase);
 
-    private static readonly ImmutableHashSet<AreaObjectCode> VerticallyExtendableObjects =
+    private static readonly ImmutableHashSet<ObjectType> VerticallyExtendableObjects =
         ImmutableHashSet.Create(
-            AreaObjectCode.VerticalBricks,
-            AreaObjectCode.VerticalStones,
-            AreaObjectCode.UnenterablePipe,
-            AreaObjectCode.EnterablePipe,
-            AreaObjectCode.RopeForLift,
-            AreaObjectCode.PulleyRope,
-            AreaObjectCode.Castle,
-            AreaObjectCode.CastleCeilingCap,
-            AreaObjectCode.Staircase,
-            AreaObjectCode.VerticalSeaBlocks,
-            AreaObjectCode.ExtendableJPipe,
-            AreaObjectCode.VerticalBalls);
+            ObjectType.VerticalBricks,
+            ObjectType.VerticalBlocks,
+            ObjectType.UnenterablePipe,
+            ObjectType.EnterablePipe,
+            ObjectType.RopeForLift,
+            ObjectType.PulleyRope,
+            ObjectType.Castle,
+            ObjectType.CastleCeilingCap,
+            ObjectType.Staircase,
+            ObjectType.VerticalSeaBlocks,
+            ObjectType.ExtendableJPipe,
+            ObjectType.VerticalBalls);
 
-    private static readonly ImmutableHashSet<AreaObjectCode> ExtendableObjects =
+    private static readonly ImmutableHashSet<ObjectType> ExtendableObjects =
         HorizontallyExtendableObjects
         .Union(VerticallyExtendableObjects)
-        .Add(AreaObjectCode.ScreenJump);
+        .Add(ObjectType.PageSkip);
 
     public static IEnumerable<byte> ToBytes(
         this IEnumerable<AreaObjectCommand> items)
@@ -85,238 +85,238 @@ public static class ExtensionMethods
         yield return AreaSpriteCommand.TerminationCode;
     }
 
-    public static AreaObjectCode ToObjectCode(this AreaPlatformType type)
+    public static ObjectType ToObjectCode(this AreaPlatformType type)
     {
-        return AreaObjectCode.AreaSpecificPlatform | (AreaObjectCode)(8 | (int)type);
+        return ObjectType.AreaSpecificPlatform | (ObjectType)(8 | (int)type);
     }
 
-    public static bool IsHorizontallyExtendableObject(this AreaObjectCode code)
+    public static bool IsHorizontallyExtendableObject(this ObjectType code)
     {
         return HorizontallyExtendableObjects.Contains(code);
     }
 
-    public static bool IsVerticallyExtendableObject(this AreaObjectCode code)
+    public static bool IsVerticallyExtendableObject(this ObjectType code)
     {
         return VerticallyExtendableObjects.Contains(code);
     }
 
-    public static bool IsExtendableObject(this AreaObjectCode code)
+    public static bool IsExtendableObject(this ObjectType code)
     {
         return ExtendableObjects.Contains(code);
     }
 
-    public static string BaseName(this AreaObjectCode code)
+    public static string BaseName(this ObjectType code)
     {
         switch (code)
         {
-            case AreaObjectCode.QuestionBlockPowerup:
+            case ObjectType.QuestionBlockPowerup:
                 return AddDescriptor(
                     Resources.QuestionBlock,
                     Resources.Powerup);
 
-            case AreaObjectCode.QuestionBlockCoin:
+            case ObjectType.QuestionBlockCoin:
                 return AddDescriptor(
                     Resources.QuestionBlock,
                     Resources.Coin);
 
-            case AreaObjectCode.HiddenBlockCoin:
+            case ObjectType.HiddenBlockCoin:
                 return AddDescriptor(
                     Resources.HiddenBlock,
                     Resources.Coin);
 
-            case AreaObjectCode.HiddenBlock1UP:
+            case ObjectType.HiddenBlock1UP:
                 return AddDescriptor(
                     Resources.HiddenBlock,
                     Resources.LifeMushroom);
 
-            case AreaObjectCode.BrickPowerup:
+            case ObjectType.BrickPowerup:
                 return AddDescriptor(
                     Resources.Brick,
                     Resources.Powerup);
 
-            case AreaObjectCode.BrickBeanstalk:
+            case ObjectType.BrickBeanstalk:
                 return AddDescriptor(
                     Resources.Brick,
                     Resources.Beanstalk);
 
-            case AreaObjectCode.BrickStar:
+            case ObjectType.BrickStar:
                 return AddDescriptor(
                     Resources.Brick,
                     Resources.Star);
 
-            case AreaObjectCode.Brick10Coins:
+            case ObjectType.Brick10Coins:
                 return AddDescriptor(
                     Resources.Brick,
                     Resources.TenCoins);
 
-            case AreaObjectCode.Brick1UP:
+            case ObjectType.Brick1UP:
                 return AddDescriptor(
                     Resources.Brick,
                     Resources.LifeMushroom);
 
-            case AreaObjectCode.SidewaysPipe:
+            case ObjectType.SidewaysPipe:
                 return Resources.SidewaysPipe;
 
-            case AreaObjectCode.UsedBlock:
+            case ObjectType.UsedBlock:
                 return Resources.UsedBlock;
 
-            case AreaObjectCode.SpringBoard:
+            case ObjectType.Spring:
                 return Resources.SpringBoard;
 
-            case AreaObjectCode.JPipe:
-            case AreaObjectCode.AltJPipe:
+            case ObjectType.JPipe:
+            case ObjectType.AltJPipe:
                 return Resources.JPipe;
 
-            case AreaObjectCode.FlagPole:
-            case AreaObjectCode.AltFlagPole:
+            case ObjectType.FlagPole:
+            case ObjectType.AltFlagPole:
                 return Resources.FlagPole;
 
-            case AreaObjectCode.Empty:
-            case AreaObjectCode.Empty2:
+            case ObjectType.Nothing1:
+            case ObjectType.Nothing2:
                 return Resources.Empty;
 
-            case AreaObjectCode.AreaSpecificPlatform:
+            case ObjectType.AreaSpecificPlatform:
                 return Resources.AreaSpecificPlatform;
 
-            case AreaObjectCode.GreenIsland:
+            case ObjectType.GreenIsland:
                 return Resources.AreaSpecificPlatform_Trees;
 
-            case AreaObjectCode.MushroomIsland:
+            case ObjectType.MushroomIsland:
                 return Resources.AreaSpecificPlatform_Mushrooms;
 
-            case AreaObjectCode.Cannon:
+            case ObjectType.Cannon:
                 return Resources.AreaSpecificPlatform_BulletBillTurrets;
 
-            case AreaObjectCode.CloudGround:
+            case ObjectType.CloudGround:
                 // This is not a mistake. The regular ground changes to clouds, and
                 // area specific platform is still trees.
                 return Resources.AreaSpecificPlatform_Trees;
 
-            case AreaObjectCode.HorizontalBricks:
+            case ObjectType.HorizontalBricks:
                 return Resources.HorizontalBricks;
 
-            case AreaObjectCode.HorizontalStones:
+            case ObjectType.HorizontalBlocks:
                 return Resources.HorizontalStones;
 
-            case AreaObjectCode.HorizontalCoins:
+            case ObjectType.HorizontalCoins:
                 return Resources.HorizontalCoins;
 
-            case AreaObjectCode.VerticalBricks:
+            case ObjectType.VerticalBricks:
                 return Resources.VerticalBricks;
 
-            case AreaObjectCode.VerticalStones:
+            case ObjectType.VerticalBlocks:
                 return Resources.VerticalStones;
 
-            case AreaObjectCode.UnenterablePipe:
+            case ObjectType.UnenterablePipe:
                 return Resources.UnenterablePipe;
 
-            case AreaObjectCode.EnterablePipe:
+            case ObjectType.EnterablePipe:
                 return Resources.EnterablePipe;
 
-            case AreaObjectCode.Hole:
+            case ObjectType.Hole:
                 return Resources.Hole;
 
-            case AreaObjectCode.BalanceHorizontalRope:
+            case ObjectType.BalanceHorizontalRope:
                 return Resources.BalanceHorizontalRope;
 
-            case AreaObjectCode.BridgeV7:
+            case ObjectType.BridgeV7:
                 return AddYDescriptor(Resources.Bridge, 7);
 
-            case AreaObjectCode.BridgeV8:
+            case ObjectType.BridgeV8:
                 return AddYDescriptor(Resources.Bridge, 8);
 
-            case AreaObjectCode.BridgeV10:
+            case ObjectType.BridgeV10:
                 return AddYDescriptor(Resources.Bridge, 10);
 
-            case AreaObjectCode.HoleWithWaterOrLava:
+            case ObjectType.HoleWithWaterOrLava:
                 return Resources.HoleWithWaterOrLava;
 
-            case AreaObjectCode.HorizontalQuestionBlocksV3:
+            case ObjectType.HorizontalQuestionBlocksV3:
                 return AddYDescriptor(Resources.HorizontalQuestionBlocks, 3);
 
-            case AreaObjectCode.HorizontalQuestionBlocksV7:
+            case ObjectType.HorizontalQuestionBlocksV7:
                 return AddYDescriptor(Resources.HorizontalQuestionBlocks, 7);
 
-            case AreaObjectCode.ScreenJump:
+            case ObjectType.PageSkip:
                 return Resources.ScreenJump;
 
-            case AreaObjectCode.BowserAxe:
+            case ObjectType.BowserAxe:
                 return Resources.BowserAxe;
 
-            case AreaObjectCode.RopeForAxe:
+            case ObjectType.RopeForAxe:
                 return Resources.RopeForAxe;
 
-            case AreaObjectCode.BowserBridge:
+            case ObjectType.BowserBridge:
                 return Resources.BowserBridge;
 
-            case AreaObjectCode.ScrollStopWarpZone:
+            case ObjectType.ScrollStopWarpZone:
                 return Resources.ScrollStopWarpZone;
 
-            case AreaObjectCode.ScrollStop:
-            case AreaObjectCode.AltScrollStop:
+            case ObjectType.ScrollStop:
+            case ObjectType.AltScrollStop:
                 return Resources.ScrollStop;
 
-            case AreaObjectCode.RedCheepCheepFlying:
+            case ObjectType.JumpingCheepCheepGenerator:
                 return Resources.RedCheepCheepFlying;
 
-            case AreaObjectCode.BulletBillGenerator:
+            case ObjectType.BulletBillGenerator:
                 return Resources.BulletBillGenerator;
 
-            case AreaObjectCode.StopGenerator:
+            case ObjectType.StopGenerator:
                 return Resources.StopGenerator;
 
-            case AreaObjectCode.LoopCommand:
+            case ObjectType.LoopCommand:
                 return Resources.LoopCommand;
 
-            case AreaObjectCode.TerrainAndBackgroundSceneryChange:
+            case ObjectType.TerrainAndBackgroundSceneryChange:
                 return Resources.BrickAndSceneryChange;
 
-            case AreaObjectCode.ForegroundChange:
+            case ObjectType.ForegroundSceneryChange:
                 return Resources.ForegroundChange;
 
-            case AreaObjectCode.RopeForLift:
+            case ObjectType.RopeForLift:
                 return Resources.RopeForLift;
 
-            case AreaObjectCode.PulleyRope:
+            case ObjectType.PulleyRope:
                 return Resources.PulleyRope;
 
-            case AreaObjectCode.EmptyTile:
+            case ObjectType.EmptyTile:
                 return Resources.EmptyTile;
 
-            case AreaObjectCode.Castle:
+            case ObjectType.Castle:
                 return Resources.Castle;
 
-            case AreaObjectCode.CastleCeilingCap:
+            case ObjectType.CastleCeilingCap:
                 return Resources.CastleCeilingCap;
 
-            case AreaObjectCode.Staircase:
+            case ObjectType.Staircase:
                 return Resources.Staircase;
 
-            case AreaObjectCode.CastleStairs:
+            case ObjectType.CastleStairs:
                 return Resources.CastleStairs;
 
-            case AreaObjectCode.CastleRectangularCeilingTiles:
+            case ObjectType.CastleRectangularCeilingTiles:
                 return Resources.CastleRectangularCeilingTiles;
 
-            case AreaObjectCode.CastleFloorRightEdge:
+            case ObjectType.CastleFloorRightEdge:
                 return Resources.CastleFloorRightEdge;
 
-            case AreaObjectCode.CastleFloorLeftEdge:
+            case ObjectType.CastleFloorLeftEdge:
                 return Resources.CastleFloorLeftEdge;
 
-            case AreaObjectCode.CastleFloorLeftWall:
+            case ObjectType.CastleFloorLeftWall:
                 return Resources.CastleFloorLeftWall;
 
-            case AreaObjectCode.CastleFloorRightWall:
+            case ObjectType.CastleFloorRightWall:
                 return Resources.CastleFloorRightWall;
 
-            case AreaObjectCode.VerticalSeaBlocks:
+            case ObjectType.VerticalSeaBlocks:
                 return Resources.VerticalSeaBlocks;
 
-            case AreaObjectCode.ExtendableJPipe:
+            case ObjectType.ExtendableJPipe:
                 return Resources.ExtendableJPipe;
 
-            case AreaObjectCode.VerticalBalls:
+            case ObjectType.VerticalBalls:
                 return Resources.VerticalBalls;
 
             default:
@@ -326,25 +326,25 @@ public static class ExtensionMethods
         }
     }
 
-    public static int GetMaxLength(this AreaObjectCode code)
+    public static int GetMaxLength(this ObjectType code)
     {
         switch (code)
         {
-            case AreaObjectCode.ScreenJump:
-                return 0x1F;
+            case ObjectType.PageSkip:
+                return 0x20;
 
-            case AreaObjectCode.EnterablePipe:
-            case AreaObjectCode.UnenterablePipe:
-                return 7;
-
-            case AreaObjectCode.Staircase:
+            case ObjectType.EnterablePipe:
+            case ObjectType.UnenterablePipe:
                 return 8;
 
-            case AreaObjectCode.Castle:
-                return 7;
+            case ObjectType.Staircase:
+                return 9;
+
+            case ObjectType.Castle:
+                return 8;
 
             default:
-                return code.IsExtendableObject() ? 0x0F : 0;
+                return code.IsExtendableObject() ? 0x10 : 1;
         }
     }
 
@@ -368,13 +368,13 @@ public static class ExtensionMethods
             case AreaSpriteCode.BuzzyBeetle:
                 return Resources.BuzzyBeetle;
 
-            case AreaSpriteCode.RedKoopaTroopa2:
+            case AreaSpriteCode.RedKoopaTroopaPatrol:
                 return AddTwoDescriptors(
                     Resources.KoopaParatroopa,
                     Resources.Red,
                     Resources.WalksOffFloors);
 
-            case AreaSpriteCode.GreenKoopaTroopa2:
+            case AreaSpriteCode.GreenKoopaTroopaStopped:
                 return AddTwoDescriptors(
                     Resources.KoopaParatroopa,
                     Resources.Green,
@@ -392,7 +392,7 @@ public static class ExtensionMethods
             case AreaSpriteCode.BulletBill:
                 return Resources.BulletBill;
 
-            case AreaSpriteCode.YellowKoopaParatroopa:
+            case AreaSpriteCode.YellowKoopaParatroopaStopped:
                 return AddTwoDescriptors(
                     Resources.KoopaParatroopa,
                     Resources.Yellow,
@@ -414,7 +414,7 @@ public static class ExtensionMethods
             case AreaSpriteCode.PiranhaPlant:
                 return Resources.PiranhaPlant;
 
-            case AreaSpriteCode.GreenKoopaParatroopa:
+            case AreaSpriteCode.GreenKoopaParatroopaLeaping:
                 return AddTwoDescriptors(
                     Resources.KoopaParatroopa,
                     Resources.Green,
@@ -426,7 +426,7 @@ public static class ExtensionMethods
                     Resources.Red,
                     Resources.FliesVertically);
 
-            case AreaSpriteCode.GreenKoopaParatroopa2:
+            case AreaSpriteCode.GreenKoopaParatroopaFlying:
                 return AddTwoDescriptors(
                     Resources.KoopaParatroopa,
                     Resources.Green,
@@ -582,38 +582,38 @@ public static class ExtensionMethods
         AreaPlatformType areaPlatformType)
     {
         var length = command.Parameter + 1;
-        var code = command.Code;
+        var code = command.ObjectType;
         switch (code)
         {
-            case AreaObjectCode.AreaSpecificPlatform:
+            case ObjectType.AreaSpecificPlatform:
                 code = areaPlatformType.ToObjectCode();
                 break;
 
-            case AreaObjectCode.BridgeV7:
+            case ObjectType.BridgeV7:
                 return AddTwoDescriptors(
                     Resources.Bridge,
                     YDescriptor(7),
                     WidthDescriptor(length));
 
-            case AreaObjectCode.BridgeV8:
+            case ObjectType.BridgeV8:
                 return AddTwoDescriptors(
                     Resources.Bridge,
                     YDescriptor(8),
                     WidthDescriptor(length));
 
-            case AreaObjectCode.BridgeV10:
+            case ObjectType.BridgeV10:
                 return AddTwoDescriptors(
                     Resources.Bridge,
                     YDescriptor(10),
                     WidthDescriptor(length));
 
-            case AreaObjectCode.HorizontalQuestionBlocksV3:
+            case ObjectType.HorizontalQuestionBlocksV3:
                 return AddTwoDescriptors(
                     Resources.HorizontalQuestionBlocks,
                     YDescriptor(3),
                     WidthDescriptor(length));
 
-            case AreaObjectCode.HorizontalQuestionBlocksV7:
+            case ObjectType.HorizontalQuestionBlocksV7:
                 return AddTwoDescriptors(
                     Resources.HorizontalQuestionBlocks,
                     YDescriptor(7),
@@ -625,7 +625,7 @@ public static class ExtensionMethods
             ? AddWidthDescriptor(baseName, length)
             : code.IsVerticallyExtendableObject()
             ? AddHeightDescriptor(baseName, length)
-            : code == AreaObjectCode.ScreenJump
+            : code == ObjectType.PageSkip
             ? AddDescriptor(baseName, PageSetDescriptor(length))
             : baseName;
     }

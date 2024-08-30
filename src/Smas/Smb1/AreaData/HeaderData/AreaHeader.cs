@@ -185,7 +185,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
             return StartYPosition switch
             {
                 StartYPosition.Y00 => 0x00,
-                StartYPosition.Y20 => 0x20,
+                StartYPosition.Y00FromOtherArea => 0x20,
                 StartYPosition.YB0 => 0xB0,
                 StartYPosition.Y50 => 0x50,
                 StartYPosition.Alt1Y00 => 0x00,

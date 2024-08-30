@@ -28,20 +28,20 @@ public class AreaSpriteRenderer
             { AreaSpriteCode.GreenKoopaTroopa, GreenKoopaTroopa },
             { AreaSpriteCode.RedKoopaTroopa, RedKoopaTroopa },
             { AreaSpriteCode.BuzzyBeetle, BuzzyBeetle },
-            { AreaSpriteCode.RedKoopaTroopa2, RedKoopaTroopa },
-            { AreaSpriteCode.GreenKoopaTroopa2, GreenKoopaTroopa },
+            { AreaSpriteCode.RedKoopaTroopaPatrol, RedKoopaTroopa },
+            { AreaSpriteCode.GreenKoopaTroopaStopped, GreenKoopaTroopa },
             { AreaSpriteCode.HammerBros, HammerBros },
             { AreaSpriteCode.Goomba, Goomba },
             { AreaSpriteCode.Blooper, Blooper },
             { AreaSpriteCode.BulletBill, BulletBill },
-            { AreaSpriteCode.YellowKoopaParatroopa, GoldKoopaParaTroopa },
+            { AreaSpriteCode.YellowKoopaParatroopaStopped, GoldKoopaParaTroopa },
             { AreaSpriteCode.GreenCheepCheep, GreenCheepCheep },
             { AreaSpriteCode.RedCheepCheep, RedCheepCheep },
             { AreaSpriteCode.Podoboo, Podoboo },
             { AreaSpriteCode.PiranhaPlant, PiranhaPlant },
-            { AreaSpriteCode.GreenKoopaParatroopa, GreenKoopaParaTroopa },
+            { AreaSpriteCode.GreenKoopaParatroopaLeaping, GreenKoopaParaTroopa },
             { AreaSpriteCode.RedKoopaParatroopa, RedKoopaParaTroopa },
-            { AreaSpriteCode.GreenKoopaParatroopa2, GreenKoopaParaTroopa2 },
+            { AreaSpriteCode.GreenKoopaParatroopaFlying, GreenKoopaParaTroopa2 },
             { AreaSpriteCode.Lakitu, Lakitu },
             { AreaSpriteCode.Spiny, Spiny },
             { AreaSpriteCode.RedFlyingCheepCheep, RedFlyingCheepCheep },
@@ -75,20 +75,20 @@ public class AreaSpriteRenderer
             { AreaSpriteCode.ThreeGreenKoopasY6, ThreeGreenKoopasY6 },
         };
 
-        ObjectCommands = new Dictionary<AreaObjectCode, SpriteCallback>()
+        ObjectCommands = new Dictionary<ObjectType, SpriteCallback>()
         {
-            { AreaObjectCode.EnterablePipe, PipePiranhaPlant },
-            { AreaObjectCode.UnenterablePipe, PipePiranhaPlant },
-            { AreaObjectCode.SpringBoard, SpringBoard },
-            { AreaObjectCode.FlagPole, FlagPole },
-            { AreaObjectCode.AltFlagPole, FlagPole },
-            { AreaObjectCode.BulletBillGenerator, BulletBill },
-            { AreaObjectCode.RedCheepCheepFlying, RedFlyingCheepCheep },
-            { AreaObjectCode.StopGenerator, StopGenerator },
-            { AreaObjectCode.LoopCommand, Loop },
-            { AreaObjectCode.ScrollStop, ScrollStop },
-            { AreaObjectCode.ScrollStopWarpZone, ScrollStopWarpZone },
-            { AreaObjectCode.AltScrollStop, ScrollStop },
+            { ObjectType.EnterablePipe, PipePiranhaPlant },
+            { ObjectType.UnenterablePipe, PipePiranhaPlant },
+            { ObjectType.Spring, SpringBoard },
+            { ObjectType.FlagPole, FlagPole },
+            { ObjectType.AltFlagPole, FlagPole },
+            { ObjectType.BulletBillGenerator, BulletBill },
+            { ObjectType.JumpingCheepCheepGenerator, RedFlyingCheepCheep },
+            { ObjectType.StopGenerator, StopGenerator },
+            { ObjectType.LoopCommand, Loop },
+            { ObjectType.ScrollStop, ScrollStop },
+            { ObjectType.ScrollStopWarpZone, ScrollStopWarpZone },
+            { ObjectType.AltScrollStop, ScrollStop },
         };
     }
 
@@ -99,7 +99,7 @@ public class AreaSpriteRenderer
         get;
     }
 
-    private Dictionary<AreaObjectCode, SpriteCallback> ObjectCommands
+    private Dictionary<ObjectType, SpriteCallback> ObjectCommands
     {
         get;
     }
@@ -203,7 +203,7 @@ public class AreaSpriteRenderer
         AreaType areaType,
         bool showPipePiranhaPlants)
     {
-        ObjectCommands[AreaObjectCode.BulletBillGenerator] = areaType == AreaType.Water
+        ObjectCommands[ObjectType.BulletBillGenerator] = areaType == AreaType.Water
             ? RedCheepCheep
             : BulletBill;
 
@@ -211,25 +211,25 @@ public class AreaSpriteRenderer
         var screen = 0;
         foreach (var command in areaObjectData)
         {
-            if (command.ScreenFlag)
+            if (command.PageFlag)
             {
                 screen += 0x10;
             }
-            else if (command.Code == AreaObjectCode.ScreenJump)
+            else if (command.ObjectType == ObjectType.PageSkip)
             {
-                screen = command.BaseCommand << 4;
+                screen = command.PrimaryCommand << 4;
             }
 
             if (!showPipePiranhaPlants && (
-                command.Code == AreaObjectCode.EnterablePipe
-                || command.Code == AreaObjectCode.UnenterablePipe))
+                command.ObjectType == ObjectType.EnterablePipe
+                || command.ObjectType == ObjectType.UnenterablePipe))
             {
                 continue;
             }
 
             var x = (screen | command.X) << 4;
             var y = (command.Y + 2) << 4;
-            if (ObjectCommands.TryGetValue(command.Code, out var getSprites))
+            if (ObjectCommands.TryGetValue(command.ObjectType, out var getSprites))
             {
                 result = result.Concat(getSprites(x, y, frame));
             }

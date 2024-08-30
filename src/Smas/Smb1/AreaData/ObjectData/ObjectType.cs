@@ -6,7 +6,7 @@
 
 namespace Maseya.Smas.Smb1.AreaData.ObjectData;
 
-public enum AreaObjectCode
+public enum ObjectType
 {
     QuestionBlockPowerup,
     QuestionBlockCoin,
@@ -19,11 +19,11 @@ public enum AreaObjectCode
     Brick1UP,
     SidewaysPipe,
     UsedBlock,
-    SpringBoard,
+    Spring,
     JPipe,
     FlagPole,
-    Empty,
-    Empty2,
+    Nothing1,
+    Nothing2,
     AreaSpecificPlatform = 0x10,
 
     GreenIsland = AreaSpecificPlatform | 8 | AreaPlatformType.Trees,
@@ -32,10 +32,10 @@ public enum AreaObjectCode
     CloudGround = AreaSpecificPlatform | 8 | AreaPlatformType.CloudGround,
 
     HorizontalBricks = 0x20,
-    HorizontalStones = 0x30,
+    HorizontalBlocks = 0x30,
     HorizontalCoins = 0x40,
     VerticalBricks = 0x50,
-    VerticalStones = 0x60,
+    VerticalBlocks = 0x60,
     UnenterablePipe = 0x70,
     EnterablePipe = 0x78,
 
@@ -48,7 +48,7 @@ public enum AreaObjectCode
     HorizontalQuestionBlocksV3 = 0x0C60,
     HorizontalQuestionBlocksV7 = 0x0C70,
 
-    ScreenJump = 0x0D00,
+    PageSkip = 0x0D00,
     AltJPipe = 0x0D40,
     AltFlagPole,
     BowserAxe,
@@ -57,13 +57,13 @@ public enum AreaObjectCode
     ScrollStopWarpZone,
     ScrollStop,
     AltScrollStop,
-    RedCheepCheepFlying,
+    JumpingCheepCheepGenerator,
     BulletBillGenerator,
     StopGenerator,
     LoopCommand,
 
     TerrainAndBackgroundSceneryChange = 0x0E00,
-    ForegroundChange = 0x0E40,
+    ForegroundSceneryChange = 0x0E40,
 
     RopeForLift = 0x0F00,
     PulleyRope = 0x0F10,

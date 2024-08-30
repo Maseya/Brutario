@@ -161,7 +161,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath)
+        string helpFilePath)
     {
         return MessageBox.Show(
             text,
@@ -181,7 +181,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath)
+        string helpFilePath)
     {
         return MessageBox.Show(
             owner,
@@ -201,7 +201,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath,
+        string helpFilePath,
         string keyword)
     {
         return MessageBox.Show(
@@ -223,7 +223,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath,
+        string helpFilePath,
         string keyword)
     {
         return MessageBox.Show(
@@ -245,7 +245,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath,
+        string helpFilePath,
         HelpNavigator navigator)
     {
         return MessageBox.Show(
@@ -267,7 +267,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath,
+        string helpFilePath,
         HelpNavigator navigator)
     {
         return MessageBox.Show(
@@ -289,7 +289,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath,
+        string helpFilePath,
         HelpNavigator navigator,
         object param)
     {
@@ -313,7 +313,7 @@ public static class RtlAwareMessageBox
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton,
         MessageBoxOptions options,
-        string? helpFilePath,
+        string helpFilePath,
         HelpNavigator navigator,
         object param)
     {

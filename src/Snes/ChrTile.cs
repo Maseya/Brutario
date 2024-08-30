@@ -131,14 +131,6 @@ public struct ChrTile : IEquatable<ChrTile>
         }
     }
 
-    public int XFlipMask
-    {
-        get
-        {
-            return (-((value >> FlipXOffset) & 1)) & 7;
-        }
-    }
-
     public bool YFlipped
     {
         get
@@ -156,14 +148,6 @@ public struct ChrTile : IEquatable<ChrTile>
             {
                 Value &= ~(1 << FlipYOffset);
             }
-        }
-    }
-
-    public int YFlipMask
-    {
-        get
-        {
-            return (-((value >> FlipYOffset) & 1)) & 7;
         }
     }
 

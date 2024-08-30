@@ -182,19 +182,6 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         }
     }
 
-    public int RealY
-    {
-        get
-        {
-            return Y + (IsFirebar ? 0 : 1);
-        }
-
-        set
-        {
-            Y = value - (IsFirebar ? 0 : 1);
-        }
-    }
-
     public int AreaNumber
     {
         get
@@ -279,20 +266,20 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
                 AreaSpriteCode.GreenKoopaTroopa => "Koopa Troopa (Green)",
                 AreaSpriteCode.RedKoopaTroopa => "Koopa Troopa (Red; Walks off floors)",
                 AreaSpriteCode.BuzzyBeetle => "Buzzy Beetle",
-                AreaSpriteCode.RedKoopaTroopa2 => "Koopa Troopa (Red; Stays on floors)",
-                AreaSpriteCode.GreenKoopaTroopa2 => "Koopa Troopa (Green; Walks in place)",
+                AreaSpriteCode.RedKoopaTroopaPatrol => "Koopa Troopa (Red; Stays on floors)",
+                AreaSpriteCode.GreenKoopaTroopaStopped => "Koopa Troopa (Green; Walks in place)",
                 AreaSpriteCode.HammerBros => "Hammer Bros.",
                 AreaSpriteCode.Goomba => "Goomba",
                 AreaSpriteCode.Blooper => "Squid",
                 AreaSpriteCode.BulletBill => "Bullet Bill",
-                AreaSpriteCode.YellowKoopaParatroopa => "Yellow Koopa Paratroopa (Flies in place)",
+                AreaSpriteCode.YellowKoopaParatroopaStopped => "Yellow Koopa Paratroopa (Flies in place)",
                 AreaSpriteCode.GreenCheepCheep => "Green Cheep-Cheep",
                 AreaSpriteCode.RedCheepCheep => "Red Cheep-Cheep",
                 AreaSpriteCode.Podoboo => "Podoboo",
                 AreaSpriteCode.PiranhaPlant => "Piranha Plant",
-                AreaSpriteCode.GreenKoopaParatroopa => "Green Koopa Paratroopa (Leaping)",
+                AreaSpriteCode.GreenKoopaParatroopaLeaping => "Green Koopa Paratroopa (Leaping)",
                 AreaSpriteCode.RedKoopaParatroopa => "Red Koopa Paratroopa (Flies vertically)",
-                AreaSpriteCode.GreenKoopaParatroopa2 => "Green Koopa Paratroopa (Flies horizontally)",
+                AreaSpriteCode.GreenKoopaParatroopaFlying => "Green Koopa Paratroopa (Flies horizontally)",
                 AreaSpriteCode.Lakitu => "Lakitu",
                 AreaSpriteCode.Spiny => "Spiny (undefined walk speed)",
                 AreaSpriteCode.RedFlyingCheepCheep => "Red Flying Cheep-Cheep",
@@ -327,14 +314,6 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
                 AreaSpriteCode.ScreenJump => $"Page Skip: {BaseCommand & 0x1F}",
                 _ => $"Unknown command: {this}",
             };
-        }
-    }
-
-    private bool IsFirebar
-    {
-        get
-        {
-            return ((uint)Code - (uint)AreaSpriteCode.FireBarClockwise) < 5;
         }
     }
 

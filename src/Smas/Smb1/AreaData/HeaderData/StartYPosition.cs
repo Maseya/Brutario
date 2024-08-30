@@ -23,7 +23,7 @@ public enum StartYPosition
     /// <summary>
     /// Y = -1 entering from another area.
     /// </summary>
-    Y20,
+    Y00FromOtherArea,
 
     /// <summary>
     /// Y = 10

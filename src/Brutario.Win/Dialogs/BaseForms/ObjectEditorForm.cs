@@ -57,7 +57,7 @@ internal partial class ObjectEditorForm : Form
 
             // Change the name of the area specific platform in the object
             // combo box to match the new value.
-            var index = EnumIndexes[AreaObjectCode.AreaSpecificPlatform];
+            var index = EnumIndexes[ObjectType.AreaSpecificPlatform];
             var code = value.ToObjectCode();
             cbxAreaObjectCode.Items[index] = code.BaseName();
 
@@ -187,7 +187,7 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    private AreaObjectCode AreaObjectCode
+    private ObjectType AreaObjectCode
     {
         get
         {
@@ -427,7 +427,7 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    private static IReadOnlyList<AreaObjectCode> Codes
+    private static IReadOnlyList<ObjectType> Codes
     {
         get
         {
@@ -435,10 +435,10 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    private static ReadOnlyDictionary<AreaObjectCode, int> EnumIndexes { get; } = new(
-        new Dictionary<AreaObjectCode, int>(
+    private static ReadOnlyDictionary<ObjectType, int> EnumIndexes { get; } = new(
+        new Dictionary<ObjectType, int>(
         Enumerable.Range(0, Codes.Count)
-            .Select(i => new KeyValuePair<AreaObjectCode, int>(Codes[i], i))));
+            .Select(i => new KeyValuePair<ObjectType, int>(Codes[i], i))));
 
     private static bool TryGetBinaryCommand(string text, out UIAreaObjectCommand command)
     {
@@ -471,7 +471,7 @@ internal partial class ObjectEditorForm : Form
 
         var result = new AreaObjectCommand(bytes[1], bytes[2], bytes[3]);
         if (!result.IsValid || bytes[0] >= 0x20
-            || result.Code == AreaObjectCode.ScreenJump)
+            || result.ObjectType == ObjectType.PageSkip)
         {
             command = default;
             return false;
@@ -485,7 +485,7 @@ internal partial class ObjectEditorForm : Form
     {
         YPosEnabled = value.HasYCoord;
         LengthEnabled = value.IsExtendableObject;
-        MaximumLength = 1 + value.Code.GetMaxLength();
+        MaximumLength = value.ObjectType.GetMaxLength();
         TerrainAndBackgroundSceneryEnabled = value.IsTerrainAndBackgroundChange;
         ForegroundSceneryEnabled = value.IsForegroundChange;
     }
@@ -505,7 +505,7 @@ internal partial class ObjectEditorForm : Form
             YPos = command.Y;
         }
 
-        AreaObjectCode = command.Code;
+        AreaObjectCode = command.ObjectType;
         if (TerrainAndBackgroundSceneryEnabled)
         {
             TerrainMode = command.TerrainMode;

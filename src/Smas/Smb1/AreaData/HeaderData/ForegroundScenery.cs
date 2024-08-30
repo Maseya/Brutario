@@ -22,7 +22,7 @@ public enum ForegroundScenery
     Underwater,
 
     /// <summary>
-    /// A castle wall is behind the player (e.g. main area of W8-3).
+    /// A castle wall that is behind the player (e.g. main area of W8-3).
     /// </summary>
     CastleWall,
 

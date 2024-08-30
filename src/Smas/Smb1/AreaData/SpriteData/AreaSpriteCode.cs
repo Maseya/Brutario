@@ -28,12 +28,12 @@ public enum AreaSpriteCode
     /// <summary>
     /// Red Koopa Troopa (stays on floors).
     /// </summary>
-    RedKoopaTroopa2,
+    RedKoopaTroopaPatrol,
 
     /// <summary>
     /// Green Koopa Troopa (walks in place).
     /// </summary>
-    GreenKoopaTroopa2,
+    GreenKoopaTroopaStopped,
 
     /// <summary>
     /// Hammer Bros.
@@ -58,7 +58,7 @@ public enum AreaSpriteCode
     /// <summary>
     /// Yellow Koopa Paratroopa (flies in place).
     /// </summary>
-    YellowKoopaParatroopa,
+    YellowKoopaParatroopaStopped,
 
     /// <summary>
     /// Green Cheep-cheep (slow)
@@ -83,7 +83,7 @@ public enum AreaSpriteCode
     /// <summary>
     /// Green Koopa Paratroopa (Leaping)
     /// </summary>
-    GreenKoopaParatroopa,
+    GreenKoopaParatroopaLeaping,
 
     /// <summary>
     /// Red Koopa Paratroopa (flies vertically)
@@ -93,7 +93,7 @@ public enum AreaSpriteCode
     /// <summary>
     /// Green Koopa Paratroopa (flies horizontally)
     /// </summary>
-    GreenKoopaParatroopa2,
+    GreenKoopaParatroopaFlying,
 
     /// <summary>
     /// Lakitu

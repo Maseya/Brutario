@@ -20,70 +20,70 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     /// </summary>
     public const byte TerminationCode = 0xFD;
 
-    public static readonly ReadOnlyCollection<AreaObjectCode> ValidCodes =
-        new(new AreaObjectCode[]
+    public static readonly ReadOnlyCollection<ObjectType> ValidCodes =
+        new(new ObjectType[]
         {
-            AreaObjectCode.QuestionBlockPowerup,
-            AreaObjectCode.QuestionBlockCoin,
-            AreaObjectCode.HiddenBlockCoin,
-            AreaObjectCode.HiddenBlock1UP,
-            AreaObjectCode.BrickPowerup,
-            AreaObjectCode.BrickBeanstalk,
-            AreaObjectCode.BrickStar,
-            AreaObjectCode.Brick10Coins,
-            AreaObjectCode.Brick1UP,
-            AreaObjectCode.SidewaysPipe,
-            AreaObjectCode.UsedBlock,
-            AreaObjectCode.SpringBoard,
-            AreaObjectCode.JPipe,
-            AreaObjectCode.FlagPole,
-            AreaObjectCode.Empty,
-            AreaObjectCode.Empty2,
-            AreaObjectCode.AreaSpecificPlatform,
-            AreaObjectCode.HorizontalBricks,
-            AreaObjectCode.HorizontalStones,
-            AreaObjectCode.HorizontalCoins,
-            AreaObjectCode.VerticalBricks,
-            AreaObjectCode.VerticalStones,
-            AreaObjectCode.UnenterablePipe,
-            AreaObjectCode.EnterablePipe,
-            AreaObjectCode.Hole,
-            AreaObjectCode.BalanceHorizontalRope,
-            AreaObjectCode.BridgeV7,
-            AreaObjectCode.BridgeV8,
-            AreaObjectCode.BridgeV10,
-            AreaObjectCode.HoleWithWaterOrLava,
-            AreaObjectCode.HorizontalQuestionBlocksV3,
-            AreaObjectCode.HorizontalQuestionBlocksV7,
-            AreaObjectCode.AltJPipe,
-            AreaObjectCode.AltFlagPole,
-            AreaObjectCode.BowserAxe,
-            AreaObjectCode.RopeForAxe,
-            AreaObjectCode.BowserBridge,
-            AreaObjectCode.ScrollStopWarpZone,
-            AreaObjectCode.ScrollStop,
-            AreaObjectCode.AltScrollStop,
-            AreaObjectCode.RedCheepCheepFlying,
-            AreaObjectCode.BulletBillGenerator,
-            AreaObjectCode.StopGenerator,
-            AreaObjectCode.LoopCommand,
-            AreaObjectCode.TerrainAndBackgroundSceneryChange,
-            AreaObjectCode.ForegroundChange,
-            AreaObjectCode.RopeForLift,
-            AreaObjectCode.PulleyRope,
-            AreaObjectCode.EmptyTile,
-            AreaObjectCode.Castle,
-            AreaObjectCode.CastleCeilingCap,
-            AreaObjectCode.Staircase,
-            AreaObjectCode.CastleStairs,
-            AreaObjectCode.CastleRectangularCeilingTiles,
-            AreaObjectCode.CastleFloorRightEdge,
-            AreaObjectCode.CastleFloorLeftEdge,
-            AreaObjectCode.CastleFloorLeftWall,
-            AreaObjectCode.CastleFloorRightWall,
-            AreaObjectCode.VerticalSeaBlocks,
-            AreaObjectCode.ExtendableJPipe,
-            AreaObjectCode.VerticalBalls,
+            ObjectType.QuestionBlockPowerup,
+            ObjectType.QuestionBlockCoin,
+            ObjectType.HiddenBlockCoin,
+            ObjectType.HiddenBlock1UP,
+            ObjectType.BrickPowerup,
+            ObjectType.BrickBeanstalk,
+            ObjectType.BrickStar,
+            ObjectType.Brick10Coins,
+            ObjectType.Brick1UP,
+            ObjectType.SidewaysPipe,
+            ObjectType.UsedBlock,
+            ObjectType.Spring,
+            ObjectType.JPipe,
+            ObjectType.FlagPole,
+            ObjectType.Nothing1,
+            ObjectType.Nothing2,
+            ObjectType.AreaSpecificPlatform,
+            ObjectType.HorizontalBricks,
+            ObjectType.HorizontalBlocks,
+            ObjectType.HorizontalCoins,
+            ObjectType.VerticalBricks,
+            ObjectType.VerticalBlocks,
+            ObjectType.UnenterablePipe,
+            ObjectType.EnterablePipe,
+            ObjectType.Hole,
+            ObjectType.BalanceHorizontalRope,
+            ObjectType.BridgeV7,
+            ObjectType.BridgeV8,
+            ObjectType.BridgeV10,
+            ObjectType.HoleWithWaterOrLava,
+            ObjectType.HorizontalQuestionBlocksV3,
+            ObjectType.HorizontalQuestionBlocksV7,
+            ObjectType.AltJPipe,
+            ObjectType.AltFlagPole,
+            ObjectType.BowserAxe,
+            ObjectType.RopeForAxe,
+            ObjectType.BowserBridge,
+            ObjectType.ScrollStopWarpZone,
+            ObjectType.ScrollStop,
+            ObjectType.AltScrollStop,
+            ObjectType.JumpingCheepCheepGenerator,
+            ObjectType.BulletBillGenerator,
+            ObjectType.StopGenerator,
+            ObjectType.LoopCommand,
+            ObjectType.TerrainAndBackgroundSceneryChange,
+            ObjectType.ForegroundSceneryChange,
+            ObjectType.RopeForLift,
+            ObjectType.PulleyRope,
+            ObjectType.EmptyTile,
+            ObjectType.Castle,
+            ObjectType.CastleCeilingCap,
+            ObjectType.Staircase,
+            ObjectType.CastleStairs,
+            ObjectType.CastleRectangularCeilingTiles,
+            ObjectType.CastleFloorRightEdge,
+            ObjectType.CastleFloorLeftEdge,
+            ObjectType.CastleFloorLeftWall,
+            ObjectType.CastleFloorRightWall,
+            ObjectType.VerticalSeaBlocks,
+            ObjectType.ExtendableJPipe,
+            ObjectType.VerticalBalls,
         });
 
     public AreaObjectCommand(byte value1, byte value2, byte value3 = 0)
@@ -132,7 +132,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         set
         {
             Value1 &= 0x0F;
-            Value1 |= (byte)((value & 0x0F) << 4);
+            Value1 |= (byte)(value << 4);
         }
     }
 
@@ -157,7 +157,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
             if (IsThreeByteCommand)
             {
                 Value2 &= 0x0F;
-                Value2 |= (byte)((value & 0x0F) << 4);
+                Value2 |= (byte)(value << 4);
             }
             else
             {
@@ -167,7 +167,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public bool ScreenFlag
+    public bool PageFlag
     {
         get
         {
@@ -190,7 +190,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public int BaseCommand
+    public int PrimaryCommand
     {
         get
         {
@@ -212,17 +212,17 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public int Command
+    public int SecondaryCommand
     {
         get
         {
-            return (BaseCommand >> 4) & 7;
+            return (PrimaryCommand >> 4) & 7;
         }
 
         set
         {
-            BaseCommand &= 0x8F;
-            BaseCommand |= (byte)((value & 7) << 4);
+            PrimaryCommand &= 0x8F;
+            PrimaryCommand |= (byte)((value & 7) << 4);
         }
     }
 
@@ -240,25 +240,25 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public AreaObjectCode Code
+    public ObjectType ObjectType
     {
         get
         {
             return (Value1 & 0x0F) switch
             {
-                0x0F => (AreaObjectCode)(0xF00 | BaseCommand),
-                0x0C => (AreaObjectCode)(0xC00 | (Command << 4)),
-                0x0D => (Command & ~1) == 0
-                    ? AreaObjectCode.ScreenJump
-                    : (AreaObjectCode)(0xD00 | (Command << 4) | Parameter),
-                0x0E => (AreaObjectCode)(0xE00 | ((Command & 4) << 4)),
-                _ => Command switch
+                0x0F => (ObjectType)(0xF00 | PrimaryCommand),
+                0x0C => (ObjectType)(0xC00 | (SecondaryCommand << 4)),
+                0x0D => (SecondaryCommand & ~1) == 0
+                    ? ObjectType.PageSkip
+                    : (ObjectType)(0xD00 | (SecondaryCommand << 4) | Parameter),
+                0x0E => (ObjectType)(0xE00 | ((SecondaryCommand & 4) << 4)),
+                _ => SecondaryCommand switch
                 {
-                    0 => (AreaObjectCode)Parameter,
+                    0 => (ObjectType)Parameter,
                     7 => Parameter < 8
-                        ? AreaObjectCode.UnenterablePipe
-                        : AreaObjectCode.EnterablePipe,
-                    _ => (AreaObjectCode)(Command << 4),
+                        ? ObjectType.UnenterablePipe
+                        : ObjectType.EnterablePipe,
+                    _ => (ObjectType)(SecondaryCommand << 4),
                 },
             };
         }
@@ -268,7 +268,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return Code.IsExtendableObject();
+            return ObjectType.IsExtendableObject();
         }
     }
 
@@ -276,7 +276,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return Code == AreaObjectCode.TerrainAndBackgroundSceneryChange;
+            return ObjectType == ObjectType.TerrainAndBackgroundSceneryChange;
         }
     }
 
@@ -284,7 +284,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return Code == AreaObjectCode.ForegroundChange;
+            return ObjectType == ObjectType.ForegroundSceneryChange;
         }
     }
 
@@ -292,26 +292,26 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return Code switch
+            return ObjectType switch
             {
-                AreaObjectCode.ScreenJump => Value2 & 0x1F,
-                AreaObjectCode.EnterablePipe or
-                AreaObjectCode.UnenterablePipe => Parameter & 7,
+                ObjectType.PageSkip => Value2 & 0x1F,
+                ObjectType.EnterablePipe or
+                ObjectType.UnenterablePipe => Parameter & 7,
                 _ => IsExtendableObject ? Parameter : 0,
             };
         }
 
         set
         {
-            switch (Code)
+            switch (ObjectType)
             {
-                case AreaObjectCode.ScreenJump:
+                case ObjectType.PageSkip:
                     Value2 &= 0xE0;
                     Value2 |= (byte)(value & 0x1F);
                     break;
 
-                case AreaObjectCode.EnterablePipe:
-                case AreaObjectCode.UnenterablePipe:
+                case ObjectType.EnterablePipe:
+                case ObjectType.UnenterablePipe:
                     Parameter &= 0xF8;
                     Parameter |= (byte)(value & 7);
                     break;
@@ -332,14 +332,14 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return (ForegroundScenery)(Code == AreaObjectCode.ForegroundChange
+            return (ForegroundScenery)(IsForegroundChange
                 ? Parameter & 7
                 : 0);
         }
 
         set
         {
-            if (Code == AreaObjectCode.ForegroundChange)
+            if (IsForegroundChange)
             {
                 Parameter &= 0xF8;
                 Parameter |= (byte)((int)value & 7);
@@ -351,17 +351,17 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return (TerrainMode)(Code == AreaObjectCode.TerrainAndBackgroundSceneryChange
-                ? BaseCommand & 0x0F
+            return (TerrainMode)(IsTerrainAndBackgroundChange
+                ? PrimaryCommand & 0x0F
                 : 0);
         }
 
         set
         {
-            if (Code == AreaObjectCode.TerrainAndBackgroundSceneryChange)
+            if (IsTerrainAndBackgroundChange)
             {
-                BaseCommand &= 0xF0;
-                BaseCommand |= (int)value & 0x0F;
+                PrimaryCommand &= 0xF0;
+                PrimaryCommand |= (int)value & 0x0F;
             }
         }
     }
@@ -370,17 +370,17 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return (BackgroundScenery)(Code == AreaObjectCode.TerrainAndBackgroundSceneryChange
-                ? (BaseCommand >> 4) & 3
+            return (BackgroundScenery)(ObjectType == ObjectType.TerrainAndBackgroundSceneryChange
+                ? (PrimaryCommand >> 4) & 3
                 : 0);
         }
 
         set
         {
-            if (Code == AreaObjectCode.TerrainAndBackgroundSceneryChange)
+            if (ObjectType == ObjectType.TerrainAndBackgroundSceneryChange)
             {
-                BaseCommand &= 0xCF;
-                BaseCommand |= ((int)value & 3) << 4;
+                PrimaryCommand &= 0xCF;
+                PrimaryCommand |= ((int)value & 3) << 4;
             }
         }
     }
@@ -389,7 +389,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return Code.BaseName();
+            return ObjectType.BaseName();
         }
     }
 
@@ -405,7 +405,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         get
         {
-            return Value1 != 0xFD
+            return Value1 != TerminationCode
                 && (IsThreeByteCommand || Value3 == 0);
         }
     }
@@ -438,57 +438,57 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     {
         var length = Parameter + 1;
 
-        switch (Code)
+        switch (ObjectType)
         {
-            case AreaObjectCode.QuestionBlockPowerup:
+            case ObjectType.QuestionBlockPowerup:
                 return "Question Block (Powerup)";
 
-            case AreaObjectCode.QuestionBlockCoin:
+            case ObjectType.QuestionBlockCoin:
                 return "Question Block (Coin)";
 
-            case AreaObjectCode.HiddenBlockCoin:
+            case ObjectType.HiddenBlockCoin:
                 return "Hidden Block (Coin)";
 
-            case AreaObjectCode.HiddenBlock1UP:
+            case ObjectType.HiddenBlock1UP:
                 return "Hidden Block (1UP)";
 
-            case AreaObjectCode.BrickPowerup:
+            case ObjectType.BrickPowerup:
                 return "Brick (Powerup)";
 
-            case AreaObjectCode.BrickBeanstalk:
+            case ObjectType.BrickBeanstalk:
                 return "Brick (Beanstalk)";
 
-            case AreaObjectCode.BrickStar:
+            case ObjectType.BrickStar:
                 return "Brick (Star)";
 
-            case AreaObjectCode.Brick10Coins:
+            case ObjectType.Brick10Coins:
                 return "Brick (10 Coins)";
 
-            case AreaObjectCode.Brick1UP:
+            case ObjectType.Brick1UP:
                 return "Brick (1UP)";
 
-            case AreaObjectCode.SidewaysPipe:
+            case ObjectType.SidewaysPipe:
                 return "Sideways Pipe Cap";
 
-            case AreaObjectCode.UsedBlock:
+            case ObjectType.UsedBlock:
                 return "Used Block";
 
-            case AreaObjectCode.SpringBoard:
+            case ObjectType.Spring:
                 return "Spring Board";
 
-            case AreaObjectCode.JPipe:
-            case AreaObjectCode.AltJPipe:
+            case ObjectType.JPipe:
+            case ObjectType.AltJPipe:
                 return "J-Pipe";
 
-            case AreaObjectCode.FlagPole:
-            case AreaObjectCode.AltFlagPole:
+            case ObjectType.FlagPole:
+            case ObjectType.AltFlagPole:
                 return "Flag Pole";
 
-            case AreaObjectCode.Empty:
-            case AreaObjectCode.Empty2:
+            case ObjectType.Nothing1:
+            case ObjectType.Nothing2:
                 return "Nothing";
 
-            case AreaObjectCode.AreaSpecificPlatform:
+            case ObjectType.AreaSpecificPlatform:
                 switch (areaPlatformType)
                 {
                     case AreaPlatformType.Trees:
@@ -509,128 +509,128 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
                 break;
 
-            case AreaObjectCode.HorizontalBricks:
+            case ObjectType.HorizontalBricks:
                 return $"Horizontal Bricks (Width={length})";
 
-            case AreaObjectCode.HorizontalStones:
+            case ObjectType.HorizontalBlocks:
                 return $"Horizontal Blocks (Width={length})";
 
-            case AreaObjectCode.HorizontalCoins:
+            case ObjectType.HorizontalCoins:
                 return $"Horizontal Coins (Width={length})";
 
-            case AreaObjectCode.VerticalBricks:
+            case ObjectType.VerticalBricks:
                 return $"Vertical Bricks (Height={length})";
 
-            case AreaObjectCode.VerticalStones:
+            case ObjectType.VerticalBlocks:
                 return $"Vertical Blocks (Height={length})";
 
-            case AreaObjectCode.UnenterablePipe:
+            case ObjectType.UnenterablePipe:
                 return $"Unenterable Pipe (Height={length})";
 
-            case AreaObjectCode.EnterablePipe:
+            case ObjectType.EnterablePipe:
                 return $"Enterable Pipe (Height={length})";
 
-            case AreaObjectCode.Hole:
+            case ObjectType.Hole:
                 return $"Hole (Width={length})";
 
-            case AreaObjectCode.BalanceHorizontalRope:
+            case ObjectType.BalanceHorizontalRope:
                 return $"Pulley Platforms (Width={length})";
 
-            case AreaObjectCode.BridgeV7:
+            case ObjectType.BridgeV7:
                 return $"Rope Bridge (Y=7, Width={length})";
 
-            case AreaObjectCode.BridgeV8:
+            case ObjectType.BridgeV8:
                 return $"Rope Bridge (Y=8, Width={length})";
 
-            case AreaObjectCode.BridgeV10:
+            case ObjectType.BridgeV10:
                 return $"Rope Bridge (Y=10, Width={length})";
 
-            case AreaObjectCode.HoleWithWaterOrLava:
+            case ObjectType.HoleWithWaterOrLava:
                 return $"Hole with water or lava (Width={length})";
 
-            case AreaObjectCode.HorizontalQuestionBlocksV3:
+            case ObjectType.HorizontalQuestionBlocksV3:
                 return $"Row of Coin Blocks (Y=3, Width={length})";
 
-            case AreaObjectCode.HorizontalQuestionBlocksV7:
+            case ObjectType.HorizontalQuestionBlocksV7:
                 return $"Row of Coin Blocks (Y=7, Width={length})";
 
-            case AreaObjectCode.ScreenJump:
-                return $"Skip to screen 0x{BaseCommand:X2}";
+            case ObjectType.PageSkip:
+                return $"Skip to screen 0x{PrimaryCommand:X2}";
 
-            case AreaObjectCode.BowserAxe:
+            case ObjectType.BowserAxe:
                 return $"Bowser Axe";
 
-            case AreaObjectCode.BowserBridge:
+            case ObjectType.BowserBridge:
                 return $"Bowser Bridge";
 
-            case AreaObjectCode.ScrollStopWarpZone:
+            case ObjectType.ScrollStopWarpZone:
                 return $"Scroll Stop (Warp Zone)";
 
-            case AreaObjectCode.ScrollStop:
-            case AreaObjectCode.AltScrollStop:
+            case ObjectType.ScrollStop:
+            case ObjectType.AltScrollStop:
                 return $"Scroll Stop";
 
-            case AreaObjectCode.RedCheepCheepFlying:
+            case ObjectType.JumpingCheepCheepGenerator:
                 return $"Generator: Red flying cheep-cheeps";
 
-            case AreaObjectCode.BulletBillGenerator:
+            case ObjectType.BulletBillGenerator:
                 return $"Generator: Bullet Bills";
 
-            case AreaObjectCode.StopGenerator:
+            case ObjectType.StopGenerator:
                 return $"Stop Generator (also stops Lakitus)";
 
-            case AreaObjectCode.LoopCommand:
+            case ObjectType.LoopCommand:
                 return $"Screen Loop Command";
 
-            case AreaObjectCode.TerrainAndBackgroundSceneryChange:
+            case ObjectType.TerrainAndBackgroundSceneryChange:
                 return "Brick and scenery change";
 
-            case AreaObjectCode.ForegroundChange:
+            case ObjectType.ForegroundSceneryChange:
                 return "Foreground Change";
 
-            case AreaObjectCode.RopeForLift:
+            case ObjectType.RopeForLift:
                 return "Rope for platform lifts";
 
-            case AreaObjectCode.PulleyRope:
+            case ObjectType.PulleyRope:
                 return $"Rope for pulley platforms (Height={length})";
 
-            case AreaObjectCode.EmptyTile:
+            case ObjectType.EmptyTile:
                 return "Empty tile";
 
-            case AreaObjectCode.Castle:
+            case ObjectType.Castle:
                 return "Castle";
 
-            case AreaObjectCode.CastleCeilingCap:
+            case ObjectType.CastleCeilingCap:
                 return "Castle Object: Ceiling Cap Tile";
 
-            case AreaObjectCode.Staircase:
+            case ObjectType.Staircase:
                 return $"Staircase (Width={length})";
 
-            case AreaObjectCode.CastleStairs:
+            case ObjectType.CastleStairs:
                 return "Castle Object: Descending Stairs";
 
-            case AreaObjectCode.CastleRectangularCeilingTiles:
+            case ObjectType.CastleRectangularCeilingTiles:
                 return "Castle Object: Rectangular Ceiling Tiles";
 
-            case AreaObjectCode.CastleFloorRightEdge:
+            case ObjectType.CastleFloorRightEdge:
                 return "Castle Object: Right-Facing Wall To Floor";
 
-            case AreaObjectCode.CastleFloorLeftEdge:
+            case ObjectType.CastleFloorLeftEdge:
                 return "Castle Object: Left-Facing Wall To Floor";
 
-            case AreaObjectCode.CastleFloorLeftWall:
+            case ObjectType.CastleFloorLeftWall:
                 return "Castle Object: Left-Facing Wall";
 
-            case AreaObjectCode.CastleFloorRightWall:
+            case ObjectType.CastleFloorRightWall:
                 return "Castle Object: Right-Facing Wall";
 
-            case AreaObjectCode.VerticalSeaBlocks:
+            case ObjectType.VerticalSeaBlocks:
                 return $"Vertical Sea Blocks (Height={length})";
 
-            case AreaObjectCode.ExtendableJPipe:
+            case ObjectType.ExtendableJPipe:
                 return $"Extendable J-Pipe (Height={length})";
 
-            case AreaObjectCode.VerticalBalls:
+            case ObjectType.VerticalBalls:
                 return $"Vertical Climbing Balls (Height={length})";
         }
 

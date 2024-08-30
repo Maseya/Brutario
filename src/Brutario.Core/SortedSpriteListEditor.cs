@@ -326,18 +326,6 @@ public class SortedSpriteListEditor :
         return index;
     }
 
-    private bool RemoveInternal(UIAreaSpriteCommand item)
-    {
-        var index = IndexOf(item);
-        if (index < 0)
-        {
-            return false;
-        }
-
-        Items.RemoveAt(index);
-        return true;
-    }
-
     private int SearchFirstIndexOf(UIAreaSpriteCommand item)
     {
         var comparer = Comparer<UIAreaSpriteCommand>.Create(

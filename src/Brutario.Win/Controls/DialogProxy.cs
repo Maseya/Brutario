@@ -86,11 +86,11 @@ public abstract class DialogProxy : Component
     [Bindable(true)]
     [DefaultValue(null)]
     [TypeConverter(typeof(StringConverter))]
-    public object Tag
+    public object? Tag
     {
         get
         {
-            return BaseForm.Tag;
+            return BaseForm?.Tag;
         }
 
         set

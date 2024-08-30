@@ -791,8 +791,7 @@ public class BrutarioEditor : IMainEditor
             var sprite = (UIAreaSpriteCommand)CopiedSprite!;
             sprite.X = x;
             sprite.Y = y;
-            SpriteData.Add(sprite);
-            throw new InvalidOperationException("ObjectData.Add is not preffered. Use AddObjectInternal");
+            SelectedSpriteIndex = AddSpriteInternal(sprite);
         }
         else
         {
@@ -850,7 +849,7 @@ public class BrutarioEditor : IMainEditor
 
     public void AddPreviewSprite(UIAreaSpriteCommand item)
     {
-        AddSpriteInternal(item, discardHistory: true);
+        SelectedSpriteIndex = AddSpriteInternal(item, discardHistory: true);
     }
 
     public void EditPreviewSprite(
@@ -1428,7 +1427,7 @@ public class BrutarioEditor : IMainEditor
         return position switch
         {
             StartYPosition.Y00 => 4,
-            StartYPosition.Y20 => 4,
+            StartYPosition.Y00FromOtherArea => 4,
             StartYPosition.YB0 => 2,
             StartYPosition.Y50 => 2,
             StartYPosition.Alt1Y00 => 4,

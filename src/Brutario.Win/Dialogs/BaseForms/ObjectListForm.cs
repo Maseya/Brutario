@@ -93,7 +93,7 @@ public sealed partial class ObjectListForm : Form
     {
         for (var i = 0; i < Items.Count; i++)
         {
-            if (Items[i].Command.Code != AreaObjectCode.AreaSpecificPlatform)
+            if (Items[i].Command.ObjectType != ObjectType.AreaSpecificPlatform)
             {
                 continue;
             }

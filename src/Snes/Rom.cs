@@ -981,15 +981,6 @@ public class Rom
 
     public void ReadBytesIndirect(
         int snesAddress,
-        int count,
-        Span<byte> dest,
-        bool crossBanks = true)
-    {
-        ReadBytesIndirect(snesAddress, dest[..count], crossBanks);
-    }
-
-    public void ReadBytesIndirect(
-        int snesAddress,
         Span<byte> dest,
         bool crossBanks = true)
     {
@@ -1004,20 +995,6 @@ public class Rom
         var result = new byte[count];
         ReadBytesIndirect(snesAddress, result, crossBanks);
         return result;
-    }
-
-    public void ReadBytesIndirectIndexed(
-        int snesAddress,
-        int index,
-        int count,
-        Span<byte> dest,
-        bool crossBanks = true)
-    {
-        ReadBytesIndirectIndexed(
-            snesAddress,
-            index,
-            dest[..count],
-            crossBanks);
     }
 
     public void ReadBytesIndirectIndexed(
@@ -1041,15 +1018,6 @@ public class Rom
         var result = new byte[count];
         ReadBytesIndirectIndexed(snesAddress, index, result, crossBanks);
         return result;
-    }
-
-    public void ReadInt16Array(
-        int snesAddress,
-        int count,
-        Span<short> dest,
-        bool crossBanks = true)
-    {
-        ReadInt16Array(snesAddress, dest[..count], crossBanks);
     }
 
     public void ReadInt16Array(
@@ -1082,15 +1050,6 @@ public class Rom
 
     public void ReadInt16ArrayIndirect(
         int snesAddress,
-        int count,
-        Span<short> dest,
-        bool crossBanks = true)
-    {
-        ReadInt16ArrayIndirect(snesAddress, dest[..count], crossBanks);
-    }
-
-    public void ReadInt16ArrayIndirect(
-        int snesAddress,
         Span<short> dest,
         bool crossBanks = true)
     {
@@ -1107,20 +1066,6 @@ public class Rom
         var result = new short[count];
         ReadInt16ArrayIndirect(snesAddress, result, crossBanks);
         return result;
-    }
-
-    public void ReadInt16ArrayIndirectIndexed(
-        int snesAddress,
-        int index,
-        int count,
-        Span<short> dest,
-        bool crossBanks = true)
-    {
-        ReadInt16ArrayIndirectIndexed(
-            snesAddress,
-            index,
-            dest[..count],
-            crossBanks);
     }
 
     public void ReadInt16ArrayIndirectIndexed(
