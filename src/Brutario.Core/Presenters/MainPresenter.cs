@@ -29,11 +29,12 @@ public class MainPresenter
         ISaveOnClosePrompt saveOnClosePrompt,
         IHeaderEditorView headerEditor,
         IObjectEditorView objectEditor,
-        ISpriteEditorView spriteEditor)
+        ISpriteEditorView spriteEditor,
+        IPaletteEditorView paletteEditor)
     {
         MainEditor = mainEditor;
         MainView = mainView;
-        //ObjectListView = objectListView;
+        ObjectListView = objectListView;
         ExceptionHelper = exceptionHelper;
         OpenFileNameSelector = openFileNameSelector;
         SaveFileNameSelector = saveFileNameSelector;
@@ -41,6 +42,7 @@ public class MainPresenter
         HeaderEditorView = headerEditor;
         ObjectEditorView = objectEditor;
         SpriteEditorView = spriteEditor;
+        PaletteEditorView = paletteEditor;
 
         MainEditor.PathChanged += MainEditor_PathChanged;
         MainEditor.FileOpened += MainEditor_FileOpened;
@@ -197,6 +199,8 @@ public class MainPresenter
     {
         get;
     }
+
+    private IPaletteEditorView PaletteEditorView { get; }
 
     public void Open()
     {
@@ -482,6 +486,16 @@ public class MainPresenter
         MainEditor.AnimationFrame = frame;
     }
 
+    public void EditPalette()
+    {
+        PaletteEditorView.Prompt();
+    }
+
+    public void UpdatePaletteIndex(int row, int paletteIndex)
+    {
+        MainEditor.UpdatePaletteIndex(row, paletteIndex);
+    }
+
     public DrawData GetDrawData(
         int startX,
         Size size,
@@ -624,7 +638,7 @@ public class MainPresenter
 
     private void MainEditor_StartXChanged(object? sender, EventArgs e)
     {
-        MainView.StartX = MainEditor.StartX;
+        MainView.StartX = MainEditor.StartX >> 1;
     }
 
     private void MainEditor_Invalidated(object? sender, EventArgs e)

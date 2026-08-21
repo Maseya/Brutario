@@ -29,7 +29,7 @@ public class TilemapLoader
             {
                 TilemapCommand command = rom.ReadInt16IndirectIndexed(
                     pointers.TilemapDataPointer,
-                    indexes[i] + j);
+                    (indexes[i] + j) << 1);
                 if (command.IsTerminationCommand)
                 {
                     break;
@@ -39,6 +39,26 @@ public class TilemapLoader
             }
 
             TilemapCommands[i] = [.. commands];
+        }
+
+        Layer2BackgroundIndexTable = rom.ReadInt16ArrayIndirectAs(
+            pointers.Layer2BackgroundIndexTablePointer,
+            numberOfAreas, x => (ushort)x);
+        Layer2BackgroundPointersTable = rom.ReadInt16ArrayIndirectAs(
+            pointers.Layer2BackgroundPointersTablePointer,
+            numberOfAreas,
+            x => (0x50000 | (ushort)x) - pointers.Layer2Obj16TileTablePointer);
+
+        Layer2BackgroundTileset = new Obj16Tile[pointers.Layer2Obj16TileTableSize];
+        unsafe
+        {
+            fixed (Obj16Tile* ptr = Layer2BackgroundTileset)
+            {
+                var span = new Span<short>(
+                    ptr,
+                    Layer2BackgroundTileset.Length * Obj16Tile.NumberOfTiles);
+                rom.ReadInt16Array(pointers.Layer2Obj16TileTablePointer, span);
+            }
         }
 
         Layer2Tilemap = new int[0xD00 >> 1];
@@ -65,6 +85,9 @@ public class TilemapLoader
         private set;
     }
 
+    /// <summary>
+    /// $7E:D000-$7E:DDFF
+    /// </summary>
     private int[] Layer2Tilemap
     {
         get;
@@ -92,6 +115,12 @@ public class TilemapLoader
         get;
     }
 
+    private ushort[] Layer2BackgroundIndexTable;
+
+    private int[] Layer2BackgroundPointersTable;
+
+    private Obj16Tile[] Layer2BackgroundTileset;
+
     public void LoadTilemap(int areaIndex)
     {
         EnableLayer3 = false;
@@ -102,8 +131,8 @@ public class TilemapLoader
             {
                 if (command.CommandEF == 0x3F)
                 {
-                    Layer2Tilemap[++Layer2TilemapIndex] = 0xFFFF;
-                    LoadTilemapTiles();
+                    Layer2Tilemap[(++Layer2TilemapIndex) << 8] = 0xFFFF;
+                    WriteTilemapFromBuffer(areaIndex);
                 }
                 else
                 {
@@ -112,12 +141,42 @@ public class TilemapLoader
             }
             else
             {
+                Func580B3(command);
             }
         }
     }
 
-    private void LoadTilemapTiles()
+    private void Func580B3(TilemapCommand command)
     {
+    }
+
+    private void WriteTilemapFromBuffer(int areaIndex)
+    {
+        // CODE_59166
+        // Use the $7E:D000 map16 tiles to fill the $7E:2000 array with the
+        // obj tile data that will eventually be copied to vram.
+        // This therefore only gets called after the $7E:D000 array is filled.
+
+        var DATA_7ED000 = new ushort[0x1000];
+        var DATA_7E2000 = new Obj16Tile[0x1000];
+
+        var layer2BackgroundIndex = Layer2BackgroundIndexTable[areaIndex];
+        var layer2BackgroundPointer =
+            Layer2BackgroundPointersTable[layer2BackgroundIndex];
+
+        unsafe
+        {
+            fixed (Obj16Tile* ptr = DATA_7E2000)
+            {
+                for (var y = 0; y < DATA_7ED000.Length; y++)
+                {
+                    if (DATA_7ED000[y] == 0xFFFF)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private void EnableHdmaGradient(TilemapCommand command)
@@ -159,7 +218,7 @@ public class TilemapLoader
 
     private void SetSpecialTilemapIndex(TilemapCommand command)
     {
-        Layer2TilemapIndex = command.CommandF1 | 0x10;
+        TileSetIndex = (byte)(command.CommandF1 | 0x10);
     }
 
     private void GenerateGoombaPillars(TilemapCommand command)

@@ -467,13 +467,13 @@ public class AreaSpriteRenderer
         // TODO(swr): rip from tile data.
         var tile = new Obj16Tile(0x0453, 0x0455, 0x0454, 0x0456);
         yield return new Sprite(
-            x, y, new SpriteTile(tile[0], 0, 0), TileProperties.Transparent);
+            x, y, new SpriteTile(tile[0], 0, -1), TileProperties.Transparent);
         yield return new Sprite(
-            x, y + 8, new SpriteTile(tile[2], 0, 0), TileProperties.Transparent);
+            x, y + 8, new SpriteTile(tile[2], 0, -1), TileProperties.Transparent);
         yield return new Sprite(
-            x + 8, y, new SpriteTile(tile[1], 0, 0), TileProperties.Transparent);
+            x + 8, y, new SpriteTile(tile[1], 0, -1), TileProperties.Transparent);
         yield return new Sprite(
-            x + 8, y + 8, new SpriteTile(tile[3], 0, 0), TileProperties.Transparent);
+            x + 8, y + 8, new SpriteTile(tile[3], 0, -1), TileProperties.Transparent);
     }
 
     private static IEnumerable<Sprite> Mushroom(int x, int y, int palette)
@@ -1242,7 +1242,7 @@ public class AreaSpriteRenderer
         }
 
         y -= 8 + offset;
-        var tile = new ChrTile(index, 5, 0, 0);
+        var tile = new ChrTile(index, 5, LayerPriority.Priority1, 0);
         yield return new Sprite(x, y, new SpriteTile(tile, PixelStartIndex));
 
         tile.TileIndex++;

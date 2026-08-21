@@ -91,6 +91,22 @@ public class PaletteData
         get;
     }
 
+    public void UpdatePaletteIndex(int paletteIndex, int row, int value)
+    {
+        if ((uint)row >= RowsPerPalette)
+        {
+            throw new ArgumentOutOfRangeException(nameof(row));
+        }
+
+        if ((uint)value >= RowIndexTableSize)
+        {
+            throw new ArgumentOutOfRangeException(nameof(value));
+        }
+
+        var destIndex = paletteIndex * RowsPerPalette;
+        RowIndexTable[destIndex + row] = (byte)value;
+    }
+
     public void ReadPalette(int paletteIndex, Span<Color32BppArgb> dest)
     {
         ReadPalette(
