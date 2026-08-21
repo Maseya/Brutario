@@ -31,16 +31,28 @@ public class TilemapLoaderPointers
 
     public TilemapLoaderPointers(
         int tilemapDataIndexPointer,
-        int tilemapDataPointer)
+        int tilemapDataPointer,
+        int layer2BackgroundIndexTablePointer,
+        int layer2BackgroundPointersTablePointer,
+        int layer2Obj16TileTableSize,
+        int layer2Obj16TileTablePointer)
     {
         TilemapDataIndexPointer = tilemapDataIndexPointer;
         TilemapDataPointer = tilemapDataPointer;
+        Layer2BackgroundIndexTablePointer = layer2BackgroundIndexTablePointer;
+        Layer2BackgroundPointersTablePointer = layer2BackgroundPointersTablePointer;
+        Layer2Obj16TileTableSize = layer2Obj16TileTableSize;
+        Layer2Obj16TileTablePointer = layer2Obj16TileTablePointer;
     }
 
     private TilemapLoaderPointers(int baseAddress)
             : this(
             tilemapDataIndexPointer: baseAddress,
-            tilemapDataPointer: baseAddress + 0x09)
+            tilemapDataPointer: baseAddress + 0x09,
+            layer2BackgroundIndexTablePointer: baseAddress + 0x1114,
+            layer2BackgroundPointersTablePointer: baseAddress + 0x1119,
+            layer2Obj16TileTablePointer: baseAddress + 0x118D,
+            layer2Obj16TileTableSize: 364)
     {
     }
 
@@ -53,4 +65,12 @@ public class TilemapLoaderPointers
     {
         get;
     }
+
+    public int Layer2BackgroundIndexTablePointer { get; }
+
+    public int Layer2BackgroundPointersTablePointer { get; }
+
+    public int Layer2Obj16TileTablePointer { get; }
+
+    public int Layer2Obj16TileTableSize { get; }
 }

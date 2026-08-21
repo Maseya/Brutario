@@ -47,6 +47,7 @@ public class AreaEditor
 
         ReloadPaletteInternal();
         GameData!.TilemapLoader.LoadTilemap(ObjectAreaIndex);
+        GameData!.TilemapLoaderAsm.LoadTilemap(AreaType, ObjectAreaIndex);
         ReloadGfxInternal();
 
         RenderAreaTilemapInternal();
