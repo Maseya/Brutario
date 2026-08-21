@@ -206,7 +206,7 @@ public sealed partial class ObjectListForm : Form
         {
             get
             {
-                return (UIAreaObjectCommand)BaseItems[index].Tag;
+                return (UIAreaObjectCommand)BaseItems[index].Tag!;
             }
 
             set
@@ -286,7 +286,7 @@ public sealed partial class ObjectListForm : Form
         {
             foreach (var item in BaseItems)
             {
-                yield return (UIAreaObjectCommand)(item as ListViewItem)!.Tag;
+                yield return (UIAreaObjectCommand)(item as ListViewItem)!.Tag!;
             }
         }
 
