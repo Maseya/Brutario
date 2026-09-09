@@ -2,8 +2,8 @@
 
 public enum BackgroundPalette
 {
+    Normal,
     Mountains,
-    OneMountain,
     Waterall,
     GoombaPillars,
     GreenPeaks,
