@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 public partial class EditorDialogBase : Component
 {
-    private IWin32Window? win32Window;
+    private IWin32Window? owner_;
 
     public EditorDialogBase()
     {
@@ -32,7 +32,7 @@ public partial class EditorDialogBase : Component
     {
         get
         {
-            return win32Window;
+            return owner_;
         }
 
         set
@@ -42,7 +42,7 @@ public partial class EditorDialogBase : Component
                 return;
             }
 
-            win32Window = value;
+            owner_ = value;
             OnOwnerChanged(EventArgs.Empty);
         }
     }

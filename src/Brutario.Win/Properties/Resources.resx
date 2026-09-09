@@ -157,17 +157,11 @@
   <data name="scissors-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\scissors-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Picture1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Picture1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="rotate-left-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rotate-left-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map-regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\map-regular.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Picture2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Picture2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AltFlagPole" xml:space="preserve">
     <value>Flag Pole</value>
@@ -363,5 +357,23 @@
   </data>
   <data name="VerticalStones" xml:space="preserve">
     <value>Vertical Blocks (Height={0})</value>
+  </data>
+  <data name="angle-down-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\angle-down-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="angle-up-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\angle-up-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file-export-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-export-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file-import-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-import-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrows-rotate-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrows-rotate-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="swatchbook-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\swatchbook-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
