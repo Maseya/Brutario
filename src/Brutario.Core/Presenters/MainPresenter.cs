@@ -393,7 +393,7 @@ public class MainPresenter
 
     public void SetStartX(int startX)
     {
-        MainEditor.StartX = startX;
+        MainEditor.StartX = startX << 1;
     }
 
     public void SetSelectedItem(int x, int y)
