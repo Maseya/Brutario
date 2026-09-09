@@ -1,4 +1,11 @@
-﻿namespace Brutario.Win.Controls;
+﻿// <copyright file="PaletteControl.Designer.cs" organization="Maseya">
+//     Copyright (c) 2026 spel werdz rite. All rights reserved. Licensed
+//     under GNU Affero General Public License. See LICENSE in project
+//     root for full license information, or visit
+//     https://www.gnu.org/licenses/#AGPL
+// </copyright>
+
+namespace Brutario.Win.Controls;
 
 partial class PaletteControl
 {

@@ -25,7 +25,7 @@ public static class AreaPixelRenderer
         Color32BppArgb top,
         Color32BppArgb bottom);
 
-    public static void DrawArea(Graphics graphics, in DrawData drawData)
+    public static void DrawArea(Graphics graphics, in AreaDrawData drawData)
     {
         DrawArea(
             graphics,

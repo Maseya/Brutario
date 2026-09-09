@@ -29,8 +29,7 @@ public class MainPresenter
         ISaveOnClosePrompt saveOnClosePrompt,
         IHeaderEditorView headerEditor,
         IObjectEditorView objectEditor,
-        ISpriteEditorView spriteEditor,
-        IPaletteEditorView paletteEditor)
+        ISpriteEditorView spriteEditor)
     {
         MainEditor = mainEditor;
         MainView = mainView;
@@ -42,7 +41,6 @@ public class MainPresenter
         HeaderEditorView = headerEditor;
         ObjectEditorView = objectEditor;
         SpriteEditorView = spriteEditor;
-        PaletteEditorView = paletteEditor;
 
         MainEditor.PathChanged += MainEditor_PathChanged;
         MainEditor.FileOpened += MainEditor_FileOpened;
@@ -83,6 +81,10 @@ public class MainPresenter
 
         MainView.Player = MainEditor.Player;
         MainView.PlayerState = MainEditor.PlayerState;
+
+        PaletteEditorPresenter = new PaletteEditorPresenter(
+            MainEditor.PaletteEditorModel,
+            MainView.PaletteEditorView);
     }
 
     public bool AutoSaveEnabled
@@ -150,7 +152,8 @@ public class MainPresenter
         }
     }
 
-    private BrutarioEditor MainEditor
+    // TODO(swr): I'm only making this public to test stuff. Make it private!!
+    public BrutarioEditor MainEditor
     {
         get;
     }
@@ -200,7 +203,10 @@ public class MainPresenter
         get;
     }
 
-    private IPaletteEditorView PaletteEditorView { get; }
+    private PaletteEditorPresenter PaletteEditorPresenter
+    {
+        get;
+    }
 
     public void Open()
     {
@@ -486,17 +492,7 @@ public class MainPresenter
         MainEditor.AnimationFrame = frame;
     }
 
-    public void EditPalette()
-    {
-        PaletteEditorView.Prompt();
-    }
-
-    public void UpdatePaletteIndex(int row, int paletteIndex)
-    {
-        MainEditor.UpdatePaletteIndex(row, paletteIndex);
-    }
-
-    public DrawData GetDrawData(
+    public AreaDrawData GetDrawData(
         int startX,
         Size size,
         Color separatorColor,
@@ -575,6 +571,7 @@ public class MainPresenter
     private void MainEditor_AreaLoaded(object? sender, EventArgs e)
     {
         MainView.MapEditorEnabled = true;
+
     }
 
     private void MainEditor_AnimationFrameChanged(object? sender, EventArgs e)
@@ -773,6 +770,8 @@ public class MainPresenter
         MainView.EditItemEnabled =
         MainView.PasteEnabled =
         MainView.DeleteAllEnabled = false;
+
+        MainView.ViewPaletteEditor = false;
     }
 
     private void MainEditor_AreaNumberChanged(object? sender, EventArgs e)
