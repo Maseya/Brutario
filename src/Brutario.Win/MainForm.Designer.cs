@@ -62,6 +62,7 @@ namespace Brutario.Win
             tsmExportTileData = new ToolStripMenuItem();
             tsmEditHeader = new ToolStripMenuItem();
             tsmSpriteMode = new ToolStripMenuItem();
+            tsmEditPalette = new ToolStripMenuItem();
             tsmView = new ToolStripMenuItem();
             tsmPlayerState = new ToolStripMenuItem();
             tsmSmall = new ToolStripMenuItem();
@@ -298,7 +299,7 @@ namespace Brutario.Win
             // 
             // tsmLevel
             // 
-            tsmLevel.DropDownItems.AddRange(new ToolStripItem[] { tsmLoadArea, tsmExportTileData, tsmEditHeader, tsmSpriteMode });
+            tsmLevel.DropDownItems.AddRange(new ToolStripItem[] { tsmLoadArea, tsmExportTileData, tsmEditHeader, tsmSpriteMode, tsmEditPalette });
             tsmLevel.Name = "tsmLevel";
             tsmLevel.Size = new Size(46, 20);
             tsmLevel.Text = "Level";
@@ -308,7 +309,7 @@ namespace Brutario.Win
             tsmLoadArea.Enabled = false;
             tsmLoadArea.Image = Properties.Resources.folder_tree_solid;
             tsmLoadArea.Name = "tsmLoadArea";
-            tsmLoadArea.Size = new Size(183, 22);
+            tsmLoadArea.Size = new Size(206, 22);
             tsmLoadArea.Text = "Load Area";
             tsmLoadArea.Click += LoadArea_Click;
             // 
@@ -316,7 +317,7 @@ namespace Brutario.Win
             // 
             tsmExportTileData.Enabled = false;
             tsmExportTileData.Name = "tsmExportTileData";
-            tsmExportTileData.Size = new Size(183, 22);
+            tsmExportTileData.Size = new Size(206, 22);
             tsmExportTileData.Text = "Export Tile Data";
             tsmExportTileData.Click += ExportTileData_Click;
             // 
@@ -325,7 +326,7 @@ namespace Brutario.Win
             tsmEditHeader.Enabled = false;
             tsmEditHeader.Name = "tsmEditHeader";
             tsmEditHeader.ShortcutKeys = Keys.Control | Keys.H;
-            tsmEditHeader.Size = new Size(183, 22);
+            tsmEditHeader.Size = new Size(206, 22);
             tsmEditHeader.Text = "Edit Header";
             tsmEditHeader.Click += EditHeader_Click;
             // 
@@ -335,9 +336,20 @@ namespace Brutario.Win
             tsmSpriteMode.Image = Properties.Resources.alien;
             tsmSpriteMode.Name = "tsmSpriteMode";
             tsmSpriteMode.ShortcutKeys = Keys.Control | Keys.M;
-            tsmSpriteMode.Size = new Size(183, 22);
+            tsmSpriteMode.Size = new Size(206, 22);
             tsmSpriteMode.Text = "Sprite Mode";
             tsmSpriteMode.Click += SpriteMode_Click;
+            // 
+            // tsmEditPalette
+            // 
+            tsmEditPalette.CheckOnClick = true;
+            tsmEditPalette.Enabled = false;
+            tsmEditPalette.Image = Properties.Resources.swatchbook_solid;
+            tsmEditPalette.Name = "tsmEditPalette";
+            tsmEditPalette.ShortcutKeys = Keys.Control | Keys.Shift | Keys.P;
+            tsmEditPalette.Size = new Size(206, 22);
+            tsmEditPalette.Text = "Edit &Palette";
+            tsmEditPalette.CheckedChanged += EditPalette_CheckedChanged;
             // 
             // tsmView
             // 
@@ -923,6 +935,7 @@ namespace Brutario.Win
         private System.Windows.Forms.Timer autoSaveTimer;
         private ToolStripMenuItem tsmAutoSave;
         private ToolStripSeparator toolStripSeparator12;
+        private ToolStripMenuItem tsmEditPalette;
     }
 }
 

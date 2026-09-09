@@ -94,7 +94,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // toolStripButton1
             // 
             toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton1.Image = Properties.Resources.Picture1;
+            toolStripButton1.Image = Properties.Resources.angle_up_solid;
             toolStripButton1.ImageTransparentColor = Color.Magenta;
             toolStripButton1.Name = "toolStripButton1";
             toolStripButton1.Size = new Size(24, 24);
@@ -104,7 +104,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // toolStripButton2
             // 
             toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = Properties.Resources.Picture2;
+            toolStripButton2.Image = Properties.Resources.angle_down_solid;
             toolStripButton2.ImageTransparentColor = Color.Magenta;
             toolStripButton2.Name = "toolStripButton2";
             toolStripButton2.Size = new Size(24, 24);

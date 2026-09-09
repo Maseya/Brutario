@@ -6,9 +6,9 @@ using System.Drawing;
 
 using Maseya.Snes;
 
-public readonly ref struct DrawData
+public readonly ref struct AreaDrawData
 {
-    public DrawData(
+    public AreaDrawData(
         Color32BppArgb bgColor,
         ReadOnlySpan<Color32BppArgb> palette,
         ReadOnlySpan<byte> pixelData,

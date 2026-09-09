@@ -98,6 +98,26 @@ namespace Brutario.Win.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap angle_down_solid {
+            get {
+                object obj = ResourceManager.GetObject("angle-down-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap angle_up_solid {
+            get {
+                object obj = ResourceManager.GetObject("angle-up-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bullet Bill Shooter (Height={0}).
         /// </summary>
         internal static string AreaSpecificPlatform_BulletBillTurrets {
@@ -130,6 +150,16 @@ namespace Brutario.Win.Properties {
         internal static string AreaSpecificPlatform_Trees {
             get {
                 return ResourceManager.GetString("AreaSpecificPlatform_Trees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrows_rotate_solid {
+            get {
+                object obj = ResourceManager.GetObject("arrows-rotate-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -388,6 +418,26 @@ namespace Brutario.Win.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap file_export_solid {
+            get {
+                object obj = ResourceManager.GetObject("file-export-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap file_import_solid {
+            get {
+                object obj = ResourceManager.GetObject("file-import-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flag Pole.
         /// </summary>
         internal static string FlagPole {
@@ -577,26 +627,6 @@ namespace Brutario.Win.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Picture1 {
-            get {
-                object obj = ResourceManager.GetObject("Picture1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Picture2 {
-            get {
-                object obj = ResourceManager.GetObject("Picture2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap plus_solid {
             get {
                 object obj = ResourceManager.GetObject("plus-solid", resourceCulture);
@@ -739,6 +769,16 @@ namespace Brutario.Win.Properties {
         internal static string StopGenerator {
             get {
                 return ResourceManager.GetString("StopGenerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap swatchbook_solid {
+            get {
+                object obj = ResourceManager.GetObject("swatchbook-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

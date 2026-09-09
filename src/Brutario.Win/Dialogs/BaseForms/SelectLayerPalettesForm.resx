@@ -117,10 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="paletteEditorDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>31, 26</value>
-  </metadata>
-  <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Select which palette rows should be used for the foreground, background, and sprite layers for the current level.
+
+Foreground: Uses rows 1-5 of the palette
+Background: Rows 6-8
+Sprites: 9-16
+
+Custom: For advanced users only. Manually select which entries into the index table each row should.
+
+WARNING: This does not create entirely custom palettes. Most of these values are shared across levels. Editing palettes here is likely to cause changes in other levels, so exercise caution.
+
+WARNING: Row 16 is the player palette row. Editing the row value will cause no changes.
+</value>
+  </data>
 </root>
