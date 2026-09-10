@@ -83,6 +83,9 @@ public class MainPresenter
         PaletteEditorPresenter = new PaletteEditorPresenter(
             MainEditor.PaletteEditorModel,
             MainView.PaletteEditorView);
+
+        MainEditor.PaletteEditorModel.AreaPaletteChanged +=
+            PaletteEditorModel_AreaPaletteChanged;
     }
 
     public bool AutoSaveEnabled
@@ -493,8 +496,14 @@ public class MainPresenter
 
     private void MainEditor_HasUnsavedChangesChanged(object? sender, EventArgs e)
     {
-        MainView.SaveEnabled = MainEditor.HasUnsavedChanges;
+        SetSaveEnabled();
         SetName();
+    }
+
+    private void SetSaveEnabled()
+    {
+        MainView.SaveEnabled = MainEditor.HasUnsavedChanges
+            || MainEditor.PaletteEditorModel.AreaPaletteHasUnsavedChanges;
     }
 
     private void MainEditor_ObjectData_DataReset(object? sender, EventArgs e)
@@ -610,7 +619,8 @@ public class MainPresenter
 
     private bool CleanupBeforeClose()
     {
-        if (MainEditor.HasUnsavedChanges)
+        if (MainEditor.HasUnsavedChanges
+            || MainEditor.PaletteEditorModel.AreaPaletteHasUnsavedChanges)
         {
             switch (SaveOnClosePrompt.Prompt())
             {
@@ -731,6 +741,10 @@ public class MainPresenter
         SetEditItemEnabled();
         SetDeleteAllEnabled();
         SetPasteEnabled();
+    }
+    private void PaletteEditorModel_AreaPaletteChanged(object? sender, EventArgs e)
+    {
+        SetSaveEnabled();
     }
 
     private void SetEditItemEnabled()

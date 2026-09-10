@@ -31,11 +31,11 @@ partial class PaletteEditorForm
         components = new System.ComponentModel.Container();
         paletteControl = new Brutario.Win.Controls.DesignControl();
         gbxForeground = new GroupBox();
-        cbxForeground = new ComboBox();
+        cbxForegroundPalette = new ComboBox();
         gbxBackground = new GroupBox();
-        cbxBackground = new ComboBox();
+        cbxBackgroundPalette = new ComboBox();
         gbxSprites = new GroupBox();
-        cbxSprites = new ComboBox();
+        cbxSpritePalette = new ComboBox();
         statusStrip1 = new StatusStrip();
         tsslColor = new ToolStripStatusLabel();
         tsslRed = new ToolStripStatusLabel();
@@ -99,7 +99,7 @@ partial class PaletteEditorForm
         // 
         // gbxForeground
         // 
-        gbxForeground.Controls.Add(cbxForeground);
+        gbxForeground.Controls.Add(cbxForegroundPalette);
         gbxForeground.Location = new Point(264, 51);
         gbxForeground.Margin = new Padding(3, 2, 3, 2);
         gbxForeground.Name = "gbxForeground";
@@ -111,19 +111,19 @@ partial class PaletteEditorForm
         // 
         // cbxForeground
         // 
-        cbxForeground.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-        cbxForeground.FormattingEnabled = true;
-        cbxForeground.Items.AddRange(new object[] { "Normal", "Snow (Day)", "Snow (Night)", "Mushroom Island", "Mushroom Island (Warp Zone)", "Underground", "Castle", "Castle (Underwater)" });
-        cbxForeground.Location = new Point(6, 20);
-        cbxForeground.Margin = new Padding(3, 2, 3, 2);
-        cbxForeground.Name = "cbxForeground";
-        cbxForeground.Size = new Size(203, 23);
-        cbxForeground.TabIndex = 0;
-        cbxForeground.SelectedIndexChanged += Foreground_SelectedIndexChanged;
+        cbxForegroundPalette.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        cbxForegroundPalette.FormattingEnabled = true;
+        cbxForegroundPalette.Items.AddRange(new object[] { "Normal", "Snow (Day)", "Snow (Night)", "Mushroom Island", "Mushroom Island (Warp Zone)", "Underground", "Castle", "Castle (Underwater)" });
+        cbxForegroundPalette.Location = new Point(6, 20);
+        cbxForegroundPalette.Margin = new Padding(3, 2, 3, 2);
+        cbxForegroundPalette.Name = "cbxForeground";
+        cbxForegroundPalette.Size = new Size(203, 23);
+        cbxForegroundPalette.TabIndex = 0;
+        cbxForegroundPalette.SelectedIndexChanged += AreaPalette_SelectedIndexChanged;
         // 
         // gbxBackground
         // 
-        gbxBackground.Controls.Add(cbxBackground);
+        gbxBackground.Controls.Add(cbxBackgroundPalette);
         gbxBackground.Location = new Point(264, 102);
         gbxBackground.Margin = new Padding(3, 2, 3, 2);
         gbxBackground.Name = "gbxBackground";
@@ -135,19 +135,19 @@ partial class PaletteEditorForm
         // 
         // cbxBackground
         // 
-        cbxBackground.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        cbxBackground.FormattingEnabled = true;
-        cbxBackground.Items.AddRange(new object[] { "Normal", "Mountains", "Waterfall", "Goomba Pillars", "Green Peaks", "Orange Peaks", "Snow Peaks", "Starry Night", "Mushroom Island", "Castle Wall", "Bonus Room", "Underwater", "Underground", "Castle", "W8 Castle", "Castle (Underwater)" });
-        cbxBackground.Location = new Point(6, 20);
-        cbxBackground.Margin = new Padding(3, 2, 3, 2);
-        cbxBackground.Name = "cbxBackground";
-        cbxBackground.Size = new Size(203, 23);
-        cbxBackground.TabIndex = 0;
-        cbxBackground.SelectedIndexChanged += Background_SelectedIndexChanged;
+        cbxBackgroundPalette.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        cbxBackgroundPalette.FormattingEnabled = true;
+        cbxBackgroundPalette.Items.AddRange(new object[] { "Normal", "Mountains", "Waterfall", "Goomba Pillars", "Green Peaks", "Orange Peaks", "Snow Peaks", "Starry Night", "Mushroom Island", "Castle Wall", "Bonus Room", "Underwater", "Underground", "Castle", "W8 Castle", "Castle (Underwater)" });
+        cbxBackgroundPalette.Location = new Point(6, 20);
+        cbxBackgroundPalette.Margin = new Padding(3, 2, 3, 2);
+        cbxBackgroundPalette.Name = "cbxBackground";
+        cbxBackgroundPalette.Size = new Size(203, 23);
+        cbxBackgroundPalette.TabIndex = 0;
+        cbxBackgroundPalette.SelectedIndexChanged += AreaPalette_SelectedIndexChanged;
         // 
         // gbxSprites
         // 
-        gbxSprites.Controls.Add(cbxSprites);
+        gbxSprites.Controls.Add(cbxSpritePalette);
         gbxSprites.Location = new Point(264, 153);
         gbxSprites.Margin = new Padding(3, 2, 3, 2);
         gbxSprites.Name = "gbxSprites";
@@ -159,15 +159,15 @@ partial class PaletteEditorForm
         // 
         // cbxSprites
         // 
-        cbxSprites.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-        cbxSprites.FormattingEnabled = true;
-        cbxSprites.Items.AddRange(new object[] { "Normal", "Underground", "Castle" });
-        cbxSprites.Location = new Point(6, 20);
-        cbxSprites.Margin = new Padding(3, 2, 3, 2);
-        cbxSprites.Name = "cbxSprites";
-        cbxSprites.Size = new Size(203, 23);
-        cbxSprites.TabIndex = 0;
-        cbxSprites.SelectedIndexChanged += Sprites_SelectedIndexChanged;
+        cbxSpritePalette.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        cbxSpritePalette.FormattingEnabled = true;
+        cbxSpritePalette.Items.AddRange(new object[] { "Normal", "Underground", "Castle" });
+        cbxSpritePalette.Location = new Point(6, 20);
+        cbxSpritePalette.Margin = new Padding(3, 2, 3, 2);
+        cbxSpritePalette.Name = "cbxSprites";
+        cbxSpritePalette.Size = new Size(203, 23);
+        cbxSpritePalette.TabIndex = 0;
+        cbxSpritePalette.SelectedIndexChanged += AreaPalette_SelectedIndexChanged;
         // 
         // statusStrip1
         // 
@@ -526,11 +526,11 @@ partial class PaletteEditorForm
     #endregion
     private Controls.DesignControl paletteControl;
     private GroupBox gbxForeground;
-    private ComboBox cbxForeground;
+    private ComboBox cbxForegroundPalette;
     private GroupBox gbxBackground;
-    private ComboBox cbxBackground;
+    private ComboBox cbxBackgroundPalette;
     private GroupBox gbxSprites;
-    private ComboBox cbxSprites;
+    private ComboBox cbxSpritePalette;
     private StatusStrip statusStrip1;
     private ToolStripStatusLabel tsslColor;
     private ToolStripStatusLabel tsslRed;
