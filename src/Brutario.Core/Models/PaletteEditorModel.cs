@@ -9,9 +9,7 @@ using Maseya.Snes;
 
 public class PaletteEditorModel
 {
-    private ForegroundPalette foregroundPalette_;
-    private BackgroundPalette backgroundPalette_;
-    private SpritePalette spritePalette_;
+    private AreaPalette areaPalette_;
 
     private int paletteIndex_;
     private Player player_;
@@ -20,9 +18,9 @@ public class PaletteEditorModel
 
     private Point selectedPoint_;
 
-    private int _saveHistoryIndex;
-    private int _currentHistoryIndex;
-    private bool _hasUnsavedChanges;
+    private int saveHistoryIndex_;
+    private int currentHistoryIndex_;
+    private bool hasUnsavedChanges_;
 
     public PaletteEditorModel()
     {
@@ -35,57 +33,33 @@ public class PaletteEditorModel
         Rows = new byte[PaletteData.RowsPerPalette];
     }
 
-    public ForegroundPalette ForegroundPalette
+    public AreaPalette AreaPalette
     {
         get
         {
-            return foregroundPalette_;
+            return areaPalette_;
         }
         set
         {
-            if (ForegroundPalette == value)
+            if (AreaPalette ==  value)
             {
                 return;
             }
 
-            foregroundPalette_ = value;
-            OnForegroundPaletteChanged(EventArgs.Empty);
+            SetAreaPaletteInternal(value);
         }
     }
 
-    public BackgroundPalette BackgroundPalette
+    private AreaPalette OriginalAreaPalette
     {
-        get
-        {
-            return backgroundPalette_;
-        }
-        set
-        {
-            if (BackgroundPalette == value)
-            {
-                return;
-            }
-
-            backgroundPalette_ = value;
-            OnBackgroundPaletteChanged(EventArgs.Empty);
-        }
+        get; set;
     }
 
-    public SpritePalette SpritePalette
+    public bool AreaPaletteHasUnsavedChanges
     {
         get
         {
-            return spritePalette_;
-        }
-        set
-        {
-            if (SpritePalette == value)
-            {
-                return;
-            }
-
-            spritePalette_ = value;
-            OnSpritePaletteChanged(EventArgs.Empty);
+            return AreaPalette != OriginalAreaPalette;
         }
     }
 
@@ -98,9 +72,7 @@ public class PaletteEditorModel
 
         var result = new Color32BppArgb[PaletteData.TotalPaletteSize];
         PaletteData.ReadPalette(
-            ForegroundPalette,
-            BackgroundPalette,
-            SpritePalette,
+            AreaPalette,
             IsBonusArea,
             Player,
             PlayerState,
@@ -174,7 +146,7 @@ public class PaletteEditorModel
     {
         get
         {
-            return _hasUnsavedChanges;
+            return hasUnsavedChanges_;
         }
 
         private set
@@ -184,7 +156,7 @@ public class PaletteEditorModel
                 return;
             }
 
-            _hasUnsavedChanges = value;
+            hasUnsavedChanges_ = value;
             OnHasUnsavedChangesChanged(EventArgs.Empty);
         }
     }
@@ -300,11 +272,11 @@ public class PaletteEditorModel
     {
         get
         {
-            return _saveHistoryIndex;
+            return saveHistoryIndex_;
         }
         set
         {
-            _saveHistoryIndex = value;
+            saveHistoryIndex_ = value;
             HasUnsavedChanges = SaveHistoryIndex != CurrentHistoryIndex;
         }
     }
@@ -313,11 +285,11 @@ public class PaletteEditorModel
     {
         get
         {
-            return _currentHistoryIndex;
+            return currentHistoryIndex_;
         }
         set
         {
-            _currentHistoryIndex = value;
+            currentHistoryIndex_ = value;
             HasUnsavedChanges = SaveHistoryIndex != CurrentHistoryIndex;
         }
     }
@@ -326,9 +298,7 @@ public class PaletteEditorModel
 
     public event EventHandler? Saved;
 
-    public event EventHandler? ForegroundPaletteChanged;
-    public event EventHandler? BackgroundPaletteChanged;
-    public event EventHandler? SpritePaletteChanged;
+    public event EventHandler? AreaPaletteChanged;
 
     public event EventHandler? PaletteIndexChanged;
     public event EventHandler? PlayerChanged;
@@ -369,6 +339,17 @@ public class PaletteEditorModel
         OnSaved(EventArgs.Empty);
     }
 
+    public void WriteAreaPalette()
+    {
+        if (PaletteData is null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        PaletteData.UpdateAreaPalette(PaletteIndex, AreaPalette);
+        OriginalAreaPalette = AreaPalette;
+    }
+
     public void EditColor(int index, Color32BppArgb color)
     {
         if (PaletteData is null)
@@ -378,11 +359,7 @@ public class PaletteEditorModel
 
         var row = index / PaletteData.ColorsPerRow;
         var column = index % PaletteData.ColorsPerRow;
-        var rowIndex = PaletteData.GetRowIndex(
-            ForegroundPalette,
-            BackgroundPalette,
-            SpritePalette,
-            row);
+        var rowIndex = PaletteData.GetRowIndex(AreaPalette, row);
         var originalColor = PaletteData.GetColor(rowIndex, column, Player, PlayerState, IsBonusArea);
         PushUndoAction(
             undo: () => SetColorInternal(rowIndex, column, originalColor),
@@ -449,9 +426,7 @@ public class PaletteEditorModel
             _ => throw new InvalidEnumArgumentException(),
         };
 
-        var originalForegroundPalette = ForegroundPalette;
-        var originalBackgroundPalette = BackgroundPalette;
-        var originalSpritePalette = SpritePalette;
+        var originalAreaPalette = AreaPalette;
         var originalIsBonusArea = IsBonusArea;
         var originalPlayer = Player;
         var originalPlayerState = PlayerState;
@@ -459,9 +434,7 @@ public class PaletteEditorModel
         void action()
         {
             ImportPaletteInternal(
-                originalForegroundPalette,
-                originalBackgroundPalette,
-                originalSpritePalette,
+                originalAreaPalette,
                 originalIsBonusArea,
                 originalPlayer,
                 originalPlayerState,
@@ -471,9 +444,7 @@ public class PaletteEditorModel
         void redo()
         {
             ImportPaletteInternal(
-                originalForegroundPalette,
-                originalBackgroundPalette,
-                originalSpritePalette,
+                originalAreaPalette,
                 originalIsBonusArea,
                 originalPlayer,
                 originalPlayerState,
@@ -484,18 +455,14 @@ public class PaletteEditorModel
     }
 
     private void ImportPaletteInternal(
-        ForegroundPalette foregroundPalette,
-        BackgroundPalette backgroundPalette,
-        SpritePalette spritePalette,
+        AreaPalette areaPalette,
         bool isBonusArea,
         Player player,
         PlayerState playerState,
         ReadOnlySpan<Color32BppArgb> palette)
     {
         PaletteData!.WritePalette(
-            foregroundPalette,
-            backgroundPalette,
-            spritePalette,
+            areaPalette,
             isBonusArea,
             player,
             playerState,
@@ -604,8 +571,8 @@ public class PaletteEditorModel
     private void ClearHistory()
     {
         UndoFactory.Clear();
-        _saveHistoryIndex = 0;
-        _currentHistoryIndex = 0;
+        saveHistoryIndex_ = 0;
+        currentHistoryIndex_ = 0;
         HasUnsavedChanges = false;
     }
 
@@ -621,37 +588,14 @@ public class PaletteEditorModel
         Saved?.Invoke(this, e);
     }
 
-    protected virtual void OnForegroundPaletteChanged(EventArgs e)
+    protected virtual void OnAreaPaletteChenged(EventArgs e)
     {
         if (PaletteData is not null)
         {
             OnPaletteChanged(EventArgs.Empty);
-            PaletteData.UpdateForegroundPalette(PaletteIndex, ForegroundPalette);
         }
 
-        ForegroundPaletteChanged?.Invoke(this, e);
-    }
-
-    protected virtual void OnBackgroundPaletteChanged(EventArgs e)
-    {
-        if (PaletteData is not null)
-        {
-            OnPaletteChanged(EventArgs.Empty);
-            PaletteData.UpdateBackgroundPalette(PaletteIndex, BackgroundPalette);
-        }
-
-        BackgroundPaletteChanged?.Invoke(this, e);
-    }
-
-    protected virtual void OnSpritePaletteChanged(EventArgs e)
-    {
-        if (PaletteData is not null)
-        {
-            OnPaletteChanged(EventArgs.Empty);
-            PaletteData.UpdateSpritePalette(PaletteIndex, SpritePalette);
-        }
-
-        SpritePaletteChanged?.Invoke(this, e);
+        AreaPaletteChanged?.Invoke(this, EventArgs.Empty);
     }
 
     protected virtual void OnPaletteIndexChanged(EventArgs e)
@@ -705,25 +649,24 @@ public class PaletteEditorModel
         HasUnsavedChangesChanged?.Invoke(this, e);
     }
 
+    private void SetAreaPaletteInternal(AreaPalette value, bool setOriginal = false)
+    {
+        if (setOriginal)
+        {
+            OriginalAreaPalette = value;
+        }
+        areaPalette_ = value;
+        OnAreaPaletteChenged(EventArgs.Empty);
+    }
+
     private void SetSceneryPalettes()
     {
         if (PaletteData is not null)
         {
-            if (PaletteData.TryGetForegroundPalette(PaletteIndex, out var foregroundPalette))
-            {
-                ForegroundPalette = foregroundPalette;
-            }
-
-            if (PaletteData.TryGetBackgroundPalette(PaletteIndex, out var backgroundPalette))
-            {
-                BackgroundPalette = backgroundPalette;
-            }
-
-            if (PaletteData.TryGetSpritePalette(PaletteIndex, out var spritePalette))
-            {
-                SpritePalette = spritePalette;
-            }
-
+            // TODO(swr): Some kind of warning might be nice to mention that an
+            // error occurred.
+            _ = PaletteData.TryGetAreaPalette(PaletteIndex, out var areaPalette);
+            SetAreaPaletteInternal(areaPalette, setOriginal: true);
             OnPaletteChanged(EventArgs.Empty);
         }
     }

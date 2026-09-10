@@ -16,9 +16,7 @@ public class PaletteEditorPresenter
         PaletteEditorModel = paletteEditorModel;
         PaletteEditorModel.Saved += PaletteEditorModel_Saved;
         PaletteEditorModel.PaletteChanged += PaletteEditorModel_PaletteChanged;
-        PaletteEditorModel.ForegroundPaletteChanged += PaletteEditorModel_ForegroundPaletteChanged;
-        PaletteEditorModel.BackgroundPaletteChanged += PaletteEditorModel_BackgroundPaletteChanged;
-        PaletteEditorModel.SpritePaletteChanged += PaletteEditorModel_SpritePaletteChanged;
+        PaletteEditorModel.AreaPaletteChanged += PaletteEditorModel_AreaPaletteChanged;
         PaletteEditorModel.HasUnsavedChangesChanged += PaletteEditorModel_HasUnsavedChangesChanged;
         PaletteEditorModel.UndoElementAdded += PaletteEditorModel_UndoElementAdded;
         PaletteEditorModel.UndoComplete += PaletteEditorModel_UndoComplete;
@@ -29,12 +27,7 @@ public class PaletteEditorPresenter
         PaletteEditorView.View = new Size(
             width: PaletteData.ColorsPerRow,
             height: PaletteData.RowsPerPalette);
-        PaletteEditorView.ForegroundPaletteChanged +=
-            PaletteEditorView_ForegroundPaletteChanged;
-        PaletteEditorView.BackgroundPaletteChanged +=
-            PaletteEditorView_BackgroundPaletteChanged;
-        PaletteEditorView.SpritePaletteChanged +=
-            PaletteEditorView_SpritePaletteChanged;
+        PaletteEditorView.AreaPaletteChanged += PaletteEditorView_AreaPaletteChanged;
         PaletteEditorView.SaveClicked += PaletteEditorView_SaveClicked;
         PaletteEditorView.UndoClicked += PaletteEditorView_UndoClicked;
         PaletteEditorView.RedoClicked += PaletteEditorView_RedoClicked;
@@ -44,47 +37,26 @@ public class PaletteEditorPresenter
             PaletteEditorView_SelectedPointChanged;
         PaletteEditorView.SelectedColorEdited +=
             PaletteEditorView_SelectedColorEdited;
-        PaletteEditorView.ImportPalette += PaletteEditorView_ImportPalette;
-        PaletteEditorView.ExportPalette += PaletteEditorView_ExportPalette;
+        PaletteEditorView.ImportPaletteClicked += PaletteEditorView_ImportPalette;
+        PaletteEditorView.ExportPaletteClicked += PaletteEditorView_ExportPalette;
     }
 
     private PaletteEditorModel PaletteEditorModel { get; }
 
     private IPaletteEditorView PaletteEditorView { get; }
 
-    private void PaletteEditorModel_ForegroundPaletteChanged(object? sender, EventArgs e)
+    private void PaletteEditorModel_AreaPaletteChanged(object? sender, EventArgs e)
     {
-        PaletteEditorView.ForegroundPalette = PaletteEditorModel.ForegroundPalette;
+        PaletteEditorView.AreaPalette = PaletteEditorModel.AreaPalette;
     }
 
-    private void PaletteEditorModel_BackgroundPaletteChanged(object? sender, EventArgs e)
+    private void PaletteEditorView_AreaPaletteChanged(object? sender, EventArgs e)
     {
-        PaletteEditorView.BackgroundPalette = PaletteEditorModel.BackgroundPalette;
-    }
-
-    private void PaletteEditorModel_SpritePaletteChanged(object? sender, EventArgs e)
-    {
-        PaletteEditorView.SpritePalette = PaletteEditorModel.SpritePalette;
-    }
-
-    private void PaletteEditorView_ForegroundPaletteChanged(object? sender, EventArgs e)
-    {
-        PaletteEditorModel.ForegroundPalette = PaletteEditorView.ForegroundPalette;
-    }
-
-    private void PaletteEditorView_BackgroundPaletteChanged(object? sender, EventArgs e)
-    {
-        PaletteEditorModel.BackgroundPalette = PaletteEditorView.BackgroundPalette;
-    }
-
-    private void PaletteEditorView_SpritePaletteChanged(object? sender, EventArgs e)
-    {
-        PaletteEditorModel.SpritePalette = PaletteEditorView.SpritePalette;
+        PaletteEditorModel.AreaPalette = PaletteEditorView.AreaPalette;
     }
 
     private void PaletteEditorModel_PaletteChanged(object? sender, EventArgs e)
     {
-        PaletteEditorView.SaveEnabled = true;
         PaletteEditorView.Redraw();
     }
 

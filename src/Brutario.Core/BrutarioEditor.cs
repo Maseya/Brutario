@@ -1513,6 +1513,7 @@ public class BrutarioEditor : IMainEditor
         WriteHeader();
         WriteObjectData();
         WriteSpriteData();
+        PaletteEditorModel.WriteAreaPalette();
         GameData!.WriteToGameData(Rom!);
     }
 
