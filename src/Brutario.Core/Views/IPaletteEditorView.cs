@@ -7,9 +7,7 @@ using Maseya.Snes;
 
 public interface IPaletteEditorView
 {
-    ForegroundPalette ForegroundPalette { get; set; }
-    BackgroundPalette BackgroundPalette { get; set; }
-    SpritePalette SpritePalette { get; set; }
+    public AreaPalette AreaPalette { get; set; }
 
     bool SaveEnabled { get; set; }
     bool UndoEnabled { get; set; }
@@ -36,18 +34,17 @@ public interface IPaletteEditorView
 
     Color32BppArgb SelectedColor { get; set; }
 
-    event EventHandler<PathEventArgs>? ImportPalette;
-    event EventHandler<PathEventArgs>? ExportPalette;
-
     event EventHandler? SaveClicked;
+
+    event EventHandler<PathEventArgs>? ImportPaletteClicked;
+    event EventHandler<PathEventArgs>? ExportPaletteClicked;
+
     event EventHandler? UndoClicked;
     event EventHandler? RedoClicked;
 
     event EventHandler? ResetClicked;
 
-    event EventHandler? ForegroundPaletteChanged;
-    event EventHandler? BackgroundPaletteChanged;
-    event EventHandler? SpritePaletteChanged;
+    event EventHandler? AreaPaletteChanged;
 
     event EventHandler? ViewSizeChanged;
     event EventHandler? SelectedPointChanged;

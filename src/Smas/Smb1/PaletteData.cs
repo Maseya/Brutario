@@ -116,27 +116,35 @@ public class PaletteData
 
     public void Reset(Rom rom, PaletteDataPointers pointers)
     {
-        rom.ReadBytesIndirect(
+        var rowIndexTable = rom.ReadBytesIndirect(
             pointers.RowIndexTablePointer,
-            RowIndexTable);
+            RowIndexTableSize);
 
-        // Make sure the index tables stay within the bounds of the tables they index into.
-        if (RowIndexTable.Any(rowIndex => rowIndex >= IndexTableSize))
+        if (rowIndexTable.Any(rowIndex => rowIndex >= IndexTableSize))
         {
             throw new ArgumentException(
                 "Element in palette row index table attempts to access a value outside of the index table.");
         }
 
-        rom.ReadInt16ArrayIndirectAs(
+        var indexTable = rom.ReadInt16ArrayIndirectAs(
             pointers.IndexTablePointer,
-            IndexTable,
+            IndexTableSize,
             x => x >> 1);
 
-        if (IndexTable.Any(index => index > ColorTableSize - ColorsPerRow))
+        if (indexTable.Any(index => index > ColorTableSize - ColorsPerRow))
         {
             throw new ArgumentException(
                 "Element in palette index table attempts to access a value outside of the color table.");
         }
+
+        Array.Copy(
+            sourceArray: rowIndexTable,
+            destinationArray: RowIndexTable,
+            length: RowIndexTableSize);
+        Array.Copy(
+            sourceArray: indexTable,
+            destinationArray: IndexTable,
+            length: IndexTableSize);
 
         rom.ReadInt16ArrayIndirectAs(
            pointers.ColorTablePointer,
@@ -154,32 +162,25 @@ public class PaletteData
 
     public int GetRowIndex(int paletteIndex, int row)
     {
-        return (uint)paletteIndex >= AreaLoader.DefaultNumberOfAreas
+        return (uint)paletteIndex >= AreaPaletteCount
             ? throw new ArgumentOutOfRangeException(nameof(paletteIndex))
             : (uint)row >= RowsPerPalette
             ? throw new ArgumentOutOfRangeException(nameof(row))
             : RowIndexTable[(paletteIndex * RowsPerPalette) + row];
     }
 
-    public int GetRowIndex(
-        ForegroundPalette foregroundPalette,
-        BackgroundPalette backgroundPalette,
-        SpritePalette spritePalette,
-        int row)
+    public static int GetRowIndex(AreaPalette areaPalette, int row)
     {
-        AssertPaletteEnums(foregroundPalette, backgroundPalette, spritePalette);
         return (uint)row < 5
-            ? ForegroundPalettes[foregroundPalette][row]
+            ? ForegroundPalettes[areaPalette.ForegroundPalette][row]
             : (uint)(row - 5u) < 8 - 5
-            ? BackgroundPalettes[backgroundPalette][row - 5]
+            ? BackgroundPalettes[areaPalette.BackgroundPalette][row - 5]
             : (uint)(row - 8u) < RowsPerPalette - 8
-            ? SpritePalettes[spritePalette][row - 8]
+            ? SpritePalettes[areaPalette.SpritePalette][row - 8]
             : throw new ArgumentOutOfRangeException(nameof(row));
     }
 
-    public Color32BppArgb GetColor(
-        int rowIndex,
-        int column)
+    public Color32BppArgb GetColor(int rowIndex, int column)
     {
         return (uint)column >= ColorsPerRow
             ? throw new ArgumentOutOfRangeException(nameof(column))
@@ -188,17 +189,14 @@ public class PaletteData
             : ColorTable[IndexTable[rowIndex] + column];
     }
 
-    public void SetColor(
-        int rowIndex,
-        int column,
-        Color32BppArgb value)
+    public void SetColor(int rowIndex, int column, Color32BppArgb value)
     {
-        if ((uint)column >= (uint)ColorsPerRow)
+        if ((uint)column >= ColorsPerRow)
         {
             throw new ArgumentOutOfRangeException(nameof(column));
         }
 
-        if ((uint)rowIndex >= (uint)RowIndexTableSize)
+        if ((uint)rowIndex >= IndexTableSize)
         {
             throw new ArgumentOutOfRangeException(nameof(rowIndex));
         }
@@ -213,12 +211,12 @@ public class PaletteData
         PlayerState playerState,
         bool IsLuigiBonusArea)
     {
-        if ((uint)column >= (uint)ColorsPerRow)
+        if ((uint)column >= ColorsPerRow)
         {
             throw new ArgumentOutOfRangeException(nameof(column));
         }
 
-        if ((uint)rowIndex >= (uint)IndexTableSize)
+        if ((uint)rowIndex >= IndexTableSize)
         {
             throw new ArgumentOutOfRangeException(nameof(rowIndex));
         }
@@ -232,12 +230,12 @@ public class PaletteData
             var playerPaletteSourceIndex = column;
             if (player == Player.Luigi)
             {
-                playerPaletteSourceIndex |= 0x10;
+                playerPaletteSourceIndex += ColorsPerRow;
             }
 
             if (playerState == PlayerState.Fire)
             {
-                playerPaletteSourceIndex |= 0x20;
+                playerPaletteSourceIndex += ColorsPerRow * 2;
             }
 
             return PlayerPaletteTable[playerPaletteSourceIndex];
@@ -256,12 +254,12 @@ public class PaletteData
         bool IsBonusArea,
         Color32BppArgb value)
     {
-        if ((uint)column >= (uint)ColorsPerRow)
+        if ((uint)column >= ColorsPerRow)
         {
             throw new ArgumentOutOfRangeException(nameof(column));
         }
 
-        if ((uint)rowIndex >= (uint)IndexTableSize)
+        if ((uint)rowIndex >= IndexTableSize)
         {
             throw new ArgumentOutOfRangeException(nameof(rowIndex));
         }
@@ -275,12 +273,12 @@ public class PaletteData
             var playerPaletteSourceIndex = column;
             if (player == Player.Luigi)
             {
-                playerPaletteSourceIndex |= 0x10;
+                playerPaletteSourceIndex += ColorsPerRow;
             }
 
             if (playerState == PlayerState.Fire)
             {
-                playerPaletteSourceIndex |= 0x20;
+                playerPaletteSourceIndex += ColorsPerRow * 2;
             }
 
             PlayerPaletteTable[playerPaletteSourceIndex] = value;
@@ -289,6 +287,19 @@ public class PaletteData
         {
             ColorTable[IndexTable[rowIndex] + column] = value;
         }
+    }
+
+    public bool TryGetAreaPalette(int paletteIndex, out AreaPalette areaPalette)
+    {
+        var result = true;
+        result &= TryGetForegroundPalette(paletteIndex, out var foregroundPalette);
+        result &= TryGetBackgroundPalette(paletteIndex, out var backgroundPalette);
+        result &= TryGetSpritePalette(paletteIndex, out var spritePalette);
+        areaPalette = new AreaPalette(
+            foregroundPalette,
+            backgroundPalette,
+            spritePalette);
+        return result;
     }
 
     public bool TryGetForegroundPalette(
@@ -345,49 +356,13 @@ public class PaletteData
         return false;
     }
 
-    public void UpdateForegroundPalette(
+    public void UpdateAreaPalette(
         int paletteIndex,
-        ForegroundPalette foregroundPalette)
+        AreaPalette areaPalette)
     {
-        if (!Enum.IsDefined(foregroundPalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(foregroundPalette),
-                (int)foregroundPalette,
-                typeof(ForegroundPalette));
-        }
-
-        WritePaletteRows(paletteIndex, 0, ForegroundPalettes[foregroundPalette]);
-    }
-
-    public void UpdateBackgroundPalette(
-        int paletteIndex,
-        BackgroundPalette backgroundPalette)
-    {
-        if (!Enum.IsDefined(backgroundPalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(backgroundPalette),
-                (int)backgroundPalette,
-                typeof(BackgroundPalette));
-        }
-
-        WritePaletteRows(paletteIndex, 5, BackgroundPalettes[backgroundPalette]);
-    }
-
-    public void UpdateSpritePalette(
-        int paletteIndex,
-        SpritePalette spritePalette)
-    {
-        if (!Enum.IsDefined(spritePalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(spritePalette),
-                (int)spritePalette,
-                typeof(SpritePalette));
-        }
-
-        WritePaletteRows(paletteIndex, 8, SpritePalettes[spritePalette]);
+        WritePaletteRows(paletteIndex, 0, ForegroundPalettes[areaPalette.ForegroundPalette]);
+        WritePaletteRows(paletteIndex, 5, BackgroundPalettes[areaPalette.BackgroundPalette]);
+        WritePaletteRows(paletteIndex, 8, SpritePalettes[areaPalette.SpritePalette]);
     }
 
     public void ReadPalette(
@@ -397,9 +372,9 @@ public class PaletteData
         PlayerState playerState,
         Span<Color32BppArgb> dest)
     {
-        if ((uint)paletteIndex >= (uint)AreaLoader.DefaultNumberOfAreas)
+        if ((uint)paletteIndex >= AreaLoader.DefaultNumberOfAreas)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(paletteIndex));
         }
 
         var rows = new ReadOnlySpan<byte>(
@@ -411,92 +386,31 @@ public class PaletteData
     }
 
     public void ReadPalette(
-        ForegroundPalette foregroundPalette,
-        BackgroundPalette backgroundPalette,
-        SpritePalette spritePalette,
+        AreaPalette areaPalette,
         bool isBonusArea,
         Player player,
         PlayerState playerState,
         Span<Color32BppArgb> dest)
     {
-        if (!Enum.IsDefined(foregroundPalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(foregroundPalette),
-                (int)foregroundPalette,
-                typeof(ForegroundPalette));
-        }
-
-        if (!Enum.IsDefined(backgroundPalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(backgroundPalette),
-                (int)backgroundPalette,
-                typeof(BackgroundPalette));
-        }
-
-        if (!Enum.IsDefined(spritePalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(spritePalette),
-                (int)spritePalette,
-                typeof(SpritePalette));
-        }
-
         var rows = new byte[RowsPerPalette];
-        ForegroundPalettes[foregroundPalette].CopyTo(new Span<byte>(rows, 0, 5));
-        BackgroundPalettes[backgroundPalette].CopyTo(new Span<byte>(rows, 5, 8));
-        SpritePalettes[spritePalette].CopyTo(new Span<byte>(rows, 8, 8));
+        ForegroundPalettes[areaPalette.ForegroundPalette].CopyTo(new Span<byte>(rows, 0, 5));
+        BackgroundPalettes[areaPalette.BackgroundPalette].CopyTo(new Span<byte>(rows, 5, 8));
+        SpritePalettes[areaPalette.SpritePalette].CopyTo(new Span<byte>(rows, 8, 8));
 
         ReadPalette(rows, isBonusArea, player, playerState, dest);
     }
 
-    private void AssertPaletteEnums(
-        ForegroundPalette foregroundPalette = ForegroundPalette.Normal,
-        BackgroundPalette backgroundPalette = BackgroundPalette.Normal,
-        SpritePalette spritePalette = SpritePalette.Normal)
-    {
-
-        if (!Enum.IsDefined(foregroundPalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(foregroundPalette),
-                (int)foregroundPalette,
-                typeof(ForegroundPalette));
-        }
-
-        if (!Enum.IsDefined(backgroundPalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(backgroundPalette),
-                (int)backgroundPalette,
-                typeof(BackgroundPalette));
-        }
-
-        if (!Enum.IsDefined(spritePalette))
-        {
-            throw new InvalidEnumArgumentException(
-                nameof(spritePalette),
-                (int)spritePalette,
-                typeof(SpritePalette));
-        }
-    }
-
     public void WritePalette(
-        ForegroundPalette foregroundPalette,
-        BackgroundPalette backgroundPalette,
-        SpritePalette spritePalette,
+        AreaPalette areaPalette,
         bool isBonusArea,
         Player player,
         PlayerState state,
         ReadOnlySpan<Color32BppArgb> source)
     {
-        AssertPaletteEnums(foregroundPalette, backgroundPalette, spritePalette);
-
         var rows = new byte[RowsPerPalette];
-        ForegroundPalettes[foregroundPalette].CopyTo(new Span<byte>(rows, 0, 5));
-        BackgroundPalettes[backgroundPalette].CopyTo(new Span<byte>(rows, 5, 8));
-        SpritePalettes[spritePalette].CopyTo(new Span<byte>(rows, 8, 8));
+        ForegroundPalettes[areaPalette.ForegroundPalette].CopyTo(new Span<byte>(rows, 0, 5));
+        BackgroundPalettes[areaPalette.BackgroundPalette].CopyTo(new Span<byte>(rows, 5, 8));
+        SpritePalettes[areaPalette.SpritePalette].CopyTo(new Span<byte>(rows, 8, 8));
         WritePalette(rows, isBonusArea, player, state, source);
     }
 
@@ -519,7 +433,18 @@ public class PaletteData
         WritePalette(rows, isBonusArea, player, state, source);
     }
 
-    public void WriteToGameData(Rom rom, PaletteDataPointers pointers)
+    public void WriteRowDataToGameData(Rom rom, PaletteDataPointers pointers)
+    {
+        rom.WriteArrayAsInt16Indirect<int>(
+            pointers.IndexTablePointer,
+            IndexTable,
+            x => (short)(x << 1));
+        rom.WriteBytesIndirect(
+            pointers.RowIndexTablePointer,
+            RowIndexTable);
+    }
+
+    public void WriteColorDataToGameData(Rom rom, PaletteDataPointers pointers)
     {
         rom.WriteArrayAsInt16Indirect<Color32BppArgb>(
             pointers.PlayerPaletteTablePointer,
@@ -533,13 +458,12 @@ public class PaletteData
             pointers.ColorTablePointer,
             ColorTable,
             x => (short)Color32BppArgb.ToSnesColor(x));
-        rom.WriteArrayAsInt16Indirect<int>(
-            pointers.IndexTablePointer,
-            IndexTable,
-            x => (short)(x << 1));
-        rom.WriteBytesIndirect(
-            pointers.RowIndexTablePointer,
-            RowIndexTable);
+    }
+
+    public void WriteToGameData(Rom rom, PaletteDataPointers pointers)
+    {
+        WriteColorDataToGameData(rom, pointers);
+        WriteRowDataToGameData(rom, pointers);
     }
 
     private Span<byte> GetPaletteRows(int paletteIndex, int start, int length)

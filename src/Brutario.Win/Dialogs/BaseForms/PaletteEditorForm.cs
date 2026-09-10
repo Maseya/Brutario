@@ -20,6 +20,7 @@ using static Math;
 
 public partial class PaletteEditorForm : Form, IPaletteEditorView
 {
+    private AreaPalette _areaPalette;
     private Point _selectedPoint;
     private Size _view;
     private Color32BppArgb _selectedColor;
@@ -28,9 +29,9 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
     {
         InitializeComponent();
 
-        cbxForeground.SelectedIndex =
-        cbxBackground.SelectedIndex =
-        cbxSprites.SelectedIndex = 0;
+        cbxForegroundPalette.SelectedIndex =
+        cbxBackgroundPalette.SelectedIndex =
+        cbxSpritePalette.SelectedIndex = 0;
     }
 
     public PaletteEditorForm(IContainer container) : this()
@@ -80,60 +81,40 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
         }
     }
 
-    public ForegroundPalette ForegroundPalette
+    public AreaPalette AreaPalette
     {
         get
         {
-            return (ForegroundPalette)cbxForeground.SelectedIndex;
+            return _areaPalette;
         }
 
         set
         {
-            if (!Enum.IsDefined(value))
+            if (AreaPalette == value)
             {
-                throw new InvalidEnumArgumentException(
-                    nameof(ForegroundPalette), (int)value, typeof(ForegroundPalette));
+                return;
             }
 
-            cbxForeground.SelectedIndex = (int)value;
+            _areaPalette = value;
+            OnAreaPaletteChanged(EventArgs.Empty);
         }
     }
 
-    public BackgroundPalette BackgroundPalette
+    private AreaPalette UIAreaPalette
     {
         get
         {
-            return (BackgroundPalette)cbxBackground.SelectedIndex;
+            return new AreaPalette(
+                (ForegroundPalette)Max(cbxForegroundPalette.SelectedIndex, 0),
+                (BackgroundPalette)Max(cbxBackgroundPalette.SelectedIndex, 0),
+                (SpritePalette)Max(cbxSpritePalette.SelectedIndex, 0));
         }
 
         set
         {
-            if (!Enum.IsDefined(value))
-            {
-                throw new InvalidEnumArgumentException(
-                    nameof(BackgroundPalette), (int)value, typeof(BackgroundPalette));
-            }
-
-            cbxBackground.SelectedIndex = (int)value;
-        }
-    }
-
-    public SpritePalette SpritePalette
-    {
-        get
-        {
-            return (SpritePalette)cbxSprites.SelectedIndex;
-        }
-
-        set
-        {
-            if (!Enum.IsDefined(value))
-            {
-                throw new InvalidEnumArgumentException(
-                    nameof(SpritePalette), (int)value, typeof(SpritePalette));
-            }
-
-            cbxSprites.SelectedIndex = (int)value;
+            cbxForegroundPalette.SelectedIndex = (int)value.ForegroundPalette;
+            cbxBackgroundPalette.SelectedIndex = (int)value.BackgroundPalette;
+            cbxSpritePalette.SelectedIndex = (int)value.SpritePalette;
         }
     }
 
@@ -222,11 +203,11 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
         }
     }
 
-    public event EventHandler? ForegroundPaletteChanged;
-    public event EventHandler? BackgroundPaletteChanged;
-    public event EventHandler? SpritePaletteChanged;
-
     public event EventHandler? SaveClicked;
+
+    public event EventHandler<PathEventArgs>? ImportPaletteClicked;
+    public event EventHandler<PathEventArgs>? ExportPaletteClicked;
+
     public event EventHandler? UndoClicked;
     public event EventHandler? RedoClicked;
 
@@ -236,34 +217,14 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
     public event EventHandler? SelectedPointChanged;
     public event EventHandler? SelectedColorChanged;
     public event EventHandler? SelectedColorEdited;
+
     public event EventHandler<PaletteDrawEventArgs>? DrawPalette;
 
-    public event EventHandler<PathEventArgs>? ImportPalette;
-    public event EventHandler<PathEventArgs>? ExportPalette;
+    public event EventHandler? AreaPaletteChanged;
 
     public void Redraw()
     {
         paletteControl.Invalidate();
-    }
-
-    protected virtual void OnExportPalette(PathEventArgs e)
-    {
-        ExportPalette?.Invoke(this, e);
-    }
-
-    protected virtual void OnForegroundPaletteChanged(EventArgs e)
-    {
-        ForegroundPaletteChanged?.Invoke(this, e);
-    }
-
-    protected virtual void OnBackgroundPaletteChanged(EventArgs e)
-    {
-        BackgroundPaletteChanged?.Invoke(this, e);
-    }
-
-    protected virtual void OnSpritePaletteChanged(EventArgs e)
-    {
-        SpritePaletteChanged?.Invoke(this, e);
     }
 
     protected virtual void OnSaveClicked(EventArgs e)
@@ -276,6 +237,11 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
         {
             exceptionView.Show(ex);
         }
+    }
+
+    protected virtual void OnExportPaletteClicked(PathEventArgs e)
+    {
+        ExportPaletteClicked?.Invoke(this, e);
     }
 
     protected virtual void OnUndoClicked(EventArgs e)
@@ -291,6 +257,12 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
     protected virtual void OnReset(EventArgs e)
     {
         ResetClicked?.Invoke(this, e);
+    }
+
+    protected virtual void OnAreaPaletteChanged(EventArgs e)
+    {
+        UIAreaPalette = AreaPalette;
+        AreaPaletteChanged?.Invoke(this, e);
     }
 
     protected virtual void OnViewSizeChanged(EventArgs e)
@@ -330,11 +302,17 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
         tsslBlue.Text = SelectedColor.B.ToString();
     }
 
+    private void Save_Click(object sender, EventArgs e)
+    {
+        OnSaveClicked(EventArgs.Empty);
+    }
+
     private void ImportPalette_Click(object sender, EventArgs e)
     {
         if (importPaletteFileDialog.ShowDialog() == DialogResult.OK)
         {
-            ImportPalette?.Invoke(this, new PathEventArgs(importPaletteFileDialog.FileName));
+            ImportPaletteClicked?.Invoke(
+                this, new PathEventArgs(importPaletteFileDialog.FileName));
         }
     }
 
@@ -342,23 +320,53 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
     {
         if (exportPaletteFileDialog.ShowDialog() == DialogResult.OK)
         {
-            ExportPalette?.Invoke(this, new PathEventArgs(exportPaletteFileDialog.FileName));
+            ExportPaletteClicked?.Invoke(
+                this, new PathEventArgs(exportPaletteFileDialog.FileName));
         }
     }
 
-    private void Foreground_SelectedIndexChanged(object sender, EventArgs e)
+    private void Close_Click(object sender, EventArgs e)
     {
-        OnForegroundPaletteChanged(EventArgs.Empty);
+        Hide();
     }
 
-    private void Background_SelectedIndexChanged(object sender, EventArgs e)
+    private void Undo_Click(object sender, EventArgs e)
     {
-        OnBackgroundPaletteChanged(EventArgs.Empty);
+        OnUndoClicked(EventArgs.Empty);
     }
 
-    private void Sprites_SelectedIndexChanged(object sender, EventArgs e)
+    private void Redo_Click(object sender, EventArgs e)
     {
-        OnSpritePaletteChanged(EventArgs.Empty);
+        OnRedoClicked(EventArgs.Empty);
+    }
+
+    private void Copy_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void Paste_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void Reset_Click(object sender, EventArgs e)
+    {
+        var result = MessageBox.Show(
+            owner: this,
+            text: "This will reload all palette data back to what was stored in ROM. This cannot be undone. Proceed?",
+            caption: "Reset palette data.",
+            buttons: MessageBoxButtons.YesNo,
+            icon: MessageBoxIcon.Information);
+        if (result == DialogResult.Yes)
+        {
+            OnReset(EventArgs.Empty);
+        }
+    }
+
+    private void AreaPalette_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        AreaPalette = UIAreaPalette;
     }
 
     private void PaletteControl_MouseMove(object sender, MouseEventArgs e)
@@ -387,51 +395,7 @@ public partial class PaletteEditorForm : Form, IPaletteEditorView
         OnDrawPalette(new PaletteDrawEventArgs(target));
     }
 
-    private void Reset_Click(object sender, EventArgs e)
-    {
-        var result = MessageBox.Show(
-            owner: this,
-            text: "This will reload all palette data back to what was stored in ROM. This cannot be undone. Proceed?",
-            caption: "Reset palette data.",
-            buttons: MessageBoxButtons.YesNo,
-            icon: MessageBoxIcon.Information);
-        if (result == DialogResult.Yes)
-        {
-            OnReset(EventArgs.Empty);
-        }
-    }
-
-    private void Undo_Click(object sender, EventArgs e)
-    {
-        OnUndoClicked(EventArgs.Empty);
-    }
-
-    private void Redo_Click(object sender, EventArgs e)
-    {
-        OnRedoClicked(EventArgs.Empty);
-    }
-
-    private void Save_Click(object sender, EventArgs e)
-    {
-        OnSaveClicked(EventArgs.Empty);
-    }
-
-    private void Close_Click(object sender, EventArgs e)
-    {
-        Hide();
-    }
-
     private void AnimationTimer_Tick(object sender, EventArgs e)
-    {
-
-    }
-
-    private void Copy_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void Paste_Click(object sender, EventArgs e)
     {
 
     }
