@@ -11,14 +11,20 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
+using Brutario.Core.Views;
+using Brutario.Win.Dialogs.BaseForms;
 using Brutario.Win.Properties;
 
 using Core;
 
 using Maseya.Smas.Smb1;
 
+using Views;
+
 public partial class MainForm : Form, IMainView
 {
+    private PaletteEditorForm paletteEditorForm;
+
     // TODO(swr): BrutatioEditor needs to be an interface. It's currently not an
     // interface because it is rapidly changing and I don't want to keep
     // changing the interface.
@@ -26,6 +32,13 @@ public partial class MainForm : Form, IMainView
     {
         InitializeComponent();
         InitializeComponent2();
+
+        paletteEditorForm = new PaletteEditorForm(components!)
+        {
+            Owner = this
+        };
+        paletteEditorForm.FormClosing += PaletteEditorForm_FormClosing;
+        paletteEditorForm.VisibleChanged += PaletteEditorForm_VisibleChanged;
 
         Presenter = new MainPresenter(
             brutarioEditor,
@@ -66,8 +79,22 @@ public partial class MainForm : Form, IMainView
             tsmClose.Enabled =
             tsmLoadArea.Enabled =
             tsbJumpToArea.Enabled =
-            ttbJumpToArea.Enabled = value;
+            ttbJumpToArea.Enabled =
+            tsmEditPalette.Enabled = value;
             //tsbLoadAreaByLevel.Enabled = value;
+        }
+    }
+
+    public bool ViewPaletteEditor
+    {
+        get
+        {
+            return tsmEditPalette.Checked;
+        }
+
+        set
+        {
+            tsmEditPalette.Checked = value;
         }
     }
 
@@ -286,6 +313,14 @@ public partial class MainForm : Form, IMainView
     }
 
     public MainPresenter Presenter { get; }
+
+    public IPaletteEditorView PaletteEditorView
+    {
+        get
+        {
+            return paletteEditorForm;
+        }
+    }
 
     private DateTime StartTime { get; set; }
 
@@ -600,7 +635,7 @@ public partial class MainForm : Form, IMainView
 
     private void LoadArea_Click(object sender, EventArgs e)
     {
-        MessageBox.Show("Not yet implemented");
+        _ = MessageBox.Show("Not yet implemented");
     }
 
     private void ObjectListView_AddItem_Click(object sender, EventArgs e)
@@ -652,6 +687,27 @@ public partial class MainForm : Form, IMainView
 
             Settings.Default.AutoSaveHardCutoff = Presenter.AutoSaveHardCutoff = dialog.HardCutoff;
             Settings.Default.Save();
+        }
+    }
+
+    private void EditPalette_CheckedChanged(object sender, EventArgs e)
+    {
+        paletteEditorForm.Visible = tsmEditPalette.Checked;
+    }
+
+    private void PaletteEditorForm_VisibleChanged(object? sender, EventArgs e)
+    {
+        tsmEditPalette.Checked = paletteEditorForm.Visible;
+    }
+
+    private void PaletteEditorForm_FormClosing(object? sender, FormClosingEventArgs e)
+    {
+        switch (e.CloseReason)
+        {
+            case CloseReason.UserClosing:
+                e.Cancel = true;
+                paletteEditorForm.Visible = false;
+                break;
         }
     }
 }

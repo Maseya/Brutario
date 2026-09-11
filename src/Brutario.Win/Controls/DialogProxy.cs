@@ -14,10 +14,10 @@ using System.Windows.Forms;
 /// as dialog windows. This is an abstract class.
 /// </summary>
 /// <remarks>
-/// Many windows <see cref="Form"/> classes are intended to be used as modal dialog
-/// boxes. These classes usually do not intend to make public the many properties and
-/// methods that a form exposes. This class is therefore used to make public only the
-/// essential parameters that an application developer intends to make usable. The base
+/// Many windows <see cref="Form"/> classes are intended to be used as dialog boxes.
+/// These classes usually do not intend to make public the many properties and methods
+/// that a form exposes. This class is therefore used to make public only the essential
+/// parameters that an application developer intends to make visible. The base
 /// <see cref="Form"/> is kept internal so inheritors can select which properties,
 /// methods, and events should be visible.
 /// <para/>
@@ -28,6 +28,9 @@ using System.Windows.Forms;
 [DesignTimeVisible(true)]
 public abstract class DialogProxy : Component
 {
+    private bool hideOnUserClose_;
+    private bool hideEventAdded_  = false;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="DialogProxy"/> class.
     /// </summary>
@@ -99,6 +102,56 @@ public abstract class DialogProxy : Component
         }
     }
 
+    public Form? Owner
+    {
+        get
+        {
+            return BaseForm.Owner;
+        }
+
+        set
+        {
+            BaseForm.Owner = value;
+        }
+    }
+
+    public bool Visible
+    {
+        get
+        {
+            return BaseForm.Visible;
+        }
+
+        set
+        {
+            BaseForm.Visible = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value that determines whether the base form will mark itself as
+    /// hidden when closed by the user, rather than actually closing itself.
+    /// </summary>
+    public bool HideOnUserClose
+    {
+        get
+        {
+            return hideOnUserClose_;
+        }
+        set
+        {
+            // We cannot add the event on construction, as the base form will not yet
+            // have been assigned.
+            if (!hideEventAdded_)
+            {
+                BaseForm.FormClosing += BaseForm_FormClosing;
+                hideEventAdded_ = true;
+            }
+
+            hideOnUserClose_ = value;
+        }
+    }
+
     /// <summary>
     /// Gets the <see cref="Form"/> to use for modal dialog operations.
     /// </summary>
@@ -111,7 +164,7 @@ public abstract class DialogProxy : Component
     /// Runs a common dialog box with a specified owner or default if none is given.
     /// </summary>
     /// <param name="owner">
-    /// An <see cref="IWin32Window"/> that represents the top-level windows the will
+    /// An <see cref="IWin32Window"/> that represents the top-level windows that will
     /// own the modal dialog box, or <see langword="null"/> to specify the currently
     /// active window of your application.
     /// </param>
@@ -121,6 +174,19 @@ public abstract class DialogProxy : Component
     public DialogResult ShowDialog(IWin32Window? owner = null)
     {
         return BaseForm.ShowDialog(owner);
+    }
+
+    /// <summary>
+    /// Shows the base window with a specified owner or default if none is given.
+    /// </summary>
+    /// <param name="owner">
+    /// An <see cref="IWin32Window"/> that represents the top-level windows that will
+    /// own the modal dialog box, or <see langword="null"/> to specify the currently
+    /// active window of your application.
+    /// </param>
+    public void Show(IWin32Window? owner = null)
+    {
+        BaseForm.Show(owner);
     }
 
     /// <summary>
@@ -150,5 +216,19 @@ public abstract class DialogProxy : Component
         }
 
         base.Dispose(disposing);
+    }
+
+    private void BaseForm_FormClosing(object? sender, FormClosingEventArgs e)
+    {
+        switch (e.CloseReason)
+        {
+            case CloseReason.UserClosing:
+                if (HideOnUserClose)
+                {
+                    e.Cancel = true;
+                    BaseForm.Hide();
+                }
+                break;
+        }
     }
 }

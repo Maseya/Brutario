@@ -114,7 +114,7 @@ public class ObjectListDialog : DialogProxy
         }
     }
 
-    public Form Owner
+    public Form? Owner
     {
         get
         {

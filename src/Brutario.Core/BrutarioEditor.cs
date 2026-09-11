@@ -13,7 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-using Brutario.Core.Views;
+using Brutario.Core.Models;
 
 using Maseya.Smas.Smb1;
 using Maseya.Smas.Smb1.AreaData;
@@ -62,15 +62,18 @@ public class BrutarioEditor : IMainEditor
 
     public BrutarioEditor()
     {
+        PaletteEditorModel = new PaletteEditorModel();
+
         Path = String.Empty;
         Player = Player.Mario;
         PlayerState = PlayerState.Big;
 
-        Palette = new Color32BppArgb[0x140];
         PixelData = new byte[GfxData.TotalPixelDataSize];
         Map16Tiles = new Obj16Tile[0x100];
-        TileMap = new int[TileMapLength];
+        BG1TileMap = new int[TileMapLength];
+        BG2TileMap = new int[TileMapLength];
         BG1 = new ObjTile[TileMapLength * 4];
+        BG2 = new ObjTile[TileMapLength * 4];
 
         ObjectData = new SortedObjectListEditor();
         ObjectData.DataReset += (s, e) => OnObjectData_DataReset(e);
@@ -86,6 +89,7 @@ public class BrutarioEditor : IMainEditor
         UndoFactory.UndoElementAdded += UndoFactory_UndoElementAdded;
         UndoFactory.UndoComplete += UndoFactory_UndoComplete;
         UndoFactory.RedoComplete += UndoFactory_RedoComplete;
+
     }
 
     public event EventHandler? PathChanged;
@@ -485,12 +489,25 @@ public class BrutarioEditor : IMainEditor
         }
     }
 
+    public bool IsBonusArea
+    {
+        get
+        {
+            return AreaNumber is 0x42 or 0x2B;
+        }
+    }
+
     public SortedObjectListEditor ObjectData
     {
         get;
     }
 
     public SortedSpriteListEditor SpriteData
+    {
+        get;
+    }
+
+    public PaletteEditorModel PaletteEditorModel
     {
         get;
     }
@@ -541,11 +558,6 @@ public class BrutarioEditor : IMainEditor
         }
     }
 
-    private Color32BppArgb[] Palette
-    {
-        get;
-    }
-
     private byte[] PixelData
     {
         get;
@@ -556,12 +568,22 @@ public class BrutarioEditor : IMainEditor
         get;
     }
 
-    private int[] TileMap
+    private int[] BG1TileMap
+    {
+        get;
+    }
+
+    private int[] BG2TileMap
     {
         get;
     }
 
     private ObjTile[] BG1
+    {
+        get;
+    }
+
+    private ObjTile[] BG2
     {
         get;
     }
@@ -642,7 +664,8 @@ public class BrutarioEditor : IMainEditor
         // up the last valid state of the editor. Making this its own struct/class may
         // be a good idea.
         var rom = new Rom(File.ReadAllBytes(path));
-        var gameData = new GameData(rom);
+        var pointers = Pointers.GetPointers(rom);
+        var gameData = new GameData(rom, pointers);
 
         // These should never throw.
         Rom = rom;
@@ -650,6 +673,10 @@ public class BrutarioEditor : IMainEditor
         GameData = gameData;
         GameData.GfxData.ReadStaticData(PixelData);
         GameData.Map16Data.ReadStaticTiles(Map16Tiles);
+        PaletteEditorModel.PaletteData = GameData.PaletteData;
+        PaletteEditorModel.Path = path;
+        PaletteEditorModel.Rom = rom;
+        PaletteEditorModel.Pointers = pointers.PaletteDataPointers;
 
         // Internally, these should never throw. However, they call events, which we
         // cannot control. If an event throws, it could mess up our state. But if this
@@ -813,7 +840,7 @@ public class BrutarioEditor : IMainEditor
         // to the history. The user may be changing the object properties a lot
         // as they design the object to their liking, and we don't want all of
         // this in the history, just whatever the final product is. There's lots
-        // of rooms for bugs in this command, as we change the state of the
+        // of room for bugs in this command, as we change the state of the
         // editor pretty hard. We can't add multiple preview objects at once, we
         // can't switch to sprite, we probably shouldn't allow edits to other
         // things such as header or other area data. If the user decides to go
@@ -943,7 +970,7 @@ public class BrutarioEditor : IMainEditor
         var data = new byte[0x20 * 0x10 * 0x0D];
         for (var i = 0; i < data.Length; i++)
         {
-            data[i] = (byte)TileMap[i + (2 * 0x20 * 0x10)];
+            data[i] = (byte)BG1TileMap[i + (2 * 0x20 * 0x10)];
         }
 
         return data;
@@ -1011,7 +1038,6 @@ public class BrutarioEditor : IMainEditor
             OldSpriteIndex = SelectedSpriteIndex;
             OldSprite = SelectedSprite;
             EditSelectedSpriteEnabled = true;
-
         }
     }
 
@@ -1169,7 +1195,7 @@ public class BrutarioEditor : IMainEditor
         }
     }
 
-    public DrawData GetDrawData(
+    public AreaDrawData GetDrawData(
         int startX,
         Size size,
         Color separatorColor,
@@ -1182,11 +1208,12 @@ public class BrutarioEditor : IMainEditor
             ? SelectedSpriteIndex
             : SelectedObjectIndex;
 
-        return new DrawData(
+        return new AreaDrawData(
             new Color32BppArgb(0xFF, 0, 0, 0),
-            Palette,
+            PaletteEditorModel.GetCurrentPalette(),
             PixelData,
             BG1,
+            BG2,
             EnumerateSprites(AnimationFrame),
             startX,
             size,
@@ -1319,20 +1346,20 @@ public class BrutarioEditor : IMainEditor
 
     protected virtual void OnPlayerChanged(EventArgs e)
     {
+        PaletteEditorModel.Player = Player;
         PlayerChanged?.Invoke(this, e);
         if (IsAreaLoaded)
         {
-            ReloadPalette();
             Invalidate();
         }
     }
 
     protected virtual void OnPlayerStateChanged(EventArgs e)
     {
+        PaletteEditorModel.PlayerState = PlayerState;
         PlayerStateChanged?.Invoke(this, e);
         if (IsAreaLoaded)
         {
-            ReloadPalette();
             Invalidate();
         }
     }
@@ -1443,6 +1470,7 @@ public class BrutarioEditor : IMainEditor
         WriteHeader();
         WriteObjectData();
         WriteSpriteData();
+        PaletteEditorModel.WriteAreaPalette();
         GameData!.WriteToGameData(Rom!);
     }
 
@@ -1789,27 +1817,18 @@ public class BrutarioEditor : IMainEditor
             discardHistory: true);
         ResetObjectData(discardHistory: true);
         ResetSpriteData(discardHistory: true);
-        ReloadPalette();
+        PaletteEditorModel.PaletteIndex = ObjectAreaIndex;
+
         GameData!.TilemapLoader.LoadTilemap(ObjectAreaIndex);
+        GameData!.TilemapLoaderAsm.LoadTilemap(AreaType, ObjectAreaIndex);
         ReloadGfx();
         StartX = 0;
         IsAreaLoaded = true;
         RenderAreaTilemap();
+        //RenderBG2Tilemap();
+        GameData!.TilemapLoaderAsm.WriteTilemap(BG2);
         OnAreaLoaded(EventArgs.Empty);
         Invalidate();
-    }
-
-    private void ReloadPalette()
-    {
-        // TODO(swr): Change AreaNumber requirement to tileset requirement.
-        var isLuigiBonusArea = Player == Player.Luigi
-            && (AreaNumber == 0x42 || AreaNumber == 0x2B);
-        GameData!.PaletteData.ReadPalette(
-            ObjectAreaIndex,
-            isLuigiBonusArea,
-            Player,
-            PlayerState,
-            Palette);
     }
 
     private void ReloadGfx()
@@ -1859,19 +1878,24 @@ public class BrutarioEditor : IMainEditor
     private void RenderAreaTilemap()
     {
         GameData!.AreaObjectRenderer.RenderTileMap(
-            TileMap,
+            BG1TileMap,
             AreaType,
             AreaHeader,
-            ObjectData.GetObjectData().ToArray(),
+            [.. ObjectData.GetObjectData()],
             //GameData!.AreaLoader.AreaObjectData[ObjectAreaIndex],
             AreaNumber == 2);
-        ReadBG1Tiles();
+        ReadBGTiles(BG1TileMap, BG1);
     }
 
-    private void ReadBG1Tiles()
+    private void RenderBG2Tilemap()
+    {
+        ReadBGTiles(BG2TileMap, BG2);
+    }
+
+    private void ReadBGTiles(int[] tilemap, ObjTile[] bg)
     {
         const int width = 0x200;
-        var tiles = TileMap;
+        var tiles = tilemap;
         var height = tiles.Length / width;
         for (var y = 0; y < height; y++)
         {
@@ -1898,10 +1922,10 @@ public class BrutarioEditor : IMainEditor
                     }
                 }
 
-                BG1[destRow + destX] = tile.TopLeft;
-                BG1[destRow + destX + 1] = tile.TopRight;
-                BG1[destRow + (width << 1) + destX] = tile.BottomLeft;
-                BG1[destRow + (width << 1) + destX + 1] = tile.BottomRight;
+                bg[destRow + destX] = tile.TopLeft;
+                bg[destRow + destX + 1] = tile.TopRight;
+                bg[destRow + (width << 1) + destX] = tile.BottomLeft;
+                bg[destRow + (width << 1) + destX + 1] = tile.BottomRight;
             }
         }
     }
@@ -1925,7 +1949,7 @@ public class BrutarioEditor : IMainEditor
             AreaType,
             showPipePiranhaPlants: AreaNumber != 0x25);
 
-        var tilemapSprites = AreaSpriteRenderer.GetObjectDataSprites(TileMap);
+        var tilemapSprites = AreaSpriteRenderer.GetObjectDataSprites(BG1TileMap);
 
         var playerSprite = AreaSpriteRenderer.GetPlayerSprite(
             x: 0x28,

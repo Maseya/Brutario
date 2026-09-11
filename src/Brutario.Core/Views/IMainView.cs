@@ -8,7 +8,10 @@ namespace Brutario.Core;
 
 using System.Drawing;
 
+using Brutario.Core.Views;
+
 using Maseya.Smas.Smb1;
+using Maseya.Snes;
 
 public interface IMainView
 {
@@ -30,6 +33,8 @@ public interface IMainView
 
     bool DeleteAllEnabled { get; set; }
 
+    bool ViewPaletteEditor { get; set; }
+
     Player Player { get; set; }
 
     PlayerState PlayerState { get; set; }
@@ -41,6 +46,8 @@ public interface IMainView
     int StartX { get; set; }
 
     Size DrawAreaSize { get; }
+
+    IPaletteEditorView PaletteEditorView { get; }
 
     void Redraw();
 }
