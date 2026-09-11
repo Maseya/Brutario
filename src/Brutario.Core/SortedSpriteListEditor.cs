@@ -292,18 +292,22 @@ public class SortedSpriteListEditor :
         IEnumerable<AreaSpriteCommand> data)
     {
         var page = 0;
+        var lastCodeWasScreenJump = false;
         foreach (var item in data)
         {
-            if (item.ScreenFlag)
+            if (item.Code == AreaSpriteCode.ScreenJump)
             {
-                page++;
-            }
-            else if (item.Code == AreaSpriteCode.ScreenJump)
-            {
+                lastCodeWasScreenJump = true;
                 page = item.BaseCommand & 0x1F;
                 continue;
             }
 
+            if (item.ScreenFlag && !lastCodeWasScreenJump)
+            {
+                page++;
+            }
+
+            lastCodeWasScreenJump = false;
             yield return new UIAreaSpriteCommand(item, page);
         }
     }
