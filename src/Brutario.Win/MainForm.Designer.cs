@@ -669,9 +669,10 @@ namespace Brutario.Win
             // hsbStartX
             // 
             hsbStartX.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            hsbStartX.Dock = DockStyle.Bottom;
             hsbStartX.Enabled = false;
             hsbStartX.LargeChange = 16;
-            hsbStartX.Location = new Point(0, 325);
+            hsbStartX.Location = new Point(0, 342);
             hsbStartX.Maximum = 16;
             hsbStartX.Name = "hsbStartX";
             hsbStartX.Size = new Size(901, 17);
@@ -752,7 +753,7 @@ namespace Brutario.Win
             areaControl.Enabled = false;
             areaControl.Location = new Point(0, 52);
             areaControl.Name = "areaControl";
-            areaControl.Size = new Size(901, 274);
+            areaControl.Size = new Size(901, 290);
             areaControl.TabIndex = 5;
             areaControl.Paint += AreaControl_Paint;
             areaControl.MouseClick += AreaControl_MouseClick;
@@ -812,7 +813,7 @@ namespace Brutario.Win
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(901, 341);
+            ClientSize = new Size(901, 359);
             Controls.Add(areaControl);
             Controls.Add(hsbStartX);
             Controls.Add(toolStrip);
@@ -820,7 +821,7 @@ namespace Brutario.Win
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = mnuMain;
             Margin = new Padding(4, 3, 4, 3);
-            MinimumSize = new Size(916, 252);
+            MinimumSize = new Size(917, 398);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Brutario";
