@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 using Maseya.Smas.Smb1.AreaData.ObjectData;
 
@@ -100,7 +99,10 @@ public class SortedObjectListEditor :
 
     bool ICollection<UIAreaObjectCommand>.IsReadOnly
     {
-        get { return false; }
+        get
+        {
+            return false;
+        }
     }
 
     private List<UIAreaObjectCommand> Items

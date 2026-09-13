@@ -20,5 +20,8 @@ public class UndoEventArgs : EventArgs
     {
     }
 
-    public UndoElement UndoElement { get; }
+    public UndoElement UndoElement
+    {
+        get;
+    }
 }

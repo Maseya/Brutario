@@ -35,7 +35,10 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         }
     }
 
-    public int Page { get; set; }
+    public int Page
+    {
+        get; set;
+    }
 
     public int X
     {
@@ -72,7 +75,10 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         }
     }
 
-    public int Z { get; set; }
+    public int Z
+    {
+        get; set;
+    }
 
     public string HexString
     {

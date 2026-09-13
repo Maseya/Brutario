@@ -220,17 +220,17 @@ public partial class SpriteEditorForm : Form
             result.Value1 |= (byte)(XPos << 4);
             switch (AreaSpriteCode)
             {
-                case AreaSpriteCode.AreaPointer:
-                    result.Value1 |= 0x0E;
-                    result.Value2 |= (byte)(AreaNumber & 0x7F);
-                    result.Value3 |= (byte)((World - 1) << 5);
-                    result.Value3 |= (byte)(DestPage & 0x1F);
-                    break;
+            case AreaSpriteCode.AreaPointer:
+                result.Value1 |= 0x0E;
+                result.Value2 |= (byte)(AreaNumber & 0x7F);
+                result.Value3 |= (byte)((World - 1) << 5);
+                result.Value3 |= (byte)(DestPage & 0x1F);
+                break;
 
-                default:
-                    result.Value1 |= (byte)YPos;
-                    result.Value2 |= (byte)((int)AreaSpriteCode & 0x3F);
-                    break;
+            default:
+                result.Value1 |= (byte)YPos;
+                result.Value2 |= (byte)((int)AreaSpriteCode & 0x3F);
+                break;
             }
 
             result.HardWorldFlag |= HardFlag;
@@ -248,16 +248,16 @@ public partial class SpriteEditorForm : Form
             AreaSpriteCode = command.Code;
             switch (command.Code)
             {
-                case AreaSpriteCode.AreaPointer:
-                    Page = 1 + (command.Value3 & 0x1F);
-                    World = 1 + command.WorldLimit;
-                    AreaNumber = command.AreaNumber;
-                    break;
+            case AreaSpriteCode.AreaPointer:
+                Page = 1 + (command.Value3 & 0x1F);
+                World = 1 + command.WorldLimit;
+                AreaNumber = command.AreaNumber;
+                break;
 
-                default:
-                    YPos = command.Y;
-                    HardFlag = command.HardWorldFlag;
-                    break;
+            default:
+                YPos = command.Y;
+                HardFlag = command.HardWorldFlag;
+                break;
             }
 
             Page = value.Page;

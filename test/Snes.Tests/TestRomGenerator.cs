@@ -10,17 +10,35 @@ using System;
 /// </remarks>
 internal class TestRomGenerator
 {
-    public string? AddressMode { get; set; }
+    public string? AddressMode
+    {
+        get; set;
+    }
 
-    public int Size { get; set; }
+    public int Size
+    {
+        get; set;
+    }
 
-    public string? LoRom { get; set; }
+    public string? LoRom
+    {
+        get; set;
+    }
 
-    public string? HiRom { get; set; }
+    public string? HiRom
+    {
+        get; set;
+    }
 
-    public string? ExLoRom { get; set; }
+    public string? ExLoRom
+    {
+        get; set;
+    }
 
-    public string? ExHiRom { get; set; }
+    public string? ExHiRom
+    {
+        get; set;
+    }
 
     public byte[] CreateRom()
     {

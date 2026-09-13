@@ -74,25 +74,25 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
         {
             switch (index)
             {
-                case TopLeftIndex:
-                    TopLeft = value;
-                    return;
+            case TopLeftIndex:
+                TopLeft = value;
+                return;
 
-                case BottomLeftIndex:
-                    TopRight = value;
-                    return;
+            case BottomLeftIndex:
+                TopRight = value;
+                return;
 
-                case TopRightIndex:
-                    BottomLeft = value;
-                    return;
+            case TopRightIndex:
+                BottomLeft = value;
+                return;
 
-                case BottomRightIndex:
-                    BottomRight = value;
-                    return;
+            case BottomRightIndex:
+                BottomRight = value;
+                return;
 
-                default:
-                    throw new ArgumentOutOfRangeException(
-                        nameof(index));
+            default:
+                throw new ArgumentOutOfRangeException(
+                    nameof(index));
             }
         }
     }

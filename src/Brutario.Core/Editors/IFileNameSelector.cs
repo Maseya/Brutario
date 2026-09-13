@@ -8,7 +8,10 @@ namespace Brutario.Core.Editors;
 
 public interface IFileNameSelector
 {
-    string? FileName { get; set; }
+    string? FileName
+    {
+        get; set;
+    }
 
     PromptResult Prompt();
 }

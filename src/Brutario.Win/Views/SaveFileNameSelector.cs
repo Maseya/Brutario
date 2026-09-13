@@ -16,7 +16,10 @@ public class SaveFileNameSelector : FileNameSelectorBase
         SaveFileDialog = new SaveFileDialog();
     }
 
-    public SaveFileDialog SaveFileDialog { get; }
+    public SaveFileDialog SaveFileDialog
+    {
+        get;
+    }
 
     protected override FileDialog FileDialog
     {

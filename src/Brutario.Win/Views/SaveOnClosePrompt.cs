@@ -8,8 +8,6 @@ using Brutario.Core.Editors;
 
 using Controls;
 
-using Core;
-
 public partial class SaveOnClosePrompt : EditorDialogBase, ISaveOnClosePrompt
 {
     private string? _text;

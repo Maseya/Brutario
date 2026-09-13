@@ -345,46 +345,46 @@ internal partial class ObjectEditorForm : Form
             result.Value1 |= (byte)(XPos << 4);
             switch ((int)AreaObjectCode & 0xF00)
             {
-                case 0xE00:
-                    result.Value1 |= 0x0E;
-                    result.Value2 |= (byte)(((int)AreaObjectCode) & 0x40);
-                    if (ForegroundSceneryEnabled)
-                    {
-                        result.Value2 |= (byte)ForegroundScenery;
-                    }
-                    else if (TerrainAndBackgroundSceneryEnabled)
-                    {
-                        result.Value2 |= (byte)TerrainMode;
-                        result.Value2 |= (byte)((int)BackgroundScenery << 4);
-                    }
-                    else
-                    {
-                        Debug.Assert(
-                            false,
-                            "Scenery command but no scenery objects enabled.");
-                    }
+            case 0xE00:
+                result.Value1 |= 0x0E;
+                result.Value2 |= (byte)(((int)AreaObjectCode) & 0x40);
+                if (ForegroundSceneryEnabled)
+                {
+                    result.Value2 |= (byte)ForegroundScenery;
+                }
+                else if (TerrainAndBackgroundSceneryEnabled)
+                {
+                    result.Value2 |= (byte)TerrainMode;
+                    result.Value2 |= (byte)((int)BackgroundScenery << 4);
+                }
+                else
+                {
+                    Debug.Assert(
+                        false,
+                        "Scenery command but no scenery objects enabled.");
+                }
 
-                    break;
+                break;
 
-                case 0xF00:
-                    result.Value1 |= 0x0F;
-                    if (YPosEnabled)
-                    {
-                        result.Value2 |= (byte)(YPos << 4);
-                    }
+            case 0xF00:
+                result.Value1 |= 0x0F;
+                if (YPosEnabled)
+                {
+                    result.Value2 |= (byte)(YPos << 4);
+                }
 
-                    result.Value3 |= (byte)((int)AreaObjectCode & 0x7F);
-                    break;
+                result.Value3 |= (byte)((int)AreaObjectCode & 0x7F);
+                break;
 
-                default:
-                    if (YPosEnabled)
-                    {
-                        result.Value1 |= (byte)YPos;
-                    }
+            default:
+                if (YPosEnabled)
+                {
+                    result.Value1 |= (byte)YPos;
+                }
 
-                    result.Value1 |= (byte)((int)AreaObjectCode >> 8);
-                    result.Value2 |= (byte)((int)AreaObjectCode & 0x7F);
-                    break;
+                result.Value1 |= (byte)((int)AreaObjectCode >> 8);
+                result.Value2 |= (byte)((int)AreaObjectCode & 0x7F);
+                break;
             }
 
             if (LengthEnabled)
@@ -435,7 +435,10 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    private static ReadOnlyDictionary<ObjectType, int> EnumIndexes { get; } = new(
+    private static ReadOnlyDictionary<ObjectType, int> EnumIndexes
+    {
+        get;
+    } = new(
         new Dictionary<ObjectType, int>(
         Enumerable.Range(0, Codes.Count)
             .Select(i => new KeyValuePair<ObjectType, int>(Codes[i], i))));

@@ -21,9 +21,18 @@ public interface IObjectListView
 
     event EventHandler? MoveItemUp_Click;
 
-    AreaPlatformType AreaPlatformType { get; set; }
+    AreaPlatformType AreaPlatformType
+    {
+        get; set;
+    }
 
-    int SelectedIndex { get; set; }
+    int SelectedIndex
+    {
+        get; set;
+    }
 
-    IList<UIAreaObjectCommand> Items { get; }
+    IList<UIAreaObjectCommand> Items
+    {
+        get;
+    }
 }

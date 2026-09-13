@@ -52,7 +52,10 @@ public class SortedSpriteListEditor :
 
     bool ICollection<UIAreaSpriteCommand>.IsReadOnly
     {
-        get { return false; }
+        get
+        {
+            return false;
+        }
     }
 
     private List<UIAreaSpriteCommand> Items

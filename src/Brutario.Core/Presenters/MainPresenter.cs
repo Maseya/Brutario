@@ -146,25 +146,55 @@ public class MainPresenter
         }
     }
 
-    private BrutarioEditor MainEditor { get; }
+    private BrutarioEditor MainEditor
+    {
+        get;
+    }
 
-    private IMainView MainView { get; }
+    private IMainView MainView
+    {
+        get;
+    }
 
-    private IExceptionView ExceptionHelper { get; }
+    private IExceptionView ExceptionHelper
+    {
+        get;
+    }
 
-    private IFileNameSelector OpenFileNameSelector { get; }
+    private IFileNameSelector OpenFileNameSelector
+    {
+        get;
+    }
 
-    private IFileNameSelector SaveFileNameSelector { get; }
+    private IFileNameSelector SaveFileNameSelector
+    {
+        get;
+    }
 
-    private ISaveOnClosePrompt SaveOnClosePrompt { get; }
+    private ISaveOnClosePrompt SaveOnClosePrompt
+    {
+        get;
+    }
 
-    private IHeaderEditorView HeaderEditorView { get; }
+    private IHeaderEditorView HeaderEditorView
+    {
+        get;
+    }
 
-    private IObjectListView ObjectListView { get; }
+    private IObjectListView ObjectListView
+    {
+        get;
+    }
 
-    private IObjectEditorView ObjectEditorView { get; }
+    private IObjectEditorView ObjectEditorView
+    {
+        get;
+    }
 
-    private ISpriteEditorView SpriteEditorView { get; }
+    private ISpriteEditorView SpriteEditorView
+    {
+        get;
+    }
 
     public void Open()
     {
@@ -606,12 +636,12 @@ public class MainPresenter
         {
             switch (SaveOnClosePrompt.Prompt())
             {
-                case PromptResult.Yes:
-                    MainEditor.Save();
-                    break;
+            case PromptResult.Yes:
+                MainEditor.Save();
+                break;
 
-                case PromptResult.Cancel:
-                    return false;
+            case PromptResult.Cancel:
+                return false;
             }
         }
 

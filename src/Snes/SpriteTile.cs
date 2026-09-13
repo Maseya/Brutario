@@ -18,7 +18,8 @@ public struct SpriteTile : IEquatable<SpriteTile>
 
     public SpriteTile(int tileIndex, int paletteIndex, int priority = 0)
         : this(tileIndex, paletteIndex, priority, false, false)
-    { }
+    {
+    }
 
     public SpriteTile(
         int tileIndex,

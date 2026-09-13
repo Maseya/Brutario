@@ -41,9 +41,16 @@ public class TilemapLoaderPointers
             : this(
             tilemapDataIndexPointer: baseAddress,
             tilemapDataPointer: baseAddress + 0x09)
-    { }
+    {
+    }
 
-    public int TilemapDataIndexPointer { get; }
+    public int TilemapDataIndexPointer
+    {
+        get;
+    }
 
-    public int TilemapDataPointer { get; }
+    public int TilemapDataPointer
+    {
+        get;
+    }
 }

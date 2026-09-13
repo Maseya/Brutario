@@ -14,7 +14,10 @@ public interface IHeaderEditorView
 {
     event EventHandler? AreaHeaderChanged;
 
-    AreaHeader AreaHeader { get; set; }
+    AreaHeader AreaHeader
+    {
+        get; set;
+    }
 
     bool Prompt();
 }

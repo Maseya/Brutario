@@ -724,39 +724,39 @@ public class Rom
         int result;
         switch (mode)
         {
-            case AddressMode.LoRom:
-            case AddressMode.LoRom2:
-                result = ((pointer & 0x7F_0000) >> 1) | (pointer & 0x7FFF);
-                break;
+        case AddressMode.LoRom:
+        case AddressMode.LoRom2:
+            result = ((pointer & 0x7F_0000) >> 1) | (pointer & 0x7FFF);
+            break;
 
-            case AddressMode.HiRom:
-            case AddressMode.HiRom2:
-                result = pointer & 0x3F_FFFF;
-                break;
+        case AddressMode.HiRom:
+        case AddressMode.HiRom2:
+            result = pointer & 0x3F_FFFF;
+            break;
 
-            case AddressMode.ExHiRom:
-                result = pointer & 0x3F_FFFF;
-                if (pointer < 0xC0_0000)
-                {
-                    result |= 0x40_0000;
-                }
+        case AddressMode.ExHiRom:
+            result = pointer & 0x3F_FFFF;
+            if (pointer < 0xC0_0000)
+            {
+                result |= 0x40_0000;
+            }
 
-                break;
+            break;
 
-            case AddressMode.ExLoRom:
-                result = ((pointer & 0x7F_0000) >> 1) | (pointer & 0x7FFF);
-                if (pointer < 0x80_0000)
-                {
-                    result |= 0x40_0000;
-                }
+        case AddressMode.ExLoRom:
+            result = ((pointer & 0x7F_0000) >> 1) | (pointer & 0x7FFF);
+            if (pointer < 0x80_0000)
+            {
+                result |= 0x40_0000;
+            }
 
-                break;
+            break;
 
-            default:
-                throw new InvalidEnumArgumentException(
-                    nameof(mode),
-                    (int)mode,
-                    typeof(AddressMode));
+        default:
+            throw new InvalidEnumArgumentException(
+                nameof(mode),
+                (int)mode,
+                typeof(AddressMode));
         }
 
         return result + header;
@@ -775,55 +775,55 @@ public class Rom
         int result;
         switch (mode)
         {
-            case AddressMode.LoRom:
-                result = ((pointer << 1) & 0x7F_0000) | 0x8000 | (pointer & 0x7FFF);
-                if (pointer >= 0x38_0000)
-                {
-                    result |= 0x80_0000;
-                }
+        case AddressMode.LoRom:
+            result = ((pointer << 1) & 0x7F_0000) | 0x8000 | (pointer & 0x7FFF);
+            if (pointer >= 0x38_0000)
+            {
+                result |= 0x80_0000;
+            }
 
-                break;
+            break;
 
-            case AddressMode.HiRom:
-                result = 0xC0_0000 | pointer;
-                break;
+        case AddressMode.HiRom:
+            result = 0xC0_0000 | pointer;
+            break;
 
-            case AddressMode.ExHiRom:
-                result = pointer >= 0x7E_0000
-                    ? ~0x40_0000 & pointer
-                    : pointer < 0x40_0000
-                    ? 0xC0_0000 | pointer
-                    : pointer;
-                break;
+        case AddressMode.ExHiRom:
+            result = pointer >= 0x7E_0000
+                ? ~0x40_0000 & pointer
+                : pointer < 0x40_0000
+                ? 0xC0_0000 | pointer
+                : pointer;
+            break;
 
-            case AddressMode.ExLoRom:
-                result = ((pointer << 1) & 0x7F_0000) | 0x8000 | (pointer & 0x7FFF);
-                if (pointer < 0x40_0000)
-                {
-                    result |= 0x80_0000;
-                }
+        case AddressMode.ExLoRom:
+            result = ((pointer << 1) & 0x7F_0000) | 0x8000 | (pointer & 0x7FFF);
+            if (pointer < 0x40_0000)
+            {
+                result |= 0x80_0000;
+            }
 
-                break;
+            break;
 
-            case AddressMode.LoRom2:
-                result = 0x80_0000
-                    | ((pointer << 1) & 0x7F_0000) | 0x8000 | (pointer & 0x7FFF);
-                break;
+        case AddressMode.LoRom2:
+            result = 0x80_0000
+                | ((pointer << 1) & 0x7F_0000) | 0x8000 | (pointer & 0x7FFF);
+            break;
 
-            case AddressMode.HiRom2:
-                result = 0x40_0000 | pointer;
-                if (pointer >= 0x30_0000)
-                {
-                    result |= 0x80_0000;
-                }
+        case AddressMode.HiRom2:
+            result = 0x40_0000 | pointer;
+            if (pointer >= 0x30_0000)
+            {
+                result |= 0x80_0000;
+            }
 
-                break;
+            break;
 
-            default:
-                throw new InvalidEnumArgumentException(
-                    nameof(mode),
-                    (int)mode,
-                    typeof(AddressMode));
+        default:
+            throw new InvalidEnumArgumentException(
+                nameof(mode),
+                (int)mode,
+                typeof(AddressMode));
         }
 
         return result;

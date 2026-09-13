@@ -87,31 +87,71 @@ public class AreaLoaderPointers
             objectHighBytePointer: baseAddress + 0x72,
             areaDataStartPointer: baseAddress + 0x01B2,
             areaDataEndPointer: baseAddress + 0x17DA)
-    { }
+    {
+    }
 
-    public int NumberOfWorldsAddress { get; }
+    public int NumberOfWorldsAddress
+    {
+        get;
+    }
 
-    public int NumberOfAreas { get; }
+    public int NumberOfAreas
+    {
+        get;
+    }
 
-    public int AreaNumberTableSize { get; }
+    public int AreaNumberTableSize
+    {
+        get;
+    }
 
-    public int WorldAreaNumberOffsetPointer { get; }
+    public int WorldAreaNumberOffsetPointer
+    {
+        get;
+    }
 
-    public int AreaNumberTablePointer { get; }
+    public int AreaNumberTablePointer
+    {
+        get;
+    }
 
-    public int SpriteAreaTypeOffsetPointer { get; }
+    public int SpriteAreaTypeOffsetPointer
+    {
+        get;
+    }
 
-    public int SpriteLowBytePointer { get; }
+    public int SpriteLowBytePointer
+    {
+        get;
+    }
 
-    public int SpriteHighBytePointer { get; }
+    public int SpriteHighBytePointer
+    {
+        get;
+    }
 
-    public int ObjectAreaTypeOffsetPointer { get; }
+    public int ObjectAreaTypeOffsetPointer
+    {
+        get;
+    }
 
-    public int ObjectLowBytePointer { get; }
+    public int ObjectLowBytePointer
+    {
+        get;
+    }
 
-    public int ObjectHighBytePointer { get; }
+    public int ObjectHighBytePointer
+    {
+        get;
+    }
 
-    public int AreaDataStartPointer { get; }
+    public int AreaDataStartPointer
+    {
+        get;
+    }
 
-    public int AreaDataEndPointer { get; }
+    public int AreaDataEndPointer
+    {
+        get;
+    }
 }

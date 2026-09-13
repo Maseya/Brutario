@@ -122,39 +122,39 @@ public class Pointers
         // TODO(swr): This will need to be customized more later.
         switch (rom.DestinationCode)
         {
-            case DestinationCode.NorthAmerica:
-                if (rom.GameTitle.Contains("WORLD"))
-                {
-                    return UsaPlusW;
-                }
+        case DestinationCode.NorthAmerica:
+            if (rom.GameTitle.Contains("WORLD"))
+            {
+                return UsaPlusW;
+            }
 
-                if (rom.GameTitle == "Super Mario Bros. 1")
-                {
-                    return UsaSmb1;
-                }
+            if (rom.GameTitle == "Super Mario Bros. 1")
+            {
+                return UsaSmb1;
+            }
 
-                return Usa;
+            return Usa;
 
-            case DestinationCode.Japan:
-                if (rom.MaskRomVersion == 1)
-                {
-                    return Jp11;
-                }
+        case DestinationCode.Japan:
+            if (rom.MaskRomVersion == 1)
+            {
+                return Jp11;
+            }
 
-                return Jp10;
+            return Jp10;
 
-            case DestinationCode.Europe:
-                if (rom.GameTitle.Contains("WORLD"))
-                {
-                    return EuPlusW;
-                }
+        case DestinationCode.Europe:
+            if (rom.GameTitle.Contains("WORLD"))
+            {
+                return EuPlusW;
+            }
 
-                return Eu;
+            return Eu;
 
-            default:
-                throw new ArgumentException(
-                    "Could not determine which type of All-Stars ROM was loaded.",
-                    nameof(rom));
+        default:
+            throw new ArgumentException(
+                "Could not determine which type of All-Stars ROM was loaded.",
+                nameof(rom));
         }
     }
 }

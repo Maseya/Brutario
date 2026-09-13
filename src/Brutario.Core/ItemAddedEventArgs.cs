@@ -8,5 +8,8 @@ public class ItemAddedEventArgs : EventArgs
         Index = index;
     }
 
-    public int Index { get; set; }
+    public int Index
+    {
+        get; set;
+    }
 }

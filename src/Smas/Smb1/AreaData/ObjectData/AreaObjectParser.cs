@@ -110,41 +110,95 @@ public class AreaObjectParser
         };
     }
 
-    public AreaObjectRenderer AreaObjectRenderer { get; }
+    public AreaObjectRenderer AreaObjectRenderer
+    {
+        get;
+    }
 
-    public byte[] PulleyRopeTileTable { get; }
+    public byte[] PulleyRopeTileTable
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable1 { get; }
+    public byte[] JPipeTilesTable1
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable2 { get; }
+    public byte[] JPipeTilesTable2
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable3 { get; }
+    public byte[] JPipeTilesTable3
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable4 { get; }
+    public byte[] JPipeTilesTable4
+    {
+        get;
+    }
 
-    public byte[] PipeTileTable { get; }
+    public byte[] PipeTileTable
+    {
+        get;
+    }
 
-    public byte[] WaterSurfaceTileTable { get; }
+    public byte[] WaterSurfaceTileTable
+    {
+        get;
+    }
 
-    public byte[] CoinRowTileTable { get; }
+    public byte[] CoinRowTileTable
+    {
+        get;
+    }
 
-    public byte[] BrickRowTileTable { get; }
+    public byte[] BrickRowTileTable
+    {
+        get;
+    }
 
-    public byte[] BlockRowTileTable { get; }
+    public byte[] BlockRowTileTable
+    {
+        get;
+    }
 
-    public byte[] SingleTileObjectTable { get; }
+    public byte[] SingleTileObjectTable
+    {
+        get;
+    }
 
-    public byte[] CastleTileTable { get; }
+    public byte[] CastleTileTable
+    {
+        get;
+    }
 
-    public byte[] StoneStairYTable { get; }
+    public byte[] StoneStairYTable
+    {
+        get;
+    }
 
-    public byte[] StoneStairHeightTable { get; }
+    public byte[] StoneStairHeightTable
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable5 { get; }
+    public byte[] JPipeTilesTable5
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable6 { get; }
+    public byte[] JPipeTilesTable6
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable7 { get; }
+    public byte[] JPipeTilesTable7
+    {
+        get;
+    }
 
     private AreaType AreaType
     {
@@ -742,21 +796,21 @@ public class AreaObjectParser
     {
         switch (CurrentHeader.AreaPlatformType)
         {
-            case AreaPlatformType.Trees:
-                RenderTreePlatform();
-                break;
+        case AreaPlatformType.Trees:
+            RenderTreePlatform();
+            break;
 
-            case AreaPlatformType.Mushrooms:
-                RenderMushroomPlatform();
-                break;
+        case AreaPlatformType.Mushrooms:
+            RenderMushroomPlatform();
+            break;
 
-            case AreaPlatformType.CloudGround:
-                RenderCloudPlatform();
-                break;
+        case AreaPlatformType.CloudGround:
+            RenderCloudPlatform();
+            break;
 
-            case AreaPlatformType.BulletBillTurrets:
-                RenderBulletBillTurrets();
-                break;
+        case AreaPlatformType.BulletBillTurrets:
+            RenderBulletBillTurrets();
+            break;
         }
     }
 

@@ -14,7 +14,6 @@ using System.IO;
 using System.Linq;
 
 using Brutario.Core.Editors;
-using Brutario.Core.Views;
 
 using Maseya.Smas.Smb1;
 using Maseya.Smas.Smb1.AreaData;
@@ -145,9 +144,15 @@ public class BrutarioEditor : IMainEditor
 
     public event EventHandler? AnimationFrameChanged;
 
-    public bool EditSelectedObjectEnabled { get; set; }
+    public bool EditSelectedObjectEnabled
+    {
+        get; set;
+    }
 
-    public bool EditSelectedSpriteEnabled { get; set; }
+    public bool EditSelectedSpriteEnabled
+    {
+        get; set;
+    }
 
     public int SelectedObjectIndex
     {
@@ -604,38 +609,80 @@ public class BrutarioEditor : IMainEditor
         }
     }
 
-    private int OldObjectIndex { get; set; }
+    private int OldObjectIndex
+    {
+        get; set;
+    }
 
-    private UIAreaObjectCommand OldObject { get; set; }
+    private UIAreaObjectCommand OldObject
+    {
+        get; set;
+    }
 
-    private int OldSpriteIndex { get; set; }
+    private int OldSpriteIndex
+    {
+        get; set;
+    }
 
-    private UIAreaSpriteCommand OldSprite { get; set; }
+    private UIAreaSpriteCommand OldSprite
+    {
+        get; set;
+    }
 
-    private int PreferredX { get; set; }
+    private int PreferredX
+    {
+        get; set;
+    }
 
-    private int PreferredY { get; set; }
+    private int PreferredY
+    {
+        get; set;
+    }
 
     private GameData? GameData
     {
         get; set;
     }
 
-    private string? AutoSavePath { get; set; }
+    private string? AutoSavePath
+    {
+        get; set;
+    }
 
-    public bool AutoSaveEnabled { get; set; }
+    public bool AutoSaveEnabled
+    {
+        get; set;
+    }
 
-    public bool PruneAutoSavesEnabled { get; set; }
+    public bool PruneAutoSavesEnabled
+    {
+        get; set;
+    }
 
-    public TimeSpan AutoSaveInterval { get; set; }
+    public TimeSpan AutoSaveInterval
+    {
+        get; set;
+    }
 
-    public TimeSpan AutoSaveCutoffAge { get; set; }
+    public TimeSpan AutoSaveCutoffAge
+    {
+        get; set;
+    }
 
-    public bool AutoSaveHardCutoff { get; set; }
+    public bool AutoSaveHardCutoff
+    {
+        get; set;
+    }
 
-    private DateTime LastAutoSaveTime { get; set; }
+    private DateTime LastAutoSaveTime
+    {
+        get; set;
+    }
 
-    private byte[]? LastAutoSaveData { get; set; }
+    private byte[]? LastAutoSaveData
+    {
+        get; set;
+    }
 
     public void Open(string path)
     {

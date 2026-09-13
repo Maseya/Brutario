@@ -147,37 +147,37 @@ public class AreaSpriteRenderer
                 var pX = x << 4;
                 switch (tilemap[index + x])
                 {
-                    case 0xE8:
-                        result = result.Concat(Powerup(pX, pY));
-                        break;
+                case 0xE8:
+                    result = result.Concat(Powerup(pX, pY));
+                    break;
 
-                    case 0x62:
-                        result = result.Concat(HiddenQuestionBlock(pX, pY));
-                        break;
+                case 0x62:
+                    result = result.Concat(HiddenQuestionBlock(pX, pY));
+                    break;
 
-                    case 0x63:
-                        result = result.Concat(HiddenBlock1UP(pX, pY));
-                        break;
+                case 0x63:
+                    result = result.Concat(HiddenBlock1UP(pX, pY));
+                    break;
 
-                    case 0x58:
-                        result = result.Concat(Powerup(pX, pY));
-                        break;
+                case 0x58:
+                    result = result.Concat(Powerup(pX, pY));
+                    break;
 
-                    case 0x59:
-                        result = result.Concat(BeanStalk(pX, pY));
-                        break;
+                case 0x59:
+                    result = result.Concat(BeanStalk(pX, pY));
+                    break;
 
-                    case 0x5A:
-                        result = result.Concat(Star(pX, pY));
-                        break;
+                case 0x5A:
+                    result = result.Concat(Star(pX, pY));
+                    break;
 
-                    case 0x5B:
-                        result = result.Concat(Brick10Coins(pX, pY));
-                        break;
+                case 0x5B:
+                    result = result.Concat(Brick10Coins(pX, pY));
+                    break;
 
-                    case 0x5C:
-                        result = result.Concat(Brick1Up(pX, pY));
-                        break;
+                case 0x5C:
+                    result = result.Concat(Brick1Up(pX, pY));
+                    break;
                 }
             }
         }

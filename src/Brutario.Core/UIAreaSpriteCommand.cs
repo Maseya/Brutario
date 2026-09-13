@@ -35,7 +35,10 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
         }
     }
 
-    public int Page { get; set; }
+    public int Page
+    {
+        get; set;
+    }
 
     public int X
     {
@@ -51,7 +54,10 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
         }
     }
 
-    public int Z { get; set; }
+    public int Z
+    {
+        get; set;
+    }
 
     public int Y
     {

@@ -36,27 +36,63 @@ public readonly ref struct DrawData
         SelectColor = selectColor;
     }
 
-    public Color32BppArgb BgColor { get; }
+    public Color32BppArgb BgColor
+    {
+        get;
+    }
 
-    public ReadOnlySpan<Color32BppArgb> Palette { get; }
+    public ReadOnlySpan<Color32BppArgb> Palette
+    {
+        get;
+    }
 
-    public ReadOnlySpan<byte> PixelData { get; }
+    public ReadOnlySpan<byte> PixelData
+    {
+        get;
+    }
 
-    public ReadOnlySpan<ObjTile> Bg1 { get; }
+    public ReadOnlySpan<ObjTile> Bg1
+    {
+        get;
+    }
 
-    public IEnumerable<Sprite> Sprites { get; }
+    public IEnumerable<Sprite> Sprites
+    {
+        get;
+    }
 
-    public int StartX { get; }
+    public int StartX
+    {
+        get;
+    }
 
-    public Size Size { get; }
+    public Size Size
+    {
+        get;
+    }
 
-    public IEnumerable<Rectangle> Rectangles { get; }
+    public IEnumerable<Rectangle> Rectangles
+    {
+        get;
+    }
 
-    public int SelectedIndex { get; }
+    public int SelectedIndex
+    {
+        get;
+    }
 
-    public Color SeparatorColor { get; }
+    public Color SeparatorColor
+    {
+        get;
+    }
 
-    public Color PassiveColor { get; }
+    public Color PassiveColor
+    {
+        get;
+    }
 
-    public Color SelectColor { get; }
+    public Color SelectColor
+    {
+        get;
+    }
 }

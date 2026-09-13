@@ -197,7 +197,10 @@ public class AreaEditor
         set;
     }
 
-    private bool IsAreaLoaded { get; set; }
+    private bool IsAreaLoaded
+    {
+        get; set;
+    }
 
     private GameData GameData
     {
