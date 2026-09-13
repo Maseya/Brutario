@@ -147,7 +147,7 @@ csharp_style_unused_value_assignment_preference = discard_variable:error
 csharp_style_unused_value_expression_statement_preference = discard_variable:error
 
 # 'using' directive preferences
-csharp_using_directive_placement = outside_namespace:error
+csharp_using_directive_placement = inside_namespace:error
 
 # New line preferences
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = false:error
