@@ -13,6 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
+using Brutario.Core.Editors;
 using Brutario.Core.Views;
 
 using Maseya.Smas.Smb1;

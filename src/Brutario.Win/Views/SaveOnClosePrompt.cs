@@ -4,6 +4,8 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using Brutario.Core.Editors;
+
 using Controls;
 
 using Core;

@@ -1,4 +1,4 @@
-﻿namespace Maseya.Snes.Tests;
+﻿namespace Snes.Tests;
 
 using System;
 using System.ComponentModel;

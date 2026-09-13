@@ -10,6 +10,8 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using Brutario.Core.Editors;
+
 using Core;
 
 using Maseya.Smas.Smb1.AreaData.HeaderData;

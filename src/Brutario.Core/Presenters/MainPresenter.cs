@@ -4,12 +4,13 @@
 //     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-namespace Brutario.Core;
+namespace Brutario.Core.Presenters;
 
 using System;
 using System.Drawing;
 using System.Text;
 
+using Brutario.Core.Editors;
 using Brutario.Core.Views;
 
 using Maseya.Smas.Smb1;

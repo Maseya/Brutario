@@ -3,6 +3,8 @@
 using System;
 using System.ComponentModel;
 
+using Brutario.Core.Views;
+
 using Controls;
 
 using Core;

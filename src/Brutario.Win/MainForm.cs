@@ -11,6 +11,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
+using Brutario.Core.Presenters;
+using Brutario.Core.Views;
 using Brutario.Win.Properties;
 
 using Core;

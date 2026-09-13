@@ -3,6 +3,8 @@
 using System;
 using System.ComponentModel;
 
+using Brutario.Core.Editors;
+
 using Core;
 
 public abstract class FileNameSelectorBase : EditorDialogBase, IFileNameSelector
