@@ -1179,14 +1179,9 @@ public class BrutarioEditor : IMainEditor
 
         if (SpriteMode && SelectedSpriteIndex != -1)
         {
-            if (y < 0)
-            {
-                y = 0;
-            }
-            else if (y >= 0x0D)
-            {
-                y = 0x0C;
-            }
+            y = SelectedSprite.Command.Y > 0x0C
+                ? SelectedSprite.Command.Y
+                : Clamp(y, 0x00, 0x0C);
 
             var item = SelectedSprite;
             item.X = x;
