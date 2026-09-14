@@ -427,7 +427,7 @@ internal partial class ObjectEditorForm : Form
         }
     }
 
-    private static IReadOnlyList<ObjectType> Codes
+    private static ReadOnlyCollection<ObjectType> Codes
     {
         get
         {

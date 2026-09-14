@@ -608,7 +608,7 @@ public partial class MainForm : Form, IMainView
 
     private void LoadArea_Click(object sender, EventArgs e)
     {
-        MessageBox.Show("Not yet implemented");
+        _ = MessageBox.Show("Not yet implemented");
     }
 
     private void ObjectListView_AddItem_Click(object sender, EventArgs e)

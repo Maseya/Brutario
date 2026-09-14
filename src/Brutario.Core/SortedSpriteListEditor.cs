@@ -216,7 +216,7 @@ public class SortedSpriteListEditor :
         int index,
         Brutario.Core.UIAreaSpriteCommand item)
     {
-        Add(item);
+        _ = Add(item);
     }
 
     public IEnumerator<UIAreaSpriteCommand> GetEnumerator()

@@ -1756,7 +1756,7 @@ public class BrutarioEditor : IMainEditor
     {
         PushUndoAction(
             undo: () => ObjectData.Reset(items),
-            redo: () => ObjectData.Clear());
+            redo: ObjectData.Clear);
     }
 
     private void ClearSpritesInternal(bool discardHistory = false)
@@ -1774,7 +1774,7 @@ public class BrutarioEditor : IMainEditor
     {
         PushUndoAction(
             undo: () => SpriteData.Reset(items),
-            redo: () => SpriteData.Clear());
+            redo: SpriteData.Clear);
     }
 
     private void SetAreaHeaderInternal(
