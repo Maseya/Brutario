@@ -24,7 +24,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     /// </summary>
     public AreaSpriteCode Code
     {
-        get
+        readonly get
         {
             return IsThreeByteCommand
                 ? AreaSpriteCode.AreaPointer
@@ -40,7 +40,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         }
     }
 
-    public bool IsValid
+    public readonly bool IsValid
     {
         get
         {
@@ -54,7 +54,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     /// </summary>
     public bool HardWorldFlag
     {
-        get
+        readonly get
         {
             return !IsThreeByteCommand && (Value2 & 0x40) != 0;
         }
@@ -83,7 +83,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     /// </summary>
     public bool ScreenFlag
     {
-        get
+        readonly get
         {
             return (Value2 & 0x80) != 0;
         }
@@ -104,7 +104,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     /// <summary>
     /// Gets the size, in bytes, of this <see cref="AreaSpriteCommand"/>.
     /// </summary>
-    public int Size
+    public readonly int Size
     {
         get
         {
@@ -139,7 +139,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         set;
     }
 
-    public int BaseCommand
+    public readonly int BaseCommand
     {
         get
         {
@@ -153,7 +153,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     /// </summary>
     public int X
     {
-        get
+        readonly get
         {
             return Value1 >> 4;
         }
@@ -170,7 +170,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
     /// </summary>
     public int Y
     {
-        get
+        readonly get
         {
             return Value1 & 0x0F;
         }
@@ -184,7 +184,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
 
     public int AreaNumber
     {
-        get
+        readonly get
         {
             return IsThreeByteCommand
                 ? Value2 & 0x7F
@@ -203,7 +203,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
 
     public int WorldLimit
     {
-        get
+        readonly get
         {
             return IsThreeByteCommand
                 ? Value3 >> 5
@@ -222,7 +222,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
 
     public int AreaPointerScreen
     {
-        get
+        readonly get
         {
             return IsThreeByteCommand
                 ? Value3 & 0x1F
@@ -239,7 +239,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         }
     }
 
-    public bool IsThreeByteCommand
+    public readonly bool IsThreeByteCommand
     {
         get
         {
@@ -247,7 +247,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         }
     }
 
-    public string HexString
+    public readonly string HexString
     {
         get
         {
@@ -256,7 +256,7 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         }
     }
 
-    public string FullName
+    public readonly string FullName
     {
         get
         {
@@ -332,25 +332,25 @@ public struct AreaSpriteCommand : IEquatable<AreaSpriteCommand>
         return (coordinates & 0x0F) == 0x0E;
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is AreaSpriteCommand other && Equals(other);
     }
 
-    public bool Equals(AreaSpriteCommand other)
+    public readonly bool Equals(AreaSpriteCommand other)
     {
         return Value1.Equals(other.Value1) && Value2.Equals(other.Value2)
             && (!IsThreeByteCommand || Value3.Equals(other.Value3));
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return IsThreeByteCommand
             ? HashCode.Combine(Value1, Value2, Value3)
             : HashCode.Combine(Value1, Value2);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return IsThreeByteCommand
             ? $"({X}, {Y}): Area pointer to 0x{AreaNumber:X2}"

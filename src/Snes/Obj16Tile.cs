@@ -57,7 +57,7 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
 
     public ObjTile this[int index]
     {
-        get
+        readonly get
         {
             return index switch
             {
@@ -117,7 +117,7 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
         return index % 2;
     }
 
-    public Obj16Tile FlipX()
+    public readonly Obj16Tile FlipX()
     {
         return new Obj16Tile(
             BottomLeft.FlipX(),
@@ -126,7 +126,7 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
             TopRight.FlipX());
     }
 
-    public Obj16Tile FlipY()
+    public readonly Obj16Tile FlipY()
     {
         return new Obj16Tile(
             TopRight.FlipY(),
@@ -135,7 +135,7 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
             BottomLeft.FlipY());
     }
 
-    public bool Equals(Obj16Tile other)
+    public readonly bool Equals(Obj16Tile other)
     {
         return
             TopLeft.Equals(other.TopLeft) &&
@@ -144,17 +144,17 @@ public struct Obj16Tile : IEquatable<Obj16Tile>
             BottomRight.Equals(other.BottomRight);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is Obj16Tile tile && Equals(tile);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(TopLeft, BottomLeft, TopRight, BottomRight);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{TopLeft}-{BottomLeft}-{TopRight}-{BottomRight}";
     }

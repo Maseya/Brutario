@@ -43,7 +43,7 @@ public struct ChrTile : IEquatable<ChrTile>
 
     public int Value
     {
-        get
+        readonly get
         {
             return _value;
         }
@@ -56,7 +56,7 @@ public struct ChrTile : IEquatable<ChrTile>
 
     public int TileIndex
     {
-        get
+        readonly get
         {
             return Value & TileIndexMask;
         }
@@ -70,7 +70,7 @@ public struct ChrTile : IEquatable<ChrTile>
 
     public int PaletteIndex
     {
-        get
+        readonly get
         {
             return (Value >> PaletteOffset) & PaletteMask;
         }
@@ -84,7 +84,7 @@ public struct ChrTile : IEquatable<ChrTile>
 
     public LayerPriority Priority
     {
-        get
+        readonly get
         {
             return (LayerPriority)(
                 (Value >> PriorityOffset) & PriorityMask);
@@ -99,7 +99,7 @@ public struct ChrTile : IEquatable<ChrTile>
 
     public TileFlip TileFlip
     {
-        get
+        readonly get
         {
             return (TileFlip)((Value >> FlipOffset) & FlipMask);
         }
@@ -113,7 +113,7 @@ public struct ChrTile : IEquatable<ChrTile>
 
     public bool XFlipped
     {
-        get
+        readonly get
         {
             return ((Value >> FlipXOffset) & 1) != 0;
         }
@@ -133,7 +133,7 @@ public struct ChrTile : IEquatable<ChrTile>
 
     public bool YFlipped
     {
-        get
+        readonly get
         {
             return ((Value >> FlipYOffset) & 1) != 0;
         }
@@ -171,22 +171,22 @@ public struct ChrTile : IEquatable<ChrTile>
         return !(left == right);
     }
 
-    public bool Equals(ChrTile obj)
+    public readonly bool Equals(ChrTile obj)
     {
         return Value.Equals(obj.Value);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is ChrTile tile && Equals(tile);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return Value;
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{Value:X4}";
     }

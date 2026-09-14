@@ -37,7 +37,7 @@ public unsafe struct Color32BppArgb : IEquatable<Color32BppArgb>
         set;
     }
 
-    public int Value
+    public readonly int Value
     {
         get
         {
@@ -102,22 +102,22 @@ public unsafe struct Color32BppArgb : IEquatable<Color32BppArgb>
         return color.ToArgb();
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return Value;
     }
 
-    public bool Equals(Color32BppArgb other)
+    public readonly bool Equals(Color32BppArgb other)
     {
         return Value == other.Value;
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is Color32BppArgb other && Equals(other);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return Value.ToString("X6");
     }

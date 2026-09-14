@@ -52,7 +52,7 @@ public struct Sprite : IEquatable<Sprite>
         return !(left == right);
     }
 
-    public bool Equals(Sprite other)
+    public readonly bool Equals(Sprite other)
     {
         return X.Equals(other.X)
             && Y.Equals(other.Y)
@@ -60,17 +60,17 @@ public struct Sprite : IEquatable<Sprite>
             && TileProperties.Equals(other.TileProperties);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is Sprite other && Equals(other);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(Tile, X, Y);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{Tile}:{X:X3},{Y:X3}";
     }

@@ -112,7 +112,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     /// <summary>
     /// The size, in bytes, of this <see cref="AreaObjectCommand"/>.
     /// </summary>
-    public int Size
+    public readonly int Size
     {
         get
         {
@@ -122,7 +122,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public int X
     {
-        get
+        readonly get
         {
             return Value1 >> 4;
         }
@@ -134,7 +134,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public bool HasYCoord
+    public readonly bool HasYCoord
     {
         get
         {
@@ -145,7 +145,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public int Y
     {
-        get
+        readonly get
         {
             return IsThreeByteCommand ? Value2 >> 4 : Value1 & 0x0F;
         }
@@ -167,7 +167,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public bool PageFlag
     {
-        get
+        readonly get
         {
             return ((IsThreeByteCommand ? Value3 : Value2) & 0x80) != 0;
         }
@@ -190,7 +190,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public int PrimaryCommand
     {
-        get
+        readonly get
         {
             return (IsThreeByteCommand ? Value3 : Value2) & 0x7F;
         }
@@ -212,7 +212,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public int SecondaryCommand
     {
-        get
+        readonly get
         {
             return (PrimaryCommand >> 4) & 7;
         }
@@ -226,7 +226,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public int Parameter
     {
-        get
+        readonly get
         {
             return Value2 & 0x0F;
         }
@@ -238,7 +238,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public ObjectType ObjectType
+    public readonly ObjectType ObjectType
     {
         get
         {
@@ -262,7 +262,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public bool IsExtendableObject
+    public readonly bool IsExtendableObject
     {
         get
         {
@@ -270,7 +270,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public bool IsTerrainAndBackgroundChange
+    public readonly bool IsTerrainAndBackgroundChange
     {
         get
         {
@@ -278,7 +278,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public bool IsForegroundChange
+    public readonly bool IsForegroundChange
     {
         get
         {
@@ -288,7 +288,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public int Length
     {
-        get
+        readonly get
         {
             return ObjectType switch
             {
@@ -328,7 +328,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public ForegroundScenery ForegroundScenery
     {
-        get
+        readonly get
         {
             return (ForegroundScenery)(IsForegroundChange
                 ? Parameter & 7
@@ -347,7 +347,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public TerrainMode TerrainMode
     {
-        get
+        readonly get
         {
             return (TerrainMode)(IsTerrainAndBackgroundChange
                 ? PrimaryCommand & 0x0F
@@ -366,7 +366,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
 
     public BackgroundScenery BackgroundScenery
     {
-        get
+        readonly get
         {
             return (BackgroundScenery)(ObjectType == ObjectType.TerrainAndBackgroundSceneryChange
                 ? (PrimaryCommand >> 4) & 3
@@ -383,7 +383,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public string BaseName
+    public readonly string BaseName
     {
         get
         {
@@ -391,7 +391,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public bool IsThreeByteCommand
+    public readonly bool IsThreeByteCommand
     {
         get
         {
@@ -399,7 +399,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public bool IsValid
+    public readonly bool IsValid
     {
         get
         {
@@ -408,7 +408,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         }
     }
 
-    public string HexString
+    public readonly string HexString
     {
         get
         {
@@ -432,7 +432,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         return (coordinates & 0x0F) == 0x0F;
     }
 
-    public string FullName(AreaPlatformType areaPlatformType)
+    public readonly string FullName(AreaPlatformType areaPlatformType)
     {
         var length = Parameter + 1;
 
@@ -635,25 +635,25 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
         return $"Unknown command: {this}";
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is AreaObjectCommand other && Equals(other);
     }
 
-    public bool Equals(AreaObjectCommand other)
+    public readonly bool Equals(AreaObjectCommand other)
     {
         return Value1.Equals(other.Value1) && Value2.Equals(other.Value2)
             && (!IsThreeByteCommand || Value3.Equals(other.Value3));
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return IsThreeByteCommand
             ? HashCode.Combine(Value1, Value2, Value3)
             : HashCode.Combine(Value1, Value2);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"({X}, {Y}): {BaseName}";
     }

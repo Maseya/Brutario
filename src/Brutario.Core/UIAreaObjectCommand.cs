@@ -24,7 +24,7 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
 
     public AreaObjectCommand Command
     {
-        get
+        readonly get
         {
             return _command;
         }
@@ -42,7 +42,7 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
 
     public int X
     {
-        get
+        readonly get
         {
             return Command.X | (Page << 4);
         }
@@ -56,7 +56,7 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
 
     public int Y
     {
-        get
+        readonly get
         {
             return _command.Y;
         }
@@ -67,7 +67,7 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         }
     }
 
-    public Rectangle SelectionRectangle
+    public readonly Rectangle SelectionRectangle
     {
         get
         {
@@ -80,7 +80,7 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         get; set;
     }
 
-    public string HexString
+    public readonly string HexString
     {
         get
         {
@@ -98,24 +98,24 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         return !(left == right);
     }
 
-    public bool Equals(UIAreaObjectCommand other)
+    public readonly bool Equals(UIAreaObjectCommand other)
     {
         return Command.Equals(other.Command)
             && Page.Equals(other.Page)
             && Z.Equals(other.Z);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is UIAreaObjectCommand other && Equals(other);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(Command, Page, Z);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{X}, {Y}, {Z}, {Command.BaseName}";
     }

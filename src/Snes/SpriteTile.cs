@@ -63,7 +63,7 @@ public struct SpriteTile : IEquatable<SpriteTile>
         return !(left == right);
     }
 
-    public bool Equals(SpriteTile other)
+    public readonly bool Equals(SpriteTile other)
     {
         return TileIndex.Equals(other.TileIndex)
             && PaletteIndex.Equals(other.PaletteIndex)
@@ -72,17 +72,17 @@ public struct SpriteTile : IEquatable<SpriteTile>
             && FlipY.Equals(other.FlipY);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is SpriteTile other && Equals(other);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(TileIndex, PaletteIndex, Priority, FlipX, FlipY);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{TileIndex:X4}";
     }
