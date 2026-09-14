@@ -14,8 +14,8 @@ using AreaData.SpriteData;
 
 public static class ExtensionMethods
 {
-    private static readonly ImmutableHashSet<ObjectType> HorizontallyExtendableObjects =
-        ImmutableHashSet.Create(
+    private static readonly ImmutableHashSet<ObjectType>
+        HorizontallyExtendableObjects = [
             ObjectType.AreaSpecificPlatform,
             ObjectType.GreenIsland,
             ObjectType.MushroomIsland,
@@ -31,10 +31,11 @@ public static class ExtensionMethods
             ObjectType.HoleWithWaterOrLava,
             ObjectType.HorizontalQuestionBlocksV3,
             ObjectType.HorizontalQuestionBlocksV7,
-            ObjectType.Staircase);
+            ObjectType.Staircase,
+        ];
 
-    private static readonly ImmutableHashSet<ObjectType> VerticallyExtendableObjects =
-        ImmutableHashSet.Create(
+    private static readonly ImmutableHashSet<ObjectType> VerticallyExtendableObjects
+        = [
             ObjectType.VerticalBricks,
             ObjectType.VerticalBlocks,
             ObjectType.UnenterablePipe,
@@ -46,7 +47,8 @@ public static class ExtensionMethods
             ObjectType.Staircase,
             ObjectType.VerticalSeaBlocks,
             ObjectType.ExtendableJPipe,
-            ObjectType.VerticalBalls);
+            ObjectType.VerticalBalls,
+        ];
 
     private static readonly ImmutableHashSet<ObjectType> ExtendableObjects =
         HorizontallyExtendableObjects

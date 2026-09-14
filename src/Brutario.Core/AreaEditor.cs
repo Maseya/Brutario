@@ -250,7 +250,7 @@ public class AreaEditor
             TileMap,
             AreaType,
             AreaHeader,
-            ObjectDataInternal.GetObjectData().ToArray(),
+            [.. ObjectDataInternal.GetObjectData()],
             AreaNumber == 2);
         ReadBG1Tiles();
     }

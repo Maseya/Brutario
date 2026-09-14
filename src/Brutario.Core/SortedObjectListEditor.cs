@@ -332,7 +332,7 @@ public class SortedObjectListEditor :
 
         result.Add(AreaObjectCommand.TerminationCode);
 
-        return result.ToArray();
+        return [.. result];
     }
 
     void ICollection<UIAreaObjectCommand>.CopyTo(

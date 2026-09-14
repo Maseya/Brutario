@@ -1881,12 +1881,12 @@ public class BrutarioEditor : IMainEditor
 
     private void WriteObjectData()
     {
-        GameData!.AreaLoader.AreaObjectData[ObjectAreaIndex] = ObjectData.GetObjectData().ToArray();
+        GameData!.AreaLoader.AreaObjectData[ObjectAreaIndex] = [.. ObjectData.GetObjectData()];
     }
 
     private void WriteSpriteData()
     {
-        GameData!.AreaLoader.AreaSpriteData[SpriteAreaIndex] = SpriteData.GetSpriteData().ToArray();
+        GameData!.AreaLoader.AreaSpriteData[SpriteAreaIndex] = [.. SpriteData.GetSpriteData()];
     }
 
     private void WriteHeader()
@@ -1910,7 +1910,7 @@ public class BrutarioEditor : IMainEditor
             TileMap,
             AreaType,
             AreaHeader,
-            ObjectData.GetObjectData().ToArray(),
+            [.. ObjectData.GetObjectData()],
             //GameData!.AreaLoader.AreaObjectData[ObjectAreaIndex],
             AreaNumber == 2);
         ReadBG1Tiles();
@@ -1967,8 +1967,8 @@ public class BrutarioEditor : IMainEditor
     private IEnumerable<Sprite> EnumerateSprites(int frame)
     {
         var areaDataSprites = GameData!.AreaSpriteRenderer.GetSprites(
-            SpriteData.GetSpriteData().ToArray(),
-            ObjectData.GetObjectData().ToArray(),
+            [.. SpriteData.GetSpriteData()],
+            [.. ObjectData.GetObjectData()],
             frame,
             AreaType,
             showPipePiranhaPlants: AreaNumber != 0x25);

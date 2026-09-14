@@ -123,8 +123,7 @@ public class GfxData
             throw new ArgumentException("GFX data is invalid!");
         }
 
-        TileSetActions = new Func<int, IEnumerable<int>>?[0x20]
-        {
+        TileSetActions = [
             null,
             GetUndergroundTileSets,
             GetGrassTileSets,
@@ -157,7 +156,7 @@ public class GfxData
             null,
             null,
             null,
-        };
+        ];
     }
 
     private byte[] AreaPixelData

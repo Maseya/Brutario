@@ -37,12 +37,11 @@ public class TilemapLoader
                 commands.Add(command);
             }
 
-            TilemapCommands[i] = commands.ToArray();
+            TilemapCommands[i] = [.. commands];
         }
 
         Layer2Tilemap = new int[0xD00 >> 1];
-        BackgroundGenerationCommands = new Action<TilemapCommand>[0x0D]
-        {
+        BackgroundGenerationCommands = [
             x => Layer2TilemapIndex++,
             EnableHdmaGradient,
             EnableHdmaWaving,
@@ -56,7 +55,7 @@ public class TilemapLoader
             GenerateWaterfallTiles,
             SetSpecialTilemapIndex,
             GenerateGoombaPillars,
-        };
+        ];
     }
 
     public byte TileSetIndex

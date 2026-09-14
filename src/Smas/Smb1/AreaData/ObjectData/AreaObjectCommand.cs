@@ -20,9 +20,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
     /// </summary>
     public const byte TerminationCode = 0xFD;
 
-    public static readonly ReadOnlyCollection<ObjectType> ValidCodes =
-        new(new ObjectType[]
-        {
+    public static readonly ReadOnlyCollection<ObjectType> ValidCodes = new([
             ObjectType.QuestionBlockPowerup,
             ObjectType.QuestionBlockCoin,
             ObjectType.HiddenBlockCoin,
@@ -84,7 +82,7 @@ public struct AreaObjectCommand : IEquatable<AreaObjectCommand>
             ObjectType.VerticalSeaBlocks,
             ObjectType.ExtendableJPipe,
             ObjectType.VerticalBalls,
-        });
+        ]);
 
     public AreaObjectCommand(byte value1, byte value2, byte value3 = 0)
     {

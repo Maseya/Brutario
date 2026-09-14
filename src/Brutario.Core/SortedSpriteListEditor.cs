@@ -268,7 +268,7 @@ public class SortedSpriteListEditor :
 
         result.Add(AreaSpriteCommand.TerminationCode);
 
-        return result.ToArray();
+        return [.. result];
     }
 
     void ICollection<UIAreaSpriteCommand>.CopyTo(
