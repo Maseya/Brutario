@@ -13,11 +13,11 @@ using Maseya.Smas.Smb1.AreaData.ObjectData;
 
 public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
 {
-    private AreaObjectCommand command_;
+    private AreaObjectCommand _command;
 
     public UIAreaObjectCommand(AreaObjectCommand command, int page, int z = 0)
     {
-        command_ = command;
+        _command = command;
         Page = page;
         Z = z;
     }
@@ -26,12 +26,12 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
     {
         get
         {
-            return command_;
+            return _command;
         }
 
         set
         {
-            command_ = value;
+            _command = value;
         }
     }
 
@@ -50,7 +50,7 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         set
         {
             Page = value >> 4;
-            command_.X = value & 0x0F;
+            _command.X = value & 0x0F;
         }
     }
 
@@ -58,12 +58,12 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
     {
         get
         {
-            return command_.Y;
+            return _command.Y;
         }
 
         set
         {
-            command_.Y = value;
+            _command.Y = value;
         }
     }
 

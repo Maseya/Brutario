@@ -20,23 +20,23 @@ public struct ObjTile : IEquatable<ObjTile>
     private const int FlipOffset = 14;
     private const int FlipMask = 3;
 
-    private ushort value;
+    private ushort _value;
 
     private ObjTile(int value)
     {
-        this.value = (ushort)value;
+        _value = (ushort)value;
     }
 
     public int Value
     {
         get
         {
-            return value;
+            return _value;
         }
 
         set
         {
-            this.value = (ushort)value;
+            _value = (ushort)value;
         }
     }
 

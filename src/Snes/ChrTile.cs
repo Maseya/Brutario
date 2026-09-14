@@ -22,7 +22,7 @@ public struct ChrTile : IEquatable<ChrTile>
     private const int FlipYOffset = FlipOffset + 1;
     private const int FlipMask = 3;
 
-    private ushort value;
+    private ushort _value;
 
     public ChrTile(
         int tileIndex,
@@ -30,7 +30,7 @@ public struct ChrTile : IEquatable<ChrTile>
         LayerPriority layerPriority,
         TileFlip tileFlip)
     {
-        value = (ushort)(tileIndex & TileIndexMask);
+        _value = (ushort)(tileIndex & TileIndexMask);
         Value |= (paletteIndex & PaletteMask) << PaletteOffset;
         Value |= ((int)layerPriority & PriorityMask) << PriorityOffset;
         Value |= ((int)tileFlip & FlipMask) << FlipOffset;
@@ -38,19 +38,19 @@ public struct ChrTile : IEquatable<ChrTile>
 
     private ChrTile(int value)
     {
-        this.value = (ushort)value;
+        _value = (ushort)value;
     }
 
     public int Value
     {
         get
         {
-            return value;
+            return _value;
         }
 
         set
         {
-            this.value = (ushort)value;
+            _value = (ushort)value;
         }
     }
 

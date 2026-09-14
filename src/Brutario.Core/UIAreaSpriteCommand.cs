@@ -13,11 +13,11 @@ using Maseya.Smas.Smb1.AreaData.SpriteData;
 
 public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
 {
-    private AreaSpriteCommand command_;
+    private AreaSpriteCommand _command;
 
     public UIAreaSpriteCommand(AreaSpriteCommand command, int page, int z = 0)
     {
-        command_ = command;
+        _command = command;
         Page = page;
         Z = z;
     }
@@ -26,12 +26,12 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
     {
         get
         {
-            return command_;
+            return _command;
         }
 
         set
         {
-            command_ = value;
+            _command = value;
         }
     }
 
@@ -50,7 +50,7 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
         set
         {
             Page = value >> 4;
-            command_.X = value & 0x0F;
+            _command.X = value & 0x0F;
         }
     }
 
@@ -63,12 +63,12 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
     {
         get
         {
-            return command_.Y;
+            return _command.Y;
         }
 
         set
         {
-            command_.Y = value;
+            _command.Y = value;
         }
     }
 
