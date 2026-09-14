@@ -22,6 +22,8 @@ using Maseya.Smas.Smb1.AreaData.ObjectData;
 using Maseya.Smas.Smb1.AreaData.SpriteData;
 using Maseya.Snes;
 
+using static System.Math;
+
 public class BrutarioEditor : IMainEditor
 {
     public const int ScreenCount = 0x20;
@@ -1177,14 +1179,9 @@ public class BrutarioEditor : IMainEditor
 
         if (SpriteMode && SelectedSpriteIndex != -1)
         {
-            if (y < 0)
-            {
-                y = 0;
-            }
-            else if (y >= 0x0D)
-            {
-                y = 0x0C;
-            }
+            y = SelectedSprite.Command.Y > 0x0C
+                ? SelectedSprite.Command.Y
+                : Clamp(y, 0x00, 0x0C);
 
             var item = SelectedSprite;
             item.X = x;
@@ -1197,14 +1194,11 @@ public class BrutarioEditor : IMainEditor
         }
         else if (!SpriteMode && SelectedObjectIndex != -1)
         {
-            if (y - 2 < 0)
-            {
-                y = 2;
-            }
-            else if (y - 2 >= 0x0C)
-            {
-                y = 2 + 0x0B;
-            }
+            y = SelectedObject.Command.IsThreeByteCommand
+                ? Clamp(y, 0x00 + 2, 0x0F + 2)
+                : (uint)(SelectedObject.Command.Y - 0x0C) <= (0x0E - 0x0C)
+                ? 2 + SelectedObject.Command.Y
+                : Clamp(y, 0x00 + 2, 0x0B + 2);
 
             var item = SelectedObject;
             item.X = x;
