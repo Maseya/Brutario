@@ -35,235 +35,206 @@ namespace Brutario.Win.Dialogs.BaseForms
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblTime = new System.Windows.Forms.Label();
-            this.lblPosition = new System.Windows.Forms.Label();
-            this.lblScenery = new System.Windows.Forms.Label();
-            this.cbxTime = new System.Windows.Forms.ComboBox();
-            this.cbxPosition = new System.Windows.Forms.ComboBox();
-            this.cbxForeground = new System.Windows.Forms.ComboBox();
-            this.lblForeground = new System.Windows.Forms.Label();
-            this.cbxAreaPlatformType = new System.Windows.Forms.ComboBox();
-            this.lblAreaPlatformType = new System.Windows.Forms.Label();
-            this.cbxBackgroundScenery = new System.Windows.Forms.ComboBox();
-            this.lblTerrainMode = new System.Windows.Forms.Label();
-            this.cbxTerrainMode = new System.Windows.Forms.ComboBox();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            //
+            lblTime = new Label();
+            lblPosition = new Label();
+            lblScenery = new Label();
+            cbxTime = new ComboBox();
+            cbxPosition = new ComboBox();
+            cbxForeground = new ComboBox();
+            lblForeground = new Label();
+            cbxAreaPlatformType = new ComboBox();
+            lblAreaPlatformType = new Label();
+            cbxBackgroundScenery = new ComboBox();
+            lblTerrainMode = new Label();
+            cbxTerrainMode = new ComboBox();
+            btnOK = new Button();
+            btnCancel = new Button();
+            SuspendLayout();
+            // 
             // lblTime
-            //
-            this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(12, 15);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(30, 13);
-            this.lblTime.TabIndex = 0;
-            this.lblTime.Text = "Time";
-            //
+            // 
+            lblTime.AutoSize = true;
+            lblTime.Location = new Point(14, 17);
+            lblTime.Margin = new Padding(4, 0, 4, 0);
+            lblTime.Name = "lblTime";
+            lblTime.Size = new Size(33, 15);
+            lblTime.TabIndex = 0;
+            lblTime.Text = "Time";
+            // 
             // lblPosition
-            //
-            this.lblPosition.AutoSize = true;
-            this.lblPosition.Location = new System.Drawing.Point(12, 42);
-            this.lblPosition.Name = "lblPosition";
-            this.lblPosition.Size = new System.Drawing.Size(44, 13);
-            this.lblPosition.TabIndex = 1;
-            this.lblPosition.Text = "Position";
-            //
+            // 
+            lblPosition.AutoSize = true;
+            lblPosition.Location = new Point(14, 48);
+            lblPosition.Margin = new Padding(4, 0, 4, 0);
+            lblPosition.Name = "lblPosition";
+            lblPosition.Size = new Size(50, 15);
+            lblPosition.TabIndex = 1;
+            lblPosition.Text = "Position";
+            // 
             // lblScenery
-            //
-            this.lblScenery.AutoSize = true;
-            this.lblScenery.Location = new System.Drawing.Point(12, 124);
-            this.lblScenery.Name = "lblScenery";
-            this.lblScenery.Size = new System.Drawing.Size(46, 13);
-            this.lblScenery.TabIndex = 4;
-            this.lblScenery.Text = "Scenery";
-            //
+            // 
+            lblScenery.AutoSize = true;
+            lblScenery.Location = new Point(14, 143);
+            lblScenery.Margin = new Padding(4, 0, 4, 0);
+            lblScenery.Name = "lblScenery";
+            lblScenery.Size = new Size(48, 15);
+            lblScenery.TabIndex = 4;
+            lblScenery.Text = "Scenery";
+            // 
             // cbxTime
-            //
-            this.cbxTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTime.FormattingEnabled = true;
-            this.cbxTime.Items.AddRange(new object[] {
-            "Not Set",
-            "400",
-            "300",
-            "200"});
-            this.cbxTime.Location = new System.Drawing.Point(115, 12);
-            this.cbxTime.Name = "cbxTime";
-            this.cbxTime.Size = new System.Drawing.Size(245, 21);
-            this.cbxTime.TabIndex = 7;
-            this.cbxTime.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
-            //
+            // 
+            cbxTime.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxTime.FormattingEnabled = true;
+            cbxTime.Items.AddRange(new object[] { "Not Set", "400", "300", "200" });
+            cbxTime.Location = new Point(134, 14);
+            cbxTime.Margin = new Padding(4, 3, 4, 3);
+            cbxTime.Name = "cbxTime";
+            cbxTime.Size = new Size(285, 23);
+            cbxTime.TabIndex = 7;
+            cbxTime.SelectedIndexChanged += Value_SelectedIndexChanged;
+            // 
             // cbxPosition
-            //
-            this.cbxPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxPosition.FormattingEnabled = true;
-            this.cbxPosition.Items.AddRange(new object[] {
-            "-1",
-            "-1; from another area",
-            "10",
-            "4",
-            "-1",
-            "-1",
-            "10 (Autowalk)",
-            "10 (Autowalk)"});
-            this.cbxPosition.Location = new System.Drawing.Point(115, 39);
-            this.cbxPosition.Name = "cbxPosition";
-            this.cbxPosition.Size = new System.Drawing.Size(245, 21);
-            this.cbxPosition.TabIndex = 8;
-            this.cbxPosition.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
-            //
+            // 
+            cbxPosition.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxPosition.FormattingEnabled = true;
+            cbxPosition.Items.AddRange(new object[] { "-1", "-1; from another area", "10", "4", "-1", "-1", "10 (Autowalk)", "10 (Autowalk)" });
+            cbxPosition.Location = new Point(134, 45);
+            cbxPosition.Margin = new Padding(4, 3, 4, 3);
+            cbxPosition.Name = "cbxPosition";
+            cbxPosition.Size = new Size(285, 23);
+            cbxPosition.TabIndex = 8;
+            cbxPosition.SelectedIndexChanged += Value_SelectedIndexChanged;
+            // 
             // cbxForeground
-            //
-            this.cbxForeground.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxForeground.FormattingEnabled = true;
-            this.cbxForeground.Items.AddRange(new object[] {
-            "None",
-            "Underwater",
-            "Castle Wall (Unused)",
-            "Over Water",
-            "Night (Unused)",
-            "Snow (Unused)",
-            "Night and Snow (Unused)",
-            "Castle (unused)"});
-            this.cbxForeground.Location = new System.Drawing.Point(115, 66);
-            this.cbxForeground.Name = "cbxForeground";
-            this.cbxForeground.Size = new System.Drawing.Size(245, 21);
-            this.cbxForeground.TabIndex = 9;
-            this.cbxForeground.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
-            //
+            // 
+            cbxForeground.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxForeground.FormattingEnabled = true;
+            cbxForeground.Items.AddRange(new object[] { "None", "Underwater", "Castle Wall (Unused)", "Over Water", "Night (Unused)", "Snow (Unused)", "Night and Snow (Unused)", "Castle (unused)" });
+            cbxForeground.Location = new Point(134, 76);
+            cbxForeground.Margin = new Padding(4, 3, 4, 3);
+            cbxForeground.Name = "cbxForeground";
+            cbxForeground.Size = new Size(285, 23);
+            cbxForeground.TabIndex = 9;
+            cbxForeground.SelectedIndexChanged += Value_SelectedIndexChanged;
+            // 
             // lblForeground
-            //
-            this.lblForeground.AutoSize = true;
-            this.lblForeground.Location = new System.Drawing.Point(12, 69);
-            this.lblForeground.Name = "lblForeground";
-            this.lblForeground.Size = new System.Drawing.Size(61, 13);
-            this.lblForeground.TabIndex = 10;
-            this.lblForeground.Text = "Foreground";
-            //
+            // 
+            lblForeground.AutoSize = true;
+            lblForeground.Location = new Point(14, 80);
+            lblForeground.Margin = new Padding(4, 0, 4, 0);
+            lblForeground.Name = "lblForeground";
+            lblForeground.Size = new Size(69, 15);
+            lblForeground.TabIndex = 10;
+            lblForeground.Text = "Foreground";
+            // 
             // cbxAreaPlatformType
-            //
-            this.cbxAreaPlatformType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxAreaPlatformType.FormattingEnabled = true;
-            this.cbxAreaPlatformType.Items.AddRange(new object[] {
-            "Trees",
-            "Mushrooms",
-            "Bullet Bill Turrets",
-            "Cloud Ground"});
-            this.cbxAreaPlatformType.Location = new System.Drawing.Point(115, 93);
-            this.cbxAreaPlatformType.Name = "cbxAreaPlatformType";
-            this.cbxAreaPlatformType.Size = new System.Drawing.Size(245, 21);
-            this.cbxAreaPlatformType.TabIndex = 11;
-            this.cbxAreaPlatformType.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
-            //
+            // 
+            cbxAreaPlatformType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxAreaPlatformType.FormattingEnabled = true;
+            cbxAreaPlatformType.Items.AddRange(new object[] { "Trees", "Mushrooms", "Bullet Bill Turrets", "Cloud Ground" });
+            cbxAreaPlatformType.Location = new Point(134, 107);
+            cbxAreaPlatformType.Margin = new Padding(4, 3, 4, 3);
+            cbxAreaPlatformType.Name = "cbxAreaPlatformType";
+            cbxAreaPlatformType.Size = new Size(285, 23);
+            cbxAreaPlatformType.TabIndex = 11;
+            cbxAreaPlatformType.SelectedIndexChanged += Value_SelectedIndexChanged;
+            // 
             // lblAreaPlatformType
-            //
-            this.lblAreaPlatformType.AutoSize = true;
-            this.lblAreaPlatformType.Location = new System.Drawing.Point(12, 96);
-            this.lblAreaPlatformType.Name = "lblAreaPlatformType";
-            this.lblAreaPlatformType.Size = new System.Drawing.Size(97, 13);
-            this.lblAreaPlatformType.TabIndex = 12;
-            this.lblAreaPlatformType.Text = "Area Platform Type";
-            //
+            // 
+            lblAreaPlatformType.AutoSize = true;
+            lblAreaPlatformType.Location = new Point(14, 111);
+            lblAreaPlatformType.Margin = new Padding(4, 0, 4, 0);
+            lblAreaPlatformType.Name = "lblAreaPlatformType";
+            lblAreaPlatformType.Size = new Size(107, 15);
+            lblAreaPlatformType.TabIndex = 12;
+            lblAreaPlatformType.Text = "Area Platform Type";
+            // 
             // cbxBackgroundScenery
-            //
-            this.cbxBackgroundScenery.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxBackgroundScenery.FormattingEnabled = true;
-            this.cbxBackgroundScenery.Items.AddRange(new object[] {
-            "Nothing",
-            "Clouds",
-            "Mountain",
-            "Fence"});
-            this.cbxBackgroundScenery.Location = new System.Drawing.Point(115, 121);
-            this.cbxBackgroundScenery.Name = "cbxBackgroundScenery";
-            this.cbxBackgroundScenery.Size = new System.Drawing.Size(245, 21);
-            this.cbxBackgroundScenery.TabIndex = 13;
-            this.cbxBackgroundScenery.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
-            //
+            // 
+            cbxBackgroundScenery.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxBackgroundScenery.FormattingEnabled = true;
+            cbxBackgroundScenery.Items.AddRange(new object[] { "Nothing", "Clouds", "Mountain", "Fence" });
+            cbxBackgroundScenery.Location = new Point(134, 140);
+            cbxBackgroundScenery.Margin = new Padding(4, 3, 4, 3);
+            cbxBackgroundScenery.Name = "cbxBackgroundScenery";
+            cbxBackgroundScenery.Size = new Size(285, 23);
+            cbxBackgroundScenery.TabIndex = 13;
+            cbxBackgroundScenery.SelectedIndexChanged += Value_SelectedIndexChanged;
+            // 
             // lblTerrainMode
-            //
-            this.lblTerrainMode.AutoSize = true;
-            this.lblTerrainMode.Location = new System.Drawing.Point(12, 152);
-            this.lblTerrainMode.Name = "lblTerrainMode";
-            this.lblTerrainMode.Size = new System.Drawing.Size(70, 13);
-            this.lblTerrainMode.TabIndex = 14;
-            this.lblTerrainMode.Text = "Terrain Mode";
-            //
+            // 
+            lblTerrainMode.AutoSize = true;
+            lblTerrainMode.Location = new Point(14, 175);
+            lblTerrainMode.Margin = new Padding(4, 0, 4, 0);
+            lblTerrainMode.Name = "lblTerrainMode";
+            lblTerrainMode.Size = new Size(76, 15);
+            lblTerrainMode.TabIndex = 14;
+            lblTerrainMode.Text = "Terrain Mode";
+            // 
             // cbxTerrainMode
-            //
-            this.cbxTerrainMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTerrainMode.FormattingEnabled = true;
-            this.cbxTerrainMode.Items.AddRange(new object[] {
-            "None",
-            "2-tile-high floor with no ceiling",
-            "2-tile-high floor with 1-tile-high ceiling",
-            "2-tile-high floor with 3-tile-high ceiling",
-            "2-tile-high floor with 4-tile-high ceiling",
-            "2-tile-high floor with 8-tile-high ceiling",
-            "5-tile-high floor with 1-tile-high ceiling",
-            "5-tile-high floor with 3-tile-high ceiling",
-            "5-tile-high floor with 4-tile-high ceiling",
-            "6-tile-high floor with 1-tile-high ceiling",
-            "No floor with 1-tile-high ceiling",
-            "6-tile-high floor with 4-tile-high ceiling",
-            "9-tile-high floor with 1-tile-high ceiling",
-            "2-tile-high floor with 1-tile-high ceiling and 5 tiles in the middle",
-            "2-tile-high floor with 1-tile-high ceiling and 4 tiles in the middle",
-            "Floor tiles everywhere"});
-            this.cbxTerrainMode.Location = new System.Drawing.Point(115, 148);
-            this.cbxTerrainMode.Name = "cbxTerrainMode";
-            this.cbxTerrainMode.Size = new System.Drawing.Size(245, 21);
-            this.cbxTerrainMode.TabIndex = 15;
-            this.cbxTerrainMode.SelectedIndexChanged += new System.EventHandler(this.Value_SelectedIndexChanged);
-            //
+            // 
+            cbxTerrainMode.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxTerrainMode.FormattingEnabled = true;
+            cbxTerrainMode.Items.AddRange(new object[] { "None", "2-tile-high floor with no ceiling", "2-tile-high floor with 1-tile-high ceiling", "2-tile-high floor with 3-tile-high ceiling", "2-tile-high floor with 4-tile-high ceiling", "2-tile-high floor with 8-tile-high ceiling", "5-tile-high floor with 1-tile-high ceiling", "5-tile-high floor with 3-tile-high ceiling", "5-tile-high floor with 4-tile-high ceiling", "6-tile-high floor with 1-tile-high ceiling", "No floor with 1-tile-high ceiling", "6-tile-high floor with 4-tile-high ceiling", "9-tile-high floor with 1-tile-high ceiling", "2-tile-high floor with 1-tile-high ceiling and 5 tiles in the middle", "2-tile-high floor with 1-tile-high ceiling and 4 tiles in the middle", "Floor tiles everywhere" });
+            cbxTerrainMode.Location = new Point(134, 171);
+            cbxTerrainMode.Margin = new Padding(4, 3, 4, 3);
+            cbxTerrainMode.Name = "cbxTerrainMode";
+            cbxTerrainMode.Size = new Size(285, 23);
+            cbxTerrainMode.TabIndex = 15;
+            cbxTerrainMode.SelectedIndexChanged += Value_SelectedIndexChanged;
+            // 
             // btnOK
-            //
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(204, 174);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 16;
-            this.btnOK.Text = "&OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            //
+            // 
+            btnOK.DialogResult = DialogResult.OK;
+            btnOK.Location = new Point(238, 201);
+            btnOK.Margin = new Padding(4, 3, 4, 3);
+            btnOK.Name = "btnOK";
+            btnOK.Size = new Size(88, 27);
+            btnOK.TabIndex = 16;
+            btnOK.Text = "&OK";
+            btnOK.UseVisualStyleBackColor = true;
+            // 
             // btnCancel
-            //
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(285, 175);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 17;
-            this.btnCancel.Text = "&Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            //
+            // 
+            btnCancel.DialogResult = DialogResult.Cancel;
+            btnCancel.Location = new Point(332, 202);
+            btnCancel.Margin = new Padding(4, 3, 4, 3);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(88, 27);
+            btnCancel.TabIndex = 17;
+            btnCancel.Text = "&Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            // 
             // HeaderEditorForm
-            //
-            this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(372, 210);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.cbxTerrainMode);
-            this.Controls.Add(this.lblTerrainMode);
-            this.Controls.Add(this.cbxBackgroundScenery);
-            this.Controls.Add(this.lblAreaPlatformType);
-            this.Controls.Add(this.cbxAreaPlatformType);
-            this.Controls.Add(this.lblForeground);
-            this.Controls.Add(this.cbxForeground);
-            this.Controls.Add(this.cbxPosition);
-            this.Controls.Add(this.cbxTime);
-            this.Controls.Add(this.lblScenery);
-            this.Controls.Add(this.lblPosition);
-            this.Controls.Add(this.lblTime);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "HeaderEditorForm";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.Text = "Edit Header";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            AcceptButton = btnOK;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = btnCancel;
+            ClientSize = new Size(434, 242);
+            Controls.Add(btnCancel);
+            Controls.Add(btnOK);
+            Controls.Add(cbxTerrainMode);
+            Controls.Add(lblTerrainMode);
+            Controls.Add(cbxBackgroundScenery);
+            Controls.Add(lblAreaPlatformType);
+            Controls.Add(cbxAreaPlatformType);
+            Controls.Add(lblForeground);
+            Controls.Add(cbxForeground);
+            Controls.Add(cbxPosition);
+            Controls.Add(cbxTime);
+            Controls.Add(lblScenery);
+            Controls.Add(lblPosition);
+            Controls.Add(lblTime);
+            Margin = new Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "HeaderEditorForm";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            Text = "Edit Header";
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

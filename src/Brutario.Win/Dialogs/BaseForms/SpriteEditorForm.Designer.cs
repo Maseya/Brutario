@@ -64,67 +64,67 @@ namespace Brutario.Win.Dialogs.BaseForms
             ((System.ComponentModel.ISupportInitialize)nudY).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudX).BeginInit();
             SuspendLayout();
-            //
+            // 
             // gbxBinary
-            //
+            // 
             gbxBinary.Controls.Add(tbxManualInput);
             gbxBinary.Controls.Add(chkUseManualInput);
-            gbxBinary.Location = new Point(16, 171);
-            gbxBinary.Margin = new Padding(4, 5, 4, 5);
+            gbxBinary.Location = new Point(14, 128);
+            gbxBinary.Margin = new Padding(4, 4, 4, 4);
             gbxBinary.Name = "gbxBinary";
-            gbxBinary.Padding = new Padding(4, 5, 4, 5);
-            gbxBinary.Size = new Size(251, 91);
+            gbxBinary.Padding = new Padding(4, 4, 4, 4);
+            gbxBinary.Size = new Size(220, 68);
             gbxBinary.TabIndex = 6;
             gbxBinary.TabStop = false;
-            //
+            // 
             // tbxManualInput
-            //
+            // 
             tbxManualInput.CharacterCasing = CharacterCasing.Upper;
-            tbxManualInput.Location = new Point(12, 35);
-            tbxManualInput.Margin = new Padding(4, 5, 4, 5);
+            tbxManualInput.Location = new Point(10, 26);
+            tbxManualInput.Margin = new Padding(4, 4, 4, 4);
             tbxManualInput.MaxLength = 8;
             tbxManualInput.Name = "tbxManualInput";
-            tbxManualInput.Size = new Size(229, 27);
+            tbxManualInput.Size = new Size(201, 23);
             tbxManualInput.TabIndex = 1;
             tbxManualInput.WordWrap = false;
             tbxManualInput.TextChanged += ManualInput_TextChanged;
-            //
+            // 
             // chkUseManualInput
-            //
+            // 
             chkUseManualInput.AutoSize = true;
-            chkUseManualInput.Location = new Point(12, 0);
-            chkUseManualInput.Margin = new Padding(4, 5, 4, 5);
+            chkUseManualInput.Location = new Point(10, 0);
+            chkUseManualInput.Margin = new Padding(4, 4, 4, 4);
             chkUseManualInput.Name = "chkUseManualInput";
-            chkUseManualInput.Size = new Size(168, 24);
+            chkUseManualInput.Size = new Size(136, 19);
             chkUseManualInput.TabIndex = 0;
             chkUseManualInput.Text = "Enter value manually";
             chkUseManualInput.UseVisualStyleBackColor = true;
             chkUseManualInput.CheckedChanged += UseManualInput_CheckedChanged;
-            //
+            // 
             // btnCancel
-            //
+            // 
             btnCancel.DialogResult = DialogResult.Cancel;
-            btnCancel.Location = new Point(383, 202);
-            btnCancel.Margin = new Padding(4, 5, 4, 5);
+            btnCancel.Location = new Point(335, 152);
+            btnCancel.Margin = new Padding(4, 4, 4, 4);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(100, 35);
+            btnCancel.Size = new Size(88, 26);
             btnCancel.TabIndex = 5;
             btnCancel.Text = "&Cancel";
             btnCancel.UseVisualStyleBackColor = true;
-            //
+            // 
             // btnOK
-            //
+            // 
             btnOK.DialogResult = DialogResult.OK;
-            btnOK.Location = new Point(275, 202);
-            btnOK.Margin = new Padding(4, 5, 4, 5);
+            btnOK.Location = new Point(241, 152);
+            btnOK.Margin = new Padding(4, 4, 4, 4);
             btnOK.Name = "btnOK";
-            btnOK.Size = new Size(100, 35);
+            btnOK.Size = new Size(88, 26);
             btnOK.TabIndex = 4;
             btnOK.Text = "&OK";
             btnOK.UseVisualStyleBackColor = true;
-            //
+            // 
             // groupBox1
-            //
+            // 
             groupBox1.Controls.Add(lblPage);
             groupBox1.Controls.Add(nudPage);
             groupBox1.Controls.Add(tbxAreaNumber);
@@ -140,193 +140,193 @@ namespace Brutario.Win.Dialogs.BaseForms
             groupBox1.Controls.Add(lblX);
             groupBox1.Controls.Add(nudY);
             groupBox1.Controls.Add(nudX);
-            groupBox1.Location = new Point(16, 18);
-            groupBox1.Margin = new Padding(4, 5, 4, 5);
+            groupBox1.Location = new Point(14, 14);
+            groupBox1.Margin = new Padding(4, 4, 4, 4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(4, 5, 4, 5);
-            groupBox1.Size = new Size(467, 143);
+            groupBox1.Padding = new Padding(4, 4, 4, 4);
+            groupBox1.Size = new Size(409, 107);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             groupBox1.Text = "Object";
-            //
+            // 
             // lblPage
-            //
+            // 
             lblPage.AutoSize = true;
-            lblPage.Location = new Point(121, 25);
+            lblPage.Location = new Point(106, 19);
             lblPage.Margin = new Padding(4, 0, 4, 0);
             lblPage.Name = "lblPage";
-            lblPage.Size = new Size(41, 20);
+            lblPage.Size = new Size(33, 15);
             lblPage.TabIndex = 29;
             lblPage.Text = "Page";
-            //
+            // 
             // nudPage
-            //
-            nudPage.Location = new Point(172, 22);
-            nudPage.Margin = new Padding(4, 5, 4, 5);
+            // 
+            nudPage.Location = new Point(150, 16);
+            nudPage.Margin = new Padding(4, 4, 4, 4);
             nudPage.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
             nudPage.Name = "nudPage";
-            nudPage.Size = new Size(47, 27);
+            nudPage.Size = new Size(41, 23);
             nudPage.TabIndex = 28;
             nudPage.TextAlign = HorizontalAlignment.Center;
             nudPage.Value = new decimal(new int[] { 1, 0, 0, 0 });
             nudPage.ValueChanged += Item_ValueChanged;
-            //
+            // 
             // tbxAreaNumber
-            //
+            // 
             tbxAreaNumber.CharacterCasing = CharacterCasing.Upper;
-            tbxAreaNumber.Location = new Point(420, 102);
-            tbxAreaNumber.Margin = new Padding(4, 5, 4, 5);
+            tbxAreaNumber.Location = new Point(368, 76);
+            tbxAreaNumber.Margin = new Padding(4, 4, 4, 4);
             tbxAreaNumber.MaxLength = 2;
             tbxAreaNumber.Name = "tbxAreaNumber";
-            tbxAreaNumber.Size = new Size(37, 27);
+            tbxAreaNumber.Size = new Size(33, 23);
             tbxAreaNumber.TabIndex = 2;
             tbxAreaNumber.Text = "25";
             tbxAreaNumber.TextAlign = HorizontalAlignment.Right;
             tbxAreaNumber.WordWrap = false;
             tbxAreaNumber.TextChanged += AreaNumber_TextChanged;
-            //
+            // 
             // lblAreaNumber
-            //
+            // 
             lblAreaNumber.AutoSize = true;
-            lblAreaNumber.Location = new Point(320, 106);
+            lblAreaNumber.Location = new Point(280, 80);
             lblAreaNumber.Margin = new Padding(4, 0, 4, 0);
             lblAreaNumber.Name = "lblAreaNumber";
-            lblAreaNumber.Size = new Size(98, 20);
+            lblAreaNumber.Size = new Size(78, 15);
             lblAreaNumber.TabIndex = 27;
             lblAreaNumber.Text = "Area Number";
-            //
+            // 
             // nudWorld
-            //
-            nudWorld.Location = new Point(201, 103);
-            nudWorld.Margin = new Padding(4, 5, 4, 5);
+            // 
+            nudWorld.Location = new Point(176, 77);
+            nudWorld.Margin = new Padding(4, 4, 4, 4);
             nudWorld.Maximum = new decimal(new int[] { 8, 0, 0, 0 });
             nudWorld.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudWorld.Name = "nudWorld";
-            nudWorld.Size = new Size(47, 27);
+            nudWorld.Size = new Size(41, 23);
             nudWorld.TabIndex = 26;
             nudWorld.TextAlign = HorizontalAlignment.Center;
             nudWorld.Value = new decimal(new int[] { 1, 0, 0, 0 });
             nudWorld.ValueChanged += Item_ValueChanged;
-            //
+            // 
             // lblWorld
-            //
+            // 
             lblWorld.AutoSize = true;
-            lblWorld.Location = new Point(147, 106);
+            lblWorld.Location = new Point(129, 80);
             lblWorld.Margin = new Padding(4, 0, 4, 0);
             lblWorld.Name = "lblWorld";
-            lblWorld.Size = new Size(49, 20);
+            lblWorld.Size = new Size(39, 15);
             lblWorld.TabIndex = 25;
             lblWorld.Text = "World";
-            //
+            // 
             // lblDestPage
-            //
+            // 
             lblDestPage.AutoSize = true;
-            lblDestPage.Location = new Point(8, 106);
+            lblDestPage.Location = new Point(7, 80);
             lblDestPage.Margin = new Padding(4, 0, 4, 0);
             lblDestPage.Name = "lblDestPage";
-            lblDestPage.Size = new Size(75, 20);
+            lblDestPage.Size = new Size(59, 15);
             lblDestPage.TabIndex = 24;
             lblDestPage.Text = "Dest Page";
-            //
+            // 
             // nudDestPage
-            //
-            nudDestPage.Location = new Point(92, 103);
-            nudDestPage.Margin = new Padding(4, 5, 4, 5);
+            // 
+            nudDestPage.Location = new Point(80, 77);
+            nudDestPage.Margin = new Padding(4, 4, 4, 4);
             nudDestPage.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
             nudDestPage.Name = "nudDestPage";
-            nudDestPage.Size = new Size(47, 27);
+            nudDestPage.Size = new Size(41, 23);
             nudDestPage.TabIndex = 23;
             nudDestPage.TextAlign = HorizontalAlignment.Center;
             nudDestPage.Value = new decimal(new int[] { 1, 0, 0, 0 });
             nudDestPage.ValueChanged += Item_ValueChanged;
-            //
+            // 
             // chkHardFlag
-            //
+            // 
             chkHardFlag.AutoSize = true;
-            chkHardFlag.Location = new Point(363, 23);
-            chkHardFlag.Margin = new Padding(4, 5, 4, 5);
+            chkHardFlag.Location = new Point(318, 17);
+            chkHardFlag.Margin = new Padding(4, 4, 4, 4);
             chkHardFlag.Name = "chkHardFlag";
-            chkHardFlag.Size = new Size(96, 24);
+            chkHardFlag.Size = new Size(77, 19);
             chkHardFlag.TabIndex = 22;
             chkHardFlag.Text = "Hard Flag";
             chkHardFlag.UseVisualStyleBackColor = true;
             chkHardFlag.CheckedChanged += Item_ValueChanged;
-            //
+            // 
             // lblObject
-            //
+            // 
             lblObject.AutoSize = true;
-            lblObject.Location = new Point(8, 66);
+            lblObject.Location = new Point(7, 50);
             lblObject.Margin = new Padding(4, 0, 4, 0);
             lblObject.Name = "lblObject";
-            lblObject.Size = new Size(53, 20);
+            lblObject.Size = new Size(42, 15);
             lblObject.TabIndex = 6;
             lblObject.Text = "Object";
-            //
+            // 
             // cbxAreaSpriteCode
-            //
+            // 
             cbxAreaSpriteCode.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxAreaSpriteCode.FormattingEnabled = true;
-            cbxAreaSpriteCode.Location = new Point(67, 62);
-            cbxAreaSpriteCode.Margin = new Padding(4, 5, 4, 5);
+            cbxAreaSpriteCode.Location = new Point(59, 46);
+            cbxAreaSpriteCode.Margin = new Padding(4, 4, 4, 4);
             cbxAreaSpriteCode.Name = "cbxAreaSpriteCode";
-            cbxAreaSpriteCode.Size = new Size(391, 28);
+            cbxAreaSpriteCode.Size = new Size(343, 23);
             cbxAreaSpriteCode.TabIndex = 5;
             cbxAreaSpriteCode.SelectedIndexChanged += AreaSpriteCode_SelectedIndexChanged;
-            //
+            // 
             // lblY
-            //
+            // 
             lblY.AutoSize = true;
-            lblY.Location = new Point(227, 25);
+            lblY.Location = new Point(199, 19);
             lblY.Margin = new Padding(4, 0, 4, 0);
             lblY.Name = "lblY";
-            lblY.Size = new Size(45, 20);
+            lblY.Size = new Size(36, 15);
             lblY.TabIndex = 3;
             lblY.Text = "Y pos";
-            //
+            // 
             // lblX
-            //
+            // 
             lblX.AutoSize = true;
-            lblX.Location = new Point(8, 25);
+            lblX.Location = new Point(7, 19);
             lblX.Margin = new Padding(4, 0, 4, 0);
             lblX.Name = "lblX";
-            lblX.Size = new Size(46, 20);
+            lblX.Size = new Size(36, 15);
             lblX.TabIndex = 2;
             lblX.Text = "X pos";
-            //
+            // 
             // nudY
-            //
-            nudY.Location = new Point(280, 22);
-            nudY.Margin = new Padding(4, 5, 4, 5);
+            // 
+            nudY.Location = new Point(245, 16);
+            nudY.Margin = new Padding(4, 4, 4, 4);
             nudY.Maximum = new decimal(new int[] { 11, 0, 0, 0 });
             nudY.Name = "nudY";
-            nudY.Size = new Size(47, 27);
+            nudY.Size = new Size(41, 23);
             nudY.TabIndex = 1;
             nudY.TextAlign = HorizontalAlignment.Center;
             nudY.ValueChanged += Item_ValueChanged;
-            //
+            // 
             // nudX
-            //
-            nudX.Location = new Point(67, 22);
-            nudX.Margin = new Padding(4, 5, 4, 5);
+            // 
+            nudX.Location = new Point(59, 16);
+            nudX.Margin = new Padding(4, 4, 4, 4);
             nudX.Maximum = new decimal(new int[] { 15, 0, 0, 0 });
             nudX.Name = "nudX";
-            nudX.Size = new Size(47, 27);
+            nudX.Size = new Size(41, 23);
             nudX.TabIndex = 0;
             nudX.TextAlign = HorizontalAlignment.Center;
             nudX.ValueChanged += Item_ValueChanged;
-            //
+            // 
             // SpriteEditorForm
-            //
+            // 
             AcceptButton = btnOK;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancel;
-            ClientSize = new Size(499, 280);
+            ClientSize = new Size(437, 210);
             Controls.Add(groupBox1);
             Controls.Add(gbxBinary);
             Controls.Add(btnCancel);
             Controls.Add(btnOK);
-            Margin = new Padding(4, 5, 4, 5);
+            Margin = new Padding(4, 4, 4, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SpriteEditorForm";

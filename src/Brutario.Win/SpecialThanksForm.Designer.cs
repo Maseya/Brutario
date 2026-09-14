@@ -43,10 +43,10 @@ namespace Brutario.Win
             // 
             rtbCredits.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             rtbCredits.Location = new Point(0, 0);
-            rtbCredits.Margin = new Padding(4, 5, 4, 5);
+            rtbCredits.Margin = new Padding(4, 4, 4, 4);
             rtbCredits.Name = "rtbCredits";
             rtbCredits.ReadOnly = true;
-            rtbCredits.Size = new Size(871, 1129);
+            rtbCredits.Size = new Size(763, 848);
             rtbCredits.TabIndex = 0;
             rtbCredits.Text = "";
             rtbCredits.WordWrap = false;
@@ -55,10 +55,10 @@ namespace Brutario.Win
             // 
             btnOK.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnOK.DialogResult = DialogResult.OK;
-            btnOK.Location = new Point(756, 1140);
-            btnOK.Margin = new Padding(4, 5, 4, 5);
+            btnOK.Location = new Point(662, 855);
+            btnOK.Margin = new Padding(4, 4, 4, 4);
             btnOK.Name = "btnOK";
-            btnOK.Size = new Size(100, 35);
+            btnOK.Size = new Size(88, 26);
             btnOK.TabIndex = 1;
             btnOK.Text = "&OK";
             btnOK.UseVisualStyleBackColor = true;
@@ -66,14 +66,14 @@ namespace Brutario.Win
             // SpecialThanksForm
             // 
             AcceptButton = btnOK;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(872, 1194);
+            ClientSize = new Size(763, 896);
             Controls.Add(btnOK);
             Controls.Add(rtbCredits);
-            Margin = new Padding(4, 5, 4, 5);
+            Margin = new Padding(4, 4, 4, 4);
             MinimizeBox = false;
-            MinimumSize = new Size(887, 184);
+            MinimumSize = new Size(778, 148);
             Name = "SpecialThanksForm";
             ShowIcon = false;
             ShowInTaskbar = false;
