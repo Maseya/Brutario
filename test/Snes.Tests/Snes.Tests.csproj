@@ -8,6 +8,8 @@
     <IsPackable>false</IsPackable>
 
     <RootNamespace>Maseya.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>

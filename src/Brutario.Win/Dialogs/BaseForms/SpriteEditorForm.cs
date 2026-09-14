@@ -22,8 +22,8 @@ public partial class SpriteEditorForm : Form
     {
         InitializeComponent();
 
-        Codes = new List<AreaSpriteCode>();
-        EnumIndexes = new Dictionary<AreaSpriteCode, int>();
+        Codes = [];
+        EnumIndexes = [];
         foreach (var obj in Enum.GetValues(typeof(AreaSpriteCode)))
         {
             var code = (AreaSpriteCode)obj;

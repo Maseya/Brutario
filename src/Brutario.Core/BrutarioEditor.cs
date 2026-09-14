@@ -72,14 +72,14 @@ public class BrutarioEditor : IMainEditor
         TileMap = new int[TileMapLength];
         BG1 = new ObjTile[TileMapLength * 4];
 
-        ObjectData = new SortedObjectListEditor();
+        ObjectData = [];
         ObjectData.DataReset += (s, e) => OnObjectData_DataReset(e);
         ObjectData.ItemEdited += (s, e) => OnObjectData_ItemEdited(e);
         ObjectData.ItemAdded += (s, e) => OnObjectData_ItemAdded(e);
         ObjectData.ItemRemoved += (s, e) => OnObjectData_ItemRemoved(e);
         ObjectData.DataCleared += (s, e) => OnObjectData_DataCleared(e);
 
-        SpriteData = new SortedSpriteListEditor();
+        SpriteData = [];
 
         UndoFactory = new UndoFactory();
         UndoFactory.Cleared += UndoFactory_Cleared;

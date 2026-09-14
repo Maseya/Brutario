@@ -59,12 +59,12 @@ public class SortedObjectListEditor :
 {
     public SortedObjectListEditor()
     {
-        Items = new List<UIAreaObjectCommand>();
+        Items = [];
     }
 
     public SortedObjectListEditor(IEnumerable<AreaObjectCommand> commands)
     {
-        Items = new List<UIAreaObjectCommand>(GetSortedUICommands(commands));
+        Items = [.. GetSortedUICommands(commands)];
     }
 
     public event EventHandler? DataReset;

@@ -12,12 +12,12 @@ public class SortedSpriteListEditor :
 {
     public SortedSpriteListEditor()
     {
-        Items = new List<UIAreaSpriteCommand>();
+        Items = [];
     }
 
     public SortedSpriteListEditor(IEnumerable<AreaSpriteCommand> commands)
     {
-        Items = new List<UIAreaSpriteCommand>(GetSortedUICommands(commands));
+        Items = [.. GetSortedUICommands(commands)];
     }
 
     public event EventHandler? DataReset;
