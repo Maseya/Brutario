@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 using Maseya.Smas.Smb1.AreaData.ObjectData;
 
@@ -60,12 +59,12 @@ public class SortedObjectListEditor :
 {
     public SortedObjectListEditor()
     {
-        Items = new List<UIAreaObjectCommand>();
+        Items = [];
     }
 
     public SortedObjectListEditor(IEnumerable<AreaObjectCommand> commands)
     {
-        Items = new List<UIAreaObjectCommand>(GetSortedUICommands(commands));
+        Items = [.. GetSortedUICommands(commands)];
     }
 
     public event EventHandler? DataReset;
@@ -100,7 +99,10 @@ public class SortedObjectListEditor :
 
     bool ICollection<UIAreaObjectCommand>.IsReadOnly
     {
-        get { return false; }
+        get
+        {
+            return false;
+        }
     }
 
     private List<UIAreaObjectCommand> Items
@@ -330,7 +332,7 @@ public class SortedObjectListEditor :
 
         result.Add(AreaObjectCommand.TerminationCode);
 
-        return result.ToArray();
+        return [.. result];
     }
 
     void ICollection<UIAreaObjectCommand>.CopyTo(

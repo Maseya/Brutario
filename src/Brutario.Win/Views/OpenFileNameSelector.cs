@@ -17,7 +17,10 @@ public class OpenFileNameSelector : FileNameSelectorBase
         OpenFileDialog = new OpenFileDialog();
     }
 
-    public OpenFileDialog OpenFileDialog { get; }
+    public OpenFileDialog OpenFileDialog
+    {
+        get;
+    }
 
     protected override FileDialog FileDialog
     {

@@ -227,11 +227,20 @@ internal readonly ref struct RomHeader
         }
     }
 
-    public AddressMode AddressMode { get; }
+    public AddressMode AddressMode
+    {
+        get;
+    }
 
-    public ReadOnlySpan<byte> Data { get; }
+    public ReadOnlySpan<byte> Data
+    {
+        get;
+    }
 
-    public int FullRomSize { get; }
+    public int FullRomSize
+    {
+        get;
+    }
 
     private int ReadInt16(int address)
     {

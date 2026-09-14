@@ -12,12 +12,12 @@ public class SortedSpriteListEditor :
 {
     public SortedSpriteListEditor()
     {
-        Items = new List<UIAreaSpriteCommand>();
+        Items = [];
     }
 
     public SortedSpriteListEditor(IEnumerable<AreaSpriteCommand> commands)
     {
-        Items = new List<UIAreaSpriteCommand>(GetSortedUICommands(commands));
+        Items = [.. GetSortedUICommands(commands)];
     }
 
     public event EventHandler? DataReset;
@@ -52,7 +52,10 @@ public class SortedSpriteListEditor :
 
     bool ICollection<UIAreaSpriteCommand>.IsReadOnly
     {
-        get { return false; }
+        get
+        {
+            return false;
+        }
     }
 
     private List<UIAreaSpriteCommand> Items
@@ -213,7 +216,7 @@ public class SortedSpriteListEditor :
         int index,
         Brutario.Core.UIAreaSpriteCommand item)
     {
-        Add(item);
+        _ = Add(item);
     }
 
     public IEnumerator<UIAreaSpriteCommand> GetEnumerator()
@@ -265,7 +268,7 @@ public class SortedSpriteListEditor :
 
         result.Add(AreaSpriteCommand.TerminationCode);
 
-        return result.ToArray();
+        return [.. result];
     }
 
     void ICollection<UIAreaSpriteCommand>.CopyTo(

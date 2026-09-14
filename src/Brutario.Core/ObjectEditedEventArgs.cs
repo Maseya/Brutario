@@ -15,11 +15,23 @@ public class ObjectEditedEventArgs : EventArgs
         NewCommand = newCommand;
     }
 
-    public int OldIndex { get; set; }
+    public int OldIndex
+    {
+        get; set;
+    }
 
-    public int NewIndex { get; set; }
+    public int NewIndex
+    {
+        get; set;
+    }
 
-    public UIAreaObjectCommand OldCommand { get; set; }
+    public UIAreaObjectCommand OldCommand
+    {
+        get; set;
+    }
 
-    public UIAreaObjectCommand NewCommand { get; set; }
+    public UIAreaObjectCommand NewCommand
+    {
+        get; set;
+    }
 }

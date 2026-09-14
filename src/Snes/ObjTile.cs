@@ -20,29 +20,29 @@ public struct ObjTile : IEquatable<ObjTile>
     private const int FlipOffset = 14;
     private const int FlipMask = 3;
 
-    private ushort value;
+    private ushort _value;
 
     private ObjTile(int value)
     {
-        this.value = (ushort)value;
+        _value = (ushort)value;
     }
 
     public int Value
     {
-        get
+        readonly get
         {
-            return value;
+            return _value;
         }
 
         set
         {
-            this.value = (ushort)value;
+            _value = (ushort)value;
         }
     }
 
     public int TileIndex
     {
-        get
+        readonly get
         {
             return Value & TileIndexMask;
         }
@@ -56,7 +56,7 @@ public struct ObjTile : IEquatable<ObjTile>
 
     public int PaletteIndex
     {
-        get
+        readonly get
         {
             return (Value >> PaletteOffset) & PaletteMask;
         }
@@ -70,7 +70,7 @@ public struct ObjTile : IEquatable<ObjTile>
 
     public LayerPriority Priority
     {
-        get
+        readonly get
         {
             return (LayerPriority)(
                 (Value >> PriorityOffset) & PriorityMask);
@@ -91,7 +91,7 @@ public struct ObjTile : IEquatable<ObjTile>
 
     public TileFlip TileFlip
     {
-        get
+        readonly get
         {
             return (TileFlip)((Value >> FlipOffset) & FlipMask);
         }
@@ -105,7 +105,7 @@ public struct ObjTile : IEquatable<ObjTile>
 
     public bool XFlipped
     {
-        get
+        readonly get
         {
             return
                 (TileFlip & TileFlip.Horizontal) != 0;
@@ -126,7 +126,7 @@ public struct ObjTile : IEquatable<ObjTile>
 
     public bool YFlipped
     {
-        get
+        readonly get
         {
             return (TileFlip & TileFlip.Veritcal) != 0;
         }
@@ -164,36 +164,36 @@ public struct ObjTile : IEquatable<ObjTile>
         return left.Value != right.Value;
     }
 
-    public ObjTile FlipX()
+    public readonly ObjTile FlipX()
     {
         var tile = this;
         tile.XFlipped ^= true;
         return tile;
     }
 
-    public ObjTile FlipY()
+    public readonly ObjTile FlipY()
     {
         var tile = this;
         tile.YFlipped ^= true;
         return tile;
     }
 
-    public bool Equals(ObjTile other)
+    public readonly bool Equals(ObjTile other)
     {
         return Value.Equals(other.Value);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is ObjTile tile && Equals(tile);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return Value;
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return Value.ToString("X4");
     }

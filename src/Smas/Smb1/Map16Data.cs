@@ -15,15 +15,12 @@ public class Map16Data
 {
     public Map16Data(Rom rom, Map16DataPointers pointers)
     {
-        Tiles = new ReadOnlyCollection<Obj16Tile[]>(
-            new Obj16Tile[][]
-            {
-                new Obj16Tile[0x2B],
-                new Obj16Tile[0x38],
-                new Obj16Tile[0x0E],
-                new Obj16Tile[0x3E],
-            }
-        );
+        Tiles = new ReadOnlyCollection<Obj16Tile[]>([
+            new Obj16Tile[0x2B],
+            new Obj16Tile[0x38],
+            new Obj16Tile[0x0E],
+            new Obj16Tile[0x3E],
+        ]);
 
         var isTileAccessible = new bool[0x100];
         for (var i = 0; i < Tiles.Count; i++)

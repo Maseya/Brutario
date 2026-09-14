@@ -114,5 +114,4 @@ public static class AutoSaveHelper
             ? date
             : null;
     }
-
 }

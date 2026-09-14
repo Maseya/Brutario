@@ -134,55 +134,130 @@ public class AreaObjectRenderer
         TileBuffer = new int[TileBufferSize];
     }
 
-    public byte[] BackgroundSceneryMetaDataOffsetTable { get; }
+    public byte[] BackgroundSceneryMetaDataOffsetTable
+    {
+        get;
+    }
 
-    public byte[] BackgroundSceneryMetaDataTable { get; }
+    public byte[] BackgroundSceneryMetaDataTable
+    {
+        get;
+    }
 
-    public byte[] BackgroundSceneryTileDataTable { get; }
+    public byte[] BackgroundSceneryTileDataTable
+    {
+        get;
+    }
 
-    public byte[] ForegroundSceneryDataOffsetTable { get; }
+    public byte[] ForegroundSceneryDataOffsetTable
+    {
+        get;
+    }
 
-    public byte[] ForegroundSceneryDataTable { get; }
+    public byte[] ForegroundSceneryDataTable
+    {
+        get;
+    }
 
-    public byte[] TerrainAreaTypeTable { get; }
+    public byte[] TerrainAreaTypeTable
+    {
+        get;
+    }
 
-    public byte[] TerrainBitMaskTable { get; }
+    public byte[] TerrainBitMaskTable
+    {
+        get;
+    }
 
-    public byte[] BitmaskTable { get; }
+    public byte[] BitmaskTable
+    {
+        get;
+    }
 
-    public byte[] PulleyRopeTileTable { get; }
+    public byte[] PulleyRopeTileTable
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable1 { get; }
+    public byte[] JPipeTilesTable1
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable2 { get; }
+    public byte[] JPipeTilesTable2
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable3 { get; }
+    public byte[] JPipeTilesTable3
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable4 { get; }
+    public byte[] JPipeTilesTable4
+    {
+        get;
+    }
 
-    public byte[] PipeTileTable { get; }
+    public byte[] PipeTileTable
+    {
+        get;
+    }
 
-    public byte[] WaterSurfaceTileTable { get; }
+    public byte[] WaterSurfaceTileTable
+    {
+        get;
+    }
 
-    public byte[] CoinRowTileTable { get; }
+    public byte[] CoinRowTileTable
+    {
+        get;
+    }
 
-    public byte[] BrickRowTileTable { get; }
+    public byte[] BrickRowTileTable
+    {
+        get;
+    }
 
-    public byte[] BlockRowTileTable { get; }
+    public byte[] BlockRowTileTable
+    {
+        get;
+    }
 
-    public byte[] SingleTileObjectTable { get; }
+    public byte[] SingleTileObjectTable
+    {
+        get;
+    }
 
-    public byte[] CastleTileTable { get; }
+    public byte[] CastleTileTable
+    {
+        get;
+    }
 
-    public byte[] BlockStairYTable { get; }
+    public byte[] BlockStairYTable
+    {
+        get;
+    }
 
-    public byte[] BlockStairHeightTable { get; }
+    public byte[] BlockStairHeightTable
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable5 { get; }
+    public byte[] JPipeTilesTable5
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable6 { get; }
+    public byte[] JPipeTilesTable6
+    {
+        get;
+    }
 
-    public byte[] JPipeTilesTable7 { get; }
+    public byte[] JPipeTilesTable7
+    {
+        get;
+    }
 
     public AreaType AreaType
     {

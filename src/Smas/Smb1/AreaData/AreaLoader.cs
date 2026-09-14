@@ -86,23 +86,20 @@ public class AreaLoader
         {
             var objectAddress = objectBank | (objectHighs[i] << 8) | objectLows[i];
             Headers[i] = rom.ReadInt16(objectAddress);
-            AreaObjectData[i] = GetAreaObjectData(
-                rom.EnumerateBytes(objectAddress + 2, 0x10000))
-                .ToArray();
+            AreaObjectData[i] =
+                [.. GetAreaObjectData(rom.EnumerateBytes(objectAddress + 2, 0x10000))];
 
             var spriteAddress = spriteBank | (spriteHighs[i] << 8) | spriteLows[i];
-            AreaSpriteData[i] = GetAreaSpriteData(rom.EnumerateBytes(spriteAddress, 0x10000))
-                .ToArray();
+            AreaSpriteData[i] =
+                [.. GetAreaSpriteData(rom.EnumerateBytes(spriteAddress, 0x10000))];
         }
 
-        SortedObjectAreaTypes =
-            Enumerable.Range(0, 4).Select(i => (AreaType)i).ToArray();
+        SortedObjectAreaTypes = [.. Enumerable.Range(0, 4).Select(i => (AreaType)i)];
         Array.Sort(
             SortedObjectAreaTypes,
             (x, y) => ObjectAreaIndexTable[(int)x] - ObjectAreaIndexTable[(int)y]);
 
-        SortedSpriteAreaTypes =
-            Enumerable.Range(0, 4).Select(i => (AreaType)i).ToArray();
+        SortedSpriteAreaTypes = [.. Enumerable.Range(0, 4).Select(i => (AreaType)i)];
         Array.Sort(
             SortedSpriteAreaTypes,
             (x, y) => SpriteAreaIndexTable[(int)x] - SpriteAreaIndexTable[(int)y]);
@@ -288,14 +285,14 @@ public class AreaLoader
         IEnumerable<AreaObjectCommand> objectData)
     {
         Headers[index] = areaHeader;
-        AreaObjectData[index] = objectData.ToArray();
+        AreaObjectData[index] = [.. objectData];
     }
 
     public void WriteSpriteData(
         int index,
         IEnumerable<AreaSpriteCommand> spriteData)
     {
-        AreaSpriteData[index] = spriteData.ToArray();
+        AreaSpriteData[index] = [.. spriteData];
     }
 
     public void WriteToGameData(Rom rom, AreaLoaderPointers pointers)
@@ -323,7 +320,7 @@ public class AreaLoader
             totalObjectSize += objectData[objectAreaIndex].Length;
 
             spriteData[spriteAreaIndex] =
-                AreaSpriteData[spriteAreaIndex].ToBytes().ToArray();
+                [.. AreaSpriteData[spriteAreaIndex].ToBytes()];
             if (spriteData[spriteAreaIndex].Length > 1 || spriteAreaIndex != 0x0F)
             {
                 spriteOffsets[spriteAreaIndex] = totalSpriteSize;

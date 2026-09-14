@@ -13,7 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-using Brutario.Core.Views;
+using Brutario.Core.Editors;
 
 using Maseya.Smas.Smb1;
 using Maseya.Smas.Smb1.AreaData;
@@ -72,14 +72,14 @@ public class BrutarioEditor : IMainEditor
         TileMap = new int[TileMapLength];
         BG1 = new ObjTile[TileMapLength * 4];
 
-        ObjectData = new SortedObjectListEditor();
+        ObjectData = [];
         ObjectData.DataReset += (s, e) => OnObjectData_DataReset(e);
         ObjectData.ItemEdited += (s, e) => OnObjectData_ItemEdited(e);
         ObjectData.ItemAdded += (s, e) => OnObjectData_ItemAdded(e);
         ObjectData.ItemRemoved += (s, e) => OnObjectData_ItemRemoved(e);
         ObjectData.DataCleared += (s, e) => OnObjectData_DataCleared(e);
 
-        SpriteData = new SortedSpriteListEditor();
+        SpriteData = [];
 
         UndoFactory = new UndoFactory();
         UndoFactory.Cleared += UndoFactory_Cleared;
@@ -144,9 +144,15 @@ public class BrutarioEditor : IMainEditor
 
     public event EventHandler? AnimationFrameChanged;
 
-    public bool EditSelectedObjectEnabled { get; set; }
+    public bool EditSelectedObjectEnabled
+    {
+        get; set;
+    }
 
-    public bool EditSelectedSpriteEnabled { get; set; }
+    public bool EditSelectedSpriteEnabled
+    {
+        get; set;
+    }
 
     public int SelectedObjectIndex
     {
@@ -603,38 +609,80 @@ public class BrutarioEditor : IMainEditor
         }
     }
 
-    private int OldObjectIndex { get; set; }
+    private int OldObjectIndex
+    {
+        get; set;
+    }
 
-    private UIAreaObjectCommand OldObject { get; set; }
+    private UIAreaObjectCommand OldObject
+    {
+        get; set;
+    }
 
-    private int OldSpriteIndex { get; set; }
+    private int OldSpriteIndex
+    {
+        get; set;
+    }
 
-    private UIAreaSpriteCommand OldSprite { get; set; }
+    private UIAreaSpriteCommand OldSprite
+    {
+        get; set;
+    }
 
-    private int PreferredX { get; set; }
+    private int PreferredX
+    {
+        get; set;
+    }
 
-    private int PreferredY { get; set; }
+    private int PreferredY
+    {
+        get; set;
+    }
 
     private GameData? GameData
     {
         get; set;
     }
 
-    private string? AutoSavePath { get; set; }
+    private string? AutoSavePath
+    {
+        get; set;
+    }
 
-    public bool AutoSaveEnabled { get; set; }
+    public bool AutoSaveEnabled
+    {
+        get; set;
+    }
 
-    public bool PruneAutoSavesEnabled { get; set; }
+    public bool PruneAutoSavesEnabled
+    {
+        get; set;
+    }
 
-    public TimeSpan AutoSaveInterval { get; set; }
+    public TimeSpan AutoSaveInterval
+    {
+        get; set;
+    }
 
-    public TimeSpan AutoSaveCutoffAge { get; set; }
+    public TimeSpan AutoSaveCutoffAge
+    {
+        get; set;
+    }
 
-    public bool AutoSaveHardCutoff { get; set; }
+    public bool AutoSaveHardCutoff
+    {
+        get; set;
+    }
 
-    private DateTime LastAutoSaveTime { get; set; }
+    private DateTime LastAutoSaveTime
+    {
+        get; set;
+    }
 
-    private byte[]? LastAutoSaveData { get; set; }
+    private byte[]? LastAutoSaveData
+    {
+        get; set;
+    }
 
     public void Open(string path)
     {
@@ -1708,7 +1756,7 @@ public class BrutarioEditor : IMainEditor
     {
         PushUndoAction(
             undo: () => ObjectData.Reset(items),
-            redo: () => ObjectData.Clear());
+            redo: ObjectData.Clear);
     }
 
     private void ClearSpritesInternal(bool discardHistory = false)
@@ -1726,7 +1774,7 @@ public class BrutarioEditor : IMainEditor
     {
         PushUndoAction(
             undo: () => SpriteData.Reset(items),
-            redo: () => SpriteData.Clear());
+            redo: SpriteData.Clear);
     }
 
     private void SetAreaHeaderInternal(
@@ -1833,12 +1881,12 @@ public class BrutarioEditor : IMainEditor
 
     private void WriteObjectData()
     {
-        GameData!.AreaLoader.AreaObjectData[ObjectAreaIndex] = ObjectData.GetObjectData().ToArray();
+        GameData!.AreaLoader.AreaObjectData[ObjectAreaIndex] = [.. ObjectData.GetObjectData()];
     }
 
     private void WriteSpriteData()
     {
-        GameData!.AreaLoader.AreaSpriteData[SpriteAreaIndex] = SpriteData.GetSpriteData().ToArray();
+        GameData!.AreaLoader.AreaSpriteData[SpriteAreaIndex] = [.. SpriteData.GetSpriteData()];
     }
 
     private void WriteHeader()
@@ -1862,7 +1910,7 @@ public class BrutarioEditor : IMainEditor
             TileMap,
             AreaType,
             AreaHeader,
-            ObjectData.GetObjectData().ToArray(),
+            [.. ObjectData.GetObjectData()],
             //GameData!.AreaLoader.AreaObjectData[ObjectAreaIndex],
             AreaNumber == 2);
         ReadBG1Tiles();
@@ -1919,8 +1967,8 @@ public class BrutarioEditor : IMainEditor
     private IEnumerable<Sprite> EnumerateSprites(int frame)
     {
         var areaDataSprites = GameData!.AreaSpriteRenderer.GetSprites(
-            SpriteData.GetSpriteData().ToArray(),
-            ObjectData.GetObjectData().ToArray(),
+            [.. SpriteData.GetSpriteData()],
+            [.. ObjectData.GetObjectData()],
             frame,
             AreaType,
             showPipePiranhaPlants: AreaNumber != 0x25);

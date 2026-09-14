@@ -1,4 +1,4 @@
-﻿namespace Brutario.Core;
+﻿namespace Brutario.Core.Views;
 
 using System;
 

@@ -113,7 +113,8 @@ public class AreaObjectRendererPointers
               baseAddress2,
               singleTileObjectTablePointer: baseAddress2 + 0x2A4,
               baseAddress3)
-    { }
+    {
+    }
 
     private AreaObjectRendererPointers(
         int baseAddress1,
@@ -146,55 +147,131 @@ public class AreaObjectRendererPointers
             jPipeTiles5TablePointer: baseAddress3 + 0x233,
             jPipeTiles6TablePointer: baseAddress3 + 0x245,
             jPipeTiles7TablePointer: baseAddress3 + 0x24B)
-    { }
+    {
+    }
 
-    public int BackgroundSceneryMetaDataOffsetTablePointer { get; }
+    public int BackgroundSceneryMetaDataOffsetTablePointer
+    {
+        get;
+    }
 
-    public int BackgroundSceneryMetaDataTablePointer { get; }
+    public int BackgroundSceneryMetaDataTablePointer
+    {
+        get;
+    }
 
-    public int BackgroundSceneryTileDataTablePointer { get; }
+    public int BackgroundSceneryTileDataTablePointer
+    {
+        get;
+    }
 
-    public int ForegroundSceneryDataOffsetTablePointer { get; }
+    public int ForegroundSceneryDataOffsetTablePointer
+    {
+        get;
+    }
 
-    public int ForegroundSceneryDataTablePointer { get; }
+    public int ForegroundSceneryDataTablePointer
+    {
+        get;
+    }
 
-    public int TerrainAreaTypeTablePointer { get; }
+    public int TerrainAreaTypeTablePointer
+    {
+        get;
+    }
 
-    public int TerrainBitMaskTablePointer { get; }
+    public int TerrainBitMaskTablePointer
+    {
+        get;
+    }
 
-    public int BitmaskTablePointer { get; }
+    public int BitmaskTablePointer
+    {
+        get;
+    }
 
-    public int PulleyRopeTileTablePointer { get; }
+    public int PulleyRopeTileTablePointer
+    {
+        get;
+    }
 
-    public int JPipeTilesTable1Pointer { get; }
+    public int JPipeTilesTable1Pointer
+    {
+        get;
+    }
 
-    public int JPipeTilesTable2Pointer { get; }
+    public int JPipeTilesTable2Pointer
+    {
+        get;
+    }
 
-    public int JPipeTilesTable3Pointer { get; }
+    public int JPipeTilesTable3Pointer
+    {
+        get;
+    }
 
-    public int JPipeTilesTable4Pointer { get; }
+    public int JPipeTilesTable4Pointer
+    {
+        get;
+    }
 
-    public int PipeTileTablePointer { get; }
+    public int PipeTileTablePointer
+    {
+        get;
+    }
 
-    public int WaterSurfaceTileTablePointer { get; }
+    public int WaterSurfaceTileTablePointer
+    {
+        get;
+    }
 
-    public int CoinRowTileTablePointer { get; }
+    public int CoinRowTileTablePointer
+    {
+        get;
+    }
 
-    public int BrickRowTileTablePointer { get; }
+    public int BrickRowTileTablePointer
+    {
+        get;
+    }
 
-    public int BlockRowTileTablePointer { get; }
+    public int BlockRowTileTablePointer
+    {
+        get;
+    }
 
-    public int SingleTileObjectTablePointer { get; }
+    public int SingleTileObjectTablePointer
+    {
+        get;
+    }
 
-    public int CastleTileTablePointer { get; }
+    public int CastleTileTablePointer
+    {
+        get;
+    }
 
-    public int BlockStairYTablePointer { get; }
+    public int BlockStairYTablePointer
+    {
+        get;
+    }
 
-    public int BlockStairHeightTablePointer { get; }
+    public int BlockStairHeightTablePointer
+    {
+        get;
+    }
 
-    public int JPipeTilesTable5Pointer { get; }
+    public int JPipeTilesTable5Pointer
+    {
+        get;
+    }
 
-    public int JPipeTilesTable6Pointer { get; }
+    public int JPipeTilesTable6Pointer
+    {
+        get;
+    }
 
-    public int JPipeTilesTable7Pointer { get; }
+    public int JPipeTilesTable7Pointer
+    {
+        get;
+    }
 }

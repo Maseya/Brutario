@@ -13,33 +13,36 @@ using Maseya.Smas.Smb1.AreaData.SpriteData;
 
 public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
 {
-    private AreaSpriteCommand command_;
+    private AreaSpriteCommand _command;
 
     public UIAreaSpriteCommand(AreaSpriteCommand command, int page, int z = 0)
     {
-        command_ = command;
+        _command = command;
         Page = page;
         Z = z;
     }
 
     public AreaSpriteCommand Command
     {
-        get
+        readonly get
         {
-            return command_;
+            return _command;
         }
 
         set
         {
-            command_ = value;
+            _command = value;
         }
     }
 
-    public int Page { get; set; }
+    public int Page
+    {
+        get; set;
+    }
 
     public int X
     {
-        get
+        readonly get
         {
             return Command.X | (Page << 4);
         }
@@ -47,26 +50,29 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
         set
         {
             Page = value >> 4;
-            command_.X = value & 0x0F;
+            _command.X = value & 0x0F;
         }
     }
 
-    public int Z { get; set; }
+    public int Z
+    {
+        get; set;
+    }
 
     public int Y
     {
-        get
+        readonly get
         {
-            return command_.Y;
+            return _command.Y;
         }
 
         set
         {
-            command_.Y = value;
+            _command.Y = value;
         }
     }
 
-    public Rectangle SelectionRectangle
+    public readonly Rectangle SelectionRectangle
     {
         get
         {
@@ -74,7 +80,7 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
         }
     }
 
-    public string HexString
+    public readonly string HexString
     {
         get
         {
@@ -96,24 +102,24 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
         return !(left == right);
     }
 
-    public bool Equals(UIAreaSpriteCommand other)
+    public readonly bool Equals(UIAreaSpriteCommand other)
     {
         return Command.Equals(other.Command)
             && Page.Equals(other.Page)
             && Z.Equals(other.Z);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is UIAreaSpriteCommand other && Equals(other);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(Command, Page, Z);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{X}, {Y}, {Z}, {Command.FullName}";
     }

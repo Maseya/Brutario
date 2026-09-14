@@ -4,7 +4,7 @@
 //     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-namespace Brutario.Core;
+namespace Brutario.Core.Editors;
 
 using System;
 
@@ -14,7 +14,10 @@ public interface IHeaderEditorView
 {
     event EventHandler? AreaHeaderChanged;
 
-    AreaHeader AreaHeader { get; set; }
+    AreaHeader AreaHeader
+    {
+        get; set;
+    }
 
     bool Prompt();
 }

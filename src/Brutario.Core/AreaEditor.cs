@@ -197,7 +197,10 @@ public class AreaEditor
         set;
     }
 
-    private bool IsAreaLoaded { get; set; }
+    private bool IsAreaLoaded
+    {
+        get; set;
+    }
 
     private GameData GameData
     {
@@ -247,7 +250,7 @@ public class AreaEditor
             TileMap,
             AreaType,
             AreaHeader,
-            ObjectDataInternal.GetObjectData().ToArray(),
+            [.. ObjectDataInternal.GetObjectData()],
             AreaNumber == 2);
         ReadBG1Tiles();
     }

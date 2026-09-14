@@ -13,33 +13,36 @@ using Maseya.Smas.Smb1.AreaData.ObjectData;
 
 public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
 {
-    private AreaObjectCommand command_;
+    private AreaObjectCommand _command;
 
     public UIAreaObjectCommand(AreaObjectCommand command, int page, int z = 0)
     {
-        command_ = command;
+        _command = command;
         Page = page;
         Z = z;
     }
 
     public AreaObjectCommand Command
     {
-        get
+        readonly get
         {
-            return command_;
+            return _command;
         }
 
         set
         {
-            command_ = value;
+            _command = value;
         }
     }
 
-    public int Page { get; set; }
+    public int Page
+    {
+        get; set;
+    }
 
     public int X
     {
-        get
+        readonly get
         {
             return Command.X | (Page << 4);
         }
@@ -47,24 +50,24 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         set
         {
             Page = value >> 4;
-            command_.X = value & 0x0F;
+            _command.X = value & 0x0F;
         }
     }
 
     public int Y
     {
-        get
+        readonly get
         {
-            return command_.Y;
+            return _command.Y;
         }
 
         set
         {
-            command_.Y = value;
+            _command.Y = value;
         }
     }
 
-    public Rectangle SelectionRectangle
+    public readonly Rectangle SelectionRectangle
     {
         get
         {
@@ -72,9 +75,12 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         }
     }
 
-    public int Z { get; set; }
+    public int Z
+    {
+        get; set;
+    }
 
-    public string HexString
+    public readonly string HexString
     {
         get
         {
@@ -92,24 +98,24 @@ public struct UIAreaObjectCommand : IEquatable<UIAreaObjectCommand>
         return !(left == right);
     }
 
-    public bool Equals(UIAreaObjectCommand other)
+    public readonly bool Equals(UIAreaObjectCommand other)
     {
         return Command.Equals(other.Command)
             && Page.Equals(other.Page)
             && Z.Equals(other.Z);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is UIAreaObjectCommand other && Equals(other);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(Command, Page, Z);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{X}, {Y}, {Z}, {Command.BaseName}";
     }

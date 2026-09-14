@@ -4,11 +4,14 @@
 //     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-namespace Brutario.Core;
+namespace Brutario.Core.Editors;
 
 public interface IFileNameSelector
 {
-    string? FileName { get; set; }
+    string? FileName
+    {
+        get; set;
+    }
 
     PromptResult Prompt();
 }

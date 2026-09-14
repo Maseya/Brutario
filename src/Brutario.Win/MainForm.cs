@@ -11,6 +11,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
+using Brutario.Core.Presenters;
+using Brutario.Core.Views;
 using Brutario.Win.Properties;
 
 using Core;
@@ -285,9 +287,15 @@ public partial class MainForm : Form, IMainView
         }
     }
 
-    public MainPresenter Presenter { get; }
+    public MainPresenter Presenter
+    {
+        get;
+    }
 
-    private DateTime StartTime { get; set; }
+    private DateTime StartTime
+    {
+        get; set;
+    }
 
     private TimeSpan ElapsedTime
     {
@@ -514,14 +522,14 @@ public partial class MainForm : Form, IMainView
     {
         switch (e.Button)
         {
-            case MouseButtons.Right:
-                Presenter.SetSelectedItem((e.X + (StartX * 8)) >> 4, e.Y >> 4);
-                if (cmsMain.Enabled)
-                {
-                    cmsMain.Show(areaControl, e.Location);
-                }
+        case MouseButtons.Right:
+            Presenter.SetSelectedItem((e.X + (StartX * 8)) >> 4, e.Y >> 4);
+            if (cmsMain.Enabled)
+            {
+                cmsMain.Show(areaControl, e.Location);
+            }
 
-                break;
+            break;
         }
     }
 
@@ -529,10 +537,10 @@ public partial class MainForm : Form, IMainView
     {
         switch (e.Button)
         {
-            case MouseButtons.Left:
-                Presenter.SetSelectedItem((e.X + (StartX * 8)) >> 4, e.Y >> 4);
-                Presenter.InitializeMoveItem();
-                break;
+        case MouseButtons.Left:
+            Presenter.SetSelectedItem((e.X + (StartX * 8)) >> 4, e.Y >> 4);
+            Presenter.InitializeMoveItem();
+            break;
         }
     }
 
@@ -600,7 +608,7 @@ public partial class MainForm : Form, IMainView
 
     private void LoadArea_Click(object sender, EventArgs e)
     {
-        MessageBox.Show("Not yet implemented");
+        _ = MessageBox.Show("Not yet implemented");
     }
 
     private void ObjectListView_AddItem_Click(object sender, EventArgs e)

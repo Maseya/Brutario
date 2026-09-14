@@ -49,7 +49,8 @@ public class GfxDataPointers
             tileSetAddressWordTablePointer,
             tileSetDestIndexTablePointer,
             tileSetSizeTablePointer)
-    { }
+    {
+    }
 
     public GfxDataPointers(
         int areaGfxAddress,
@@ -87,27 +88,61 @@ public class GfxDataPointers
               tileSetDestIndexTablePointer: baseAddress + 0x178,
               tileSetSizeTablePointer: baseAddress + 0x17E,
               gfxBaseAddress: gfxBaseAddress)
-    { }
+    {
+    }
 
-    public int AreaGfxAddress { get; }
+    public int AreaGfxAddress
+    {
+        get;
+    }
 
-    public int SpriteGfxAddress { get; }
+    public int SpriteGfxAddress
+    {
+        get;
+    }
 
-    public int AnimatedGfxAddress { get; }
+    public int AnimatedGfxAddress
+    {
+        get;
+    }
 
-    public int MarioGfxAddress { get; }
+    public int MarioGfxAddress
+    {
+        get;
+    }
 
-    public int LuigiGfxAddress { get; }
+    public int LuigiGfxAddress
+    {
+        get;
+    }
 
-    public int MenuGfxAddress { get; }
+    public int MenuGfxAddress
+    {
+        get;
+    }
 
-    public int BonusAreaTileSetTablePointer { get; }
+    public int BonusAreaTileSetTablePointer
+    {
+        get;
+    }
 
-    public int TileSetAddressBankByteTablePointer { get; }
+    public int TileSetAddressBankByteTablePointer
+    {
+        get;
+    }
 
-    public int TileSetAddressWordTablePointer { get; }
+    public int TileSetAddressWordTablePointer
+    {
+        get;
+    }
 
-    public int TileSetDestIndexTablePointer { get; }
+    public int TileSetDestIndexTablePointer
+    {
+        get;
+    }
 
-    public int TileSetSizeTablePointer { get; }
+    public int TileSetSizeTablePointer
+    {
+        get;
+    }
 }

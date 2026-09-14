@@ -66,7 +66,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
 
     public BackgroundColorControl BackgroundColorControl
     {
-        get
+        readonly get
         {
             var value = Value1 & 0x07;
             return value >= 4 ? (BackgroundColorControl)(value & 4) : 0;
@@ -91,7 +91,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
     /// </summary>
     public ForegroundScenery ForegroundScenery
     {
-        get
+        readonly get
         {
             var value = Value1 & 7;
             return value >= 4
@@ -115,7 +115,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
     /// </summary>
     public AreaPlatformType AreaPlatformType
     {
-        get
+        readonly get
         {
             return (AreaPlatformType)(Value2 >> 6);
         }
@@ -132,7 +132,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
     /// </summary>
     public BackgroundScenery BackgroundScenery
     {
-        get
+        readonly get
         {
             return (BackgroundScenery)((Value2 >> 4) & 3);
         }
@@ -149,7 +149,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
     /// </summary>
     public StartTime StartTime
     {
-        get
+        readonly get
         {
             return (StartTime)(Value1 >> 6);
         }
@@ -166,7 +166,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
     /// </summary>
     public StartYPosition StartYPosition
     {
-        get
+        readonly get
         {
             return (StartYPosition)((Value1 >> 3) & 7);
         }
@@ -178,7 +178,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
         }
     }
 
-    public int StartYPixel
+    public readonly int StartYPixel
     {
         get
         {
@@ -202,7 +202,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
     /// </summary>
     public TerrainMode TerrainMode
     {
-        get
+        readonly get
         {
             return (TerrainMode)(Value2 & 0x0F);
         }
@@ -234,7 +234,7 @@ public struct AreaHeader : IEquatable<AreaHeader>
 
     public int Word
     {
-        get
+        readonly get
         {
             return Value1 | (Value2 << 8);
         }
@@ -266,22 +266,22 @@ public struct AreaHeader : IEquatable<AreaHeader>
         return new AreaHeader(word);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is AreaHeader other && Equals(other);
     }
 
-    public bool Equals(AreaHeader other)
+    public readonly bool Equals(AreaHeader other)
     {
         return Value1.Equals(other.Value1) && Value2.Equals(other.Value2);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return Value1 | (Value2 << 8);
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"{Value1:X2} {Value2:X2}";
     }

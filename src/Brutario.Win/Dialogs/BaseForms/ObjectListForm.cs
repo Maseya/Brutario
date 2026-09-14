@@ -312,11 +312,11 @@ public sealed partial class ObjectListForm : Form
 
         private ListViewItem Create(UIAreaObjectCommand item)
         {
-            return new ListViewItem(new string[] {
+            return new ListViewItem([
                 item.Command.HexString,
                 $"{item.Page}",
                 $"{item.X:X1},{item.Y:X1}",
-                item.Command.GetDescription(Owner.AreaPlatformType)})
+                item.Command.GetDescription(Owner.AreaPlatformType)])
             {
                 Tag = item
             };

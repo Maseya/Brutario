@@ -90,17 +90,17 @@ public partial class AutoSaveForm : Form
 
             switch (cbxCutoffUnits.SelectedIndex)
             {
-                case 0:
-                    return new TimeSpan(0, time, 0);
-                case 1:
-                    return new TimeSpan(time, 0, 0);
-                case 2:
-                    return new TimeSpan(time, 0, 0, 0);
-                case 3:
-                    return new TimeSpan(7 * time, 0, 0);
-                default:
-                    Debug.Assert(false);
-                    return TimeSpan.Zero;
+            case 0:
+                return new TimeSpan(0, time, 0);
+            case 1:
+                return new TimeSpan(time, 0, 0);
+            case 2:
+                return new TimeSpan(time, 0, 0, 0);
+            case 3:
+                return new TimeSpan(7 * time, 0, 0);
+            default:
+                Debug.Assert(false);
+                return TimeSpan.Zero;
             }
         }
 

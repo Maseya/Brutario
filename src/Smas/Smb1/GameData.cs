@@ -26,19 +26,40 @@ public class GameData
         AreaSpriteRenderer = new AreaSpriteRenderer();
     }
 
-    public PaletteData PaletteData { get; }
+    public PaletteData PaletteData
+    {
+        get;
+    }
 
-    public GfxData GfxData { get; }
+    public GfxData GfxData
+    {
+        get;
+    }
 
-    public Map16Data Map16Data { get; }
+    public Map16Data Map16Data
+    {
+        get;
+    }
 
-    public AreaLoader AreaLoader { get; }
+    public AreaLoader AreaLoader
+    {
+        get;
+    }
 
-    public TilemapLoader TilemapLoader { get; }
+    public TilemapLoader TilemapLoader
+    {
+        get;
+    }
 
-    public AreaObjectRenderer AreaObjectRenderer { get; }
+    public AreaObjectRenderer AreaObjectRenderer
+    {
+        get;
+    }
 
-    public AreaSpriteRenderer AreaSpriteRenderer { get; }
+    public AreaSpriteRenderer AreaSpriteRenderer
+    {
+        get;
+    }
 
     public void WriteToGameData(Rom rom, Pointers? pointers = null)
     {

@@ -4,7 +4,7 @@
 //     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-namespace Brutario.Core;
+namespace Brutario.Core.Views;
 
 using System.Drawing;
 
@@ -12,35 +12,80 @@ using Maseya.Smas.Smb1;
 
 public interface IMainView
 {
-    string Title { get; set; }
+    string Title
+    {
+        get; set;
+    }
 
-    bool EditorEnabled { get; set; }
+    bool EditorEnabled
+    {
+        get; set;
+    }
 
-    bool MapEditorEnabled { get; set; }
+    bool MapEditorEnabled
+    {
+        get; set;
+    }
 
-    bool SaveEnabled { get; set; }
+    bool SaveEnabled
+    {
+        get; set;
+    }
 
-    bool UndoEnabled { get; set; }
+    bool UndoEnabled
+    {
+        get; set;
+    }
 
-    bool RedoEnabled { get; set; }
+    bool RedoEnabled
+    {
+        get; set;
+    }
 
-    bool EditItemEnabled { get; set; }
+    bool EditItemEnabled
+    {
+        get; set;
+    }
 
-    bool PasteEnabled { get; set; }
+    bool PasteEnabled
+    {
+        get; set;
+    }
 
-    bool DeleteAllEnabled { get; set; }
+    bool DeleteAllEnabled
+    {
+        get; set;
+    }
 
-    Player Player { get; set; }
+    Player Player
+    {
+        get; set;
+    }
 
-    PlayerState PlayerState { get; set; }
+    PlayerState PlayerState
+    {
+        get; set;
+    }
 
-    bool SpriteMode { get; set; }
+    bool SpriteMode
+    {
+        get; set;
+    }
 
-    int AreaNumber { get; set; }
+    int AreaNumber
+    {
+        get; set;
+    }
 
-    int StartX { get; set; }
+    int StartX
+    {
+        get; set;
+    }
 
-    Size DrawAreaSize { get; }
+    Size DrawAreaSize
+    {
+        get;
+    }
 
     void Redraw();
 }

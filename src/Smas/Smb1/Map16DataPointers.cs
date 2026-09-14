@@ -39,7 +39,8 @@ public class Map16DataPointers
         : this(
           lowBytePointer: baseAddress,
           highBytePointer: baseAddress + 0x05)
-    { }
+    {
+    }
 
     public int LowBytePointer
     {

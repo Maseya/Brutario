@@ -4,7 +4,7 @@
 //     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-namespace Brutario.Core;
+namespace Brutario.Core.Editors;
 
 using System;
 
@@ -16,9 +16,15 @@ public interface IObjectEditorView
 
     event EventHandler? AreaObjectCommandChanged;
 
-    AreaPlatformType AreaPlatformType { get; set; }
+    AreaPlatformType AreaPlatformType
+    {
+        get; set;
+    }
 
-    UIAreaObjectCommand AreaObjectCommand { get; set; }
+    UIAreaObjectCommand AreaObjectCommand
+    {
+        get; set;
+    }
 
     bool PromptConfirm();
 }

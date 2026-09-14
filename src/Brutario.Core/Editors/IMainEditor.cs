@@ -4,7 +4,7 @@
 //     information, or visit https://www.gnu.org/licenses/#AGPL
 // </copyright>
 
-namespace Brutario.Core;
+namespace Brutario.Core.Editors;
 
 using System;
 using System.Collections.Generic;
@@ -56,39 +56,84 @@ public interface IMainEditor
 
     event EventHandler? ObjectData_DataCleared;
 
-    string Path { get; }
+    string Path
+    {
+        get;
+    }
 
-    bool IsOpen { get; }
+    bool IsOpen
+    {
+        get;
+    }
 
-    bool HasUnsavedChanges { get; }
+    bool HasUnsavedChanges
+    {
+        get;
+    }
 
-    bool CanUndo { get; }
+    bool CanUndo
+    {
+        get;
+    }
 
-    bool CanRedo { get; }
+    bool CanRedo
+    {
+        get;
+    }
 
     /*
     int AnimationFrame { get; }
     */
 
-    Player Player { get; set; }
+    Player Player
+    {
+        get; set;
+    }
 
-    PlayerState PlayerState { get; set; }
+    PlayerState PlayerState
+    {
+        get; set;
+    }
 
-    bool SpriteMode { get; set; }
+    bool SpriteMode
+    {
+        get; set;
+    }
 
-    int AreaNumber { get; set; }
+    int AreaNumber
+    {
+        get; set;
+    }
 
-    int StartX { get; set; }
+    int StartX
+    {
+        get; set;
+    }
 
-    AreaHeader AreaHeader { get; set; }
+    AreaHeader AreaHeader
+    {
+        get; set;
+    }
 
-    IReadOnlyList<UIAreaObjectCommand> ObjectData { get; }
+    IReadOnlyList<UIAreaObjectCommand> ObjectData
+    {
+        get;
+    }
 
-    IReadOnlyList<UIAreaSpriteCommand> SpriteData { get; }
+    IReadOnlyList<UIAreaSpriteCommand> SpriteData
+    {
+        get;
+    }
 
-    int SelectedObjectIndex { get; set; }
+    int SelectedObjectIndex
+    {
+        get; set;
+    }
 
-    int SelectedSpriteIndex { get; set; }
+    int SelectedSpriteIndex
+    {
+        get; set;
+    }
 
     /*
     event EventHandler AnimationFrameChanged;

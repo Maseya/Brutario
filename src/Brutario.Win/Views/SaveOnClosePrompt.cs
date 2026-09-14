@@ -4,9 +4,9 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using Controls;
+using Brutario.Core.Editors;
 
-using Core;
+using Controls;
 
 public partial class SaveOnClosePrompt : EditorDialogBase, ISaveOnClosePrompt
 {

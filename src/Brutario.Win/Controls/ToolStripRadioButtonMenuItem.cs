@@ -40,9 +40,15 @@ public class ToolStripRadioButtonMenuItem : ToolStripMenuItem
         }
     }
 
-    private bool MouseHoverState { get; set; }
+    private bool MouseHoverState
+    {
+        get; set;
+    }
 
-    private bool MouseDownState { get; set; }
+    private bool MouseDownState
+    {
+        get; set;
+    }
 
     protected override void OnCheckedChanged(EventArgs e)
     {

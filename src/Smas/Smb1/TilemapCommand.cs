@@ -21,7 +21,7 @@ public struct TilemapCommand : IEquatable<TilemapCommand>
 
     public int Command04
     {
-        get
+        readonly get
         {
             return _value;
         }
@@ -34,7 +34,7 @@ public struct TilemapCommand : IEquatable<TilemapCommand>
 
     public int CommandEF
     {
-        get
+        readonly get
         {
             return (Command04 & 0x3F0) >> 4;
         }
@@ -48,7 +48,7 @@ public struct TilemapCommand : IEquatable<TilemapCommand>
 
     public int CommandF1
     {
-        get
+        readonly get
         {
             return Command04 & 0x0F;
         }
@@ -62,7 +62,7 @@ public struct TilemapCommand : IEquatable<TilemapCommand>
 
     public int CommandED
     {
-        get
+        readonly get
         {
             return ((Command04 & 0xE000) | ((Command04 >> 1) & 0x0E00)) >> 8;
         }
@@ -74,7 +74,7 @@ public struct TilemapCommand : IEquatable<TilemapCommand>
         }
     }
 
-    public bool IsTerminationCommand
+    public readonly bool IsTerminationCommand
     {
         get
         {
@@ -102,22 +102,22 @@ public struct TilemapCommand : IEquatable<TilemapCommand>
         return new TilemapCommand(value);
     }
 
-    public bool Equals(TilemapCommand other)
+    public readonly bool Equals(TilemapCommand other)
     {
         return Command04.Equals(other.Command04);
     }
 
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is TilemapCommand other && Equals(other);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return Command04;
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return Command04.ToString("X4");
     }
