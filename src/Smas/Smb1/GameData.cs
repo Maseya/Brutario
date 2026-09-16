@@ -1,4 +1,11 @@
-﻿namespace Maseya.Smas.Smb1;
+﻿// <copyright file="GameData.cs" organization="Maseya">
+//     Copyright (c) 2026 spel werdz rite. All rights reserved. Licensed
+//     under GNU Affero General Public License. See LICENSE in project
+//     root for full license information, or visit
+//     https://www.gnu.org/licenses/#AGPL
+// </copyright>
+
+namespace Maseya.Smas.Smb1;
 
 using AreaData;
 using AreaData.ObjectData;
