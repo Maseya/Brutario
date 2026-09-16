@@ -18,7 +18,7 @@ public static class AreaPixelRenderer
         Color32BppArgb top,
         Color32BppArgb bottom);
 
-    public static void DrawArea(Graphics graphics, in DrawData drawData)
+    public static void DrawArea(Graphics graphics, in AreaDrawData drawData)
     {
         DrawArea(
             graphics,
@@ -26,6 +26,7 @@ public static class AreaPixelRenderer
             drawData.Palette,
             drawData.PixelData,
             drawData.Bg1,
+            drawData.Bg2,
             drawData.Sprites,
             drawData.StartX,
             drawData.Size,
@@ -42,6 +43,7 @@ public static class AreaPixelRenderer
         ReadOnlySpan<Color32BppArgb> palette,
         ReadOnlySpan<byte> pixelData,
         ReadOnlySpan<ObjTile> bg1,
+        ReadOnlySpan<ObjTile> bg2,
         IEnumerable<Sprite> sprites,
         int startX,
         Size size,
@@ -56,6 +58,7 @@ public static class AreaPixelRenderer
             palette,
             pixelData,
             bg1,
+            bg2,
             sprites,
             startX,
             size);
@@ -117,6 +120,7 @@ public static class AreaPixelRenderer
         ReadOnlySpan<Color32BppArgb> palette,
         ReadOnlySpan<byte> pixelData,
         ReadOnlySpan<ObjTile> bg1,
+        ReadOnlySpan<ObjTile> bg2,
         IEnumerable<Sprite> sprites,
         int startX,
         Size size)
@@ -128,6 +132,7 @@ public static class AreaPixelRenderer
             palette,
             pixelData,
             bg1,
+            bg2,
             sprites,
             startX,
             size);
@@ -151,6 +156,7 @@ public static class AreaPixelRenderer
         ReadOnlySpan<Color32BppArgb> palette,
         ReadOnlySpan<byte> pixelData,
         ReadOnlySpan<ObjTile> bg1,
+        ReadOnlySpan<ObjTile> bg2,
         IEnumerable<Sprite> sprites,
         int startX,
         Size size)
@@ -160,16 +166,18 @@ public static class AreaPixelRenderer
             fixed (Color32BppArgb* ptrPalette = palette)
             fixed (byte* ptrPixelData = pixelData)
             fixed (ObjTile* ptrBg1 = bg1)
+            fixed (ObjTile* ptrBg2 = bg2)
             {
                 // This is DEFINITELY bad practice. Spans are ref structs and should
                 // not be passed to asynchronous functions as they keep the value alive
                 // longer than it should be. However, the async methods are all
                 // finished within this function call, the pointers never leave scope.
-                // Ideally, these value should be allowed to be ref structs, but the
+                // Ideally, these values should be allowed to be ref structs, but the
                 // language is limiting us, so we need to cheat a little right now.
                 var asyncPtrPalette = ptrPalette;
                 var asyncPtrPixelData = ptrPixelData;
                 var asyncPtrBg1 = ptrBg1;
+                var asyncPtrBg2 = ptrBg2;
 
                 var viewWidth = ((size.Width - 1) / 8) + 1;
                 var imageWidth = viewWidth * 8;
@@ -188,39 +196,70 @@ public static class AreaPixelRenderer
                     source: sprites.Where(
                         sprite => HasLayer(sprite, LayerPriority.Priority0)),
                     body: sprite => RenderSprite(sprite));
+
                 _ = Parallel.For(
                     fromInclusive: 0,
-                    toExclusive: size.Height / 8,
-                    body: row => RenderRow(row, LayerPriority.Priority0));
+                    toExclusive: size.Height / 8 - 4,
+                    body: row => RenderRow(asyncPtrBg2, row, startX >> 1, LayerPriority.Priority0));
+
+                // HACK. P1 sprites should render before BG1P0. I'm doing this to not
+                // deal with subscreens for piranha plant rendering.
+                _ = Parallel.ForEach(
+                    source: sprites.Where(
+                        sprite => HasLayer(sprite, LayerPriority.Priority1)),
+                    body: sprite => RenderSprite(sprite));
+
+                _ = Parallel.For(
+                    fromInclusive: 0,
+                    toExclusive: size.Height / 8 - 4,
+                    body: row => RenderRow(asyncPtrBg1, row, startX, LayerPriority.Priority0));
 
                 _ = Parallel.ForEach(
                     source: sprites.Where(
                         sprite => HasLayer(sprite, LayerPriority.Priority2)),
                     body: sprite => RenderSprite(sprite));
+
                 _ = Parallel.For(
                     fromInclusive: 0,
-                    toExclusive: size.Height / 8,
-                    body: row => RenderRow(row, LayerPriority.Priority1));
+                    toExclusive: size.Height / 8 - 4,
+                    body: row => RenderRow(asyncPtrBg2, row, startX >> 1, LayerPriority.Priority1));
+
+                // HACK. This renders hidden blocks in front of BG2.
+                _ = Parallel.ForEach(
+                    source: sprites.Where(
+                        sprite => sprite.Tile.Priority == -1),
+                    body: sprite => RenderSprite(sprite));
+
+                _ = Parallel.For(
+                    fromInclusive: 0,
+                    toExclusive: size.Height / 8 - 4,
+                    body: row => RenderRow(asyncPtrBg1, row, startX, LayerPriority.Priority1));
 
                 _ = Parallel.ForEach(
                     source: sprites.Where(
                         sprite => HasLayer(sprite, LayerPriority.Priority3)),
                     body: sprite => RenderSprite(sprite));
 
+                // TODO(swr): Why do I have this??
                 _ = Parallel.ForEach(
-                    source: sprites.Where(sprite => HasLayer(sprite, (LayerPriority)4)),
+                    source: sprites.Where(
+                        sprite => HasLayer(sprite, (LayerPriority)4)),
                     body: sprite => RenderSprite(sprite));
 
                 return result;
 
-                void RenderRow(int row, LayerPriority layerPriority)
+                void RenderRow(
+                    ObjTile* tilemap,
+                    int row,
+                    int xOffset,
+                    LayerPriority layerPriority)
                 {
                     var darken = row > 0x1D;
                     var rowIndex = Math.Min(row, 0x1C + (row & 1)) * 0x400;
                     var pixelRow = row * 8 * imageWidth;
                     for (var column = 0; column < viewWidth; column++, pixelRow += 8)
                     {
-                        var tile8 = asyncPtrBg1[rowIndex + column + startX];
+                        var tile8 = tilemap[rowIndex + column + xOffset];
                         if (tile8.Priority != layerPriority)
                         {
                             continue;

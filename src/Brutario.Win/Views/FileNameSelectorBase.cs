@@ -9,11 +9,11 @@ using Core;
 
 public abstract class FileNameSelectorBase : EditorDialogBase, IFileNameSelector
 {
-    public FileNameSelectorBase()
+    protected FileNameSelectorBase()
     {
     }
 
-    public FileNameSelectorBase(IContainer container)
+    protected FileNameSelectorBase(IContainer container)
     {
         container.Add(this);
     }

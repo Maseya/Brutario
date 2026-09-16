@@ -502,11 +502,14 @@ public class RomTests
     public void IsValidAddress_ValidLoRomAddress_ReturnsTrue(int snesAddress)
     {
         /*
-         * There are two ways to consider a LOROM address. If I'm trying to read from a LOROM address, then 
-         * it doesn't matter if I get $00:8000 or $80:8000 (also note that even $40:8000 or several other values
-         * may be valid based on mirroring). They point to the same PC location. However, if I'm trying to write
-         * to a PC location, then writing in LOROM or LOROM2 actually matters. Not so much because they point to
-         * different location (because they don't), but because it just affects the written data.
+         * There are two ways to consider a LOROM address. If I'm trying to read
+         * from a LOROM address, then it doesn't matter if I get $00:8000 or
+         * $80:8000 (also note that even $40:8000 or several other values may be
+         * valid based on mirroring). They point to the same PC location.
+         * However, if I'm trying to write to a PC location, then writing in
+         * LOROM or LOROM2 actually matters. Not so much because they point to
+         * different location (because they don't), but because it just affects
+         * the written data.
          */
         IsValidAddress_ValidAddress_ReturnsTrue(
             snesAddress: snesAddress,
@@ -968,7 +971,6 @@ public class RomTests
     [InlineData("Tetris Attack (U) [T+Spa050_A2j]")]
     [InlineData("Uniracers (U) [!]")]
     [InlineData("Unirally (E) [!]")]
-
     public void Constructor_ValidData_CanDetermineFormat(string name)
     {
         var testRom = TestRoms[name];

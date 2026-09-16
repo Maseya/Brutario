@@ -25,10 +25,10 @@ public class Map16Data
         var isTileAccessible = new bool[0x100];
         for (var i = 0; i < Tiles.Count; i++)
         {
-            var startIndex = i << 6;
-            for (var j = 0; j < Tiles[i].Length; j++)
+            var index = i << 6;
+            for (var j = 0; j < Tiles[i].Length; j++, index++)
             {
-                isTileAccessible[startIndex + j] = true;
+                isTileAccessible[index] = true;
             }
         }
 
@@ -70,7 +70,7 @@ public class Map16Data
     {
         for (var i = 0; i < Tiles.Count; i++)
         {
-            var destSlice = dest.Slice(i << 6, 0x40);
+            var destSlice = dest.Slice(i << 6, 1 << 6);
             Tiles[i].CopyTo(destSlice);
         }
     }
@@ -79,7 +79,7 @@ public class Map16Data
     {
         for (var i = 0; i < Tiles.Count; i++)
         {
-            var sourceSlice = source.Slice(i << 6, 0x40);
+            var sourceSlice = source.Slice(i << 6, 1 << 6);
             sourceSlice.CopyTo(Tiles[i]);
         }
     }
