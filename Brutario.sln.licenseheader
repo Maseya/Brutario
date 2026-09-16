@@ -1,6 +1,6 @@
 ﻿extensions: designer.cs generated.cs
 extensions: .cs .cpp .h
-// <copyright file="%FileName%" company="Public Domain">
+// <copyright file="%FileName%" organization="Maseya">
 //     Copyright (c) %CurrentYear% spel werdz rite. All rights reserved. Licensed
 //     under GNU Affero General Public License. See LICENSE in project
 //     root for full license information, or visit
@@ -9,7 +9,7 @@ extensions: .cs .cpp .h
 
 extensions: .aspx .ascx
 <%--
-<copyright file="%FileName%" company="Public Domain">
+<copyright file="%FileName%" organization="Maseya">
     Copyright (c) %CurrentYear% spel werdz rite. All rights reserved. Licensed
 	under GNU Affero General Public License. See LICENSE in project
 	root for full license information, or visit
@@ -18,7 +18,7 @@ extensions: .aspx .ascx
 
 --%>
 extensions: .vb
-'<copyright file="%FileName%" company="Public Domain">
+'<copyright file="%FileName%" organization="Maseya">
 '    Copyright (c) %CurrentYear% spel werdz rite. All rights reserved. Licensed
 '    under GNU Affero General Public License. See LICENSE in project
 '    root for full license information, or visit
@@ -27,7 +27,7 @@ extensions: .vb
 
 extensions:  .xml .config .xsd
 <!--
-<copyright file="%FileName%" company="Public Domain">
+<copyright file="%FileName%" organization="Maseya">
     Copyright (c) %CurrentYear% spel werdz rite. All rights reserved. Licensed
 	under GNU Affero General Public License. See LICENSE in project
 	root for full license information, or visit
