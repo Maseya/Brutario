@@ -1,4 +1,11 @@
-﻿namespace Brutario.Core;
+﻿// <copyright file="SortedSpriteListEditor.cs" organization="Maseya">
+//     Copyright (c) 2026 spel werdz rite. All rights reserved. Licensed
+//     under GNU Affero General Public License. See LICENSE in project
+//     root for full license information, or visit
+//     https://www.gnu.org/licenses/#AGPL
+// </copyright>
+
+namespace Brutario.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
