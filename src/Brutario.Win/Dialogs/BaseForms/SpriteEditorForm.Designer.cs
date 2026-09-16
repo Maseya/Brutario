@@ -70,9 +70,9 @@ namespace Brutario.Win.Dialogs.BaseForms
             gbxBinary.Controls.Add(tbxManualInput);
             gbxBinary.Controls.Add(chkUseManualInput);
             gbxBinary.Location = new Point(14, 128);
-            gbxBinary.Margin = new Padding(4, 4, 4, 4);
+            gbxBinary.Margin = new Padding(4);
             gbxBinary.Name = "gbxBinary";
-            gbxBinary.Padding = new Padding(4, 4, 4, 4);
+            gbxBinary.Padding = new Padding(4);
             gbxBinary.Size = new Size(220, 68);
             gbxBinary.TabIndex = 6;
             gbxBinary.TabStop = false;
@@ -81,7 +81,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             tbxManualInput.CharacterCasing = CharacterCasing.Upper;
             tbxManualInput.Location = new Point(10, 26);
-            tbxManualInput.Margin = new Padding(4, 4, 4, 4);
+            tbxManualInput.Margin = new Padding(4);
             tbxManualInput.MaxLength = 8;
             tbxManualInput.Name = "tbxManualInput";
             tbxManualInput.Size = new Size(201, 23);
@@ -93,7 +93,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             chkUseManualInput.AutoSize = true;
             chkUseManualInput.Location = new Point(10, 0);
-            chkUseManualInput.Margin = new Padding(4, 4, 4, 4);
+            chkUseManualInput.Margin = new Padding(4);
             chkUseManualInput.Name = "chkUseManualInput";
             chkUseManualInput.Size = new Size(136, 19);
             chkUseManualInput.TabIndex = 0;
@@ -105,7 +105,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             btnCancel.DialogResult = DialogResult.Cancel;
             btnCancel.Location = new Point(335, 152);
-            btnCancel.Margin = new Padding(4, 4, 4, 4);
+            btnCancel.Margin = new Padding(4);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(88, 26);
             btnCancel.TabIndex = 5;
@@ -116,7 +116,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             btnOK.DialogResult = DialogResult.OK;
             btnOK.Location = new Point(241, 152);
-            btnOK.Margin = new Padding(4, 4, 4, 4);
+            btnOK.Margin = new Padding(4);
             btnOK.Name = "btnOK";
             btnOK.Size = new Size(88, 26);
             btnOK.TabIndex = 4;
@@ -141,9 +141,9 @@ namespace Brutario.Win.Dialogs.BaseForms
             groupBox1.Controls.Add(nudY);
             groupBox1.Controls.Add(nudX);
             groupBox1.Location = new Point(14, 14);
-            groupBox1.Margin = new Padding(4, 4, 4, 4);
+            groupBox1.Margin = new Padding(4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(4, 4, 4, 4);
+            groupBox1.Padding = new Padding(4);
             groupBox1.Size = new Size(409, 107);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
@@ -162,7 +162,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // nudPage
             // 
             nudPage.Location = new Point(150, 16);
-            nudPage.Margin = new Padding(4, 4, 4, 4);
+            nudPage.Margin = new Padding(4);
             nudPage.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
             nudPage.Name = "nudPage";
             nudPage.Size = new Size(41, 23);
@@ -175,7 +175,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             tbxAreaNumber.CharacterCasing = CharacterCasing.Upper;
             tbxAreaNumber.Location = new Point(368, 76);
-            tbxAreaNumber.Margin = new Padding(4, 4, 4, 4);
+            tbxAreaNumber.Margin = new Padding(4);
             tbxAreaNumber.MaxLength = 2;
             tbxAreaNumber.Name = "tbxAreaNumber";
             tbxAreaNumber.Size = new Size(33, 23);
@@ -198,7 +198,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // nudWorld
             // 
             nudWorld.Location = new Point(176, 77);
-            nudWorld.Margin = new Padding(4, 4, 4, 4);
+            nudWorld.Margin = new Padding(4);
             nudWorld.Maximum = new decimal(new int[] { 8, 0, 0, 0 });
             nudWorld.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudWorld.Name = "nudWorld";
@@ -231,7 +231,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // nudDestPage
             // 
             nudDestPage.Location = new Point(80, 77);
-            nudDestPage.Margin = new Padding(4, 4, 4, 4);
+            nudDestPage.Margin = new Padding(4);
             nudDestPage.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
             nudDestPage.Name = "nudDestPage";
             nudDestPage.Size = new Size(41, 23);
@@ -244,7 +244,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // 
             chkHardFlag.AutoSize = true;
             chkHardFlag.Location = new Point(318, 17);
-            chkHardFlag.Margin = new Padding(4, 4, 4, 4);
+            chkHardFlag.Margin = new Padding(4);
             chkHardFlag.Name = "chkHardFlag";
             chkHardFlag.Size = new Size(77, 19);
             chkHardFlag.TabIndex = 22;
@@ -267,7 +267,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             cbxAreaSpriteCode.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxAreaSpriteCode.FormattingEnabled = true;
             cbxAreaSpriteCode.Location = new Point(59, 46);
-            cbxAreaSpriteCode.Margin = new Padding(4, 4, 4, 4);
+            cbxAreaSpriteCode.Margin = new Padding(4);
             cbxAreaSpriteCode.Name = "cbxAreaSpriteCode";
             cbxAreaSpriteCode.Size = new Size(343, 23);
             cbxAreaSpriteCode.TabIndex = 5;
@@ -296,7 +296,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // nudY
             // 
             nudY.Location = new Point(245, 16);
-            nudY.Margin = new Padding(4, 4, 4, 4);
+            nudY.Margin = new Padding(4);
             nudY.Maximum = new decimal(new int[] { 11, 0, 0, 0 });
             nudY.Name = "nudY";
             nudY.Size = new Size(41, 23);
@@ -307,7 +307,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             // nudX
             // 
             nudX.Location = new Point(59, 16);
-            nudX.Margin = new Padding(4, 4, 4, 4);
+            nudX.Margin = new Padding(4);
             nudX.Maximum = new decimal(new int[] { 15, 0, 0, 0 });
             nudX.Name = "nudX";
             nudX.Size = new Size(41, 23);
@@ -326,7 +326,8 @@ namespace Brutario.Win.Dialogs.BaseForms
             Controls.Add(gbxBinary);
             Controls.Add(btnCancel);
             Controls.Add(btnOK);
-            Margin = new Padding(4, 4, 4, 4);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SpriteEditorForm";

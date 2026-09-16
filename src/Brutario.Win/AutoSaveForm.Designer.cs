@@ -171,6 +171,7 @@ partial class AutoSaveForm
         Controls.Add(chkAutoSave);
         Controls.Add(btnCancel);
         Controls.Add(btnOK);
+        FormBorderStyle = FormBorderStyle.FixedDialog;
         KeyPreview = true;
         MaximizeBox = false;
         MinimizeBox = false;

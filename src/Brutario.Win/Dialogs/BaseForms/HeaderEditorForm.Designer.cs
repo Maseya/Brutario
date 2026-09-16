@@ -226,6 +226,7 @@ namespace Brutario.Win.Dialogs.BaseForms
             Controls.Add(lblScenery);
             Controls.Add(lblPosition);
             Controls.Add(lblTime);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
