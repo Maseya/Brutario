@@ -8,6 +8,7 @@
 namespace Brutario.Core.Presenters;
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
@@ -494,6 +495,25 @@ public class MainPresenter
             separatorColor,
             passiveColor,
             selectColor);
+    }
+
+    public void RunInEmulator(string emulatorPath)
+    {
+        try
+        {
+            var info = new ProcessStartInfo(emulatorPath, [MainEditor.Path])
+            {
+                UseShellExecute = false,
+                WindowStyle = ProcessWindowStyle.Maximized,
+            };
+
+            // TODO(swr): Maybe enforce only one running process?
+            _ = Process.Start(info);
+        }
+        catch (Exception ex)
+        {
+            ExceptionHelper.Show(ex);
+        }
     }
 
     private void MainEditor_ObjectData_ItemAdded(object? sender, ItemAddedEventArgs e)

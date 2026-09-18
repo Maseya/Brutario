@@ -42,6 +42,9 @@ namespace Brutario.Win
             tsmOpen = new ToolStripMenuItem();
             tsmSave = new ToolStripMenuItem();
             tsmSaveAs = new ToolStripMenuItem();
+            toolStripSeparator13 = new ToolStripSeparator();
+            tsmSetupEmulator = new ToolStripMenuItem();
+            tsmRunEmulator = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             tsmClose = new ToolStripMenuItem();
             toolStripSeparator10 = new ToolStripSeparator();
@@ -121,6 +124,7 @@ namespace Brutario.Win
             animationTimer = new System.Windows.Forms.Timer(components);
             objectListView = new Brutario.Win.Views.ObjectListView(components);
             autoSaveTimer = new System.Windows.Forms.Timer(components);
+            selectEmulatorDialog = new OpenFileDialog();
             mnuMain.SuspendLayout();
             toolStrip.SuspendLayout();
             cmsMain.SuspendLayout();
@@ -139,7 +143,7 @@ namespace Brutario.Win
             // 
             // tsmFile
             // 
-            tsmFile.DropDownItems.AddRange(new ToolStripItem[] { tsmOpen, tsmSave, tsmSaveAs, toolStripSeparator1, tsmClose, toolStripSeparator10, tsmExit });
+            tsmFile.DropDownItems.AddRange(new ToolStripItem[] { tsmOpen, tsmSave, tsmSaveAs, toolStripSeparator13, tsmSetupEmulator, tsmRunEmulator, toolStripSeparator1, tsmClose, toolStripSeparator10, tsmExit });
             tsmFile.Name = "tsmFile";
             tsmFile.Size = new Size(37, 20);
             tsmFile.Text = "&File";
@@ -149,7 +153,7 @@ namespace Brutario.Win
             tsmOpen.Image = Properties.Resources.folder_open_solid;
             tsmOpen.Name = "tsmOpen";
             tsmOpen.ShortcutKeys = Keys.Control | Keys.O;
-            tsmOpen.Size = new Size(186, 22);
+            tsmOpen.Size = new Size(190, 26);
             tsmOpen.Text = "&Open";
             tsmOpen.Click += Open_Click;
             // 
@@ -159,7 +163,7 @@ namespace Brutario.Win
             tsmSave.Image = Properties.Resources.floppy_disk_regular;
             tsmSave.Name = "tsmSave";
             tsmSave.ShortcutKeys = Keys.Control | Keys.S;
-            tsmSave.Size = new Size(186, 22);
+            tsmSave.Size = new Size(190, 26);
             tsmSave.Text = "&Save";
             tsmSave.Click += Save_Click;
             // 
@@ -168,34 +172,55 @@ namespace Brutario.Win
             tsmSaveAs.Enabled = false;
             tsmSaveAs.Name = "tsmSaveAs";
             tsmSaveAs.ShortcutKeys = Keys.Control | Keys.Alt | Keys.S;
-            tsmSaveAs.Size = new Size(186, 22);
+            tsmSaveAs.Size = new Size(190, 26);
             tsmSaveAs.Text = "Save &As...";
             tsmSaveAs.Click += SaveAs_Click;
+            // 
+            // toolStripSeparator13
+            // 
+            toolStripSeparator13.Name = "toolStripSeparator13";
+            toolStripSeparator13.Size = new Size(187, 6);
+            // 
+            // tsmSetupEmulator
+            // 
+            tsmSetupEmulator.Name = "tsmSetupEmulator";
+            tsmSetupEmulator.Size = new Size(190, 26);
+            tsmSetupEmulator.Text = "Setup Emulator";
+            tsmSetupEmulator.Click += SetupEmulator_Click;
+            // 
+            // tsmRunEmulator
+            // 
+            tsmRunEmulator.Enabled = false;
+            tsmRunEmulator.Name = "tsmRunEmulator";
+            tsmRunEmulator.ShortcutKeys = Keys.F5;
+            tsmRunEmulator.Size = new Size(190, 26);
+            tsmRunEmulator.Text = "Run Emulator";
+            tsmRunEmulator.Click += RunEmulator_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(183, 6);
+            toolStripSeparator1.Size = new Size(187, 6);
             // 
             // tsmClose
             // 
             tsmClose.Enabled = false;
             tsmClose.Name = "tsmClose";
             tsmClose.ShortcutKeys = Keys.Control | Keys.F4;
-            tsmClose.Size = new Size(186, 22);
+            tsmClose.Size = new Size(190, 26);
             tsmClose.Text = "&Close";
             tsmClose.Click += Close_Click;
             // 
             // toolStripSeparator10
             // 
             toolStripSeparator10.Name = "toolStripSeparator10";
-            toolStripSeparator10.Size = new Size(183, 6);
+            toolStripSeparator10.Size = new Size(187, 6);
             // 
             // tsmExit
             // 
             tsmExit.Name = "tsmExit";
             tsmExit.ShortcutKeys = Keys.Alt | Keys.F4;
-            tsmExit.Size = new Size(186, 22);
+            tsmExit.Size = new Size(190, 26);
             tsmExit.Text = "E&xit";
             tsmExit.Click += Exit_Click;
             // 
@@ -668,7 +693,6 @@ namespace Brutario.Win
             // 
             // hsbStartX
             // 
-            hsbStartX.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             hsbStartX.Dock = DockStyle.Bottom;
             hsbStartX.Enabled = false;
             hsbStartX.LargeChange = 16;
@@ -809,6 +833,11 @@ namespace Brutario.Win
             autoSaveTimer.Interval = 1000;
             autoSaveTimer.Tick += AutoSaveTimer_Tick;
             // 
+            // selectEmulatorDialog
+            // 
+            selectEmulatorDialog.Filter = "Emulator Executables (*.exe)|*.exe";
+            selectEmulatorDialog.Title = "Select Emulator";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -923,6 +952,10 @@ namespace Brutario.Win
         private System.Windows.Forms.Timer autoSaveTimer;
         private ToolStripMenuItem tsmAutoSave;
         private ToolStripSeparator toolStripSeparator12;
+        private ToolStripSeparator toolStripSeparator13;
+        private ToolStripMenuItem tsmSetupEmulator;
+        private ToolStripMenuItem tsmRunEmulator;
+        private OpenFileDialog selectEmulatorDialog;
     }
 }
 
