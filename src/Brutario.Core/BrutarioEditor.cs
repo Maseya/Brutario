@@ -1155,6 +1155,16 @@ public class BrutarioEditor : IMainEditor
         }
     }
 
+    /// <summary>
+    /// Moves either <see cref="SelectedObject"/> or <see cref="SelectedSprite"/> (based
+    /// on <see cref="SpriteMode"/> to the designated coordinates.
+    /// </summary>
+    /// <param name="x">
+    /// The new screen X-coordinate to send the item to.
+    /// </param>
+    /// <param name="y">
+    /// The new screen Y-coordinate to send the item to.
+    /// </param>
     public void MoveSelectedItem(int x, int y)
     {
         if (SpriteMode)
@@ -1169,24 +1179,20 @@ public class BrutarioEditor : IMainEditor
             return;
         }
 
-        if (x < 0)
-        {
-            x = 0;
-        }
-        else if (x >= 0x200)
-        {
-            x = 0x1FF;
-        }
-
         if (SpriteMode && SelectedSpriteIndex != -1)
         {
-            y = SelectedSprite.Command.Y > 0x0C
+            var offset = UIAreaSpriteCommand.Offset(SelectedSprite.Command.Code);
+            var spriteX = x - offset.Width;
+            var spriteY = y - offset.Height;
+
+            spriteX = Clamp(spriteX, 0, 0x200 - 1);
+            spriteY = SelectedSprite.Command.Y > 0x0D
                 ? SelectedSprite.Command.Y
-                : Clamp(y, 0x00, 0x0C);
+                : Clamp(spriteY, 0x00, 0x0D);
 
             var item = SelectedSprite;
-            item.X = x;
-            item.Y = y;
+            item.X = spriteX + offset.Width;
+            item.Y = spriteY + offset.Height;
 
             SelectedSpriteIndex = EditSpriteInternal(
                 SelectedSpriteIndex,
@@ -1195,6 +1201,7 @@ public class BrutarioEditor : IMainEditor
         }
         else if (!SpriteMode && SelectedObjectIndex != -1)
         {
+            x = Clamp(x, 0, 0x200 - 1);
             y = SelectedObject.Command.IsThreeByteCommand
                 ? Clamp(y, 0x00 + 2, 0x0F + 2)
                 : (uint)(SelectedObject.Command.Y - 0x0C) <= (0x0E - 0x0C)
