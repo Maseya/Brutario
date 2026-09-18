@@ -58,7 +58,9 @@ public static class AreaPixelRenderer
         Color passiveColor,
         Color selectColor)
     {
-        using var image = GetImage(
+        var viewWidth = ((size.Width - 1) / 8) + 1;
+        var imageWidth = viewWidth * 8;
+        var pixels = RenderPixels(
             bgColor,
             palette,
             pixelData,
@@ -67,19 +69,33 @@ public static class AreaPixelRenderer
             startX,
             size);
 
-        using var imageGraphics = Graphics.FromImage(image);
-        DrawPageSeparators(imageGraphics, startX, image.Size, separatorColor);
-        DrawItemRectangle(
-            imageGraphics,
-            startX,
-            rectangles,
-            selectedIndex,
-            passiveColor,
-            selectColor);
+        unsafe
+        {
+            fixed (Color32BppArgb* scan0 = pixels)
+            {
+                using var image = new Bitmap(
+                    imageWidth,
+                    size.Height,
+                    imageWidth * 4,
+                    PixelFormat.Format32bppArgb,
+                    (IntPtr)scan0);
 
-        graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-        graphics.SmoothingMode = SmoothingMode.None;
-        graphics.DrawImage(image, 0, 0, image.Width, image.Height);
+                using var imageGraphics = Graphics.FromImage(image);
+                DrawPageSeparators(imageGraphics, startX, image.Size, separatorColor);
+                DrawItemRectangle(
+                    imageGraphics,
+                    startX,
+                    rectangles,
+                    selectedIndex,
+                    passiveColor,
+                    selectColor);
+
+                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                graphics.SmoothingMode = SmoothingMode.None;
+                graphics.DrawImage(image, 0, 0, image.Width, image.Height);
+                graphics.Flush(FlushIntention.Sync);
+            }
+        }
     }
 
     public static void DrawItemRectangle(
