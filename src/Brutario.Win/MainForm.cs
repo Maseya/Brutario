@@ -71,6 +71,7 @@ public partial class MainForm : Form, IMainView
             tsbJumpToArea.Enabled =
             ttbJumpToArea.Enabled = value;
             //tsbLoadAreaByLevel.Enabled = value;
+            SetRunEmulatorEnabled();
         }
     }
 
@@ -312,6 +313,19 @@ public partial class MainForm : Form, IMainView
         {
             // TODO(swr): Remove frame constants here.
             return (int)(ElapsedTime.TotalMilliseconds * (60 / 1000.0));
+        }
+    }
+
+    private bool RunEmulatorEnabled
+    {
+        get
+        {
+            return tsmRunEmulator.Enabled;
+        }
+
+        set
+        {
+            tsmRunEmulator.Enabled = value;
         }
     }
 
@@ -662,5 +676,27 @@ public partial class MainForm : Form, IMainView
             Settings.Default.AutoSaveHardCutoff = Presenter.AutoSaveHardCutoff = dialog.HardCutoff;
             Settings.Default.Save();
         }
+    }
+
+    private void SetupEmulator_Click(object sender, EventArgs e)
+    {
+        if (selectEmulatorDialog.ShowDialog() == DialogResult.OK)
+        {
+            Settings.Default.EmulatorPath = selectEmulatorDialog.FileName;
+            Settings.Default.Save();
+            SetRunEmulatorEnabled();
+        }
+    }
+
+    private void SetRunEmulatorEnabled()
+    {
+        tsmRunEmulator.Enabled = File.Exists(Settings.Default.EmulatorPath)
+            && EditorEnabled;
+        ;
+    }
+
+    private void RunEmulator_Click(object sender, EventArgs e)
+    {
+        Presenter.RunInEmulator(Settings.Default.EmulatorPath);
     }
 }
