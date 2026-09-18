@@ -45,11 +45,12 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
     {
         readonly get
         {
-            return Command.X | (Page << 4);
+            return (Command.X | (Page << 4)) + Offset(Command.Code).Width;
         }
 
         set
         {
+            value -= Offset(Command.Code).Width;
             Page = value >> 4;
             _command.X = value & 0x0F;
         }
@@ -64,12 +65,12 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
     {
         readonly get
         {
-            return _command.Y;
+            return _command.Y + Offset(Command.Code).Height;
         }
 
         set
         {
-            _command.Y = value;
+            _command.Y = value - Offset(Command.Code).Height;
         }
     }
 
@@ -123,5 +124,63 @@ public struct UIAreaSpriteCommand : IEquatable<UIAreaSpriteCommand>
     public override readonly string ToString()
     {
         return $"{X}, {Y}, {Z}, {Command.FullName}";
+    }
+
+    public static Size Offset(AreaSpriteCode code)
+    {
+        return code switch
+        {
+            AreaSpriteCode.AreaPointer => new Size(0, 1),
+            AreaSpriteCode.GreenKoopaTroopa => new Size(0, 1),
+            AreaSpriteCode.RedKoopaTroopa => new Size(0, 1),
+            AreaSpriteCode.BuzzyBeetle => new Size(0, 1),
+            AreaSpriteCode.RedKoopaTroopaPatrol => new Size(0, 1),
+            AreaSpriteCode.GreenKoopaTroopaStopped => new Size(0, 1),
+            AreaSpriteCode.HammerBros => new Size(0, 1),
+            AreaSpriteCode.Goomba => new Size(0, 1),
+            AreaSpriteCode.Blooper => new Size(0, 1),
+            AreaSpriteCode.BulletBill => new Size(0, 1),
+            AreaSpriteCode.YellowKoopaParatroopaStopped => new Size(0, 1),
+            AreaSpriteCode.GreenCheepCheep => new Size(0, 1),
+            AreaSpriteCode.RedCheepCheep => new Size(0, 1),
+            AreaSpriteCode.Podoboo => new Size(0, 1),
+            AreaSpriteCode.PiranhaPlant => new Size(0, 0),
+            AreaSpriteCode.GreenKoopaParatroopaLeaping => new Size(0, 1),
+            AreaSpriteCode.RedKoopaParatroopa => new Size(0, 1),
+            AreaSpriteCode.GreenKoopaParatroopaFlying => new Size(0, 1),
+            AreaSpriteCode.Lakitu => new Size(0, 1),
+            AreaSpriteCode.Spiny => new Size(0, 1),
+            AreaSpriteCode.RedFlyingCheepCheep => new Size(0, 1),
+            AreaSpriteCode.BowsersFire => new Size(0, 1),
+            AreaSpriteCode.Fireworks => new Size(0, 1),
+            AreaSpriteCode.BulletBillOrCheepCheeps => new Size(0, 1),
+            AreaSpriteCode.FireBarClockwise => new Size(0, 0),
+            AreaSpriteCode.FastFireBarClockwise => new Size(0, 0),
+            AreaSpriteCode.FireBarCounterClockwise => new Size(0, 0),
+            AreaSpriteCode.FastFireBarCounterClockwise => new Size(0, 0),
+            AreaSpriteCode.LongFireBarClockwise => new Size(0, 0),
+            AreaSpriteCode.BalanceRopeLift => new Size(0, 0),
+            AreaSpriteCode.LiftDownThenUp => new Size(0, 1),
+            AreaSpriteCode.LiftUp => new Size(0, 0),
+            AreaSpriteCode.LiftDown => new Size(0, 0),
+            AreaSpriteCode.LiftLeftThenRight => new Size(0, 1),
+            AreaSpriteCode.LiftFalling => new Size(0, 1),
+            AreaSpriteCode.LiftRight => new Size(0, 1),
+            AreaSpriteCode.ShortLiftUp => new Size(0, 0),
+            AreaSpriteCode.ShortLiftDown => new Size(0, 0),
+            AreaSpriteCode.Bowser => new Size(0, 1),
+            AreaSpriteCode.WarpZoneCommand => new Size(0, 1),
+            AreaSpriteCode.ToadOrPrincess => new Size(0, 0),
+            AreaSpriteCode.TwoGoombasY10 => new Size(-3, 1),
+            AreaSpriteCode.ThreeGoombasY10 => new Size(-3, 1),
+            AreaSpriteCode.TwoGoombasY6 => new Size(-3, 1),
+            AreaSpriteCode.ThreeGoombasY6 => new Size(-3, 1),
+            AreaSpriteCode.TwoGreenKoopasY10 => new Size(-3, 1),
+            AreaSpriteCode.ThreeGreenKoopasY10 => new Size(-3, 1),
+            AreaSpriteCode.TwoGreenKoopasY6 => new Size(-3, 1),
+            AreaSpriteCode.ThreeGreenKoopasY6 => new Size(-3, 1),
+            AreaSpriteCode.ScreenJump => new Size(0, 0),
+            _ => new Size(0, 0),
+        };
     }
 }
