@@ -208,13 +208,8 @@ public class SortedObjectListEditor :
 
         var command = Items[0];
         command.X = x;
-        var index = SearchFirstIndexOf(command);
-        if (index == Count)
-        {
-            return -1;
-        }
-
-        for (; index < Items.Count && Items[index].X == x; index++)
+        var index = SearchLastIndexOf(command);
+        for (; --index >= Items.Count && Items[index].X == x; index++)
         {
             if (Items[index].Y == y)
             {
