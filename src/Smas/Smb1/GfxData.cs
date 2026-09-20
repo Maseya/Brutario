@@ -258,7 +258,7 @@ public class GfxData
         // tile sets.
         if (areaIndex == 2)
         {
-            ReadTileSet(4, pixelData);
+            //ReadTileSet(4, pixelData);
         }
         else if (areaIndex == 0x0F)
         {
@@ -293,10 +293,10 @@ public class GfxData
         {
             var bank = (ushort)rom.ReadInt16IndirectIndexed(
                 pointers.TileSetAddressBankByteTablePointer,
-                i);
+                i << 1);
             var word = (ushort)rom.ReadInt16IndirectIndexed(
                 pointers.TileSetAddressWordTablePointer,
-                i);
+                i << 1);
             var src = (bank << 0x10) | word;
             rom.WriteBytes(src, PixelMapToGfx(TileSetTable[i]));
         }

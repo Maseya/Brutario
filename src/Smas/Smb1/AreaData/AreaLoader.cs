@@ -21,6 +21,8 @@ using SpriteData;
 
 public class AreaLoader
 {
+    public const int DefaultNumberOfAreas = 0x22;
+
     public AreaLoader(Rom rom, AreaLoaderPointers pointers)
     {
         NumberOfWorlds = rom.ReadByte(pointers.NumberOfWorldsAddress);

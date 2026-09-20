@@ -33,7 +33,7 @@ public class MainPresenter
     {
         MainEditor = mainEditor;
         MainView = mainView;
-        //ObjectListView = objectListView;
+        ObjectListView = objectListView;
         ExceptionHelper = exceptionHelper;
         OpenFileNameSelector = openFileNameSelector;
         SaveFileNameSelector = saveFileNameSelector;
@@ -81,6 +81,13 @@ public class MainPresenter
 
         MainView.Player = MainEditor.Player;
         MainView.PlayerState = MainEditor.PlayerState;
+
+        PaletteEditorPresenter = new PaletteEditorPresenter(
+            MainEditor.PaletteEditorModel,
+            MainView.PaletteEditorView);
+
+        MainEditor.PaletteEditorModel.AreaPaletteChanged +=
+            PaletteEditorModel_AreaPaletteChanged;
     }
 
     public bool AutoSaveEnabled
@@ -148,7 +155,8 @@ public class MainPresenter
         }
     }
 
-    private BrutarioEditor MainEditor
+    // TODO(swr): I'm only making this public to test stuff. Make it private!!
+    public BrutarioEditor MainEditor
     {
         get;
     }
@@ -194,6 +202,11 @@ public class MainPresenter
     }
 
     private ISpriteEditorView SpriteEditorView
+    {
+        get;
+    }
+
+    private PaletteEditorPresenter PaletteEditorPresenter
     {
         get;
     }
@@ -385,7 +398,7 @@ public class MainPresenter
 
     public void SetStartX(int startX)
     {
-        MainEditor.StartX = startX;
+        MainEditor.StartX = startX << 1;
     }
 
     public void SetSelectedItem(int x, int y)
@@ -482,7 +495,7 @@ public class MainPresenter
         MainEditor.AnimationFrame = frame;
     }
 
-    public DrawData GetDrawData(
+    public AreaDrawData GetDrawData(
         int startX,
         Size size,
         Color separatorColor,
@@ -537,8 +550,14 @@ public class MainPresenter
 
     private void MainEditor_HasUnsavedChangesChanged(object? sender, EventArgs e)
     {
-        MainView.SaveEnabled = MainEditor.HasUnsavedChanges;
+        SetSaveEnabled();
         SetName();
+    }
+
+    private void SetSaveEnabled()
+    {
+        MainView.SaveEnabled = MainEditor.HasUnsavedChanges
+            || MainEditor.PaletteEditorModel.AreaPaletteHasUnsavedChanges;
     }
 
     private void MainEditor_ObjectData_DataReset(object? sender, EventArgs e)
@@ -561,6 +580,7 @@ public class MainPresenter
     private void MainEditor_AreaLoaded(object? sender, EventArgs e)
     {
         MainView.MapEditorEnabled = true;
+
     }
 
     private void MainEditor_AnimationFrameChanged(object? sender, EventArgs e)
@@ -624,7 +644,7 @@ public class MainPresenter
 
     private void MainEditor_StartXChanged(object? sender, EventArgs e)
     {
-        MainView.StartX = MainEditor.StartX;
+        MainView.StartX = MainEditor.StartX >> 1;
     }
 
     private void MainEditor_Invalidated(object? sender, EventArgs e)
@@ -653,7 +673,8 @@ public class MainPresenter
 
     private bool CleanupBeforeClose()
     {
-        if (MainEditor.HasUnsavedChanges)
+        if (MainEditor.HasUnsavedChanges
+            || MainEditor.PaletteEditorModel.AreaPaletteHasUnsavedChanges)
         {
             switch (SaveOnClosePrompt.Prompt())
             {
@@ -759,6 +780,8 @@ public class MainPresenter
         MainView.EditItemEnabled =
         MainView.PasteEnabled =
         MainView.DeleteAllEnabled = false;
+
+        MainView.ViewPaletteEditor = false;
     }
 
     private void MainEditor_AreaNumberChanged(object? sender, EventArgs e)
@@ -772,6 +795,10 @@ public class MainPresenter
         SetEditItemEnabled();
         SetDeleteAllEnabled();
         SetPasteEnabled();
+    }
+    private void PaletteEditorModel_AreaPaletteChanged(object? sender, EventArgs e)
+    {
+        SetSaveEnabled();
     }
 
     private void SetEditItemEnabled()

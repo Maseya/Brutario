@@ -118,7 +118,7 @@ public sealed partial class ObjectListView : Component, IObjectListView
 
     [Browsable(false)]
     [DesignerSerializationVisibility(Hidden)]
-    public Form Owner
+    public Form? Owner
     {
         get
         {
