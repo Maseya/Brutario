@@ -154,7 +154,7 @@ public class SortedSpriteListEditor :
         var command = Items[0];
         command.X = x;
         var index = SearchLastIndexOf(command);
-        for (; --index >= Items.Count && Items[index].X == x; index++)
+        for (; --index >= 0 && Items[index].X == x; )
         {
             if (Items[index].Y == y)
             {
