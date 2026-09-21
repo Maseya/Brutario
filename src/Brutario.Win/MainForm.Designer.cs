@@ -779,6 +779,7 @@ namespace Brutario.Win
             areaControl.Name = "areaControl";
             areaControl.Size = new Size(901, 290);
             areaControl.TabIndex = 5;
+            areaControl.SizeChanged += AreaControl_SizeChanged;
             areaControl.Paint += AreaControl_Paint;
             areaControl.MouseClick += AreaControl_MouseClick;
             areaControl.MouseDoubleClick += AreaControl_MouseDoubleClick;
