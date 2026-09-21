@@ -610,9 +610,10 @@ public partial class MainForm : Form, IMainView
         // TODO(swr): There are quite a few assumption here. Let's remove some
         // of these constants.
         var viewWidth = ((areaControl.ClientSize.Width - 1) / 8) + 1;
-        hsbStartX.Maximum = 0x400 - viewWidth;
+        hsbStartX.Maximum = 0x400 - viewWidth + 0x1F;
         hsbStartX.SmallChange = 1;
         hsbStartX.LargeChange = 0x20;
+        hsbStartX.Value = Math.Min(hsbStartX.Value, 0x400 - viewWidth);
     }
 
     private void Timer_Elapsed(object? sender, EventArgs e)
