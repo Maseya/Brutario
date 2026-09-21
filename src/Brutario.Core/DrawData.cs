@@ -20,6 +20,7 @@ public readonly ref struct DrawData
         ReadOnlySpan<Color32BppArgb> palette,
         ReadOnlySpan<byte> pixelData,
         ReadOnlySpan<ObjTile> bg1,
+        ReadOnlySpan<ObjTile> bg2,
         IEnumerable<Sprite> sprites,
         int startX,
         Size size,
@@ -33,6 +34,7 @@ public readonly ref struct DrawData
         Palette = palette;
         PixelData = pixelData;
         Bg1 = bg1;
+        Bg2 = bg2;
         Sprites = sprites;
         StartX = startX;
         Size = size;
@@ -59,6 +61,11 @@ public readonly ref struct DrawData
     }
 
     public ReadOnlySpan<ObjTile> Bg1
+    {
+        get;
+    }
+
+    public ReadOnlySpan<ObjTile> Bg2
     {
         get;
     }

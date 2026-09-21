@@ -27,6 +27,7 @@ public class GameData
             rom,
             pointers.TilemapLoaderPointers,
             AreaLoader.NumberOfAreas);
+        TilemapLoaderAsm = new TilemapLoaderAsm(rom);
         AreaObjectRenderer = new AreaObjectRenderer(
             rom,
             pointers.AreaObjectRendererPointers);
@@ -54,6 +55,11 @@ public class GameData
     }
 
     public TilemapLoader TilemapLoader
+    {
+        get;
+    }
+
+    public TilemapLoaderAsm TilemapLoaderAsm
     {
         get;
     }
