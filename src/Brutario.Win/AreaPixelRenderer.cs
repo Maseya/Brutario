@@ -195,6 +195,7 @@ public static class AreaPixelRenderer
                 var asyncPtrBg1 = ptrBg1;
 
                 var viewWidth = ((size.Width - 1) / 8) + 1;
+                var viewHeight = (size.Height / 8) - 6;
                 var imageWidth = viewWidth * 8;
 
                 var result = new Color32BppArgb[imageWidth * size.Height];
@@ -213,7 +214,7 @@ public static class AreaPixelRenderer
                     body: sprite => RenderSprite(sprite));
                 _ = Parallel.For(
                     fromInclusive: 0,
-                    toExclusive: size.Height / 8,
+                    toExclusive: viewHeight,
                     body: row => RenderRow(row, LayerPriority.Priority0));
 
                 _ = Parallel.ForEach(
@@ -222,7 +223,7 @@ public static class AreaPixelRenderer
                     body: sprite => RenderSprite(sprite));
                 _ = Parallel.For(
                     fromInclusive: 0,
-                    toExclusive: size.Height / 8,
+                    toExclusive: viewHeight,
                     body: row => RenderRow(row, LayerPriority.Priority1));
 
                 _ = Parallel.ForEach(
@@ -238,7 +239,6 @@ public static class AreaPixelRenderer
 
                 void RenderRow(int row, LayerPriority layerPriority)
                 {
-                    var darken = row > 0x1D;
                     var rowIndex = Math.Min(row, 0x1C + (row & 1)) * 0x400;
                     var pixelRow = row * 8 * imageWidth;
                     for (var column = 0; column < viewWidth; column++, pixelRow += 8)
@@ -265,13 +265,6 @@ public static class AreaPixelRenderer
                                 if (pixel != 0)
                                 {
                                     var color = asyncPtrPalette[paletteIndex + pixel];
-                                    if (darken)
-                                    {
-                                        color.R /= 2;
-                                        color.G /= 2;
-                                        color.B /= 2;
-                                    }
-
                                     result[index] = color;
                                 }
                             }
