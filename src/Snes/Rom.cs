@@ -88,12 +88,6 @@ public class Rom
         Array.Copy(data, Data, data.Length);
     }
 
-    private Rom(byte[] data, AddressMode addressMode)
-    {
-        Data = data;
-        AddressMode = addressMode;
-    }
-
     public int Size
     {
         get
@@ -704,6 +698,7 @@ public class Rom
             return snesAddress + amount;
         }
 
+        // TODO(swr): Account for HiROM.
         var bank = snesAddress & BankMask;
         var word = snesAddress & LoRomWordMask;
         return bank | 0x8000 | ((word + amount) & LoRomWordMask);
@@ -847,6 +842,15 @@ public class Rom
         return ReadByteIndirectIndexed(snesAddress, 0, false);
     }
 
+    public byte ReadByteIndexed(
+        int snesAddress,
+        int index,
+        bool crossBanks = true)
+    {
+        var address = IncrementSnesAddress(snesAddress, index, crossBanks);
+        return ReadByte(address);
+    }
+
     public byte ReadByteIndirectIndexed(
         int snesAddress,
         int index,
@@ -854,8 +858,7 @@ public class Rom
     {
         var bank = snesAddress & BankMask;
         var word = ReadInt16(snesAddress);
-        var address = IncrementSnesAddress(bank | word, index, crossBanks);
-        return ReadByte(address);
+        return ReadByteIndexed(bank | word, index, crossBanks);
     }
 
     public int ReadInt16(int snesAddress, bool crossBanks = true)
@@ -869,6 +872,26 @@ public class Rom
     {
         var low = ReadByte(snesAddressLow);
         var high = ReadByte(snesAddressHigh);
+        return low | (high << 8);
+    }
+
+    public int ReadInt16Indexed(
+        int snesAddress,
+        int index,
+        bool crossBanks = true)
+    {
+        var address = IncrementSnesAddress(snesAddress, index, crossBanks);
+        return ReadInt16(address, crossBanks);
+    }
+
+    public int ReadInt16Indexed(
+        int snesAddressLow,
+        int snesAddressHigh,
+        int index,
+        bool crossBanks = true)
+    {
+        var low = ReadByteIndexed(snesAddressLow, index, crossBanks);
+        var high = ReadByteIndexed(snesAddressHigh, index, crossBanks);
         return low | (high << 8);
     }
 
@@ -890,8 +913,7 @@ public class Rom
     {
         var bank = snesAddress & BankMask;
         var word = ReadInt16(snesAddress);
-        var address = IncrementSnesAddress(bank | word, index << 1, crossBanks);
-        return ReadInt16(address, crossBanks);
+        return ReadInt16Indexed(bank | word, index << 1, crossBanks);
     }
 
     public int ReadInt16IndirectIndexed(
@@ -919,6 +941,8 @@ public class Rom
         bool crossBanks = true)
     {
         var count = dest.Length;
+
+        // TODO(swr): Handle HiROM.
         var subCount = crossBanks
             ? count
             : LoRomBankSize - (snesAddress & LoRomWordMask);
@@ -998,6 +1022,27 @@ public class Rom
         return result;
     }
 
+    public void ReadBytesIndexed(
+        int snesAddress,
+        int index,
+        Span<byte> dest,
+        bool crossBanks = true)
+    {
+        var address = IncrementSnesAddress(snesAddress, index, crossBanks);
+        ReadBytes(address, dest, crossBanks);
+    }
+
+    public byte[] ReadBytesIndexed(
+        int snesAddress,
+        int index,
+        int count,
+        bool crossBanks = true)
+    {
+        var result = new byte[count];
+        ReadBytesIndexed(snesAddress, index, result, crossBanks);
+        return result;
+    }
+
     public void ReadBytesIndirectIndexed(
         int snesAddress,
         int index,
@@ -1006,8 +1051,11 @@ public class Rom
     {
         var bank = snesAddress & BankMask;
         var word = ReadInt16(snesAddress);
-        var address = IncrementSnesAddress(bank | word, index, crossBanks);
-        ReadBytes(address, dest, crossBanks);
+        ReadBytesIndexed(
+            bank | word,
+            index,
+            dest,
+            crossBanks);
     }
 
     public byte[] ReadBytesIndirectIndexed(
@@ -1069,6 +1117,27 @@ public class Rom
         return result;
     }
 
+    public void ReadInt16ArrayIndexed(
+        int snesAddress,
+        int index,
+        Span<short> dest,
+        bool crossBanks = true)
+    {
+        var address = IncrementSnesAddress(snesAddress, index, crossBanks);
+        ReadInt16Array(address, dest, crossBanks);
+    }
+
+    public short[] ReadInt16ArrayIndexed(
+        int snesAddress,
+        int index,
+        int count,
+        bool crossBanks = true)
+    {
+        var result = new short[count];
+        ReadInt16ArrayIndexed(snesAddress, index, result, crossBanks);
+        return result;
+    }
+
     public void ReadInt16ArrayIndirectIndexed(
         int snesAddress,
         int index,
@@ -1077,8 +1146,11 @@ public class Rom
     {
         var bank = snesAddress & BankMask;
         var word = ReadInt16(snesAddress);
-        var address = IncrementSnesAddress(bank | word, index, crossBanks);
-        ReadInt16Array(address, dest, crossBanks);
+        ReadInt16ArrayIndexed(
+            bank | word,
+            index,
+            dest,
+            crossBanks);
     }
 
     public short[] ReadInt16ArrayIndirectIndexed(
@@ -1090,20 +1162,6 @@ public class Rom
         var result = new short[count];
         ReadInt16ArrayIndirectIndexed(snesAddress, index, result, crossBanks);
         return result;
-    }
-
-    public void ReadInt16ArrayAs<T>(
-        int snesAddress,
-        int count,
-        Span<T> dest,
-        Func<short, T> func,
-        bool crossBanks = true)
-    {
-        ReadInt16ArrayAs(
-            snesAddress,
-            dest[..count],
-            func,
-            crossBanks);
     }
 
     public void ReadInt16ArrayAs<T>(
@@ -1126,22 +1184,8 @@ public class Rom
         bool crossBanks = true)
     {
         var result = new T[count];
-        ReadInt16ArrayAs(snesAddress, count, result, func, crossBanks);
+        ReadInt16ArrayAs(snesAddress, result, func, crossBanks);
         return result;
-    }
-
-    public void ReadInt16ArrayIndirectAs<T>(
-        int snesAddress,
-        int count,
-        Span<T> dest,
-        Func<short, T> func,
-        bool crossBanks = true)
-    {
-        ReadInt16ArrayIndirectAs(
-            snesAddress,
-            dest[..count],
-            func,
-            crossBanks);
     }
 
     public void ReadInt16ArrayIndirectAs<T>(
@@ -1322,6 +1366,11 @@ public class Rom
         var result = new byte[Data.Length];
         Array.Copy(Data, result, Data.Length);
         return result;
+    }
+
+    public static int XBA(int value)
+    {
+        return (ushort)(((ushort)value << 8) | ((ushort)value >> 8));
     }
 
     private static bool IsArrayInBank(int count, int snesAddress)
