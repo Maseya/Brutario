@@ -913,7 +913,7 @@ public class Rom
     {
         var bank = snesAddress & BankMask;
         var word = ReadInt16(snesAddress);
-        return ReadInt16Indexed(bank | word, index << 1, crossBanks);
+        return ReadInt16Indexed(bank | word, index, crossBanks);
     }
 
     public int ReadInt16IndirectIndexed(

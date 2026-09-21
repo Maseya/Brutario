@@ -29,7 +29,7 @@ public class TilemapLoader
             {
                 TilemapCommand command = rom.ReadInt16IndirectIndexed(
                     pointers.TilemapDataPointer,
-                    indexes[i] + j);
+                    (indexes[i] + j) << 1);
                 if (command.IsTerminationCommand)
                 {
                     break;
