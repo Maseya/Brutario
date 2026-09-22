@@ -191,7 +191,6 @@ public class TilemapLoaderAsm
         const int width = 0x10;
         const int height = 0x10;
         const int screens = 0x20;
-        var srcScreens = RAM_7E0EC0;
         for (var screen = 0; screen < screens; screen++)
         {
             var srcScreen = screen * 0x800;
@@ -2262,7 +2261,6 @@ public class TilemapLoaderAsm
         RAM_7E00E4 = 0;
 
     CODE_058F99:
-        var a = RAM_7E00E4;
         var x = (ushort)((RAM_7E00E4 << 8) + 0xA0);
         ushort y = 0x0000;
 
