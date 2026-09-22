@@ -1368,7 +1368,7 @@ public class TilemapLoaderAsm
                 goto CODE_05887D;
             }
 
-            return CODE_0588CB(a);
+            return CODE_0588CB();
 
         CODE_05887D:
             if (a != 0x03)
@@ -1376,7 +1376,7 @@ public class TilemapLoaderAsm
                 goto CODE_058884;
             }
 
-            return CODE_0588F8(a);
+            return CODE_0588F8();
 
         CODE_058884:
             if (a != 0x04)
@@ -1384,7 +1384,7 @@ public class TilemapLoaderAsm
                 goto CODE_05888B;
             }
 
-            return CODE_058905(a);
+            return CODE_058905();
 
         CODE_05888B:
             if (a != 0x05)
@@ -1392,7 +1392,7 @@ public class TilemapLoaderAsm
                 goto CODE_058892;
             }
 
-            return CODE_05891A(a);
+            return CODE_05891A();
 
         CODE_058892:
             if (a != 0x18)
@@ -1400,7 +1400,7 @@ public class TilemapLoaderAsm
                 goto CODE_058899;
             }
 
-            return CODE_05892F(a);
+            return CODE_05892F();
 
         CODE_058899:
             if (a != 0x07)
@@ -1408,7 +1408,7 @@ public class TilemapLoaderAsm
                 goto CODE_0588A0;
             }
 
-            return CODE_05894C(a);
+            return CODE_05894C();
 
         CODE_0588A0:
             return a;
@@ -1437,7 +1437,7 @@ public class TilemapLoaderAsm
     CODE_0588C6:
         return;
 
-        byte CODE_0588CB(byte a)
+        byte CODE_0588CB()
         {
             a = RAM_7ED000[x];
             if (a == 0)
@@ -1491,7 +1491,7 @@ public class TilemapLoaderAsm
             return a;
         }
 
-        byte CODE_0588F8(byte a)
+        byte CODE_0588F8()
         {
             a = RAM_7ED000[x];
             if (a == 0)
@@ -1509,7 +1509,7 @@ public class TilemapLoaderAsm
             return a;
         }
 
-        byte CODE_058905(byte a)
+        byte CODE_058905()
         {
             a = RAM_7ED000[x];
             if (a == 0)
@@ -1536,7 +1536,7 @@ public class TilemapLoaderAsm
             return a;
         }
 
-        byte CODE_05891A(byte a)
+        byte CODE_05891A()
         {
             a = RAM_7ED000[x];
             if (a == 0)
@@ -1563,7 +1563,7 @@ public class TilemapLoaderAsm
             return a;
         }
 
-        byte CODE_05892F(byte a)
+        byte CODE_05892F()
         {
             a = RAM_7ED000[x];
             if (a == 0)
@@ -1599,7 +1599,7 @@ public class TilemapLoaderAsm
             return a;
         }
 
-        byte CODE_05894C(byte a)
+        byte CODE_05894C()
         {
             a = RAM_7ED000[x];
             if (a == 0)
