@@ -2644,6 +2644,10 @@ public class TilemapLoaderAsm
             CODE_05E73C();
             return;
 
+        case 0xE743:
+            CODE_05E743();
+            return;
+
         case 0xE74F:
             CODE_05E74F();
             return;
@@ -2651,6 +2655,9 @@ public class TilemapLoaderAsm
         case 0xE75B:
             CODE_05E75B();
             return;
+
+        default:
+            throw new NotImplementedException();
         }
     }
 
