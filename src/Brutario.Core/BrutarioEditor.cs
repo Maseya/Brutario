@@ -732,6 +732,15 @@ public class BrutarioEditor : IMainEditor
 
     private void TilemapLoaderAsm_LoadTileset(object? sender, TilesetEventArgs e)
     {
+        // HACK(swr): This tileset gets loaded at the start of W8-4, but not for this
+        // area itself.
+        if (AreaNumber == 2 && e.Tileset == Tileset.UnderwaterRuinsBackground)
+        {
+            GameData!.GfxData.ReadTileSet(
+                Tileset.CastleBackgroundAndForeground1,
+                PixelData);
+        }
+
         GameData!.GfxData.ReadTileSet(e.Tileset, PixelData);
     }
 
