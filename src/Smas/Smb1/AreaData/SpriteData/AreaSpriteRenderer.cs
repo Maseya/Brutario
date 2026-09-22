@@ -1242,7 +1242,7 @@ public class AreaSpriteRenderer
         }
 
         y -= 8 + offset;
-        var tile = new ChrTile(index, 5, 0, 0);
+        var tile = new ChrTile(index, 5, LayerPriority.Priority1, 0);
         yield return new Sprite(x, y, new SpriteTile(tile, PixelStartIndex));
 
         tile.TileIndex++;
