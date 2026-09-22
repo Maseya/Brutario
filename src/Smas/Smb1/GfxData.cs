@@ -26,9 +26,9 @@ public class GfxData
     public const int TotalPixelDataSize =
         MenuPixelDataStartIndex + MenuPixelDataSize;
 
-    private const int AreaGfxSize = 0x4000;
+    private const int StaticGfxSize = 0x3000;
     private const int AnimatedPixelDataDestIndex = 0x3000;
-    private const int AreaPixelDataSize = AreaGfxSize << 1;
+    private const int StaticPixelDataSize = StaticGfxSize << 1;
 
     private const int AreaBgGfxSize = 0x2000;
     private const int AreaBgPixelDataSize = AreaBgGfxSize << 1;
@@ -50,7 +50,7 @@ public class GfxData
 
     private const int AreaPixelStartIndex = 0;
 
-    private const int AreaBgPixelStartIndex = AreaPixelStartIndex + AreaPixelDataSize;
+    private const int AreaBgPixelStartIndex = AreaPixelStartIndex + StaticPixelDataSize;
 
     private const int AnimatedPixelDataStartIndex =
         SpritePixelDataStartIndex + SpritePixelDataSize;
@@ -64,7 +64,7 @@ public class GfxData
     public GfxData(Rom rom, GfxDataPointers pointers)
     {
         AreaPixelData = GfxToPixelMap(
-            rom.ReadBytes(pointers.AreaGfxAddress, AreaGfxSize));
+            rom.ReadBytes(pointers.AreaGfxAddress, StaticGfxSize));
         SpritePixelData = GfxToPixelMap(
             rom.ReadBytes(pointers.SpriteGfxAddress, SpriteGfxSize));
         AnimatedPixelData = GfxToPixelMap(
