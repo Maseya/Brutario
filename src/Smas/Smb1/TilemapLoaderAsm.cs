@@ -767,35 +767,34 @@ public class TilemapLoaderAsm
     private void CODE_058448(ushort y)
     {
         var x = RAM_7E00EB;
-        var a = Rom.ReadByteIndirectIndexed(0x05844D, y);
-        RAM_7ED000[x] = a;
+        RAM_7ED000[x] = Rom.ReadByteIndirectIndexed(0x05844D, y);
         x += 0x0010;
         RAM_7E00F1--;
 
     CODE_05845F:
-        var a8 = RAM_7ED000[x];
-        if (a8 != 0x0E)
+        var a = RAM_7ED000[x];
+        if (a != 0x0E)
         {
             goto CODE_05846B;
         }
 
-        a8 = 0x0D;
+        a = 0x0D;
         goto CODE_058476;
 
     CODE_05846B:
-        if (a8 != 0x02)
+        if (a != 0x02)
         {
             goto CODE_058473;
         }
 
-        a8 = 0x0B;
+        a = 0x0B;
         goto CODE_058476;
 
     CODE_058473:
-        a8 = Rom.ReadByteIndirectIndexed(0x058474, y);
+        a = Rom.ReadByteIndirectIndexed(0x058474, y);
 
     CODE_058476:
-        RAM_7ED000[x] = a8;
+        RAM_7ED000[x] = a;
         x += 0x0010;
         RAM_7E00F1--;
         if (RAM_7E00F1 < 0x8000)
@@ -2265,35 +2264,33 @@ public class TilemapLoaderAsm
         ushort y = 0x0000;
 
     CODE_058FA9:
-        var a8 = Rom.ReadByteIndirectIndexed(
-            0x058FAA,
-            y);
-        RAM_7ED000[x] = a8;
+        var a = Rom.ReadByteIndirectIndexed(0x058FAA, y);
+        RAM_7ED000[x] = a;
         if ((x & 1) != 0)
         {
             goto CODE_058FCF;
         }
 
-        a8 = 0x0C;
-        RAM_7ED000[x + 0x10] = a8;
-        RAM_7ED000[x + 0x30] = a8;
-        RAM_7ED000[x + 0x50] = a8;
+        a = 0x0C;
+        RAM_7ED000[x + 0x10] = a;
+        RAM_7ED000[x + 0x30] = a;
+        RAM_7ED000[x + 0x50] = a;
 
-        a8 = 0x10;
-        RAM_7ED000[x + 0x20] = a8;
-        RAM_7ED000[x + 0x40] = a8;
+        a = 0x10;
+        RAM_7ED000[x + 0x20] = a;
+        RAM_7ED000[x + 0x40] = a;
 
         goto CODE_058FE7;
 
     CODE_058FCF:
-        a8 = 0x0D;
-        RAM_7ED000[x + 0x10] = a8;
-        RAM_7ED000[x + 0x30] = a8;
-        RAM_7ED000[x + 0x50] = a8;
+        a = 0x0D;
+        RAM_7ED000[x + 0x10] = a;
+        RAM_7ED000[x + 0x30] = a;
+        RAM_7ED000[x + 0x50] = a;
 
-        a8 = 0x11;
-        RAM_7ED000[x + 0x20] = a8;
-        RAM_7ED000[x + 0x40] = a8;
+        a = 0x11;
+        RAM_7ED000[x + 0x20] = a;
+        RAM_7ED000[x + 0x40] = a;
 
     CODE_058FE7:
         x++;
