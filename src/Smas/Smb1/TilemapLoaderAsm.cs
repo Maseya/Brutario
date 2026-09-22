@@ -865,27 +865,27 @@ public class TilemapLoaderAsm
         RAM_7ED000[x + 0x20] = a;
         x++;
         a = RAM_7ED000[x];
-        if (x == 0)
+        if (a == 0)
         {
             goto CODE_0584F7;
         }
 
-        if (x == 0x12)
+        if (a == 0x12)
         {
             goto CODE_0584F7;
         }
 
-        if (x == 0x18)
+        if (a == 0x18)
         {
             goto CODE_0584F3;
         }
 
-        if (x == 0x07)
+        if (a == 0x07)
         {
             goto CODE_0584F3;
         }
 
-        if (x == 0x17)
+        if (a == 0x17)
         {
             goto CODE_0584EF;
         }
