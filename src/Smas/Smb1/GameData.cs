@@ -23,10 +23,6 @@ public class GameData
         GfxData = new GfxData(rom, pointers.GfxDataPointers);
         Map16Data = new Map16Data(rom, pointers.Map16DataPointers);
         AreaLoader = new AreaLoader(rom, pointers.AreaLoaderPointers);
-        TilemapLoader = new TilemapLoader(
-            rom,
-            pointers.TilemapLoaderPointers,
-            AreaLoader.NumberOfAreas);
         TilemapLoaderAsm = new TilemapLoaderAsm(rom);
         AreaObjectRenderer = new AreaObjectRenderer(
             rom,
@@ -50,11 +46,6 @@ public class GameData
     }
 
     public AreaLoader AreaLoader
-    {
-        get;
-    }
-
-    public TilemapLoader TilemapLoader
     {
         get;
     }

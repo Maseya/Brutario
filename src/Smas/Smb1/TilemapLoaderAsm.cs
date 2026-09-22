@@ -164,8 +164,11 @@ public class TilemapLoaderAsm
         }
     }
 
-    public void LoadTilemap(AreaType areaType, int areaIndex)
+    public event EventHandler<TilesetEventArgs>? LoadTileset;
+
+    public void LoadTilemap(AreaType areaType, int areaIndex, Player player)
     {
+        RAM_7E0753 = (byte)player;
         RAM_7E005C = (ushort)areaType;
         RAM_7E00DB = (ushort)areaIndex;
         unsafe
@@ -208,11 +211,6 @@ public class TilemapLoaderAsm
                 }
             }
         }
-    }
-
-    public void WriteGFXTileset(byte[] pixelData)
-    {
-
     }
 
     private void FUNC_058000()
@@ -2714,6 +2712,7 @@ public class TilemapLoaderAsm
 
     private void CODE_05E82A(int tileset)
     {
+        OnLoadTileset(new TilesetEventArgs((Tileset)tileset));
         var x = tileset << 1;
 
         // Note that this table has word values, but we only read the high word.
@@ -2734,6 +2733,11 @@ public class TilemapLoaderAsm
             x);
 
         CODE_05E84C();
+    }
+
+    protected virtual void OnLoadTileset(TilesetEventArgs e)
+    {
+        LoadTileset?.Invoke(this, e);
     }
 
     /// <summary>

@@ -707,12 +707,18 @@ public class BrutarioEditor : IMainEditor
         var rom = new Rom(File.ReadAllBytes(path));
         var gameData = new GameData(rom);
 
+        if (GameData is not null)
+        {
+            GameData.TilemapLoaderAsm.LoadTileset -= TilemapLoaderAsm_LoadTileset;
+        }
+
         // These should never throw.
         Rom = rom;
         Path = path;
         GameData = gameData;
         GameData.GfxData.ReadStaticData(PixelData);
         GameData.Map16Data.ReadStaticTiles(Map16Tiles);
+        GameData.TilemapLoaderAsm.LoadTileset += TilemapLoaderAsm_LoadTileset;
 
         // Internally, these should never throw. However, they call events, which we
         // cannot control. If an event throws, it could mess up our state. But if this
@@ -722,6 +728,11 @@ public class BrutarioEditor : IMainEditor
             oldAreaNumber: 0,
             newAreaNumber: GameData.AreaLoader.GetAreaNumber(world: 0, level: 0),
             discardHistory: true);
+    }
+
+    private void TilemapLoaderAsm_LoadTileset(object? sender, TilesetEventArgs e)
+    {
+        GameData!.GfxData.ReadTileSet(e.Tileset, PixelData);
     }
 
     public void Save()
@@ -1386,6 +1397,7 @@ public class BrutarioEditor : IMainEditor
         if (IsAreaLoaded)
         {
             ReloadPalette();
+            ReloadTilemap();
             Invalidate();
         }
     }
@@ -1853,9 +1865,7 @@ public class BrutarioEditor : IMainEditor
         ResetObjectData(discardHistory: true);
         ResetSpriteData(discardHistory: true);
         ReloadPalette();
-        GameData!.TilemapLoader.LoadTilemap(ObjectAreaIndex);
-        GameData!.TilemapLoaderAsm.LoadTilemap(AreaType, ObjectAreaIndex);
-        ReloadGfx();
+        ReloadTilemap();
         StartX = 0;
         IsAreaLoaded = true;
         RenderAreaTilemap();
@@ -1877,13 +1887,9 @@ public class BrutarioEditor : IMainEditor
             Palette);
     }
 
-    private void ReloadGfx()
+    private void ReloadTilemap()
     {
-        GameData!.GfxData.ReadAreaTileSet(
-           ObjectAreaIndex,
-           GameData.TilemapLoader.TileSetIndex,
-           Player,
-           PixelData);
+        GameData!.TilemapLoaderAsm.LoadTilemap(AreaType, ObjectAreaIndex, Player);
     }
 
     private void ResetObjectData(bool discardHistory = false)

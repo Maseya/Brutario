@@ -9,6 +9,7 @@ namespace Maseya.Smas.Smb1;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using Snes;
 
@@ -240,46 +241,18 @@ public class GfxData
         src.CopyTo(dest);
     }
 
-    public void ReadAreaTileSet(
-        int areaIndex,
-        int areaTileSetIndex,
-        Player player,
-        Span<byte> pixelData)
+    public void ReadTileSet(Tileset tileset, Span<byte> pixelData)
     {
-        if (areaTileSetIndex == 1)
+        if (!Enum.IsDefined(tileset))
         {
-            areaTileSetIndex = BonusAreaTileSetTable[(int)player];
+            throw new InvalidEnumArgumentException(
+                nameof(tileset),
+                (int)tileset,
+                typeof(Tileset));
         }
 
-        ReadTileSet(areaTileSetIndex, pixelData);
-
-        // HACK: These levels don't load a complete tileset. It uses tile sets of the
-        // area before them. Eventually, I'll need to devise a system to better load
-        // tile sets.
-        if (areaIndex == 2)
-        {
-            ReadTileSet(4, pixelData);
-        }
-        else if (areaIndex == 0x0F)
-        {
-            ReadTileSet(0x17, pixelData);
-        }
-
-        var action = TileSetActions[areaTileSetIndex & 0x1F];
-        if (action is not null)
-        {
-            foreach (var tileset in action(areaIndex))
-            {
-                ReadTileSet(tileset, pixelData);
-            }
-        }
-    }
-
-    public void ReadTileSet(int tileSetIndex, Span<byte> pixelData)
-    {
-        var tileSet = TileSetTable[tileSetIndex];
-        var destIndex = (TileSetDestIndexTable[tileSetIndex] - 0x1000) << 2;
-        tileSet.CopyTo(pixelData.Slice(destIndex, tileSet.Length));
+        var destIndex = (TileSetDestIndexTable[(int)tileset] - 0x1000) << 2;
+        TileSetTable[(int)tileset].CopyTo(pixelData[destIndex..]);
     }
 
     public void WriteToGameData(Rom rom, GfxDataPointers pointers)
