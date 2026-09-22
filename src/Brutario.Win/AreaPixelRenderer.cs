@@ -248,6 +248,12 @@ public static class AreaPixelRenderer
                     toExclusive: viewHeight,
                     body: row => RenderRow(asyncPtrBg2, row, startX >> 1, LayerPriority.Priority1));
 
+                // HACK(swr). This renders hidden blocks in front of BG2.
+                _ = Parallel.ForEach(
+                    source: sprites.Where(
+                        sprite => sprite.Tile.Priority == -1),
+                    body: sprite => RenderSprite(sprite));
+
                 _ = Parallel.For(
                     fromInclusive: 0,
                     toExclusive: viewHeight,
