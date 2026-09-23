@@ -94,5 +94,16 @@ namespace Brutario.Win.Properties {
                 this["EmulatorPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection RecentRoms {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["RecentRoms"]));
+            }
+            set {
+                this["RecentRoms"] = value;
+            }
+        }
     }
 }

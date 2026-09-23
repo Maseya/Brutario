@@ -742,6 +742,7 @@ public class MainPresenter
     private void MainEditor_FileOpened(object? sender, EventArgs e)
     {
         MainView.EditorEnabled = true;
+        MainView.AddRecentRom(MainEditor.Path);
     }
 
     private void MainEditor_FileSaved(object? sender, EventArgs e)

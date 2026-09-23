@@ -88,5 +88,9 @@ public interface IMainView
         get;
     }
 
+    void AddRecentRom(string path);
+
+    void ClearRecentRoms();
+
     void Redraw();
 }
