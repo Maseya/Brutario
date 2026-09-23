@@ -9,6 +9,7 @@ namespace Maseya.Smas.Smb1;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using Snes;
 
@@ -25,9 +26,9 @@ public class GfxData
     public const int TotalPixelDataSize =
         MenuPixelDataStartIndex + MenuPixelDataSize;
 
-    private const int AreaGfxSize = 0x4000;
+    private const int StaticGfxSize = 0x3000;
     private const int AnimatedPixelDataDestIndex = 0x3000;
-    private const int AreaPixelDataSize = AreaGfxSize << 1;
+    private const int StaticPixelDataSize = StaticGfxSize << 1;
 
     private const int AreaBgGfxSize = 0x2000;
     private const int AreaBgPixelDataSize = AreaBgGfxSize << 1;
@@ -49,7 +50,7 @@ public class GfxData
 
     private const int AreaPixelStartIndex = 0;
 
-    private const int AreaBgPixelStartIndex = AreaPixelStartIndex + AreaPixelDataSize;
+    private const int AreaBgPixelStartIndex = AreaPixelStartIndex + StaticPixelDataSize;
 
     private const int AnimatedPixelDataStartIndex =
         SpritePixelDataStartIndex + SpritePixelDataSize;
@@ -63,7 +64,7 @@ public class GfxData
     public GfxData(Rom rom, GfxDataPointers pointers)
     {
         AreaPixelData = GfxToPixelMap(
-            rom.ReadBytes(pointers.AreaGfxAddress, AreaGfxSize));
+            rom.ReadBytes(pointers.AreaGfxAddress, StaticGfxSize));
         SpritePixelData = GfxToPixelMap(
             rom.ReadBytes(pointers.SpriteGfxAddress, SpriteGfxSize));
         AnimatedPixelData = GfxToPixelMap(
@@ -240,46 +241,18 @@ public class GfxData
         src.CopyTo(dest);
     }
 
-    public void ReadAreaTileSet(
-        int areaIndex,
-        int areaTileSetIndex,
-        Player player,
-        Span<byte> pixelData)
+    public void ReadTileSet(Tileset tileset, Span<byte> pixelData)
     {
-        if (areaTileSetIndex == 1)
+        if (!Enum.IsDefined(tileset))
         {
-            areaTileSetIndex = BonusAreaTileSetTable[(int)player];
+            throw new InvalidEnumArgumentException(
+                nameof(tileset),
+                (int)tileset,
+                typeof(Tileset));
         }
 
-        ReadTileSet(areaTileSetIndex, pixelData);
-
-        // HACK: These levels don't load a complete tileset. It uses tile sets of the
-        // area before them. Eventually, I'll need to devise a system to better load
-        // tile sets.
-        if (areaIndex == 2)
-        {
-            ReadTileSet(4, pixelData);
-        }
-        else if (areaIndex == 0x0F)
-        {
-            ReadTileSet(0x17, pixelData);
-        }
-
-        var action = TileSetActions[areaTileSetIndex & 0x1F];
-        if (action is not null)
-        {
-            foreach (var tileset in action(areaIndex))
-            {
-                ReadTileSet(tileset, pixelData);
-            }
-        }
-    }
-
-    public void ReadTileSet(int tileSetIndex, Span<byte> pixelData)
-    {
-        var tileSet = TileSetTable[tileSetIndex];
-        var destIndex = (TileSetDestIndexTable[tileSetIndex] - 0x1000) << 2;
-        tileSet.CopyTo(pixelData.Slice(destIndex, tileSet.Length));
+        var destIndex = (TileSetDestIndexTable[(int)tileset] - 0x1000) << 2;
+        TileSetTable[(int)tileset].CopyTo(pixelData[destIndex..]);
     }
 
     public void WriteToGameData(Rom rom, GfxDataPointers pointers)
@@ -293,10 +266,10 @@ public class GfxData
         {
             var bank = (ushort)rom.ReadInt16IndirectIndexed(
                 pointers.TileSetAddressBankByteTablePointer,
-                i);
+                i << 1);
             var word = (ushort)rom.ReadInt16IndirectIndexed(
                 pointers.TileSetAddressWordTablePointer,
-                i);
+                i << 1);
             var src = (bank << 0x10) | word;
             rom.WriteBytes(src, PixelMapToGfx(TileSetTable[i]));
         }

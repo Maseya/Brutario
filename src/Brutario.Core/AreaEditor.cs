@@ -53,8 +53,7 @@ public class AreaEditor
             GameData.AreaLoader.AreaSpriteData[SpriteAreaIndex]);
 
         ReloadPaletteInternal();
-        GameData!.TilemapLoader.LoadTilemap(ObjectAreaIndex);
-        ReloadGfxInternal();
+        GameData!.TilemapLoaderAsm.LoadTilemap(AreaType, ObjectAreaIndex, Player);
 
         RenderAreaTilemapInternal();
 
@@ -240,15 +239,6 @@ public class AreaEditor
             Player,
             PlayerState,
             Palette);
-    }
-
-    private void ReloadGfxInternal()
-    {
-        GameData.GfxData.ReadAreaTileSet(
-           ObjectAreaIndex,
-           GameData.TilemapLoader.TileSetIndex,
-           Player,
-           PixelData);
     }
 
     private void RenderAreaTilemapInternal()
