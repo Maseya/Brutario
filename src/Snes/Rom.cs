@@ -672,14 +672,13 @@ public class Rom
 
     public static bool IsValidAddress(int pointer, AddressMode mode)
     {
-        return pointer >= 0
-            && mode switch
+        return mode switch
             {
-                AddressMode.LoRom => IsValidLoRomPointer(pointer),
-                AddressMode.LoRom2 => IsValidLoRom2Pointer(pointer),
+                AddressMode.LoRom => IsValidPointer(pointer),
+                AddressMode.LoRom2 => IsValidPointer(pointer),
                 AddressMode.ExLoRom => IsValidExLoRomPointer(pointer),
-                AddressMode.HiRom => IsValidHiRomPointer(pointer),
-                AddressMode.HiRom2 => IsValidHiRom2Pointer(pointer),
+                AddressMode.HiRom => IsValidPointer(pointer),
+                AddressMode.HiRom2 => IsValidPointer(pointer),
                 AddressMode.ExHiRom => IsValidExHiRomPointer(pointer),
                 _ => throw new InvalidEnumArgumentException(
                     nameof(mode),
@@ -1378,43 +1377,33 @@ public class Rom
         return count + (snesAddress & LoRomWordMask) <= LoRomBankSize;
     }
 
-    private static bool IsValidLoRomPointer(int pointer)
+    private static bool IsValidPointer(int pointer)
     {
-        return (pointer & 0x8000) != 0 && (pointer & ~0xFFFF) < 0x70_0000;
-    }
-
-    private static bool IsValidLoRom2Pointer(int pointer)
-    {
-        return (pointer & 0x8000) != 0
-            && (pointer & 0x80_0000) != 0
-            && (pointer & ~0x80FFFF) < 0x70_0000;
+        return
+            (uint)(pointer & ~0x80_0000) < 0x40_0000
+            ? (pointer & 0x8000) != 0
+            : (uint)(pointer - 0x40_0000) < 0x70_0000 - 0x40_0000 ||
+                (uint)(pointer - 0xC0_0000) < 0x100_0000 - 0xC0_0000;
     }
 
     private static bool IsValidExLoRomPointer(int pointer)
     {
-        return (pointer & 0x8000) != 0
-            && (pointer & 0xFF_0000) != 0x7E_0000
-            && (pointer & 0xFF_0000) != 0x7F_0000
-            && (pointer & ~0xFFFF) < 0x10_0000;
-    }
-
-    private static bool IsValidHiRomPointer(int pointer)
-    {
-        return (pointer & 0xC0_0000) != 0 && (pointer & ~0xC0_0000) < 0x40_0000;
-    }
-
-    private static bool IsValidHiRom2Pointer(int pointer)
-    {
         return
-            ((pointer & 0xC0_0000) == 0x40_0000 && (pointer & ~0xC0_0000) < 0x30_0000)
-         || ((pointer & 0xC0_0000) == 0xC0_0000 && (pointer & ~0xC0_0000) < 0x40_0000);
+            (uint)(pointer & ~0x80_0000) < 0x40_0000 ||
+                (uint)(pointer - 0x70_0000) < 0x7E_0000 - 0x70_0000
+            ? (pointer & 0x8000) != 0
+            : (uint)(pointer - 0x40_0000) < 0x7E_0000 - 0x40_0000 ||
+                (uint)(pointer - 0xC0_0000) < 0x100_0000 - 0xC0_0000;
     }
 
     private static bool IsValidExHiRomPointer(int pointer)
     {
-        return pointer < 0x3E_0000
-            || (uint)(pointer - 0xC0_0000) < 0x10_00000 - 0xC0_0000
-            || (uint)(pointer - 0x40_0000) < 0x7E_0000 - 0x40_0000;
+        return 
+            (uint)(pointer & ~0x80_0000) < 0x40_0000 ||
+                (uint)(pointer - 0x70_0000) < 0x78_0000 - 0x70_0000
+            ? (pointer & 0x8000) != 0
+            : (uint)(pointer - 0x40_0000) < 0x7E_0000 - 0x40_0000 ||
+                (uint)(pointer - 0xC0_0000) < 0x100_0000 - 0xC0_0000;
     }
 
     private static AddressMode GetAddressMode(ReadOnlySpan<byte> headerlessData)
