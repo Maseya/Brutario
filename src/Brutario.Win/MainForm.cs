@@ -10,6 +10,7 @@ namespace Brutario.Win;
 using System;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 
 using Brutario.Core.Presenters;
@@ -334,6 +335,36 @@ public partial class MainForm : Form, IMainView
         areaControl.Invalidate();
     }
 
+    public void AddRecentRom(string path)
+    {
+        while (true)
+        {
+            var index = Settings.Default.RecentRoms.IndexOf(path);
+            if (index == -1)
+            {
+                break;
+            }
+
+            Settings.Default.RecentRoms.RemoveAt(index);
+        }
+
+        Settings.Default.RecentRoms.Insert(0, path);
+        while (Settings.Default.RecentRoms.Count > 10)
+        {
+            Settings.Default.RecentRoms.RemoveAt(Settings.Default.RecentRoms.Count - 1);
+        }
+
+        Settings.Default.Save();
+        InitializeRecentRoms(Settings.Default.RecentRoms);
+    }
+
+    public void ClearRecentRoms()
+    {
+        Settings.Default.RecentRoms.Clear();
+        Settings.Default.Save();
+        InitializeRecentRoms(Settings.Default.RecentRoms);
+    }
+
     /// <summary>
     /// Initialize remaining components that could not be initialized in
     /// <see cref="InitializeComponent"/> through the designer.
@@ -350,8 +381,46 @@ public partial class MainForm : Form, IMainView
         autoSaveTimer.Interval = (int)new TimeSpan(0, 0, 3).TotalMilliseconds;
     }
 
+    private void InitializeRecentRoms(System.Collections.IList paths)
+    {
+        InitializeRecentRoms(paths, tsmOpenRecent.DropDownItems);
+        InitializeRecentRoms(paths, cmsRecentRoms.Items);
+    }
+
+    private void InitializeRecentRoms(
+        System.Collections.IList paths,
+        ToolStripItemCollection dest)
+    {
+        var items = new ToolStripItem[paths.Count + 2];
+        for (var i = 0; i < paths.Count; i++)
+        {
+            items[i] = new ToolStripMenuItem
+            {
+                Text = $"{i + 1}: {paths[i]}",
+                Tag = paths[i],
+            };
+            items[i].Click += RecentRom_Click;
+        }
+
+        for (var i = 0; i < dest.Count - 2; i++)
+        {
+            dest[i].Click -= RecentRom_Click;
+        }
+
+        items[^2] = dest[^2];
+        items[^1] = dest[^1];
+        dest.Clear();
+        dest.AddRange(items);
+    }
+
     private void MainForm_Load(object sender, EventArgs e)
     {
+        if (Settings.Default.RecentRoms is null)
+        {
+            Settings.Default.RecentRoms = [];
+        }
+
+        InitializeRecentRoms(Settings.Default.RecentRoms);
 
         if (Presenter.AutoSaveEnabled = Settings.Default.AutoSaveEnabled)
         {
@@ -389,6 +458,11 @@ public partial class MainForm : Form, IMainView
         //
         // Let's look for another dialog command and make considerations there.
         Presenter.Open();
+    }
+
+    private void RecentRom_Click(object? sender, EventArgs e)
+    {
+        Presenter.Open(((sender as ToolStripMenuItem)!.Tag as string)!);
     }
 
     private void Save_Click(object? sender, EventArgs e)
@@ -699,5 +773,18 @@ public partial class MainForm : Form, IMainView
     private void RunEmulator_Click(object sender, EventArgs e)
     {
         Presenter.RunInEmulator(Settings.Default.EmulatorPath);
+    }
+
+    private void ClearRecentRoms_Click(object sender, EventArgs e)
+    {
+        ClearRecentRoms();
+    }
+
+    private void OpenRecent_Click(object sender, EventArgs e)
+    {
+        var location = tsbOpenRecent.Bounds.Location;
+        location.X += tsbOpenRecent.Bounds.Width / 4;
+        location.Y += tsbOpenRecent.Bounds.Height;
+        cmsRecentRoms.Show(toolStrip, location);
     }
 }
