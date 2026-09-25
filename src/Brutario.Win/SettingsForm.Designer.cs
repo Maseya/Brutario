@@ -1,4 +1,4 @@
-﻿// <copyright file="AutoSaveForm.Designer.cs" organization="Maseya">
+﻿// <copyright file="SettingsForm.Designer.cs" organization="Maseya">
 //     Copyright (c) 2026 spel werdz rite. All rights reserved. Licensed
 //     under GNU Affero General Public License. See LICENSE in project
 //     root for full license information, or visit
