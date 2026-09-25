@@ -439,6 +439,16 @@ public partial class MainForm : Form, IMainView
         animationTimer.Start();
 
         autoSaveTimer.Start();
+
+        var args = Environment.GetCommandLineArgs();
+        if (args.Length == 2)
+        {
+            Presenter.Open(args[1]);
+        }
+        else if (Settings.Default.LoadLastOpenedRom && Settings.Default.RecentRoms.Count > 0)
+        {
+            Presenter.Open(Settings.Default.RecentRoms[0]!);
+        }
     }
 
     private void Open_Click(object? sender, EventArgs e)
@@ -721,9 +731,9 @@ public partial class MainForm : Form, IMainView
         Presenter.AutoSave();
     }
 
-    private void AutoSave_Click(object sender, EventArgs e)
+    private void Settings_Click(object sender, EventArgs e)
     {
-        using var dialog = new AutoSaveForm();
+        using var dialog = new SettingsForm();
 
         if (dialog.EnableAutoSave = Presenter.AutoSaveEnabled)
         {
@@ -734,6 +744,8 @@ public partial class MainForm : Form, IMainView
         {
             dialog.PruningInterval = Presenter.AutoSaveCutoffAge;
         }
+
+        dialog.LoadLastOpenedRomOnStartup = Settings.Default.LoadLastOpenedRom;
 
         dialog.HardCutoff = Presenter.AutoSaveHardCutoff;
         if (dialog.ShowDialog(this) == DialogResult.OK)
@@ -749,6 +761,9 @@ public partial class MainForm : Form, IMainView
             }
 
             Settings.Default.AutoSaveHardCutoff = Presenter.AutoSaveHardCutoff = dialog.HardCutoff;
+
+            Settings.Default.LoadLastOpenedRom = dialog.LoadLastOpenedRomOnStartup;
+
             Settings.Default.Save();
         }
     }
