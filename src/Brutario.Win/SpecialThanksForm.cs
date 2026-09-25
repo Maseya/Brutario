@@ -9,6 +9,8 @@ namespace Brutario.Win;
 
 using System.Windows.Forms;
 
+using Properties;
+
 public partial class SpecialThanksForm : Form
 {
     public SpecialThanksForm()
@@ -22,8 +24,7 @@ public partial class SpecialThanksForm : Form
         var path = Path.Combine(dir!, "Credits.rtf");
         if (!File.Exists(path))
         {
-            rtbCredits.Text = "Oops the Credits file is missing";
-            return;
+            File.WriteAllBytes(path, Resources.Credits);
         }
 
         rtbCredits.LoadFile(path);

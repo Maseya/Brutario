@@ -343,6 +343,16 @@ namespace Brutario.Win.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Credits {
+            get {
+                object obj = ResourceManager.GetObject("Credits", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing.
         /// </summary>
         internal static string Empty {
