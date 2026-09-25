@@ -89,4 +89,8 @@
     </None>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="COPY &quot;$(SolutionDir)Credits.rtf&quot; &quot;$(ProjectDir)$(OutDir)Credits.rtf&quot;" />
+  </Target>
+
 </Project>
