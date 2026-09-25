@@ -1,4 +1,4 @@
-﻿// <copyright file="AutoSaveForm.cs" organization="Maseya">
+﻿// <copyright file="AutoSaveSettingsUserControl.cs" organization="Maseya">
 //     Copyright (c) 2026 spel werdz rite. All rights reserved. Licensed
 //     under GNU Affero General Public License. See LICENSE in project
 //     root for full license information, or visit
@@ -8,12 +8,11 @@
 namespace Brutario.Win;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Forms;
 
-public partial class AutoSaveForm : Form
+public partial class AutoSaveSettingsUserControl : UserControl
 {
-    public AutoSaveForm()
+    public AutoSaveSettingsUserControl()
     {
         InitializeComponent();
     }
@@ -48,14 +47,7 @@ public partial class AutoSaveForm : Form
     {
         get
         {
-            if (!Int32.TryParse(
-                tbxTime.Text,
-                CultureInfo.CurrentUICulture,
-                out var time))
-            {
-                return TimeSpan.Zero;
-            }
-
+            var time = (int)nudTime.Value;
             var conversion = (int)Math.Pow(60, cbxUnits.SelectedIndex);
             return new TimeSpan(0, 0, time * conversion);
         }
@@ -65,20 +57,17 @@ public partial class AutoSaveForm : Form
             if (value.TotalMinutes < 1)
             {
                 cbxUnits.SelectedIndex = 0;
-                tbxTime.Text = ((int)value.TotalSeconds)
-                    .ToString(CultureInfo.CurrentUICulture);
+                nudTime.Value = (int)value.TotalSeconds;
             }
             else if (value.TotalHours < 1)
             {
                 cbxUnits.SelectedIndex = 1;
-                tbxTime.Text += ((int)value.TotalMinutes)
-                    .ToString(CultureInfo.CurrentUICulture);
+                nudTime.Value = (int)value.TotalMinutes;
             }
             else
             {
                 cbxUnits.SelectedIndex = 2;
-                tbxTime.Text = ((int)value.TotalHours)
-                    .ToString(CultureInfo.CurrentUICulture);
+                nudTime.Value = (int)value.TotalHours;
             }
         }
     }
@@ -87,14 +76,7 @@ public partial class AutoSaveForm : Form
     {
         get
         {
-            if (!Int32.TryParse(
-                tbxCutoffTime.Text,
-                CultureInfo.CurrentUICulture,
-                out var time))
-            {
-                return TimeSpan.Zero;
-            }
-
+            var time = (int)nudCutoffTime.Value;
             switch (cbxCutoffUnits.SelectedIndex)
             {
             case 0:
@@ -116,27 +98,23 @@ public partial class AutoSaveForm : Form
             if (value.TotalHours < 1)
             {
                 cbxCutoffUnits.SelectedIndex = 0;
-                tbxCutoffTime.Text = ((int)value.TotalMinutes)
-                    .ToString(CultureInfo.CurrentUICulture);
+                nudCutoffTime.Value = (int)value.TotalMinutes;
             }
             else if (value.TotalDays < 1)
             {
                 cbxCutoffUnits.SelectedIndex = 1;
-                tbxCutoffTime.Text += ((int)value.TotalHours)
-                    .ToString(CultureInfo.CurrentUICulture);
+                nudCutoffTime.Value = (int)value.TotalHours;
             }
             else if (value.TotalDays < 7)
             {
 
                 cbxCutoffUnits.SelectedIndex = 2;
-                tbxCutoffTime.Text = ((int)value.TotalDays)
-                    .ToString(CultureInfo.CurrentUICulture);
+                nudCutoffTime.Value = (int)value.TotalDays;
             }
             else
             {
                 cbxCutoffUnits.SelectedIndex = 3;
-                tbxCutoffTime.Text = (7 * (int)value.TotalDays)
-                    .ToString(CultureInfo.CurrentUICulture);
+                nudCutoffTime.Value = 7 * (int)value.TotalDays;
             }
         }
     }
@@ -155,55 +133,15 @@ public partial class AutoSaveForm : Form
         }
     }
 
-    private void UpdateOKEnabled()
-    {
-        if (EnableAutoSave)
-        {
-            if (!Int32.TryParse(
-                tbxTime.Text,
-                CultureInfo.CurrentUICulture,
-                out var _))
-            {
-                btnOK.Enabled = false;
-                return;
-            }
-        }
-
-        if (EnablePruning)
-        {
-            if (!Int32.TryParse(
-                tbxCutoffTime.Text,
-                CultureInfo.CurrentUICulture,
-                out var _))
-            {
-                btnOK.Enabled = false;
-                return;
-            }
-        }
-
-        btnOK.Enabled = true;
-    }
-
     private void AutoSave_CheckedChanged(object sender, EventArgs e)
     {
-        tbxTime.Enabled =
+        nudTime.Enabled =
         cbxUnits.Enabled = chkAutoSave.Checked;
-        UpdateOKEnabled();
     }
 
     private void Prune_CheckedChanged(object sender, EventArgs e)
     {
-        tbxCutoffTime.Enabled =
+        nudCutoffTime.Enabled =
         cbxCutoffUnits.Enabled = chkPrune.Checked;
-        UpdateOKEnabled();
-    }
-
-    private void AutoSaveForm_Load(object sender, EventArgs e)
-    {
-    }
-
-    private void Time_TextChanged(object sender, EventArgs e)
-    {
-        UpdateOKEnabled();
     }
 }

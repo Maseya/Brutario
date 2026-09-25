@@ -105,5 +105,17 @@ namespace Brutario.Win.Properties {
                 this["RecentRoms"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LoadLastOpenedRom {
+            get {
+                return ((bool)(this["LoadLastOpenedRom"]));
+            }
+            set {
+                this["LoadLastOpenedRom"] = value;
+            }
+        }
     }
 }
